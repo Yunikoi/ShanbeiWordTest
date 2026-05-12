@@ -1,0 +1,10 @@
+# 雅思高频词汇（示例）— 支持「单词 | 词性.释义」；一行可多义（用；分隔）
+abandon | v.放弃；抛弃
+ambiguous | adj.模棱两可的；含糊不清的
+coherent | adj.连贯的；条理清晰的
+deteriorate | v.恶化；变坏
+elaborate | v.详细阐述；adj.精心制作的
+inevitable | adj.不可避免的；必然发生的
+plausible | adj.貌似合理的；花言巧语的
+scrutiny | n.仔细检查；认真审查
+undermine | v.削弱；暗中破坏

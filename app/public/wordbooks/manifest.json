@@ -1,0 +1,7 @@
+{
+  "books": [
+    { "id": "ielts-core", "file": "雅思高频词汇.txt", "title": "雅思高频词汇" },
+    { "id": "cet4-core", "file": "四级核心.txt", "title": "四级核心" },
+    { "id": "ielts-verbs", "file": "雅思写作动词精选.txt", "title": "雅思写作动词精选" }
+  ]
+}

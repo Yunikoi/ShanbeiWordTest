@@ -1,0 +1,9 @@
+# 四级核心（示例）— 支持「单词,释义1；释义2」
+allocate,分配；拨给
+criteria,标准（criterion 的复数）
+emphasize,强调；着重
+hypothesis,假设；假说
+inevitable,不可避免的
+paradox,悖论；自相矛盾的说法
+redundant,多余的；累赘的
+undermine,暗中破坏；削弱

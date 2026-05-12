@@ -1,11 +1,9 @@
-import { useCallback, useRef, useState } from 'react'
-import { useWordStudy } from './useWordStudy.js'
-
-const DICT_API =
-  'https://api.dictionaryapi.dev/api/v2/entries/en'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { getLlmSettings, setLlmSettings } from './llmSettings.js'
+import { useBookshelfStudy } from './useBookshelfStudy.js'
 
 const SLIDE_MS = 320
-const REVEAL_MS = 1000
+const REVEAL_MS = 520
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms))
@@ -19,369 +17,540 @@ function speakEnglish(text) {
   window.speechSynthesis.speak(u)
 }
 
-async function fetchWordMeaning(token) {
-  const q = encodeURIComponent(token.toLowerCase())
-  const res = await fetch(`${DICT_API}/${q}`)
-  if (res.status === 404) {
-    return { token, defs: [], error: '未找到该词' }
-  }
-  if (!res.ok) {
-    return { token, defs: [], error: `请求失败 (${res.status})` }
-  }
-  const data = await res.json()
-  const defs = []
-  for (const entry of data) {
-    for (const m of entry.meanings ?? []) {
-      for (const d of m.definitions ?? []) {
-        if (d.definition) defs.push(d.definition)
-      }
-    }
-  }
-  return { token, defs: defs.slice(0, 5), error: defs.length ? null : '无英文释义' }
+function readFileAsText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result ?? ''))
+    reader.onerror = () => reject(new Error('读取文件失败'))
+    reader.readAsText(file, 'UTF-8')
+  })
 }
 
 export default function App() {
   const {
-    words,
-    loadError,
-    isCustomVocab,
-    current,
-    showTranslation,
-    setShowTranslation,
-    todayPercent,
-    commitFeedback,
-    entryFor,
-    sessionComplete,
+    shelfLoading,
+    shelfError,
+    books,
+    bookLoadError,
+    view,
+    activeTitle,
+    loadBook,
+    beginSession,
+    preparingSession,
+    backToShelf,
+    sessionPosition,
+    sessionTotal,
+    sessionEmpty,
+    currentCard,
+    commitGrade,
     importFromText,
-    restoreBuiltinVocab,
-  } = useWordStudy()
+    clearActiveBook,
+  } = useBookshelfStudy()
 
-  const fileInputRef = useRef(null)
-  const [vocabTip, setVocabTip] = useState(null)
+  const fileRef = useRef(null)
+  const dirRef = useRef(null)
 
-  const [lookupOpen, setLookupOpen] = useState(false)
-  const [lookupLoading, setLookupLoading] = useState(false)
-  const [lookupRows, setLookupRows] = useState([])
+  useEffect(() => {
+    const el = dirRef.current
+    if (!el) return
+    el.setAttribute('webkitdirectory', '')
+    el.setAttribute('directory', '')
+  }, [])
 
+  const [importTip, setImportTip] = useState(null)
+  const [openingId, setOpeningId] = useState(null)
+
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const [dailyCount, setDailyCount] = useState(30)
+
+  const [revealed, setRevealed] = useState(false)
   const [slideStage, setSlideStage] = useState('idle')
   const [feedbackBusy, setFeedbackBusy] = useState(false)
   const [cardKey, setCardKey] = useState(0)
+  const [doneOpen, setDoneOpen] = useState(false)
 
-  const isPhrase = current && /\s/.test(current.word)
-
-  const openLookup = useCallback(async () => {
-    if (!current || !isPhrase || feedbackBusy) return
-    const tokens = current.word.split(/\s+/).filter(Boolean)
-    setLookupOpen(true)
-    setLookupLoading(true)
-    setLookupRows([])
-    try {
-      const rows = await Promise.all(tokens.map((t) => fetchWordMeaning(t)))
-      setLookupRows(rows)
-    } finally {
-      setLookupLoading(false)
-    }
-  }, [current, isPhrase, feedbackBusy])
-
-  const onVocabFile = useCallback(
-    (e) => {
-      const file = e.target.files?.[0]
-      if (!file) return
-      const reader = new FileReader()
-      reader.onload = () => {
-        const text = String(reader.result ?? '')
-        const r = importFromText(text)
-        if (r.ok) {
-          let msg = `已导入 ${r.count} 条`
-          if (r.skippedLines) msg += `（跳过 ${r.skippedLines} 行无法解析）`
-          setVocabTip(msg)
-        } else {
-          setVocabTip(r.message)
-        }
-        e.target.value = ''
-        setCardKey((k) => k + 1)
-        setSlideStage('idle')
-      }
-      reader.onerror = () => {
-        setVocabTip('读取文件失败，请重试')
-        e.target.value = ''
-      }
-      reader.readAsText(file, 'UTF-8')
+  const onPickBook = useCallback(
+    async (book) => {
+      setImportTip(null)
+      setOpeningId(book.id)
+      const r = await loadBook(book)
+      setOpeningId(null)
+      if (!r.ok) return
+      setPickerOpen(true)
+      setDailyCount(30)
     },
-    [importFromText],
+    [loadBook],
   )
 
-  /**
-   * 任意反馈后都会 nextWord：先（按需）亮释义 1s → 向左离场 → commit 队列 → 新卡从右侧入场。
-   */
-  const handleFeedback = useCallback(
+  const [llm, setLlm] = useState(() => getLlmSettings())
+
+  const patchLlm = useCallback((p) => {
+    const next = { ...llm, ...p }
+    setLlm(next)
+    setLlmSettings(next)
+  }, [llm])
+
+  const startFromPicker = useCallback(async () => {
+    setDoneOpen(false)
+    try {
+      await beginSession(dailyCount)
+      setPickerOpen(false)
+      setRevealed(false)
+      setSlideStage('idle')
+      setCardKey((k) => k + 1)
+    } catch {
+      setImportTip('开始学习失败，请检查网络或大模型 API 设置')
+    }
+  }, [beginSession, dailyCount])
+
+  const handleGrade = useCallback(
     async (kind) => {
-      if (feedbackBusy || !current) return
+      if (feedbackBusy || !currentCard) return
       setFeedbackBusy(true)
       try {
-        if (kind === 'review' || kind === 'hard') {
-          setShowTranslation(true)
+        if (!revealed && kind !== 'known') {
+          setRevealed(true)
           await sleep(REVEAL_MS)
+        } else if (!revealed && kind === 'known') {
+          setRevealed(true)
+          await sleep(REVEAL_MS * 0.6)
         }
 
         setSlideStage('exit')
         await sleep(SLIDE_MS)
 
-        const { remaining } = commitFeedback(kind)
+        const { done } = commitGrade(kind)
         setCardKey((k) => k + 1)
-        setShowTranslation(false)
 
-        if (remaining > 0) {
+        if (done) {
+          setRevealed(true)
+          setDoneOpen(true)
+          setSlideStage('idle')
+        } else {
+          setRevealed(false)
           setSlideStage('enter')
           await sleep(SLIDE_MS)
+          setSlideStage('idle')
         }
-        setSlideStage('idle')
       } finally {
         setFeedbackBusy(false)
       }
     },
-    [feedbackBusy, current, commitFeedback, setShowTranslation],
+    [feedbackBusy, currentCard, revealed, commitGrade],
+  )
+
+  const onVocabFile = useCallback(
+    async (e) => {
+      const file = e.target.files?.[0]
+      e.target.value = ''
+      if (!file) return
+      try {
+        const text = await readFileAsText(file)
+        const base = file.name.replace(/\.txt$/i, '')
+        const r = importFromText(text, base)
+        if (r.ok) {
+          let msg = `已导入「${base}」共 ${r.count} 词`
+          if (r.skippedLines) msg += `（跳过 ${r.skippedLines} 行）`
+          setImportTip(msg)
+        } else {
+          setImportTip(r.message)
+        }
+      } catch {
+        setImportTip('读取文件失败，请重试')
+      }
+    },
+    [importFromText],
+  )
+
+  const onVocabDir = useCallback(
+    async (e) => {
+      const files = e.target.files ? Array.from(e.target.files) : []
+      e.target.value = ''
+      const txts = files.filter((f) => /\.txt$/i.test(f.name))
+      if (!txts.length) {
+        setImportTip('文件夹中未找到 .txt 文件')
+        return
+      }
+      try {
+        const parts = await Promise.all(txts.map((f) => readFileAsText(f)))
+        const merged = parts.join('\n')
+        const title = `文件夹导入（${txts.length} 个文件）`
+        const r = importFromText(merged, title)
+        if (r.ok) {
+          setImportTip(`已合并导入 ${txts.length} 个 txt，共 ${r.count} 词`)
+        } else {
+          setImportTip(r.message)
+        }
+      } catch {
+        setImportTip('读取文件夹失败，请重试')
+      }
+    },
+    [importFromText],
   )
 
   const cardAnimClass =
     slideStage === 'exit' ? 'card-slide-exit' : slideStage === 'enter' ? 'card-slide-enter' : ''
 
-  if (loadError && !words.length) {
+  if (shelfLoading && view === 'shelf') {
     return (
-      <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center px-4 py-6">
-        <p className="mb-4 text-center text-red-600">无法加载内置词库：{loadError}</p>
-        <p className="mb-4 text-center text-sm text-gray-600">
-          你仍可直接导入自己的 .txt（每行：单词：释义）。
-        </p>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".txt,text/plain"
-          className="hidden"
-          onChange={onVocabFile}
-        />
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="mx-auto rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
-        >
-          导入词库 (.txt)
-        </button>
-        {vocabTip ? (
-          <p className="mt-4 text-center text-sm text-amber-800">{vocabTip}</p>
-        ) : null}
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 via-indigo-50 to-violet-100 text-slate-600">
+        正在加载书架…
       </div>
     )
   }
 
-  if (!words.length) {
+  if (shelfError && view === 'shelf' && !books.length) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-gray-500">
-        正在加载词库…
+      <div className="mx-auto flex min-h-screen max-w-lg flex-col justify-center gap-4 px-4 py-8 text-center">
+        <p className="text-red-600">书架加载失败：{shelfError}</p>
+        <p className="text-sm text-slate-600">请确认已存在 /wordbooks/manifest.json 与配套 txt。</p>
+      </div>
+    )
+  }
+
+  if (view === 'study') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-50 to-violet-100 px-4 py-6">
+        <div className="mx-auto flex w-full max-w-lg flex-col gap-4">
+          <header className="flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setDoneOpen(false)
+                backToShelf()
+              }}
+              className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur hover:bg-white"
+            >
+              ← 书架
+            </button>
+            <div className="text-right text-xs text-slate-500">
+              <div className="font-medium text-slate-800">{activeTitle}</div>
+              {!sessionEmpty && sessionTotal ? (
+                <div>
+                  进度 {sessionPosition}/{sessionTotal}
+                </div>
+              ) : null}
+            </div>
+          </header>
+
+          {bookLoadError ? (
+            <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800">{bookLoadError}</p>
+          ) : null}
+
+          {sessionEmpty ? (
+            <section className="rounded-3xl bg-white/90 p-8 text-center shadow-xl backdrop-blur">
+              <p className="text-lg font-semibold text-slate-800">今日没有待复习单词</p>
+              <p className="mt-2 text-sm text-slate-600">
+                所有词条的下次复习日期都在今天之后，或词书为空。可以改日再来，或调整词书。
+              </p>
+              <button
+                type="button"
+                onClick={() => backToShelf()}
+                className="mt-6 rounded-2xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500"
+              >
+                返回书架
+              </button>
+            </section>
+          ) : currentCard && !doneOpen ? (
+            <main className="flex flex-1 flex-col items-center justify-center pb-8">
+              <div className="relative w-full overflow-hidden">
+                <article
+                  key={cardKey}
+                  className={`w-full rounded-3xl border border-white/60 bg-white/95 p-6 shadow-2xl backdrop-blur will-change-transform sm:p-8 ${cardAnimClass}`}
+                >
+                  <div className="mb-6 flex items-start justify-between gap-3">
+                    <div>
+                      <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                        {currentCard.word}
+                      </h1>
+                      <p className="mt-1 text-xs text-slate-400">
+                        例句为阅读向英文模板（不含中文释义；中文义项仅用于离线轮换选句）
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => speakEnglish(currentCard.word)}
+                      disabled={feedbackBusy}
+                      className="shrink-0 rounded-full bg-slate-100 p-2 text-slate-600 hover:bg-slate-200 disabled:opacity-50"
+                      aria-label="朗读"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7">
+                        <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM18.584 5.106a.75.75 0 0 1 1.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 1 1-1.06-1.06 3.5 3.5 0 0 0 0-4.95.75.75 0 1 1 1.06-1.061 5 5 0 0 1 0 7.07.75.75 0 0 1-1.06 0 6.5 6.5 0 0 1 0-9.192.75.75 0 0 1 0-1.06Z" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div className="mb-6 min-h-[4.5rem] rounded-2xl bg-slate-50/90 p-4">
+                    {!revealed ? (
+                      <p className="text-sm text-slate-400">释义与例句已隐藏，先尝试回忆再看提示。</p>
+                    ) : (
+                      <ul className="space-y-4">
+                        {currentCard.senses.map((s, i) => (
+                          <li key={i} className="rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
+                            <p className="text-base font-medium text-slate-900">
+                              {s.pos ? <span className="mr-2 text-indigo-600">{s.pos}.</span> : null}
+                              {s.zh}
+                            </p>
+                            <p className="mt-2 text-sm leading-relaxed text-slate-700">{s.example}</p>
+                            {s.exampleZh ? (
+                              <p className="mt-2 border-t border-slate-100 pt-2 text-sm leading-relaxed text-slate-600">
+                                {s.exampleZh}
+                              </p>
+                            ) : null}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  <div className="mb-6 flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setRevealed(true)}
+                      disabled={feedbackBusy || revealed}
+                      className="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-slate-800 disabled:opacity-40"
+                    >
+                      显示释义 / 例句
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <button
+                      type="button"
+                      onClick={() => handleGrade('known')}
+                      disabled={feedbackBusy || doneOpen}
+                      className="rounded-2xl bg-emerald-500 py-3 text-sm font-semibold text-white shadow hover:bg-emerald-600 disabled:opacity-50"
+                    >
+                      认识
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleGrade('fuzzy')}
+                      disabled={feedbackBusy || doneOpen}
+                      className="rounded-2xl bg-amber-400 py-3 text-sm font-semibold text-slate-900 shadow hover:bg-amber-500 disabled:opacity-50"
+                    >
+                      模糊
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleGrade('forget')}
+                      disabled={feedbackBusy || doneOpen}
+                      className="rounded-2xl bg-rose-500 py-3 text-sm font-semibold text-white shadow hover:bg-rose-600 disabled:opacity-50"
+                    >
+                      忘记
+                    </button>
+                  </div>
+                </article>
+              </div>
+            </main>
+          ) : null}
+        </div>
+
+        {doneOpen ? (
+          <div
+            className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 p-4 sm:items-center"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-2xl">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl">
+                ✓
+              </div>
+              <h2 className="text-xl font-bold text-slate-900">今日复习完成</h2>
+              <p className="mt-2 text-sm text-slate-600">
+                已完成 {sessionTotal} 个词条。已根据「认识 / 模糊 / 忘记」更新下次复习时间。
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setDoneOpen(false)
+                  backToShelf()
+                }}
+                className="mt-6 w-full rounded-2xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500"
+              >
+                返回书架
+              </button>
+            </div>
+          </div>
+        ) : null}
       </div>
     )
   }
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-lg flex-col px-4 py-6">
-      <header className="mb-6">
-        <div className="mb-3 flex flex-wrap items-center gap-2">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".txt,text/plain"
-            className="hidden"
-            onChange={onVocabFile}
-          />
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-50 to-violet-100 px-4 py-8">
+      <div className="mx-auto max-w-3xl">
+        <header className="mb-8 text-center">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">雅思梯度记忆 · 书架</h1>
+          <p className="mt-2 text-sm text-slate-600">纯前端离线复习 · 进度保存在本机 localStorage</p>
+        </header>
+
+        <div className="mb-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+          <input ref={fileRef} type="file" accept=".txt,text/plain" className="hidden" onChange={onVocabFile} />
+          <input ref={dirRef} type="file" className="hidden" multiple onChange={onVocabDir} />
           <button
             type="button"
-            onClick={() => fileInputRef.current?.click()}
-            disabled={feedbackBusy}
-            className="rounded-lg bg-gray-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800 disabled:opacity-50"
+            onClick={() => fileRef.current?.click()}
+            className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-slate-800"
           >
-            导入词库 (.txt)
+            导入 txt 词书
           </button>
-          {isCustomVocab ? (
-            <button
-              type="button"
-              disabled={feedbackBusy}
-              onClick={() => {
-                restoreBuiltinVocab().then(() =>
-                  setVocabTip('已切换为内置词库（public/data.json）'),
-                )
-                setCardKey((k) => k + 1)
-                setSlideStage('idle')
-              }}
-              className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-            >
-              使用内置词库
-            </button>
-          ) : null}
-          <span className="text-xs text-gray-500">
-            每行：单词：释义（支持 ： 或 :）
-          </span>
+          <button
+            type="button"
+            onClick={() => dirRef.current?.click()}
+            className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow hover:bg-slate-50"
+          >
+            导入文件夹（全部 .txt）
+          </button>
         </div>
-        {vocabTip ? (
-          <p className="mb-2 rounded-lg bg-amber-50 px-3 py-2 text-xs text-amber-900">
-            {vocabTip}
+        {importTip ? (
+          <p className="mb-6 rounded-2xl border border-amber-100 bg-amber-50 px-4 py-3 text-center text-sm text-amber-900">
+            {importTip}
           </p>
         ) : null}
-        <div className="mb-1 flex justify-between text-sm text-gray-600">
-          <span>今日已掌握</span>
-          <span>{todayPercent}%</span>
-        </div>
-        <div className="h-2 overflow-hidden rounded-full bg-gray-200">
-          <div
-            className="h-full rounded-full bg-emerald-500 transition-[width] duration-300"
-            style={{ width: `${todayPercent}%` }}
-          />
-        </div>
-      </header>
 
-      <main className="flex flex-1 flex-col items-center justify-center">
-        {sessionComplete ? (
-          <div className="rounded-2xl bg-white px-8 py-12 text-center shadow-lg">
-            <p className="text-lg font-medium text-gray-800">待复习队列已清空</p>
-            <p className="mt-2 text-sm text-gray-500">
-              本轮所有词均已「认识」或词库中已全部标记为认识。可导入新词库或清除 localStorage
-              学习进度后重新开始。
-            </p>
-          </div>
-        ) : current ? (
-          <div className="relative w-full overflow-hidden">
-            <article
-              key={cardKey}
-              className={`w-full rounded-2xl bg-white p-8 shadow-lg will-change-transform ${cardAnimClass}`}
+        <details className="mb-6 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-left shadow-sm">
+          <summary className="cursor-pointer text-sm font-semibold text-slate-800">大模型生成例句+译文（可选）</summary>
+          <p className="mt-2 text-xs leading-relaxed text-slate-500">
+            默认使用本地模板。若填写 API 密钥并勾选，则在点击「开始学习」后<strong>仅对今日抽中的词</strong>依次调用模型生成阅读向英文句与中文译文（密钥仅存本机）。
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
+            <label className="flex cursor-pointer items-center gap-2">
+              <input
+                type="checkbox"
+                checked={llm.enabled}
+                onChange={(e) => patchLlm({ enabled: e.target.checked })}
+              />
+              启用在线生成
+            </label>
+            <select
+              value={llm.provider}
+              onChange={(e) => patchLlm({ provider: /** @type {'gemini'|'groq'} */ (e.target.value) })}
+              className="rounded-lg border border-slate-200 px-2 py-1"
             >
-              <div className="mb-6 flex items-start justify-between gap-3">
-                <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
-                  {current.word}
-                </h1>
-                <button
-                  type="button"
-                  onClick={() => speakEnglish(current.word)}
-                  disabled={feedbackBusy}
-                  className="shrink-0 rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800 disabled:opacity-50"
-                  title="朗读"
-                  aria-label="朗读当前词条"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="h-7 w-7"
-                  >
-                    <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM18.584 5.106a.75.75 0 0 1 1.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 1 1-1.06-1.06 3.5 3.5 0 0 0 0-4.95.75.75 0 1 1 1.06-1.061 5 5 0 0 1 0 7.07.75.75 0 0 1-1.06 0 6.5 6.5 0 0 1 0-9.192.75.75 0 0 1 0-1.06Z" />
-                    <path d="M15.932 7.757a.75.75 0 0 1 1.061 0 6 6 0 0 1 0 8.486.75.75 0 0 1-1.06-1.061 4.5 4.5 0 0 0 0-6.364.75.75 0 0 1 0-1.06Z" />
-                  </svg>
-                </button>
-              </div>
-
-              <p className="mb-4 text-xs text-gray-400">
-                状态：{entryFor(current.word).status} · eFactor：{' '}
-                {(entryFor(current.word).efactor ?? 2.5).toFixed(2)}
-              </p>
-
-              <div className="mb-6 min-h-[4rem] rounded-lg bg-gray-50 p-4">
-                {showTranslation ? (
-                  <p className="text-lg text-gray-800">{current.translation}</p>
-                ) : (
-                  <p className="text-gray-400">释义已隐藏</p>
-                )}
-              </div>
-
-              <div className="mb-6 flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  onClick={() => setShowTranslation(true)}
-                  disabled={feedbackBusy}
-                  className="rounded-lg bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 disabled:opacity-50"
-                >
-                  查看释义
-                </button>
-                {isPhrase ? (
-                  <button
-                    type="button"
-                    onClick={openLookup}
-                    disabled={feedbackBusy}
-                    className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50"
-                  >
-                    查单词
-                  </button>
-                ) : null}
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-                <button
-                  type="button"
-                  onClick={() => handleFeedback('easy')}
-                  disabled={feedbackBusy}
-                  className="flex-1 rounded-xl bg-emerald-500 py-3 text-sm font-medium text-white shadow-sm hover:bg-emerald-600 disabled:opacity-50"
-                >
-                  认识
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleFeedback('review')}
-                  disabled={feedbackBusy}
-                  className="flex-1 rounded-xl bg-amber-400 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-amber-500 disabled:opacity-50"
-                >
-                  需复习
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleFeedback('hard')}
-                  disabled={feedbackBusy}
-                  className="flex-1 rounded-xl bg-red-500 py-3 text-sm font-medium text-white shadow-sm hover:bg-red-600 disabled:opacity-50"
-                >
-                  不认识
-                </button>
-              </div>
-            </article>
+              <option value="gemini">Google Gemini（浏览器直连）</option>
+              <option value="groq">Groq（开发环境走 Vite 代理）</option>
+            </select>
           </div>
-        ) : null}
-      </main>
+          <input
+            type="password"
+            autoComplete="off"
+            placeholder="API Key"
+            value={llm.apiKey}
+            onChange={(e) => patchLlm({ apiKey: e.target.value })}
+            className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+          />
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            <input
+              type="text"
+              placeholder="Gemini 模型名"
+              value={llm.modelGemini}
+              onChange={(e) => patchLlm({ modelGemini: e.target.value })}
+              className="rounded-xl border border-slate-200 px-3 py-2 text-xs"
+            />
+            <input
+              type="text"
+              placeholder="Groq 模型名"
+              value={llm.modelGroq}
+              onChange={(e) => patchLlm({ modelGroq: e.target.value })}
+              className="rounded-xl border border-slate-200 px-3 py-2 text-xs"
+            />
+          </div>
+          <p className="mt-2 text-xs text-slate-500">
+            <a className="text-indigo-600 underline" href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">
+              Gemini 密钥（AI Studio）
+            </a>
+            {' · '}
+            <a className="text-indigo-600 underline" href="https://console.groq.com/keys" target="_blank" rel="noreferrer">
+              Groq 密钥
+            </a>
+          </p>
+        </details>
 
-      {lookupOpen ? (
-        <div
-          className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-6 shadow-xl">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">短语拆词</h2>
+        <section>
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">可选词书</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {books.map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                disabled={openingId === b.id}
+                onClick={() => onPickBook(b)}
+                className="group flex flex-col items-start rounded-3xl border border-white/70 bg-white/90 p-5 text-left shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-60"
+              >
+                <span className="text-xs font-medium uppercase text-indigo-500">
+                  {b.source === 'builtin' ? '内置' : '已导入'}
+                </span>
+                <span className="mt-2 text-lg font-bold text-slate-900">{b.title}</span>
+                <span className="mt-3 text-xs text-slate-500">
+                  {openingId === b.id ? '正在载入…' : '点击选择并开始配置今日复习量'}
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <p className="mt-8 text-center text-xs leading-relaxed text-slate-500">
+          支持行格式：<span className="whitespace-nowrap">词条：义1；义2 | 义3</span>（竖线在冒号后表示义项大组）、
+          <span className="whitespace-nowrap">单词 | 词性.释义</span>、
+          <span className="whitespace-nowrap">单词,释义1；释义2</span>
+          。章节标题行 <span className="whitespace-nowrap">【…】</span> 与 <span className="whitespace-nowrap">#</span> 注释会跳过。
+        </p>
+      </div>
+
+      {pickerOpen ? (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 p-4 sm:items-center" role="dialog" aria-modal="true">
+          <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+            <h3 className="text-lg font-bold text-slate-900">今日复习多少个词？</h3>
+            <p className="mt-1 text-sm text-slate-600">从当前到期的词条中按优先级抽取（10–100，步长 5）。</p>
+            <div className="mt-6 space-y-4">
+              <div className="flex items-center justify-between gap-4">
+                <input
+                  type="range"
+                  min={10}
+                  max={100}
+                  step={5}
+                  value={dailyCount}
+                  onChange={(e) => setDailyCount(Number(e.target.value))}
+                  className="w-full accent-indigo-600"
+                />
+                <input
+                  type="number"
+                  min={10}
+                  max={100}
+                  step={5}
+                  value={dailyCount}
+                  onChange={(e) => {
+                    const v = Number(e.target.value)
+                    if (Number.isNaN(v)) return
+                    const c = Math.min(100, Math.max(10, Math.round(v / 5) * 5))
+                    setDailyCount(c)
+                  }}
+                  className="w-20 rounded-xl border border-slate-200 px-2 py-2 text-center text-sm font-semibold"
+                />
+              </div>
+              <p className="text-center text-2xl font-bold text-indigo-700">{dailyCount}</p>
+            </div>
+            <div className="mt-6 flex gap-3">
               <button
                 type="button"
-                onClick={() => setLookupOpen(false)}
-                className="rounded-lg px-3 py-1 text-sm text-gray-500 hover:bg-gray-100"
+                onClick={() => {
+                  setPickerOpen(false)
+                  clearActiveBook()
+                }}
+                className="flex-1 rounded-2xl border border-slate-200 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
               >
-                关闭
+                取消
+              </button>
+              <button
+                type="button"
+                onClick={() => startFromPicker()}
+                disabled={preparingSession}
+                className="flex-1 rounded-2xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow hover:bg-indigo-500 disabled:opacity-60"
+              >
+                {preparingSession ? '正在生成例句…' : '开始学习'}
               </button>
             </div>
-            {lookupLoading ? (
-              <p className="text-gray-500">正在查询…</p>
-            ) : (
-              <ul className="space-y-4">
-                {lookupRows.map((row) => (
-                  <li key={row.token} className="border-b border-gray-100 pb-4 last:border-0">
-                    <p className="font-medium text-gray-900">{row.token}</p>
-                    {row.error ? (
-                      <p className="mt-1 text-sm text-amber-700">{row.error}</p>
-                    ) : (
-                      <ul className="mt-2 list-disc pl-5 text-sm text-gray-600">
-                        {row.defs.map((d, i) => (
-                          <li key={i}>{d}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-            <p className="mt-4 text-xs text-gray-400">
-              数据来自免费词典接口 dictionaryapi.dev，仅作参考。
-            </p>
           </div>
         </div>
       ) : null}
