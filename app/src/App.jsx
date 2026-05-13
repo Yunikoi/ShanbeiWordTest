@@ -2,13 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { getLlmSettings, setLlmSettings } from './llmSettings.js'
 import { useBookshelfStudy } from './useBookshelfStudy.js'
 
-const SLIDE_MS = 320
-const REVEAL_MS = 520
-
-function sleep(ms) {
-  return new Promise((r) => setTimeout(r, ms))
-}
-
 function speakEnglish(text) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return
   window.speechSynthesis.cancel()
@@ -64,7 +57,12 @@ export default function App() {
   const [dailyCount, setDailyCount] = useState(30)
 
   const [revealed, setRevealed] = useState(false)
-  const [slideStage, setSlideStage] = useState('idle')
+  /** 单词页 → 释义页 */
+  const [studyPhase, setStudyPhase] = useState('word')
+  /** 首轮：认识 / 模糊 / 不认识（仅决定释义页底部按钮，此时未写入 SRS） */
+  const [preliminary, setPreliminary] = useState(null)
+  /** 释义页是否展开例句 */
+  const [showExamples, setShowExamples] = useState(false)
   const [feedbackBusy, setFeedbackBusy] = useState(false)
   const [cardKey, setCardKey] = useState(0)
   const [doneOpen, setDoneOpen] = useState(false)
@@ -96,47 +94,50 @@ export default function App() {
       await beginSession(dailyCount)
       setPickerOpen(false)
       setRevealed(false)
-      setSlideStage('idle')
+      setStudyPhase('word')
+      setPreliminary(null)
+      setShowExamples(false)
       setCardKey((k) => k + 1)
     } catch {
       setImportTip('开始学习失败，请检查网络或大模型 API 设置')
     }
   }, [beginSession, dailyCount])
 
-  const handleGrade = useCallback(
+  /** 首轮点认识/模糊/不认识：进入释义页，不写入 SRS */
+  const goToMeaning = useCallback(
+    (firstKind) => {
+      if (feedbackBusy || !currentCard) return
+      setPreliminary(firstKind)
+      setShowExamples(false)
+      setRevealed(true)
+      setStudyPhase('meaning')
+    },
+    [feedbackBusy, currentCard],
+  )
+
+  /** 释义页最终确认：写入 SRS 并无动画切下一词 */
+  const finalizeGrade = useCallback(
     async (kind) => {
       if (feedbackBusy || !currentCard) return
       setFeedbackBusy(true)
       try {
-        if (!revealed && kind !== 'known') {
-          setRevealed(true)
-          await sleep(REVEAL_MS)
-        } else if (!revealed && kind === 'known') {
-          setRevealed(true)
-          await sleep(REVEAL_MS * 0.6)
-        }
-
-        setSlideStage('exit')
-        await sleep(SLIDE_MS)
-
         const { done } = commitGrade(kind)
         setCardKey((k) => k + 1)
+        setStudyPhase('word')
+        setPreliminary(null)
+        setShowExamples(false)
 
         if (done) {
           setRevealed(true)
           setDoneOpen(true)
-          setSlideStage('idle')
         } else {
           setRevealed(false)
-          setSlideStage('enter')
-          await sleep(SLIDE_MS)
-          setSlideStage('idle')
         }
       } finally {
         setFeedbackBusy(false)
       }
     },
-    [feedbackBusy, currentCard, revealed, commitGrade],
+    [feedbackBusy, currentCard, commitGrade],
   )
 
   const onVocabFile = useCallback(
@@ -188,9 +189,6 @@ export default function App() {
     [importFromText],
   )
 
-  const cardAnimClass =
-    slideStage === 'exit' ? 'card-slide-exit' : slideStage === 'enter' ? 'card-slide-enter' : ''
-
   if (shelfLoading && view === 'shelf') {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-100 via-indigo-50 to-violet-100 text-slate-600">
@@ -217,6 +215,10 @@ export default function App() {
               type="button"
               onClick={() => {
                 setDoneOpen(false)
+                setStudyPhase('word')
+                setPreliminary(null)
+                setShowExamples(false)
+                setRevealed(false)
                 backToShelf()
               }}
               className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur hover:bg-white"
@@ -256,7 +258,7 @@ export default function App() {
               <div className="relative w-full overflow-hidden">
                 <article
                   key={cardKey}
-                  className={`w-full rounded-3xl border border-white/60 bg-white/95 p-6 shadow-2xl backdrop-blur will-change-transform sm:p-8 ${cardAnimClass}`}
+                  className="w-full rounded-3xl border border-white/60 bg-white/95 p-6 shadow-2xl backdrop-blur sm:p-8"
                 >
                   <div className="mb-6 flex items-start justify-between gap-3">
                     <div>
@@ -281,65 +283,104 @@ export default function App() {
                   </div>
 
                   <div className="mb-6 min-h-[4.5rem] rounded-2xl bg-slate-50/90 p-4">
-                    {!revealed ? (
-                      <p className="text-sm text-slate-400">释义与例句已隐藏，先尝试回忆再看提示。</p>
+                    {studyPhase === 'word' ? (
+                      <p className="text-sm text-slate-500">
+                        请先点<strong className="text-slate-800">认识</strong>、<strong className="text-slate-800">模糊</strong>或<strong className="text-slate-800">不认识</strong>进入释义页；释义页可查看例句，再按提示确认后才能进入下一词。
+                      </p>
                     ) : (
-                      <ul className="space-y-4">
-                        {currentCard.senses.map((s, i) => (
-                          <li key={i} className="rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
-                            <p className="text-base font-medium text-slate-900">
-                              {s.pos ? <span className="mr-2 text-indigo-600">{s.pos}.</span> : null}
-                              {s.zh}
-                            </p>
-                            <p className="mt-2 text-sm leading-relaxed text-slate-700">{s.example}</p>
-                            {s.exampleZh ? (
-                              <p className="mt-2 border-t border-slate-100 pt-2 text-sm leading-relaxed text-slate-600">
-                                {s.exampleZh}
+                      <>
+                        <ul className="space-y-4">
+                          {currentCard.senses.map((s, i) => (
+                            <li key={i} className="rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
+                              <p className="text-base font-medium text-slate-900">
+                                {s.pos ? <span className="mr-2 text-indigo-600">{s.pos}.</span> : null}
+                                {s.zh}
                               </p>
-                            ) : null}
-                          </li>
-                        ))}
-                      </ul>
+                              {showExamples ? (
+                                <>
+                                  <p className="mt-2 text-sm leading-relaxed text-slate-700">{s.example}</p>
+                                  {s.exampleZh ? (
+                                    <p className="mt-2 border-t border-slate-100 pt-2 text-sm leading-relaxed text-slate-600">
+                                      {s.exampleZh}
+                                    </p>
+                                  ) : null}
+                                </>
+                              ) : null}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setShowExamples((v) => !v)}
+                            disabled={feedbackBusy || doneOpen}
+                            className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 disabled:opacity-50"
+                          >
+                            {showExamples ? '隐藏例句' : '查看例句'}
+                          </button>
+                        </div>
+                      </>
                     )}
                   </div>
 
-                  <div className="mb-6 flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setRevealed(true)}
-                      disabled={feedbackBusy || revealed}
-                      className="rounded-2xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow hover:bg-slate-800 disabled:opacity-40"
-                    >
-                      显示释义 / 例句
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    <button
-                      type="button"
-                      onClick={() => handleGrade('known')}
-                      disabled={feedbackBusy || doneOpen}
-                      className="rounded-2xl bg-emerald-500 py-3 text-sm font-semibold text-white shadow hover:bg-emerald-600 disabled:opacity-50"
-                    >
-                      认识
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleGrade('fuzzy')}
-                      disabled={feedbackBusy || doneOpen}
-                      className="rounded-2xl bg-amber-400 py-3 text-sm font-semibold text-slate-900 shadow hover:bg-amber-500 disabled:opacity-50"
-                    >
-                      模糊
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleGrade('forget')}
-                      disabled={feedbackBusy || doneOpen}
-                      className="rounded-2xl bg-rose-500 py-3 text-sm font-semibold text-white shadow hover:bg-rose-600 disabled:opacity-50"
-                    >
-                      忘记
-                    </button>
-                  </div>
+                  {studyPhase === 'word' ? (
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                      <button
+                        type="button"
+                        onClick={() => goToMeaning('known')}
+                        disabled={feedbackBusy || doneOpen}
+                        className="rounded-2xl bg-emerald-500 py-3 text-sm font-semibold text-white shadow hover:bg-emerald-600 disabled:opacity-50"
+                      >
+                        认识
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => goToMeaning('fuzzy')}
+                        disabled={feedbackBusy || doneOpen}
+                        className="rounded-2xl bg-amber-400 py-3 text-sm font-semibold text-slate-900 shadow hover:bg-amber-500 disabled:opacity-50"
+                      >
+                        模糊
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => goToMeaning('forget')}
+                        disabled={feedbackBusy || doneOpen}
+                        className="rounded-2xl bg-rose-500 py-3 text-sm font-semibold text-white shadow hover:bg-rose-600 disabled:opacity-50"
+                      >
+                        不认识
+                      </button>
+                    </div>
+                  ) : preliminary === 'known' ? (
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      <button
+                        type="button"
+                        onClick={() => finalizeGrade('known')}
+                        disabled={feedbackBusy || doneOpen}
+                        className="rounded-2xl bg-emerald-600 py-3 text-sm font-semibold text-white shadow hover:bg-emerald-700 disabled:opacity-50"
+                      >
+                        真的认识
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => finalizeGrade('forget')}
+                        disabled={feedbackBusy || doneOpen}
+                        className="rounded-2xl border-2 border-rose-400 bg-white py-3 text-sm font-semibold text-rose-700 shadow-sm hover:bg-rose-50 disabled:opacity-50"
+                      >
+                        原来不认识
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center">
+                      <button
+                        type="button"
+                        onClick={() => finalizeGrade(preliminary)}
+                        disabled={feedbackBusy || doneOpen || !preliminary}
+                        className="w-full max-w-xs rounded-2xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500 disabled:opacity-50 sm:max-w-sm"
+                      >
+                        下一个
+                      </button>
+                    </div>
+                  )}
                 </article>
               </div>
             </main>
@@ -358,7 +399,7 @@ export default function App() {
               </div>
               <h2 className="text-xl font-bold text-slate-900">今日复习完成</h2>
               <p className="mt-2 text-sm text-slate-600">
-                已完成 {sessionTotal} 个词条。已根据「认识 / 模糊 / 忘记」更新下次复习时间。
+                已完成 {sessionTotal} 个词条。已根据「认识 / 模糊 / 不认识」更新下次复习时间。
               </p>
               <button
                 type="button"

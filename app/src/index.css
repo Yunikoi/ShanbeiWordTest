@@ -9,29 +9,3 @@ body {
 #root {
   min-height: 100vh;
 }
-
-@keyframes card-slide-out {
-  to {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-}
-
-@keyframes card-slide-in {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-.card-slide-exit {
-  animation: card-slide-out 0.32s ease-in forwards;
-}
-
-.card-slide-enter {
-  animation: card-slide-in 0.32s ease-out forwards;
-}
