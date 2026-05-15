@@ -188,3 +188,4 @@ ShanbeiWordTest/
 ### License & disclaimer
 
 Provided as-is for learning. Third-party APIs (dictionary, Gemini, Groq) remain under their own terms. Template and model outputs are **not** a substitute for authoritative dictionaries or exam instructions.
+IOI

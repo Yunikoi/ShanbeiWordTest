@@ -59,7 +59,7 @@ export default function App() {
   const [revealed, setRevealed] = useState(false)
   /** 单词页 → 释义页 */
   const [studyPhase, setStudyPhase] = useState('word')
-  /** 首轮：认识 / 模糊 / 不认识（仅决定释义页底部按钮，此时未写入 SRS） */
+  /** 首轮：认识 / 不熟悉 / 不认识（仅决定释义页底部按钮，此时未写入 SRS） */
   const [preliminary, setPreliminary] = useState(null)
   /** 释义页是否展开例句 */
   const [showExamples, setShowExamples] = useState(false)
@@ -103,7 +103,7 @@ export default function App() {
     }
   }, [beginSession, dailyCount])
 
-  /** 首轮点认识/模糊/不认识：进入释义页，不写入 SRS */
+  /** 首轮点认识/不熟悉/不认识：进入释义页，不写入 SRS */
   const goToMeaning = useCallback(
     (firstKind) => {
       if (feedbackBusy || !currentCard) return
@@ -265,9 +265,6 @@ export default function App() {
                       <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
                         {currentCard.word}
                       </h1>
-                      <p className="mt-1 text-xs text-slate-400">
-                        例句为阅读向英文模板（不含中文释义；中文义项仅用于离线轮换选句）
-                      </p>
                     </div>
                     <button
                       type="button"
@@ -282,46 +279,40 @@ export default function App() {
                     </button>
                   </div>
 
-                  <div className="mb-6 min-h-[4.5rem] rounded-2xl bg-slate-50/90 p-4">
-                    {studyPhase === 'word' ? (
-                      <p className="text-sm text-slate-500">
-                        请先点<strong className="text-slate-800">认识</strong>、<strong className="text-slate-800">模糊</strong>或<strong className="text-slate-800">不认识</strong>进入释义页；释义页可查看例句，再按提示确认后才能进入下一词。
-                      </p>
-                    ) : (
-                      <>
-                        <ul className="space-y-4">
-                          {currentCard.senses.map((s, i) => (
-                            <li key={i} className="rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
-                              <p className="text-base font-medium text-slate-900">
-                                {s.pos ? <span className="mr-2 text-indigo-600">{s.pos}.</span> : null}
-                                {s.zh}
-                              </p>
-                              {showExamples ? (
-                                <>
-                                  <p className="mt-2 text-sm leading-relaxed text-slate-700">{s.example}</p>
-                                  {s.exampleZh ? (
-                                    <p className="mt-2 border-t border-slate-100 pt-2 text-sm leading-relaxed text-slate-600">
-                                      {s.exampleZh}
-                                    </p>
-                                  ) : null}
-                                </>
-                              ) : null}
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setShowExamples((v) => !v)}
-                            disabled={feedbackBusy || doneOpen}
-                            className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 disabled:opacity-50"
-                          >
-                            {showExamples ? '隐藏例句' : '查看例句'}
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>
+                  {studyPhase === 'meaning' ? (
+                    <div className="mb-6 min-h-[4.5rem] rounded-2xl bg-slate-50/90 p-4">
+                      <ul className="space-y-4">
+                        {currentCard.senses.map((s, i) => (
+                          <li key={i} className="rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
+                            <p className="text-base font-medium text-slate-900">
+                              {s.pos ? <span className="mr-2 text-indigo-600">{s.pos}.</span> : null}
+                              {s.zh}
+                            </p>
+                            {showExamples ? (
+                              <>
+                                <p className="mt-2 text-sm leading-relaxed text-slate-700">{s.example}</p>
+                                {s.exampleZh ? (
+                                  <p className="mt-2 border-t border-slate-100 pt-2 text-sm leading-relaxed text-slate-600">
+                                    {s.exampleZh}
+                                  </p>
+                                ) : null}
+                              </>
+                            ) : null}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowExamples((v) => !v)}
+                          disabled={feedbackBusy || doneOpen}
+                          className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 disabled:opacity-50"
+                        >
+                          {showExamples ? '隐藏例句' : '查看例句'}
+                        </button>
+                      </div>
+                    </div>
+                  ) : null}
 
                   {studyPhase === 'word' ? (
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -339,7 +330,7 @@ export default function App() {
                         disabled={feedbackBusy || doneOpen}
                         className="rounded-2xl bg-amber-400 py-3 text-sm font-semibold text-slate-900 shadow hover:bg-amber-500 disabled:opacity-50"
                       >
-                        模糊
+                        不熟悉
                       </button>
                       <button
                         type="button"
@@ -399,7 +390,7 @@ export default function App() {
               </div>
               <h2 className="text-xl font-bold text-slate-900">今日复习完成</h2>
               <p className="mt-2 text-sm text-slate-600">
-                已完成 {sessionTotal} 个词条。已根据「认识 / 模糊 / 不认识」更新下次复习时间。
+                已完成 {sessionTotal} 个词条。进度已按记忆曲线保存：未掌握需连续 3 次「真的认识」；已掌握按间隔复习，答错会退回重新学习。
               </p>
               <button
                 type="button"

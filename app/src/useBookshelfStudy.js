@@ -4,6 +4,7 @@ import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings } from './llmSettings.js'
 import { attachExamples } from './ieltsSentence.js'
 import { parseWordbookText } from './parseWordbook.js'
+import { applySrsV2, migrateWordProg } from './srsCurve.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
@@ -33,31 +34,32 @@ function addDaysYmd(ymd, n) {
   return `${y}-${m}-${day}`
 }
 
-/**
- * @typedef {{
- *   intervalNext: number,
- *   nextDue: string,
- *   lastReviewed?: string,
- *   fuzzyCount?: number,
- * }} WordProg */
+/** @param {Record<string, unknown>} raw @param {string} today */
+function normalizeProgressMap(raw, today) {
+  /** @type {Record<string, unknown>} */
+  const out = {}
+  if (!raw || typeof raw !== 'object') return out
+  for (const [w, p] of Object.entries(raw)) {
+    out[w] = migrateWordProg(p, today)
+  }
+  return out
+}
 
-/** @param {Record<string, WordProg>} progMap @param {string} word @param {string} today */
+/** @param {Record<string, unknown>} progMap @param {string} word @param {string} today */
 function isDue(progMap, word, today) {
-  const p = progMap[word]
-  if (!p || !p.nextDue) return true
+  const p = migrateWordProg(progMap[word], today)
   return p.nextDue <= today
 }
 
 /**
- * @param {Record<string, WordProg>} progMap
+ * @param {Record<string, unknown>} progMap
  * @param {CardEntry[]} entries
  * @param {string} today
  */
 function buildDueSortedQueue(progMap, entries, today) {
   const due = entries.filter((e) => isDue(progMap, e.word, today))
   const score = (w) => {
-    const p = progMap[w.word]
-    if (!p || !p.nextDue) return 0
+    const p = migrateWordProg(progMap[w.word], today)
     const diff = (parseYmd(p.nextDue) - parseYmd(today)) / 86400000
     return diff
   }
@@ -71,37 +73,18 @@ function buildDueSortedQueue(progMap, entries, today) {
 }
 
 /**
- * @param {WordProg|undefined} prev
- * @param {'known' | 'fuzzy' | 'forget'} kind
- * @param {string} today
+ * 从到期池中随机打乱后再取当日数量，避免每次都抽到排序最靠前的那一批固定词。
+ * @template T
+ * @param {T[]} arr
+ * @returns {T[]}
  */
-function applySrs(prev, kind, today) {
-  const base = prev ?? { intervalNext: 1, nextDue: today, fuzzyCount: 0 }
-  const intervalNext = base.intervalNext && base.intervalNext > 0 ? base.intervalNext : 1
-
-  if (kind === 'known') {
-    const wait = intervalNext
-    return {
-      intervalNext: Math.min(wait * 2, 512),
-      nextDue: addDaysYmd(today, wait),
-      lastReviewed: today,
-      fuzzyCount: base.fuzzyCount ?? 0,
-    }
+function shuffleCopy(arr) {
+  const a = arr.slice()
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
   }
-  if (kind === 'fuzzy') {
-    return {
-      intervalNext,
-      nextDue: today,
-      lastReviewed: today,
-      fuzzyCount: (base.fuzzyCount ?? 0) + 1,
-    }
-  }
-  return {
-    intervalNext: 1,
-    nextDue: today,
-    lastReviewed: today,
-    fuzzyCount: base.fuzzyCount ?? 0,
-  }
+  return a
 }
 
 export function useBookshelfStudy() {
@@ -120,9 +103,11 @@ export function useBookshelfStudy() {
   const [entries, setEntries] = useState(/** @type {CardEntry[]} */ ([]))
   const [bookLoadError, setBookLoadError] = useState(null)
 
-  const [progress, setProgress] = useState(/** @type {Record<string, WordProg>} */ ({}))
+  const [progress, setProgress] = useState(/** @type {Record<string, unknown>} */ ({}))
   const [sessionQueue, setSessionQueue] = useState(/** @type {CardEntry[]} */ ([]))
   const [sessionIndex, setSessionIndex] = useState(0)
+  /** 本次会话计划词数（进度分母，不因加练变长而改变） */
+  const [sessionPlanTotal, setSessionPlanTotal] = useState(0)
   const [sessionFlag, setSessionFlag] = useState(/** @type {'idle' | 'active' | 'done' | 'empty'} */ ('idle'))
   const [preparingSession, setPreparingSession] = useState(false)
 
@@ -180,7 +165,10 @@ export function useBookshelfStudy() {
       const salt = Date.now()
       const withEx = raw.map((e) => attachExamples({ word: e.word, senses: e.senses }, salt))
       setEntries(withEx)
-      setProgress(loadProgress(book.id))
+      const today = localTodayYMD()
+      const progMap = normalizeProgressMap(loadProgress(book.id), today)
+      setProgress(progMap)
+      saveProgress(book.id, progMap)
       return { ok: true }
     }
 
@@ -202,7 +190,10 @@ export function useBookshelfStudy() {
       const salt = Date.now()
       const withEx = parsed.map((e) => attachExamples(e, salt))
       setEntries(withEx)
-      setProgress(loadProgress(book.id))
+      const today = localTodayYMD()
+      const progMap = normalizeProgressMap(loadProgress(book.id), today)
+      setProgress(progMap)
+      saveProgress(book.id, progMap)
       return { ok: true }
     } catch (e) {
       setBookLoadError(e.message ?? String(e))
@@ -220,21 +211,24 @@ export function useBookshelfStudy() {
       setPreparingSession(true)
       try {
         const today = localTodayYMD()
-        const prog = loadProgress(activeBookId)
+        const prog = normalizeProgressMap(loadProgress(activeBookId), today)
         const dueSorted = buildDueSortedQueue(prog, entries, today)
         const n = Math.max(0, Math.min(dailyGoal, dueSorted.length))
         if (n === 0) {
           setSessionQueue([])
           setSessionIndex(0)
+          setSessionPlanTotal(0)
           setSessionFlag('empty')
           setView('study')
           return { ok: true, empty: true }
         }
-        let queue = dueSorted.slice(0, n)
+        const pool = shuffleCopy(dueSorted)
+        let queue = pool.slice(0, n)
         const cfg = getLlmSettings()
         if (cfg.enabled && cfg.apiKey.trim()) {
           queue = await enrichQueueWithLLM(queue, cfg)
         }
+        setSessionPlanTotal(queue.length)
         setSessionQueue(queue)
         setSessionIndex(0)
         setSessionFlag('active')
@@ -252,6 +246,7 @@ export function useBookshelfStudy() {
     setSessionFlag('idle')
     setSessionQueue([])
     setSessionIndex(0)
+    setSessionPlanTotal(0)
     setActiveBookId(null)
     setEntries([])
     setActiveTitle('')
@@ -271,6 +266,7 @@ export function useBookshelfStudy() {
     setSessionFlag('idle')
     setSessionQueue([])
     setSessionIndex(0)
+    setSessionPlanTotal(0)
   }, [])
 
   const commitGrade = useCallback(
@@ -280,16 +276,27 @@ export function useBookshelfStudy() {
       if (!cur) return { done: true }
 
       const today = localTodayYMD()
-      const map = { ...loadProgress(activeBookId) }
-      map[cur.word] = applySrs(map[cur.word], kind, today)
-      saveProgress(activeBookId, map)
-      setProgress(map)
+      const raw = loadProgress(activeBookId)
+      const prev = raw[cur.word]
+      const { prog, requeueSameSession } = applySrsV2(prev, kind, today, addDaysYmd)
+      const map = { ...raw, [cur.word]: prog }
+      const normalized = normalizeProgressMap(map, today)
+      saveProgress(activeBookId, normalized)
+      setProgress(normalized)
+
+      let newQueue = [...sessionQueue]
+      if (requeueSameSession) {
+        newQueue.push(cur)
+      }
 
       const next = sessionIndex + 1
-      if (next >= sessionQueue.length) {
+      if (next >= newQueue.length) {
+        setSessionQueue(newQueue)
         setSessionFlag('done')
         return { done: true }
       }
+
+      setSessionQueue(newQueue)
       setSessionIndex(next)
       return { done: false }
     },
@@ -303,14 +310,15 @@ export function useBookshelfStudy() {
     sessionFlag === 'done' && sessionQueue.length
       ? sessionQueue[sessionQueue.length - 1]
       : sessionQueue[sessionIndex] ?? null
-  const sessionTotal = sessionQueue.length
-  const sessionPosition =
-    sessionTotal === 0 ? 0 : sessionComplete ? sessionTotal : Math.min(sessionIndex + 1, sessionTotal)
+  const sessionTotal = sessionPlanTotal
 
-  /**
-   * @param {string} text
-   * @param {string} [title]
-   */
+  const sessionPosition =
+    sessionTotal === 0
+      ? 0
+      : sessionComplete
+        ? sessionTotal
+        : Math.min(sessionIndex + 1, sessionPlanTotal)
+
   const importFromText = useCallback((text, title) => {
     const { entries: parsed, badLineNumbers } = parseWordbookText(text)
     if (!parsed.length) {
