@@ -265,6 +265,11 @@ export default function App() {
                       <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
                         {currentCard.word}
                       </h1>
+                      {currentCard.ipa ? (
+                        <p className="mt-2 font-mono text-lg tracking-wide text-slate-500 sm:text-xl">
+                          {currentCard.ipa}
+                        </p>
+                      ) : null}
                     </div>
                     <button
                       type="button"

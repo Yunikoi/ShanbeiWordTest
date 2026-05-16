@@ -16,6 +16,28 @@ function splitMeaningsChunk(s) {
 /** @typedef {{ pos?: string, zh: string }} Sense */
 
 /**
+ * 词条侧可写音标：abandon /əˈbændən/ 或 abandon [əˈbændən]
+ * @param {string} token
+ * @returns {{ word: string, ipa?: string }}
+ */
+export function splitWordAndIpa(token) {
+  const t = String(token ?? '').trim()
+  if (!t) return { word: '' }
+
+  const slash = t.match(/^(.+?)\s*\/([^/]+)\/\s*$/u)
+  if (slash) {
+    return { word: slash[1].trim(), ipa: `/${slash[2].trim()}/` }
+  }
+
+  const bracket = t.match(/^(.+?)\s*\[([^\]]+)\]\s*$/u)
+  if (bracket) {
+    return { word: bracket[1].trim(), ipa: `/${bracket[2].trim()}/` }
+  }
+
+  return { word: t }
+}
+
+/**
  * @param {string} chunk
  * @returns {Sense}
  */
@@ -49,7 +71,7 @@ function firstWordDelimiterColon(s) {
 
 /**
  * @param {string} line
- * @returns {{ word: string, senses: Sense[] } | null}
+ * @returns {{ word: string, ipa?: string, senses: Sense[] } | null}
  */
 export function parseWordbookLine(line) {
   const raw = line.trim()
@@ -61,32 +83,32 @@ export function parseWordbookLine(line) {
 
   /** 「单词 | 释义」：竖线出现在词条与释义之间（竖线在首段冒号之前，或整行无冒号） */
   if (pipeIdx >= 0 && (!colon || pipeIdx < colon.idx)) {
-    const word = raw.slice(0, pipeIdx).trim()
+    const { word, ipa } = splitWordAndIpa(raw.slice(0, pipeIdx))
     const rest = raw.slice(pipeIdx + 1).trim()
     if (!word || !rest) return null
     const senses = sensesFromColonTail(rest)
     if (!senses.length) return null
-    return { word, senses }
+    return ipa ? { word, ipa, senses } : { word, senses }
   }
 
   if (colon) {
-    const word = raw.slice(0, colon.idx).trim()
+    const { word, ipa } = splitWordAndIpa(raw.slice(0, colon.idx))
     const tail = raw.slice(colon.idx + colon.len).trim()
     if (!word || !tail) return null
     const senses = sensesFromColonTail(tail)
     if (!senses.length) return null
-    return { word, senses }
+    return ipa ? { word, ipa, senses } : { word, senses }
   }
 
   const hasCommaEarly = /^[^,|：:]{1,120},/.test(raw)
   const commaIdx = raw.indexOf(',')
   if (commaIdx > 0 && hasCommaEarly) {
-    const word = raw.slice(0, commaIdx).trim()
+    const { word, ipa } = splitWordAndIpa(raw.slice(0, commaIdx))
     const tail = raw.slice(commaIdx + 1).trim()
     if (!word || !tail) return null
     const senses = sensesFromColonTail(tail)
     if (!senses.length) return null
-    return { word, senses }
+    return ipa ? { word, ipa, senses } : { word, senses }
   }
 
   return null
@@ -122,8 +144,13 @@ export function parseWordbookText(text) {
     const prev = byWord.get(key)
     if (prev) {
       prev.senses.push(...parsed.senses)
+      if (!prev.ipa && parsed.ipa) prev.ipa = parsed.ipa
     } else {
-      byWord.set(key, { word: parsed.word, senses: [...parsed.senses] })
+      byWord.set(key, {
+        word: parsed.word,
+        ...(parsed.ipa ? { ipa: parsed.ipa } : {}),
+        senses: [...parsed.senses],
+      })
     }
   }
 

@@ -1,3 +1,5 @@
+import { polishExampleZh } from './ieltsSentence.js'
+
 /**
  * 可选：用用户自备 API Key 调用大模型，为每个义项生成阅读向英文例句 + 中文译文。
  * - Gemini：浏览器直连 generativelanguage.googleapis.com（需在 Google AI Studio 创建密钥，并可限制 HTTP 来源）。
@@ -33,6 +35,7 @@ ${lines.join('\n')}
 For EACH sense, output ONE English sentence (22–48 words) that naturally uses the headword and reflects that sense. Do NOT put Chinese characters inside the English sentence.
 
 Also output exampleZh: one faithful, natural Chinese sentence that translates ONLY that English sentence (no commentary).
+exampleZh must be entirely in Chinese: do NOT leave the English headword in the Chinese sentence; use the Chinese gloss for that sense instead.
 
 Return JSON ONLY with this shape:
 {"senses":[{"example":"...","exampleZh":"..."}]}
@@ -55,7 +58,7 @@ function mergeParsed(entry, parsed) {
       const ex = typeof p?.example === 'string' ? p.example.trim() : ''
       const zh = typeof p?.exampleZh === 'string' ? p.exampleZh.trim() : ''
       if (!ex || !zh) throw new Error('模型返回的 example / exampleZh 不完整')
-      return { ...s, example: ex, exampleZh: zh }
+      return { ...s, example: ex, exampleZh: polishExampleZh(entry.word, s.zh, zh) }
     }),
   }
 }

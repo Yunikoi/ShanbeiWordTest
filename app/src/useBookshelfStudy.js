@@ -5,12 +5,15 @@ import { getLlmSettings } from './llmSettings.js'
 import { attachExamples } from './ieltsSentence.js'
 import { parseWordbookText } from './parseWordbook.js'
 import { applySrsV2, migrateWordProg } from './srsCurve.js'
+import { enrichEntriesWithIpa } from './ipaLookup.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
-/** @typedef {{ word: string, senses: SenseEx[] }} CardEntry */
+/** @typedef {{ word: string, ipa?: string, senses: SenseEx[] }} CardEntry */
 
 const MANIFEST_URL = '/wordbooks/manifest.json'
+/** 本轮答错时，隔几个词后再测（不推到整轮队尾） */
+const SESSION_REQUEUE_OFFSET = 4
 
 function localTodayYMD() {
   const d = new Date()
@@ -163,8 +166,11 @@ export function useBookshelfStudy() {
         return { ok: false }
       }
       const salt = Date.now()
-      const withEx = raw.map((e) => attachExamples({ word: e.word, senses: e.senses }, salt))
+      const withEx = raw.map((e) =>
+        attachExamples({ word: e.word, senses: e.senses, ...(e.ipa ? { ipa: e.ipa } : {}) }, salt),
+      )
       setEntries(withEx)
+      enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
       const today = localTodayYMD()
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
@@ -190,6 +196,7 @@ export function useBookshelfStudy() {
       const salt = Date.now()
       const withEx = parsed.map((e) => attachExamples(e, salt))
       setEntries(withEx)
+      enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
       const today = localTodayYMD()
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
@@ -228,6 +235,7 @@ export function useBookshelfStudy() {
         if (cfg.enabled && cfg.apiKey.trim()) {
           queue = await enrichQueueWithLLM(queue, cfg)
         }
+        queue = await enrichEntriesWithIpa(queue)
         setSessionPlanTotal(queue.length)
         setSessionQueue(queue)
         setSessionIndex(0)
@@ -284,12 +292,12 @@ export function useBookshelfStudy() {
       saveProgress(activeBookId, normalized)
       setProgress(normalized)
 
+      const next = sessionIndex + 1
       let newQueue = [...sessionQueue]
       if (requeueSameSession) {
-        newQueue.push(cur)
+        const insertAt = Math.min(next + SESSION_REQUEUE_OFFSET, newQueue.length)
+        newQueue.splice(insertAt, 0, cur)
       }
-
-      const next = sessionIndex + 1
       if (next >= newQueue.length) {
         setSessionQueue(newQueue)
         setSessionFlag('done')
@@ -330,6 +338,7 @@ export function useBookshelfStudy() {
     }
     const withSenses = parsed.map((e) => ({
       word: e.word,
+      ...(e.ipa ? { ipa: e.ipa } : {}),
       senses: e.senses.map((s) => ({ pos: s.pos, zh: s.zh })),
     }))
     const id = addImportedBook(title?.trim() || '导入词书', withSenses)
