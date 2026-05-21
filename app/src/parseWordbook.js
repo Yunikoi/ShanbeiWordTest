@@ -4,6 +4,7 @@
  * - 词条：释义…（释义内可用 | 分成大组，组内用；或 ; 拆成多个义项）
  * - 词条,释义1；释义2
  * - # 注释行、【章节标题】行忽略
+ * Obsidian / Markdown：`#### 单词：释义`、`> - 单词：释义`（见 detectMarkdownWordbook）
  */
 
 function splitMeaningsChunk(s) {
@@ -114,7 +115,7 @@ export function parseWordbookLine(line) {
   return null
 }
 
-function isIgnorableLine(line) {
+function isIgnorablePlainLine(line) {
   const t = line.trim()
   if (!t) return true
   if (t.startsWith('#')) return true
@@ -122,40 +123,133 @@ function isIgnorableLine(line) {
   return false
 }
 
+/** @param {{ word: string, ipa?: string, senses: Sense[] }} parsed */
+function mergeParsedEntry(byWord, parsed) {
+  const key = parsed.word.toLowerCase()
+  const prev = byWord.get(key)
+  if (prev) {
+    prev.senses.push(...parsed.senses)
+    if (!prev.ipa && parsed.ipa) prev.ipa = parsed.ipa
+  } else {
+    byWord.set(key, {
+      word: parsed.word,
+      ...(parsed.ipa ? { ipa: parsed.ipa } : {}),
+      senses: [...parsed.senses],
+    })
+  }
+}
+
 /**
  * @param {string} text
- * @returns {{ entries: { word: string, senses: Sense[] }[], badLineNumbers: number[] }}
+ * @param {(line: string) => { word: string, ipa?: string, senses: Sense[] } | null} parseLine
+ * @param {(line: string) => boolean} isIgnorable
  */
-export function parseWordbookText(text) {
+function collectWordbookEntries(text, parseLine, isIgnorable) {
   const lines = text.split(/\r?\n/)
   const byWord = new Map()
   const badLineNumbers = []
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
-    if (isIgnorableLine(line)) continue
+    if (isIgnorable(line)) continue
 
-    const parsed = parseWordbookLine(line)
+    const parsed = parseLine(line)
     if (!parsed) {
       badLineNumbers.push(i + 1)
       continue
     }
-    const key = parsed.word.toLowerCase()
-    const prev = byWord.get(key)
-    if (prev) {
-      prev.senses.push(...parsed.senses)
-      if (!prev.ipa && parsed.ipa) prev.ipa = parsed.ipa
-    } else {
-      byWord.set(key, {
-        word: parsed.word,
-        ...(parsed.ipa ? { ipa: parsed.ipa } : {}),
-        senses: [...parsed.senses],
-      })
-    }
+    mergeParsedEntry(byWord, parsed)
   }
 
   return {
     entries: [...byWord.values()],
     badLineNumbers,
   }
+}
+
+const MD_WORD_MAX_LEN = 100
+
+/** Obsidian / Markdown：去掉引用符、列表符 */
+function stripMarkdownLine(line) {
+  let t = line.trim()
+  while (t.startsWith('>')) {
+    t = t.slice(1).trim()
+  }
+  t = t.replace(/^[-*+]\s+/, '')
+  return t.trim()
+}
+
+function isMarkdownMetaLine(t) {
+  return /^(title|toc|date|tags|column):\s/i.test(t)
+}
+
+function isIgnorableMarkdownLine(line) {
+  const t = stripMarkdownLine(line)
+  if (!t) return true
+  if (isMarkdownMetaLine(t)) return true
+  if (/^---\s*$/.test(t)) return true
+  return false
+}
+
+/**
+ * 解析 Obsidian 笔记行：`#### word：释义`、`> - word：释义` 等
+ * @param {string} line
+ */
+export function parseMarkdownWordbookLine(line) {
+  const stripped = stripMarkdownLine(line)
+  if (!stripped || isMarkdownMetaLine(stripped)) return null
+
+  let body = stripped
+  const heading = stripped.match(/^#{1,6}\s+(.+)$/)
+  if (heading) body = heading[1].trim()
+  else if (stripped.startsWith('#')) return null
+
+  body = body.replace(/^\\#\s*/, '')
+  body = body.replace(/\*\*([^*]+)\*\*/g, '$1').trim()
+
+  const colon = firstWordDelimiterColon(body)
+  if (!colon) return null
+
+  let wordPart = body.slice(0, colon.idx).trim()
+  const tail = body.slice(colon.idx + colon.len).trim()
+  wordPart = wordPart.replace(/^['"]|['"]$/g, '').trim()
+
+  if (!wordPart || !tail) return null
+  if (wordPart.length > MD_WORD_MAX_LEN) return null
+  if (/^(衍生|形近|同义|语法|必背|词根|常用|易混|词族)/u.test(wordPart)) return null
+
+  const { word, ipa } = splitWordAndIpa(wordPart)
+  if (!word) return null
+  const senses = sensesFromColonTail(tail)
+  if (!senses.length) return null
+  return ipa ? { word, ipa, senses } : { word, senses }
+}
+
+/** @param {string} text */
+export function detectMarkdownWordbook(text) {
+  if (/\n\s*#{1,6}\s+\S+[：:]/m.test(text)) return true
+  if (/^\s*>\s*#{0,6}\s*\S+[：:]/m.test(text)) return true
+  if (/^\s*>\s*[-*+]\s+\S+[：:]/m.test(text)) return true
+  return false
+}
+
+/** @param {string} text */
+export function parseMarkdownWordbookText(text) {
+  return collectWordbookEntries(text, parseMarkdownWordbookLine, isIgnorableMarkdownLine)
+}
+
+/** @param {string} text */
+export function parsePlainWordbookText(text) {
+  return collectWordbookEntries(text, parseWordbookLine, isIgnorablePlainLine)
+}
+
+/**
+ * @param {string} text
+ * @returns {{ entries: { word: string, senses: Sense[] }[], badLineNumbers: number[], format: 'markdown' | 'plain' }}
+ */
+export function parseWordbookText(text) {
+  const format = detectMarkdownWordbook(text) ? 'markdown' : 'plain'
+  const result =
+    format === 'markdown' ? parseMarkdownWordbookText(text) : parsePlainWordbookText(text)
+  return { ...result, format }
 }

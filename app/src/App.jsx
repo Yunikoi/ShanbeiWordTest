@@ -27,12 +27,17 @@ export default function App() {
     bookLoadError,
     view,
     activeTitle,
+    entries,
+    bookDashboard,
     loadBook,
     beginSession,
     preparingSession,
     backToShelf,
+    backToBook,
     sessionPosition,
-    sessionTotal,
+    sessionPlanTotal,
+    sessionQueueLength,
+    sessionExtra,
     sessionEmpty,
     currentCard,
     commitGrade,
@@ -53,8 +58,8 @@ export default function App() {
   const [importTip, setImportTip] = useState(null)
   const [openingId, setOpeningId] = useState(null)
 
-  const [pickerOpen, setPickerOpen] = useState(false)
   const [dailyCount, setDailyCount] = useState(30)
+  const [wordListOpen, setWordListOpen] = useState(false)
 
   const [revealed, setRevealed] = useState(false)
   /** 单词页 → 释义页 */
@@ -74,8 +79,8 @@ export default function App() {
       const r = await loadBook(book)
       setOpeningId(null)
       if (!r.ok) return
-      setPickerOpen(true)
       setDailyCount(30)
+      setWordListOpen(false)
     },
     [loadBook],
   )
@@ -92,7 +97,6 @@ export default function App() {
     setDoneOpen(false)
     try {
       await beginSession(dailyCount)
-      setPickerOpen(false)
       setRevealed(false)
       setStudyPhase('word')
       setPreliminary(null)
@@ -147,11 +151,12 @@ export default function App() {
       if (!file) return
       try {
         const text = await readFileAsText(file)
-        const base = file.name.replace(/\.txt$/i, '')
+        const base = file.name.replace(/\.(txt|md)$/i, '')
         const r = importFromText(text, base)
         if (r.ok) {
-          let msg = `已导入「${base}」共 ${r.count} 词`
-          if (r.skippedLines) msg += `（跳过 ${r.skippedLines} 行）`
+          const fmt = r.format === 'markdown' ? 'Obsidian/Markdown' : 'txt'
+          let msg = `已导入「${base}」（${fmt}）共 ${r.count} 词`
+          if (r.skippedLines) msg += `（未识别 ${r.skippedLines} 行）`
           setImportTip(msg)
         } else {
           setImportTip(r.message)
@@ -167,18 +172,18 @@ export default function App() {
     async (e) => {
       const files = e.target.files ? Array.from(e.target.files) : []
       e.target.value = ''
-      const txts = files.filter((f) => /\.txt$/i.test(f.name))
-      if (!txts.length) {
-        setImportTip('文件夹中未找到 .txt 文件')
+      const vocabFiles = files.filter((f) => /\.(txt|md)$/i.test(f.name))
+      if (!vocabFiles.length) {
+        setImportTip('文件夹中未找到 .txt / .md 文件')
         return
       }
       try {
-        const parts = await Promise.all(txts.map((f) => readFileAsText(f)))
+        const parts = await Promise.all(vocabFiles.map((f) => readFileAsText(f)))
         const merged = parts.join('\n')
-        const title = `文件夹导入（${txts.length} 个文件）`
+        const title = `文件夹导入（${vocabFiles.length} 个文件）`
         const r = importFromText(merged, title)
         if (r.ok) {
-          setImportTip(`已合并导入 ${txts.length} 个 txt，共 ${r.count} 词`)
+          setImportTip(`已合并导入 ${vocabFiles.length} 个词书文件，共 ${r.count} 词`)
         } else {
           setImportTip(r.message)
         }
@@ -206,6 +211,130 @@ export default function App() {
     )
   }
 
+  if (view === 'book') {
+    const dash = bookDashboard
+    const pct = dash ? dash.learnedPercent.toFixed(1) : '0.0'
+    const studied = dash?.studiedWords ?? 0
+    const total = dash?.totalWords ?? entries.length
+    const barPct = total ? Math.min(100, (studied / total) * 100) : 0
+
+    return (
+      <div className="min-h-screen bg-slate-100 px-4 py-6">
+        <div className="mx-auto w-full max-w-lg">
+          {bookLoadError ? (
+            <p className="mb-4 rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-800">{bookLoadError}</p>
+          ) : null}
+
+          <section className="rounded-3xl bg-white p-5 shadow-sm">
+            <div className="flex items-start justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => backToShelf()}
+                className="flex min-w-0 flex-1 items-center gap-1 text-left"
+              >
+                <span className="truncate text-lg font-bold text-slate-900">{activeTitle || '词书'}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5 shrink-0 text-slate-400">
+                  <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 0 1-.02 1.06L8.832 10l3.938 3.71a.75.75 0 1 1-1.04 1.08l-4.5-4.25a.75.75 0 0 1 0-1.08l4.5-4.25a.75.75 0 0 1 1.06.02Z" clipRule="evenodd" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={() => setWordListOpen(true)}
+                className="flex shrink-0 items-center gap-1 rounded-xl border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z" />
+                </svg>
+                词表
+              </button>
+            </div>
+
+            <div className="mt-4 flex items-baseline justify-between text-sm text-slate-600">
+              <span>
+                已学 <span className="font-semibold text-slate-800">{pct}%</span>
+              </span>
+              <span className="font-medium text-slate-800">
+                {studied}/{total} 词
+              </span>
+            </div>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100">
+              <div
+                className="h-full rounded-full bg-emerald-500 transition-all duration-300"
+                style={{ width: `${barPct}%` }}
+              />
+            </div>
+          </section>
+
+          <details className="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left shadow-sm">
+            <summary className="cursor-pointer text-sm font-semibold text-slate-800">今日学习量</summary>
+            <p className="mt-2 text-xs text-slate-500">从今日到期词中抽取（10–100，步长 5）。</p>
+            <div className="mt-3 flex items-center gap-3">
+              <input
+                type="range"
+                min={10}
+                max={100}
+                step={5}
+                value={dailyCount}
+                onChange={(e) => setDailyCount(Number(e.target.value))}
+                className="w-full accent-emerald-600"
+              />
+              <span className="w-10 text-center text-sm font-bold text-emerald-700">{dailyCount}</span>
+            </div>
+          </details>
+
+          <button
+            type="button"
+            onClick={() => startFromPicker()}
+            disabled={preparingSession || !total}
+            className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-emerald-500 py-4 text-lg font-semibold text-white shadow-lg hover:bg-emerald-600 disabled:opacity-50"
+          >
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/25">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
+                <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
+              </svg>
+            </span>
+            {preparingSession ? '准备中…' : '开始学习'}
+          </button>
+
+          {dash && dash.dueTodayTotal === 0 ? (
+            <p className="mt-4 text-center text-sm text-slate-500">今日暂无到期复习，改日再来或清空进度后重试。</p>
+          ) : null}
+        </div>
+
+        {wordListOpen ? (
+          <div
+            className="fixed inset-0 z-50 flex flex-col justify-end bg-black/40 sm:justify-center sm:p-4"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="mx-auto flex max-h-[85vh] w-full max-w-lg flex-col rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl">
+              <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+                <h3 className="text-lg font-bold text-slate-900">词表 · {total} 词</h3>
+                <button
+                  type="button"
+                  onClick={() => setWordListOpen(false)}
+                  className="rounded-full px-3 py-1 text-sm text-slate-500 hover:bg-slate-100"
+                >
+                  关闭
+                </button>
+              </div>
+              <ul className="flex-1 overflow-y-auto px-5 py-3">
+                {entries.map((e) => (
+                  <li key={e.word} className="border-b border-slate-50 py-2.5 last:border-0">
+                    <span className="font-medium text-slate-900">{e.word}</span>
+                    {e.senses[0]?.zh ? (
+                      <span className="ml-2 text-sm text-slate-500">{e.senses[0].zh}</span>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : null}
+      </div>
+    )
+  }
+
   if (view === 'study') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-50 to-violet-100 px-4 py-6">
@@ -219,7 +348,7 @@ export default function App() {
                 setPreliminary(null)
                 setShowExamples(false)
                 setRevealed(false)
-                backToShelf()
+                backToBook()
               }}
               className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur hover:bg-white"
             >
@@ -227,9 +356,16 @@ export default function App() {
             </button>
             <div className="text-right text-xs text-slate-500">
               <div className="font-medium text-slate-800">{activeTitle}</div>
-              {!sessionEmpty && sessionTotal ? (
+              {!sessionEmpty && sessionQueueLength ? (
                 <div>
-                  进度 {sessionPosition}/{sessionTotal}
+                  <div>
+                    进度 {sessionPosition}/{sessionQueueLength}
+                  </div>
+                  {sessionExtra > 0 ? (
+                    <div className="text-[10px] text-amber-700">
+                      今日目标 {sessionPlanTotal} 词 · 答错加练 {sessionExtra}
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </div>
@@ -395,13 +531,15 @@ export default function App() {
               </div>
               <h2 className="text-xl font-bold text-slate-900">今日复习完成</h2>
               <p className="mt-2 text-sm text-slate-600">
-                已完成 {sessionTotal} 个词条。进度已按记忆曲线保存：未掌握需连续 3 次「真的认识」；已掌握按间隔复习，答错会退回重新学习。
+                本轮共 {sessionQueueLength} 张（今日目标 {sessionPlanTotal} 词
+                {sessionExtra > 0 ? `，含答错加练 ${sessionExtra}` : ''}）。已掌握词按 1→2→4→7→15→30→60
+                天间隔再出现；今天答对的不会在今天重复推送。
               </p>
               <button
                 type="button"
                 onClick={() => {
                   setDoneOpen(false)
-                  backToShelf()
+                  backToBook()
                 }}
                 className="mt-6 w-full rounded-2xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow-lg hover:bg-indigo-500"
               >
@@ -423,7 +561,13 @@ export default function App() {
         </header>
 
         <div className="mb-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-          <input ref={fileRef} type="file" accept=".txt,text/plain" className="hidden" onChange={onVocabFile} />
+          <input
+            ref={fileRef}
+            type="file"
+            accept=".txt,.md,text/plain,text/markdown"
+            className="hidden"
+            onChange={onVocabFile}
+          />
           <input ref={dirRef} type="file" className="hidden" multiple onChange={onVocabDir} />
           <button
             type="button"
@@ -520,7 +664,7 @@ export default function App() {
                 </span>
                 <span className="mt-2 text-lg font-bold text-slate-900">{b.title}</span>
                 <span className="mt-3 text-xs text-slate-500">
-                  {openingId === b.id ? '正在载入…' : '点击选择并开始配置今日复习量'}
+                  {openingId === b.id ? '正在载入…' : '点击进入词书首页'}
                 </span>
               </button>
             ))}
@@ -535,62 +679,6 @@ export default function App() {
         </p>
       </div>
 
-      {pickerOpen ? (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/45 p-4 sm:items-center" role="dialog" aria-modal="true">
-          <div className="w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
-            <h3 className="text-lg font-bold text-slate-900">今日复习多少个词？</h3>
-            <p className="mt-1 text-sm text-slate-600">从当前到期的词条中按优先级抽取（10–100，步长 5）。</p>
-            <div className="mt-6 space-y-4">
-              <div className="flex items-center justify-between gap-4">
-                <input
-                  type="range"
-                  min={10}
-                  max={100}
-                  step={5}
-                  value={dailyCount}
-                  onChange={(e) => setDailyCount(Number(e.target.value))}
-                  className="w-full accent-indigo-600"
-                />
-                <input
-                  type="number"
-                  min={10}
-                  max={100}
-                  step={5}
-                  value={dailyCount}
-                  onChange={(e) => {
-                    const v = Number(e.target.value)
-                    if (Number.isNaN(v)) return
-                    const c = Math.min(100, Math.max(10, Math.round(v / 5) * 5))
-                    setDailyCount(c)
-                  }}
-                  className="w-20 rounded-xl border border-slate-200 px-2 py-2 text-center text-sm font-semibold"
-                />
-              </div>
-              <p className="text-center text-2xl font-bold text-indigo-700">{dailyCount}</p>
-            </div>
-            <div className="mt-6 flex gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setPickerOpen(false)
-                  clearActiveBook()
-                }}
-                className="flex-1 rounded-2xl border border-slate-200 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                取消
-              </button>
-              <button
-                type="button"
-                onClick={() => startFromPicker()}
-                disabled={preparingSession}
-                className="flex-1 rounded-2xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow hover:bg-indigo-500 disabled:opacity-60"
-              >
-                {preparingSession ? '正在生成例句…' : '开始学习'}
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
     </div>
   )
 }

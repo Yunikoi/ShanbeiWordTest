@@ -6,6 +6,7 @@ import { attachExamples } from './ieltsSentence.js'
 import { parseWordbookText } from './parseWordbook.js'
 import { applySrsV2, migrateWordProg } from './srsCurve.js'
 import { enrichEntriesWithIpa } from './ipaLookup.js'
+import { computeBookDashboard } from './bookDashboard.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
@@ -100,7 +101,7 @@ export function useBookshelfStudy() {
     setImportMeta(loadMeta())
   }, [])
 
-  const [view, setView] = useState(/** @type {'shelf' | 'study'} */ ('shelf'))
+  const [view, setView] = useState(/** @type {'shelf' | 'book' | 'study'} */ ('shelf'))
   const [activeBookId, setActiveBookId] = useState(/** @type {string | null} */ (null))
   const [activeTitle, setActiveTitle] = useState('')
   const [entries, setEntries] = useState(/** @type {CardEntry[]} */ ([]))
@@ -175,6 +176,7 @@ export function useBookshelfStudy() {
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
       saveProgress(book.id, progMap)
+      setView('book')
       return { ok: true }
     }
 
@@ -201,6 +203,7 @@ export function useBookshelfStudy() {
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
       saveProgress(book.id, progMap)
+      setView('book')
       return { ok: true }
     } catch (e) {
       setBookLoadError(e.message ?? String(e))
@@ -208,6 +211,11 @@ export function useBookshelfStudy() {
       return { ok: false }
     }
   }, [])
+
+  const bookDashboard = useMemo(() => {
+    if (!entries.length) return null
+    return computeBookDashboard(progress, entries, localTodayYMD())
+  }, [entries, progress])
 
   /**
    * @param {number} dailyGoal 10–100 step 5
@@ -259,7 +267,20 @@ export function useBookshelfStudy() {
     setEntries([])
     setActiveTitle('')
     setBookLoadError(null)
+    setProgress({})
   }, [])
+
+  const backToBook = useCallback(() => {
+    setView('book')
+    setSessionFlag('idle')
+    setSessionQueue([])
+    setSessionIndex(0)
+    setSessionPlanTotal(0)
+    if (activeBookId) {
+      const today = localTodayYMD()
+      setProgress(normalizeProgressMap(loadProgress(activeBookId), today))
+    }
+  }, [activeBookId])
 
   const clearActiveBook = useCallback(() => {
     setActiveBookId(null)
@@ -267,14 +288,7 @@ export function useBookshelfStudy() {
     setActiveTitle('')
     setBookLoadError(null)
     setProgress({})
-  }, [])
-
-  const backToShelfKeepBook = useCallback(() => {
     setView('shelf')
-    setSessionFlag('idle')
-    setSessionQueue([])
-    setSessionIndex(0)
-    setSessionPlanTotal(0)
   }, [])
 
   const commitGrade = useCallback(
@@ -318,22 +332,24 @@ export function useBookshelfStudy() {
     sessionFlag === 'done' && sessionQueue.length
       ? sessionQueue[sessionQueue.length - 1]
       : sessionQueue[sessionIndex] ?? null
-  const sessionTotal = sessionPlanTotal
+  /** 学习页进度分母：含答错插入的重测，避免显示 30/30 后仍有词 */
+  const sessionQueueLength = sessionQueue.length
+  const sessionExtra = Math.max(0, sessionQueueLength - sessionPlanTotal)
 
   const sessionPosition =
-    sessionTotal === 0
+    sessionQueueLength === 0
       ? 0
       : sessionComplete
-        ? sessionTotal
-        : Math.min(sessionIndex + 1, sessionPlanTotal)
+        ? sessionQueueLength
+        : sessionIndex + 1
 
   const importFromText = useCallback((text, title) => {
-    const { entries: parsed, badLineNumbers } = parseWordbookText(text)
+    const { entries: parsed, badLineNumbers, format } = parseWordbookText(text)
     if (!parsed.length) {
       return {
         ok: false,
         message:
-          '没有解析到有效词条。支持：单词 | 词性.释义；单词,释义1；释义2；单词：释义',
+          '没有解析到有效词条。支持 txt：单词 | 词性.释义；单词：释义。支持 Obsidian md：#### 单词：释义 或引用块里的 - 单词：释义',
       }
     }
     const withSenses = parsed.map((e) => ({
@@ -348,6 +364,7 @@ export function useBookshelfStudy() {
       id,
       count: withSenses.length,
       skippedLines: badLineNumbers.length,
+      format,
     }
   }, [refreshImports])
 
@@ -361,15 +378,18 @@ export function useBookshelfStudy() {
     activeBookId,
     activeTitle,
     entries,
+    bookDashboard,
     loadBook,
     beginSession,
     preparingSession,
     backToShelf,
+    backToBook,
     clearActiveBook,
-    backToShelfKeepBook,
     sessionQueue,
     sessionIndex,
-    sessionTotal,
+    sessionPlanTotal,
+    sessionQueueLength,
+    sessionExtra,
     sessionPosition,
     sessionComplete,
     sessionEmpty,
