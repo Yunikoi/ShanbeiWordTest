@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { addImportedBook, loadBookEntries, loadMeta, loadProgress, saveProgress } from './bookStorage.js'
+import {
+  addImportedBook,
+  findImportBySourceFile,
+  loadBookEntries,
+  loadMeta,
+  loadProgress,
+  saveProgress,
+  updateImportedBook,
+  removeImportedBook,
+} from './bookStorage.js'
 import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings } from './llmSettings.js'
 import { attachExamples } from './ieltsSentence.js'
@@ -343,30 +352,108 @@ export function useBookshelfStudy() {
         ? sessionQueueLength
         : sessionIndex + 1
 
-  const importFromText = useCallback((text, title) => {
-    const { entries: parsed, badLineNumbers, format } = parseWordbookText(text)
-    if (!parsed.length) {
-      return {
-        ok: false,
-        message:
-          '没有解析到有效词条。支持 txt：单词：释义。支持 Obsidian（Yasi.md）：#### 词条：释义、> - 短语：释义、词根行 subtle adj. 中文、**短语** 下一行释义等',
+  /**
+   * @param {string} text
+   * @param {string} [title]
+   * @param {{ sourceFile?: string, updateBookId?: string, replaceExisting?: boolean }} [opts]
+   */
+  const importFromText = useCallback(
+    (text, title, opts = {}) => {
+      const { entries: parsed, badLineNumbers, format } = parseWordbookText(text)
+      if (!parsed.length) {
+        return {
+          ok: false,
+          message:
+            '没有解析到有效词条。支持 txt：单词：释义。支持 Obsidian（Yasi.md）：#### 词条：释义、> - 短语：释义、词根行 subtle adj. 中文、**短语** 下一行释义等',
+        }
       }
-    }
-    const withSenses = parsed.map((e) => ({
-      word: e.word,
-      ...(e.ipa ? { ipa: e.ipa } : {}),
-      senses: e.senses.map((s) => ({ pos: s.pos, zh: s.zh })),
-    }))
-    const id = addImportedBook(title?.trim() || '导入词书', withSenses)
-    refreshImports()
-    return {
-      ok: true,
-      id,
-      count: withSenses.length,
-      skippedLines: badLineNumbers.length,
-      format,
-    }
-  }, [refreshImports])
+      const withSenses = parsed.map((e) => ({
+        word: e.word,
+        ...(e.ipa ? { ipa: e.ipa } : {}),
+        senses: e.senses.map((s) => ({ pos: s.pos, zh: s.zh })),
+      }))
+      const bookTitle = title?.trim() || '导入词书'
+
+      let targetId = opts.updateBookId
+      let updated = false
+      if (!targetId && opts.replaceExisting !== false && opts.sourceFile) {
+        const existing = findImportBySourceFile(opts.sourceFile)
+        if (existing) targetId = existing.id
+      }
+
+      if (targetId) {
+        const ok = updateImportedBook(targetId, withSenses, {
+          sourceFile: opts.sourceFile,
+          title: bookTitle,
+        })
+        if (!ok) {
+          return { ok: false, message: '更新词书失败，请重新导入。' }
+        }
+        updated = true
+      } else {
+        targetId = addImportedBook(bookTitle, withSenses, {
+          sourceFile: opts.sourceFile,
+        })
+      }
+
+      refreshImports()
+
+      if (updated && activeBookId === targetId) {
+        const raw = loadBookEntries(targetId)
+        if (raw?.length) {
+          const salt = Date.now()
+          const withEx = raw.map((e) =>
+            attachExamples(
+              { word: e.word, senses: e.senses, ...(e.ipa ? { ipa: e.ipa } : {}) },
+              salt,
+            ),
+          )
+          setEntries(withEx)
+          enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
+          const today = localTodayYMD()
+          const progMap = normalizeProgressMap(loadProgress(targetId), today)
+          setProgress(progMap)
+          saveProgress(targetId, progMap)
+          setActiveTitle(bookTitle)
+        }
+      }
+
+      return {
+        ok: true,
+        id: targetId,
+        count: withSenses.length,
+        skippedLines: badLineNumbers.length,
+        format,
+        updated,
+      }
+    },
+    [refreshImports, activeBookId],
+  )
+
+  const deleteImportedBook = useCallback(
+    (bookId) => {
+      const meta = loadMeta().find((b) => b.id === bookId)
+      if (!meta || meta.source !== 'import') {
+        return { ok: false, message: '只能删除已导入的词书' }
+      }
+      removeImportedBook(bookId)
+      refreshImports()
+      if (activeBookId === bookId) {
+        setView('shelf')
+        setSessionFlag('idle')
+        setSessionQueue([])
+        setSessionIndex(0)
+        setSessionPlanTotal(0)
+        setActiveBookId(null)
+        setEntries([])
+        setActiveTitle('')
+        setBookLoadError(null)
+        setProgress({})
+      }
+      return { ok: true, title: meta.title }
+    },
+    [refreshImports, activeBookId],
+  )
 
   return {
     shelfLoading,
@@ -397,6 +484,9 @@ export function useBookshelfStudy() {
     currentCard,
     commitGrade,
     importFromText,
+    deleteImportedBook,
     progress,
+    activeBookSource:
+      books.find((b) => b.id === activeBookId)?.source ?? null,
   }
 }

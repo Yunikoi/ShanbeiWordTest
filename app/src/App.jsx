@@ -43,10 +43,14 @@ export default function App() {
     commitGrade,
     importFromText,
     clearActiveBook,
+    activeBookSource,
+    activeBookId,
+    deleteImportedBook,
   } = useBookshelfStudy()
 
   const fileRef = useRef(null)
   const dirRef = useRef(null)
+  const reimportRef = useRef(null)
 
   useEffect(() => {
     const el = dirRef.current
@@ -83,6 +87,23 @@ export default function App() {
       setWordListOpen(false)
     },
     [loadBook],
+  )
+
+  const onDeleteBook = useCallback(
+    (book) => {
+      if (book.source !== 'import') return
+      const ok = window.confirm(
+        `确定删除词书「${book.title}」？\n\n词条与学习进度将从本机浏览器中清除，且无法恢复。`,
+      )
+      if (!ok) return
+      const r = deleteImportedBook(book.id)
+      if (r.ok) {
+        setImportTip(`已删除「${r.title}」`)
+      } else if (r.message) {
+        setImportTip(r.message)
+      }
+    },
+    [deleteImportedBook],
   )
 
   const [llm, setLlm] = useState(() => getLlmSettings())
@@ -152,10 +173,12 @@ export default function App() {
       try {
         const text = await readFileAsText(file)
         const base = file.name.replace(/\.(txt|md)$/i, '')
-        const r = importFromText(text, base)
+        const r = importFromText(text, base, { sourceFile: file.name })
         if (r.ok) {
           const fmt = r.format === 'markdown' ? 'Obsidian/Markdown' : 'txt'
-          let msg = `已导入「${base}」（${fmt}）共 ${r.count} 词`
+          const verb = r.updated ? '已更新' : '已导入'
+          let msg = `${verb}「${base}」（${fmt}）共 ${r.count} 词`
+          if (r.updated) msg += '，学习进度已保留'
           if (r.skippedLines) msg += `（未识别 ${r.skippedLines} 行）`
           setImportTip(msg)
         } else {
@@ -166,6 +189,33 @@ export default function App() {
       }
     },
     [importFromText],
+  )
+
+  const onReimportFile = useCallback(
+    async (e) => {
+      const file = e.target.files?.[0]
+      e.target.value = ''
+      if (!file) return
+      try {
+        const text = await readFileAsText(file)
+        const base = file.name.replace(/\.(txt|md)$/i, '')
+        const r = importFromText(text, base, {
+          sourceFile: file.name,
+          updateBookId: activeBookId ?? undefined,
+          replaceExisting: true,
+        })
+        if (r.ok) {
+          let msg = `词表已更新，共 ${r.count} 词`
+          if (r.skippedLines) msg += `（未识别 ${r.skippedLines} 行）`
+          setImportTip(msg)
+        } else {
+          setImportTip(r.message)
+        }
+      } catch {
+        setImportTip('读取文件失败，请重试')
+      }
+    },
+    [importFromText, activeBookId],
   )
 
   const onVocabDir = useCallback(
@@ -298,6 +348,43 @@ export default function App() {
 
           {dash && dash.dueTodayTotal === 0 ? (
             <p className="mt-4 text-center text-sm text-slate-500">今日暂无到期复习，改日再来或清空进度后重试。</p>
+          ) : null}
+
+          {activeBookSource === 'import' ? (
+            <>
+              <input
+                ref={reimportRef}
+                type="file"
+                accept=".txt,.md,text/plain,text/markdown"
+                className="hidden"
+                onChange={onReimportFile}
+              />
+              <p className="mt-4 text-center text-xs leading-relaxed text-slate-500">
+                词书保存在浏览器本机，不会自动读取磁盘上的文件。修改了 Obsidian / txt 后，请点下方按钮重新选择同一文件以更新词表。
+              </p>
+              <button
+                type="button"
+                onClick={() => reimportRef.current?.click()}
+                className="mt-3 w-full rounded-2xl border border-slate-200 bg-white py-3 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50"
+              >
+                从本地文件更新词表
+              </button>
+              {importTip ? (
+                <p className="mt-3 rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-2 text-center text-sm text-emerald-900">
+                  {importTip}
+                </p>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => {
+                  const book = books.find((b) => b.id === activeBookId)
+                  if (book) onDeleteBook(book)
+                }}
+                className="mt-3 w-full rounded-2xl border border-red-200 bg-white py-3 text-sm font-semibold text-red-600 shadow-sm hover:bg-red-50"
+              >
+                删除这本词书
+              </button>
+            </>
           ) : null}
         </div>
 
@@ -574,16 +661,19 @@ export default function App() {
             onClick={() => fileRef.current?.click()}
             className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-slate-800"
           >
-            导入 txt 词书
+            导入 txt / md 词书
           </button>
           <button
             type="button"
             onClick={() => dirRef.current?.click()}
             className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow hover:bg-slate-50"
           >
-            导入文件夹（全部 .txt）
+            导入文件夹（.txt / .md）
           </button>
         </div>
+        <p className="mb-4 text-center text-xs text-slate-500">
+          导入时会复制到本机浏览器；再次选择<strong>同名文件</strong>会更新该词书并保留已有学习进度。
+        </p>
         {importTip ? (
           <p className="mb-6 rounded-2xl border border-amber-100 bg-amber-50 px-4 py-3 text-center text-sm text-amber-900">
             {importTip}
@@ -652,21 +742,35 @@ export default function App() {
           <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">可选词书</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {books.map((b) => (
-              <button
+              <div
                 key={b.id}
-                type="button"
-                disabled={openingId === b.id}
-                onClick={() => onPickBook(b)}
-                className="group flex flex-col items-start rounded-3xl border border-white/70 bg-white/90 p-5 text-left shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl disabled:opacity-60"
+                className="relative rounded-3xl border border-white/70 bg-white/90 shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl"
               >
-                <span className="text-xs font-medium uppercase text-indigo-500">
-                  {b.source === 'builtin' ? '内置' : '已导入'}
-                </span>
-                <span className="mt-2 text-lg font-bold text-slate-900">{b.title}</span>
-                <span className="mt-3 text-xs text-slate-500">
-                  {openingId === b.id ? '正在载入…' : '点击进入词书首页'}
-                </span>
-              </button>
+                <button
+                  type="button"
+                  disabled={openingId === b.id}
+                  onClick={() => onPickBook(b)}
+                  className="flex w-full flex-col items-start p-5 pr-16 text-left disabled:opacity-60"
+                >
+                  <span className="text-xs font-medium uppercase text-indigo-500">
+                    {b.source === 'builtin' ? '内置' : '已导入'}
+                  </span>
+                  <span className="mt-2 text-lg font-bold text-slate-900">{b.title}</span>
+                  <span className="mt-3 text-xs text-slate-500">
+                    {openingId === b.id ? '正在载入…' : '点击进入词书首页'}
+                  </span>
+                </button>
+                {b.source === 'import' ? (
+                  <button
+                    type="button"
+                    title="删除词书"
+                    onClick={() => onDeleteBook(b)}
+                    className="absolute right-3 top-3 rounded-lg px-2 py-1 text-xs font-medium text-red-600 hover:bg-red-50"
+                  >
+                    删除
+                  </button>
+                ) : null}
+              </div>
             ))}
           </div>
         </section>

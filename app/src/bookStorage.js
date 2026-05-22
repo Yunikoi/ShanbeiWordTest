@@ -2,7 +2,7 @@ const META_KEY = 'swt-books-meta'
 const PREFIX_BOOK = 'swt-book-'
 const PREFIX_PROG = 'swt-prog-'
 
-/** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string, createdAt?: string }} BookMeta */
+/** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string, sourceFile?: string, createdAt?: string, updatedAt?: string }} BookMeta */
 
 export function loadMeta() {
   try {
@@ -56,13 +56,64 @@ export function saveProgress(bookId, map) {
  * @param {unknown[]} entries
  * @returns {string} new id
  */
-export function addImportedBook(title, entries) {
+/**
+ * @param {string} filename
+ * @returns {BookMeta | undefined}
+ */
+export function findImportBySourceFile(filename) {
+  if (!filename) return undefined
+  const base = filename.replace(/\.(txt|md)$/i, '')
+  return loadMeta().find(
+    (b) =>
+      b.source === 'import' &&
+      (b.sourceFile === filename || b.title === base || b.title === filename),
+  )
+}
+
+/**
+ * @param {string} bookId
+ * @param {unknown[]} entries
+ * @param {{ sourceFile?: string, title?: string }} [opts]
+ * @returns {boolean}
+ */
+export function updateImportedBook(bookId, entries, opts = {}) {
+  const meta = loadMeta()
+  const idx = meta.findIndex((b) => b.id === bookId && b.source === 'import')
+  if (idx < 0) return false
+
+  const newWords = new Set(
+    entries.map((e) => (typeof e === 'object' && e && 'word' in e ? String(/** @type {{ word: string }} */ (e).word) : '')),
+  )
+  const oldProg = loadProgress(bookId)
+  /** @type {Record<string, unknown>} */
+  const mergedProg = {}
+  for (const [w, p] of Object.entries(oldProg)) {
+    if (newWords.has(w)) mergedProg[w] = p
+  }
+
+  saveBookEntries(bookId, entries)
+  saveProgress(bookId, mergedProg)
+  if (opts.title) meta[idx].title = opts.title
+  if (opts.sourceFile) meta[idx].sourceFile = opts.sourceFile
+  meta[idx].updatedAt = new Date().toISOString()
+  saveMeta(meta)
+  return true
+}
+
+/**
+ * @param {string} title
+ * @param {unknown[]} entries
+ * @param {{ sourceFile?: string }} [opts]
+ * @returns {string} new id
+ */
+export function addImportedBook(title, entries, opts = {}) {
   const id = `import-${Date.now()}`
   const meta = loadMeta()
   meta.push({
     id,
     title: title || '导入词书',
     source: 'import',
+    ...(opts.sourceFile ? { sourceFile: opts.sourceFile } : {}),
     createdAt: new Date().toISOString(),
   })
   saveMeta(meta)
