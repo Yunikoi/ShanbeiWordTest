@@ -349,7 +349,7 @@ export function useBookshelfStudy() {
       return {
         ok: false,
         message:
-          '没有解析到有效词条。支持 txt：单词 | 词性.释义；单词：释义。支持 Obsidian md：#### 单词：释义 或引用块里的 - 单词：释义',
+          '没有解析到有效词条。支持 txt：单词：释义。支持 Obsidian（Yasi.md）：#### 词条：释义、> - 短语：释义、词根行 subtle adj. 中文、**短语** 下一行释义等',
       }
     }
     const withSenses = parsed.map((e) => ({

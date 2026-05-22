@@ -3,6 +3,7 @@
  */
 import fs from 'node:fs'
 import { parseWordbookText } from '../src/parseWordbook.js'
+// 完整 Yasi 笔记：node scripts/count-wordbook.mjs "d:/Study/Blog/content/posts/Yasi.md"
 
 const path = process.argv[2]
 if (!path) {
