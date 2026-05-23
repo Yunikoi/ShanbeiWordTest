@@ -12,6 +12,7 @@ import {
 import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings } from './llmSettings.js'
 import { attachExamples } from './ieltsSentence.js'
+import { attachLocalRelations } from './localRelations.js'
 import { parseWordbookText } from './parseWordbook.js'
 import { applySrsV2, migrateWordProg } from './srsCurve.js'
 import { enrichEntriesWithIpa } from './ipaLookup.js'
