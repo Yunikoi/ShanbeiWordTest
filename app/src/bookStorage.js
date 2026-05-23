@@ -1,3 +1,6 @@
+import { removeStudyHistory } from './studyHistory.js'
+import { removeRelationsCache } from './relationsCache.js'
+
 const META_KEY = 'swt-books-meta'
 const PREFIX_BOOK = 'swt-book-'
 const PREFIX_PROG = 'swt-prog-'
@@ -128,4 +131,6 @@ export function removeImportedBook(bookId) {
   saveMeta(meta)
   localStorage.removeItem(PREFIX_BOOK + bookId)
   localStorage.removeItem(PREFIX_PROG + bookId)
+  removeStudyHistory(bookId)
+  removeRelationsCache(bookId)
 }

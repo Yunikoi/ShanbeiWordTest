@@ -8,12 +8,18 @@
  */
 
 import { splitWordAndIpa, firstWordDelimiterColon } from './parseWordbookCore.js'
+import {
+  detectRelationSection,
+  emptyRelations,
+  mergeRelations,
+  relationItemFromEntry,
+} from './wordRelations.js'
 
 const MD_WORD_MAX_LEN = 160
 const NOTE_GLOSS = '（见笔记）'
 
 /** @typedef {{ pos?: string, zh: string }} Sense */
-/** @typedef {{ word: string, ipa?: string, senses: Sense[] }} Entry */
+/** @typedef {{ word: string, ipa?: string, senses: Sense[], relations?: import('./wordRelations.js').WordRelations }} Entry */
 
 function stripMdDecorations(s) {
   return String(s)
@@ -210,6 +216,7 @@ function isIgnorableYasiLine(t) {
   if (/^#{4,6}\s+/.test(t)) {
     const inner = t.replace(/^#{1,6}\s+/, '').trim()
     if (!/[：:]/.test(inner)) {
+      if (detectRelationSection(inner)) return false
       if (/^[\u4e00-\u9fff（(【]/.test(inner)) return true
       if (/^(Everyone|Traditional|Cities|This method|The two|Walk|provide insight)/i.test(inner)) return true
       if (isSectionLabel(inner)) return true
@@ -248,13 +255,46 @@ function mergeEntry(byWord, e) {
   if (prev) {
     prev.senses.push(...e.senses)
     if (!prev.ipa && e.ipa) prev.ipa = e.ipa
+    if (e.relations) prev.relations = mergeRelations(prev.relations, e.relations)
   } else {
     byWord.set(key, {
       word: e.word,
       ...(e.ipa ? { ipa: e.ipa } : {}),
       senses: [...e.senses],
+      ...(e.relations ? { relations: e.relations } : {}),
     })
   }
+}
+
+/**
+ * @param {Map<string, Entry>} byWord
+ * @param {string} anchorWord
+ * @param {import('./wordRelations.js').WordRelations[keyof import('./wordRelations.js').WordRelations] extends infer _ ? keyof import('./wordRelations.js').WordRelations : never} kind
+ * @param {import('./wordRelations.js').RelationItem} item
+ */
+function attachRelation(byWord, anchorWord, kind, item) {
+  if (!anchorWord || !kind || !item?.label) return
+  const key = anchorWord.toLowerCase()
+  let entry = byWord.get(key)
+  if (!entry) {
+    mergeEntry(byWord, { word: anchorWord, senses: [{ zh: NOTE_GLOSS }] })
+    entry = byWord.get(key)
+  }
+  if (!entry) return
+  const rel = entry.relations ? { ...entry.relations } : emptyRelations()
+  const list = [...rel[kind]]
+  if (!list.some((x) => x.label.toLowerCase() === item.label.toLowerCase())) {
+    list.push(item)
+  }
+  rel[kind] = list
+  entry.relations = rel
+}
+
+/** @param {Map<string, Entry>} byWord @param {string | null} anchor @param {string | null} kind @param {Entry | null} parsed */
+function attachFromParsed(byWord, anchor, kind, parsed) {
+  if (!parsed) return
+  mergeEntry(byWord, parsed)
+  if (anchor && kind) attachRelation(byWord, anchor, kind, relationItemFromEntry(parsed))
 }
 
 /**
@@ -270,6 +310,10 @@ export function parseYasiMarkdownText(text) {
   let pending = null
   /** @type {string | null} */
   let pendingHeading = null
+  /** @type {string | null} */
+  let currentAnchor = null
+  /** @type {import('./wordRelations.js').WordRelations[keyof import('./wordRelations.js').WordRelations] extends infer _ ? keyof import('./wordRelations.js').WordRelations : never | null} */
+  let relationSection = null
 
   const clearPending = () => {
     pending = null
@@ -297,15 +341,31 @@ export function parseYasiMarkdownText(text) {
     if (h4) {
       clearPending()
       pendingHeading = null
+      relationSection = null
       const body = stripMdDecorations(h4[1])
       const entries = entriesFromBody(body)
       if (entries.length) {
         for (const e of entries) mergeEntry(byWord, e)
+        currentAnchor = entries[0].word
       } else {
         const { word } = splitWordAndIpa(body)
-        if (word) pendingHeading = word
+        if (word) {
+          pendingHeading = word
+          currentAnchor = word
+        } else {
+          currentAnchor = null
+        }
       }
       continue
+    }
+
+    const hSec = quoted.match(/^#{4,6}\s+(.+)$/u)
+    if (hSec && currentAnchor) {
+      const kind = detectRelationSection(hSec[1])
+      if (kind) {
+        relationSection = kind
+        continue
+      }
     }
 
     if (pendingHeading === 'in that' && quoted.includes('in that')) {
@@ -344,9 +404,17 @@ export function parseYasiMarkdownText(text) {
         const combined = entryFromSegment(`${phrase} ${rest}`) || entryFromSegment(`${phrase}：${rest}`)
         if (combined) {
           mergeEntry(byWord, combined)
+          if (currentAnchor) {
+            attachRelation(byWord, currentAnchor, 'collocations', relationItemFromEntry(combined))
+          }
         } else {
           const { word } = splitWordAndIpa(phrase)
-          if (word) mergeEntry(byWord, { word, senses: [{ zh: rest }] })
+          if (word) {
+            mergeEntry(byWord, { word, senses: [{ zh: rest }] })
+            if (currentAnchor) {
+              attachRelation(byWord, currentAnchor, 'collocations', { label: phrase, zh: rest })
+            }
+          }
         }
       } else {
         pending = { phrase, collectBullets: true }
@@ -370,6 +438,13 @@ export function parseYasiMarkdownText(text) {
             })
           }
         }
+        if (currentAnchor) {
+          const ez = splitEnglishChinese(inner)
+          attachRelation(byWord, currentAnchor, 'collocations', {
+            label: pending.phrase,
+            zh: ez?.zh || (e?.senses?.[0]?.zh ?? inner),
+          })
+        }
         continue
       }
       if (/^[\u4e00-\u9fff]/.test(stripped)) {
@@ -377,6 +452,48 @@ export function parseYasiMarkdownText(text) {
         continue
       }
       pending = null
+    }
+
+    if (/^-\s+/.test(quoted)) {
+      const inner = quoted.replace(/^-\s+/, '').trim()
+      if (relationSection && currentAnchor) {
+        const parsed = entryFromSegment(inner)
+        if (parsed) {
+          attachFromParsed(byWord, currentAnchor, relationSection, parsed)
+          continue
+        }
+      }
+      const fromList = entriesFromBody(inner)
+      if (fromList.length) {
+        pendingHeading = null
+        clearPending()
+        for (const e of fromList) mergeEntry(byWord, e)
+        continue
+      }
+    }
+
+    if (relationSection && currentAnchor && !quoted.match(/^#{4,6}/)) {
+      const parsed = entryFromSegment(stripped) || entriesFromBody(stripped)[0]
+      if (
+        parsed &&
+        parsed.word.toLowerCase() !== currentAnchor.toLowerCase() &&
+        !/^-\s+/.test(quoted)
+      ) {
+        attachFromParsed(byWord, currentAnchor, relationSection, parsed)
+        continue
+      }
+    }
+
+    const inlineBold = entriesFromInlineBold(quoted)
+    if (inlineBold.length) {
+      pendingHeading = null
+      for (const e of inlineBold) {
+        mergeEntry(byWord, e)
+        if (currentAnchor) {
+          attachRelation(byWord, currentAnchor, 'collocations', relationItemFromEntry(e))
+        }
+      }
+      continue
     }
 
     let body = stripped || quoted
@@ -388,28 +505,20 @@ export function parseYasiMarkdownText(text) {
       continue
     }
 
-    if (/^-\s+/.test(quoted)) {
-      const inner = quoted.replace(/^-\s+/, '').trim()
-      const fromList = entriesFromBody(inner)
-      if (fromList.length) {
-        pendingHeading = null
-        clearPending()
-        for (const e of fromList) mergeEntry(byWord, e)
-        continue
-      }
-    }
-
-    const inlineBold = entriesFromInlineBold(quoted)
-    if (inlineBold.length) {
-      pendingHeading = null
-      for (const e of inlineBold) mergeEntry(byWord, e)
-      continue
-    }
-
     const parsedList = entriesFromBody(body)
     if (parsedList.length) {
       pendingHeading = null
-      for (const e of parsedList) mergeEntry(byWord, e)
+      for (const e of parsedList) {
+        if (
+          currentAnchor &&
+          relationSection &&
+          e.word.toLowerCase() !== currentAnchor.toLowerCase()
+        ) {
+          attachFromParsed(byWord, currentAnchor, relationSection, e)
+        } else {
+          mergeEntry(byWord, e)
+        }
+      }
       continue
     }
 

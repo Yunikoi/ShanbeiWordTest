@@ -46,6 +46,7 @@
 | `swt-books-meta` | 用户导入词书的元数据列表 |
 | `swt-book-<id>` | 某本导入词书的词条 JSON |
 | `swt-prog-<id>` | 该词书下各词的 SRS 进度（`nextDue`、`intervalNext` 等） |
+| `swt-history-<id>` | 该词书每次完成学习的测试记录（时间、词列表、不会的词） |
 | `swt-llm-*` | 大模型开关、provider、API Key、模型名（Key 仅存本机） |
 
 清除站点数据或删除上述键可重置对应数据。

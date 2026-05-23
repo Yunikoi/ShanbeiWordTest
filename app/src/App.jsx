@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { getLlmSettings, setLlmSettings } from './llmSettings.js'
 import { useBookshelfStudy } from './useBookshelfStudy.js'
+import { StudyHistoryModal } from './StudyHistoryModal.jsx'
+import { WordRelationsPanel } from './WordRelationsPanel.jsx'
+import { generateEntryRelations } from './llmRelations.js'
+import { loadWordRelations, saveWordRelations } from './relationsCache.js'
 
 function speakEnglish(text) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return
@@ -46,6 +50,7 @@ export default function App() {
     activeBookSource,
     activeBookId,
     deleteImportedBook,
+    studyHistory,
   } = useBookshelfStudy()
 
   const fileRef = useRef(null)
@@ -64,6 +69,7 @@ export default function App() {
 
   const [dailyCount, setDailyCount] = useState(30)
   const [wordListOpen, setWordListOpen] = useState(false)
+  const [historyOpen, setHistoryOpen] = useState(false)
 
   const [revealed, setRevealed] = useState(false)
   /** 单词页 → 释义页 */
@@ -72,9 +78,71 @@ export default function App() {
   const [preliminary, setPreliminary] = useState(null)
   /** 释义页是否展开例句 */
   const [showExamples, setShowExamples] = useState(false)
+  const [showRelations, setShowRelations] = useState(false)
+  const [cardRelations, setCardRelations] = useState(null)
+  const [relationsLoading, setRelationsLoading] = useState(false)
+  const [relationsError, setRelationsError] = useState(null)
+  const [relationsRefresh, setRelationsRefresh] = useState(0)
+  const relationsForceRef = useRef(false)
   const [feedbackBusy, setFeedbackBusy] = useState(false)
   const [cardKey, setCardKey] = useState(0)
   const [doneOpen, setDoneOpen] = useState(false)
+
+  useEffect(() => {
+    setCardRelations(null)
+    setRelationsError(null)
+    setRelationsLoading(false)
+    setRelationsRefresh(0)
+  }, [cardKey])
+
+  useEffect(() => {
+    if (!showRelations || !currentCard || !activeBookId) return
+    let cancelled = false
+
+    ;(async () => {
+      const force = relationsForceRef.current
+      relationsForceRef.current = false
+      if (!force) {
+        const cached = loadWordRelations(activeBookId, currentCard.word)
+        if (cached) {
+          setCardRelations(cached)
+          setRelationsError(null)
+          return
+        }
+      }
+
+      const cfg = getLlmSettings()
+      if (!cfg.enabled || !cfg.apiKey.trim()) {
+        setRelationsError('请先在书架启用「大模型」并填写 API Key')
+        setCardRelations(null)
+        return
+      }
+
+      setRelationsLoading(true)
+      setRelationsError(null)
+      try {
+        const rel = await generateEntryRelations(currentCard, cfg)
+        if (cancelled) return
+        saveWordRelations(activeBookId, currentCard.word, rel)
+        setCardRelations(rel)
+      } catch (e) {
+        if (!cancelled) {
+          setRelationsError(e instanceof Error ? e.message : '联想词生成失败')
+        }
+      } finally {
+        if (!cancelled) setRelationsLoading(false)
+      }
+    })()
+
+    return () => {
+      cancelled = true
+    }
+  }, [showRelations, currentCard, activeBookId, relationsRefresh])
+
+  const retryRelations = useCallback(() => {
+    relationsForceRef.current = true
+    setRelationsRefresh((n) => n + 1)
+  }, [])
 
   const onPickBook = useCallback(
     async (book) => {
@@ -122,6 +190,7 @@ export default function App() {
       setStudyPhase('word')
       setPreliminary(null)
       setShowExamples(false)
+      setShowRelations(false)
       setCardKey((k) => k + 1)
     } catch {
       setImportTip('开始学习失败，请检查网络或大模型 API 设置')
@@ -134,6 +203,7 @@ export default function App() {
       if (feedbackBusy || !currentCard) return
       setPreliminary(firstKind)
       setShowExamples(false)
+      setShowRelations(false)
       setRevealed(true)
       setStudyPhase('meaning')
     },
@@ -151,6 +221,7 @@ export default function App() {
         setStudyPhase('word')
         setPreliminary(null)
         setShowExamples(false)
+        setShowRelations(false)
 
         if (done) {
           setRevealed(true)
@@ -287,16 +358,33 @@ export default function App() {
                   <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 0 1-.02 1.06L8.832 10l3.938 3.71a.75.75 0 1 1-1.04 1.08l-4.5-4.25a.75.75 0 0 1 0-1.08l4.5-4.25a.75.75 0 0 1 1.06.02Z" clipRule="evenodd" />
                 </svg>
               </button>
-              <button
-                type="button"
-                onClick={() => setWordListOpen(true)}
-                className="flex shrink-0 items-center gap-1 rounded-xl border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z" />
-                </svg>
-                词表
-              </button>
+              <div className="flex shrink-0 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setHistoryOpen(true)}
+                  className="flex items-center gap-1 rounded-xl border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z" />
+                  </svg>
+                  测试历史
+                  {studyHistory.length > 0 ? (
+                    <span className="rounded-full bg-indigo-100 px-1.5 text-[10px] font-bold text-indigo-700">
+                      {studyHistory.length}
+                    </span>
+                  ) : null}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setWordListOpen(true)}
+                  className="flex items-center gap-1 rounded-xl border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z" />
+                  </svg>
+                  词表
+                </button>
+              </div>
             </div>
 
             <div className="mt-4 flex items-baseline justify-between text-sm text-slate-600">
@@ -418,6 +506,13 @@ export default function App() {
             </div>
           </div>
         ) : null}
+
+        <StudyHistoryModal
+          open={historyOpen}
+          onClose={() => setHistoryOpen(false)}
+          sessions={studyHistory}
+          entries={entries}
+        />
       </div>
     )
   }
@@ -434,6 +529,7 @@ export default function App() {
                 setStudyPhase('word')
                 setPreliminary(null)
                 setShowExamples(false)
+                setShowRelations(false)
                 setRevealed(false)
                 backToBook()
               }}
@@ -538,7 +634,24 @@ export default function App() {
                         >
                           {showExamples ? '隐藏例句' : '查看例句'}
                         </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowRelations((v) => !v)}
+                          disabled={feedbackBusy || doneOpen}
+                          className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-900 shadow-sm hover:bg-indigo-100 disabled:opacity-50"
+                        >
+                          {showRelations ? '隐藏联想' : '查看联想'}
+                          <span className="ml-1 text-[10px] font-normal text-indigo-600">· AI</span>
+                        </button>
                       </div>
+                      {showRelations ? (
+                        <WordRelationsPanel
+                          relations={cardRelations}
+                          loading={relationsLoading}
+                          error={relationsError}
+                          onRetry={retryRelations}
+                        />
+                      ) : null}
                     </div>
                   ) : null}
 
@@ -681,9 +794,9 @@ export default function App() {
         ) : null}
 
         <details className="mb-6 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-left shadow-sm">
-          <summary className="cursor-pointer text-sm font-semibold text-slate-800">大模型生成例句+译文（可选）</summary>
+          <summary className="cursor-pointer text-sm font-semibold text-slate-800">大模型（例句 + 联想词，可选）</summary>
           <p className="mt-2 text-xs leading-relaxed text-slate-500">
-            默认使用本地模板。若填写 API 密钥并勾选，则在点击「开始学习」后<strong>仅对今日抽中的词</strong>依次调用模型生成阅读向英文句与中文译文（密钥仅存本机）。
+            默认使用本地模板例句。若填写 API 密钥并勾选：开始学习时可生成例句；学习释义页点「查看联想」时由大模型生成近义 / 反义 / 形近 / 衍生 / 词根 / 搭配（结果缓存在本机）。
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
             <label className="flex cursor-pointer items-center gap-2">

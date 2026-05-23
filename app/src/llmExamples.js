@@ -96,7 +96,25 @@ async function geminiGenerateJson(apiKey, model, userText) {
  * @param {string} model
  * @param {string} userText
  */
-async function groqGenerateJson(apiKey, model, userText) {
+/**
+ * @param {import('./llmSettings.js').LlmSettings} cfg
+ * @param {string} userText
+ * @param {string} [systemText]
+ */
+export async function generateLlmJson(cfg, userText, systemText) {
+  if (cfg.provider === 'groq') {
+    return groqGenerateJson(cfg.apiKey, cfg.modelGroq, userText, systemText)
+  }
+  return geminiGenerateJson(cfg.apiKey, cfg.modelGemini, userText)
+}
+
+/**
+ * @param {string} apiKey
+ * @param {string} model
+ * @param {string} userText
+ * @param {string} [systemText]
+ */
+async function groqGenerateJson(apiKey, model, userText, systemText) {
   const base = import.meta.env.DEV ? '/api/groq' : 'https://api.groq.com/openai/v1'
   const r = await fetch(`${base}/chat/completions`, {
     method: 'POST',
@@ -110,6 +128,7 @@ async function groqGenerateJson(apiKey, model, userText) {
         {
           role: 'system',
           content:
+            systemText ||
             'You reply with valid JSON only. The user asks for a JSON object with a "senses" array.',
         },
         { role: 'user', content: userText },

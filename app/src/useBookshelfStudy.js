@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   addImportedBook,
   findImportBySourceFile,
@@ -16,10 +16,11 @@ import { parseWordbookText } from './parseWordbook.js'
 import { applySrsV2, migrateWordProg } from './srsCurve.js'
 import { enrichEntriesWithIpa } from './ipaLookup.js'
 import { computeBookDashboard } from './bookDashboard.js'
+import { appendStudySession, loadStudyHistory } from './studyHistory.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
-/** @typedef {{ word: string, ipa?: string, senses: SenseEx[] }} CardEntry */
+/** @typedef {{ word: string, ipa?: string, senses: SenseEx[], relations?: import('./wordRelations.js').WordRelations }} CardEntry */
 
 const MANIFEST_URL = '/wordbooks/manifest.json'
 /** 本轮答错时，隔几个词后再测（不推到整轮队尾） */
@@ -123,6 +124,9 @@ export function useBookshelfStudy() {
   const [sessionPlanTotal, setSessionPlanTotal] = useState(0)
   const [sessionFlag, setSessionFlag] = useState(/** @type {'idle' | 'active' | 'done' | 'empty'} */ ('idle'))
   const [preparingSession, setPreparingSession] = useState(false)
+  const [studyHistory, setStudyHistory] = useState(/** @type {import('./studyHistory.js').StudySession[]} */ ([]))
+  /** @type {import('react').MutableRefObject<import('./studyHistory.js').StudySession | null>} */
+  const sessionLogRef = useRef(null)
 
   const books = useMemo(() => {
     const imp = importMeta.map((b) => ({
@@ -177,7 +181,15 @@ export function useBookshelfStudy() {
       }
       const salt = Date.now()
       const withEx = raw.map((e) =>
-        attachExamples({ word: e.word, senses: e.senses, ...(e.ipa ? { ipa: e.ipa } : {}) }, salt),
+        attachExamples(
+          {
+            word: e.word,
+            senses: e.senses,
+            ...(e.ipa ? { ipa: e.ipa } : {}),
+            ...(e.relations ? { relations: e.relations } : {}),
+          },
+          salt,
+        ),
       )
       setEntries(withEx)
       enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
@@ -185,6 +197,7 @@ export function useBookshelfStudy() {
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
       saveProgress(book.id, progMap)
+      setStudyHistory(loadStudyHistory(book.id))
       setView('book')
       return { ok: true }
     }
@@ -212,6 +225,7 @@ export function useBookshelfStudy() {
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
       saveProgress(book.id, progMap)
+      setStudyHistory(loadStudyHistory(book.id))
       setView('book')
       return { ok: true }
     } catch (e) {
@@ -257,6 +271,14 @@ export function useBookshelfStudy() {
         setSessionQueue(queue)
         setSessionIndex(0)
         setSessionFlag('active')
+        sessionLogRef.current = {
+          id: `sess-${Date.now()}`,
+          startedAt: new Date().toISOString(),
+          endedAt: '',
+          planTotal: queue.length,
+          dailyGoal: n,
+          events: [],
+        }
         setView('study')
         return { ok: true, count: queue.length }
       } finally {
@@ -267,6 +289,7 @@ export function useBookshelfStudy() {
   )
 
   const backToShelf = useCallback(() => {
+    sessionLogRef.current = null
     setView('shelf')
     setSessionFlag('idle')
     setSessionQueue([])
@@ -280,6 +303,7 @@ export function useBookshelfStudy() {
   }, [])
 
   const backToBook = useCallback(() => {
+    sessionLogRef.current = null
     setView('book')
     setSessionFlag('idle')
     setSessionQueue([])
@@ -306,6 +330,14 @@ export function useBookshelfStudy() {
       const cur = sessionQueue[sessionIndex]
       if (!cur) return { done: true }
 
+      if (sessionLogRef.current) {
+        sessionLogRef.current.events.push({
+          word: cur.word,
+          kind,
+          at: new Date().toISOString(),
+        })
+      }
+
       const today = localTodayYMD()
       const raw = loadProgress(activeBookId)
       const prev = raw[cur.word]
@@ -324,6 +356,14 @@ export function useBookshelfStudy() {
       if (next >= newQueue.length) {
         setSessionQueue(newQueue)
         setSessionFlag('done')
+        if (sessionLogRef.current && activeBookId) {
+          const finished = {
+            ...sessionLogRef.current,
+            endedAt: new Date().toISOString(),
+          }
+          setStudyHistory(appendStudySession(activeBookId, finished))
+          sessionLogRef.current = null
+        }
         return { done: true }
       }
 
@@ -367,11 +407,12 @@ export function useBookshelfStudy() {
             '没有解析到有效词条。支持 txt：单词：释义。支持 Obsidian（Yasi.md）：#### 词条：释义、> - 短语：释义、词根行 subtle adj. 中文、**短语** 下一行释义等',
         }
       }
-      const withSenses = parsed.map((e) => ({
-        word: e.word,
-        ...(e.ipa ? { ipa: e.ipa } : {}),
-        senses: e.senses.map((s) => ({ pos: s.pos, zh: s.zh })),
-      }))
+    const withSenses = parsed.map((e) => ({
+      word: e.word,
+      ...(e.ipa ? { ipa: e.ipa } : {}),
+      ...(e.relations ? { relations: e.relations } : {}),
+      senses: e.senses.map((s) => ({ pos: s.pos, zh: s.zh })),
+    }))
       const bookTitle = title?.trim() || '导入词书'
 
       let targetId = opts.updateBookId
@@ -488,5 +529,6 @@ export function useBookshelfStudy() {
     progress,
     activeBookSource:
       books.find((b) => b.id === activeBookId)?.source ?? null,
+    studyHistory,
   }
 }
