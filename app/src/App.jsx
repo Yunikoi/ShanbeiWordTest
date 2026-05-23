@@ -3,8 +3,6 @@ import { getLlmSettings, setLlmSettings } from './llmSettings.js'
 import { useBookshelfStudy } from './useBookshelfStudy.js'
 import { StudyHistoryModal } from './StudyHistoryModal.jsx'
 import { WordRelationsPanel } from './WordRelationsPanel.jsx'
-import { generateEntryRelations } from './llmRelations.js'
-import { loadWordRelations, saveWordRelations } from './relationsCache.js'
 
 function speakEnglish(text) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return
@@ -79,70 +77,9 @@ export default function App() {
   /** 释义页是否展开例句 */
   const [showExamples, setShowExamples] = useState(false)
   const [showRelations, setShowRelations] = useState(false)
-  const [cardRelations, setCardRelations] = useState(null)
-  const [relationsLoading, setRelationsLoading] = useState(false)
-  const [relationsError, setRelationsError] = useState(null)
-  const [relationsRefresh, setRelationsRefresh] = useState(0)
-  const relationsForceRef = useRef(false)
   const [feedbackBusy, setFeedbackBusy] = useState(false)
   const [cardKey, setCardKey] = useState(0)
   const [doneOpen, setDoneOpen] = useState(false)
-
-  useEffect(() => {
-    setCardRelations(null)
-    setRelationsError(null)
-    setRelationsLoading(false)
-    setRelationsRefresh(0)
-  }, [cardKey])
-
-  useEffect(() => {
-    if (!showRelations || !currentCard || !activeBookId) return
-    let cancelled = false
-
-    ;(async () => {
-      const force = relationsForceRef.current
-      relationsForceRef.current = false
-      if (!force) {
-        const cached = loadWordRelations(activeBookId, currentCard.word)
-        if (cached) {
-          setCardRelations(cached)
-          setRelationsError(null)
-          return
-        }
-      }
-
-      const cfg = getLlmSettings()
-      if (!cfg.enabled || !cfg.apiKey.trim()) {
-        setRelationsError('请先在书架启用「大模型」并填写 API Key')
-        setCardRelations(null)
-        return
-      }
-
-      setRelationsLoading(true)
-      setRelationsError(null)
-      try {
-        const rel = await generateEntryRelations(currentCard, cfg)
-        if (cancelled) return
-        saveWordRelations(activeBookId, currentCard.word, rel)
-        setCardRelations(rel)
-      } catch (e) {
-        if (!cancelled) {
-          setRelationsError(e instanceof Error ? e.message : '联想词生成失败')
-        }
-      } finally {
-        if (!cancelled) setRelationsLoading(false)
-      }
-    })()
-
-    return () => {
-      cancelled = true
-    }
-  }, [showRelations, currentCard, activeBookId, relationsRefresh])
-
-  const retryRelations = useCallback(() => {
-    relationsForceRef.current = true
-    setRelationsRefresh((n) => n + 1)
-  }, [])
 
   const onPickBook = useCallback(
     async (book) => {
@@ -641,17 +578,9 @@ export default function App() {
                           className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-900 shadow-sm hover:bg-indigo-100 disabled:opacity-50"
                         >
                           {showRelations ? '隐藏联想' : '查看联想'}
-                          <span className="ml-1 text-[10px] font-normal text-indigo-600">· AI</span>
                         </button>
                       </div>
-                      {showRelations ? (
-                        <WordRelationsPanel
-                          relations={cardRelations}
-                          loading={relationsLoading}
-                          error={relationsError}
-                          onRetry={retryRelations}
-                        />
-                      ) : null}
+                      {showRelations ? <WordRelationsPanel relations={currentCard?.relations} /> : null}
                     </div>
                   ) : null}
 
@@ -794,9 +723,9 @@ export default function App() {
         ) : null}
 
         <details className="mb-6 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-left shadow-sm">
-          <summary className="cursor-pointer text-sm font-semibold text-slate-800">大模型（例句 + 联想词，可选）</summary>
+          <summary className="cursor-pointer text-sm font-semibold text-slate-800">大模型生成例句（可选）</summary>
           <p className="mt-2 text-xs leading-relaxed text-slate-500">
-            默认使用本地模板例句。若填写 API 密钥并勾选：开始学习时可生成例句；学习释义页点「查看联想」时由大模型生成近义 / 反义 / 形近 / 衍生 / 词根 / 搭配（结果缓存在本机）。
+            默认使用本地模板例句与本地联想词。若填写 API 密钥并勾选，则在点击「开始学习」后对今日抽中的词依次生成例句（密钥仅存本机）。
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
             <label className="flex cursor-pointer items-center gap-2">

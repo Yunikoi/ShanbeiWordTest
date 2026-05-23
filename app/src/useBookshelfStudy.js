@@ -23,6 +23,21 @@ import { appendStudySession, loadStudyHistory } from './studyHistory.js'
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
 /** @typedef {{ word: string, ipa?: string, senses: SenseEx[], relations?: import('./wordRelations.js').WordRelations }} CardEntry */
 
+/**
+ * @param {Array<{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, relations?: import('./wordRelations.js').WordRelations }>} raw
+ * @param {number} salt
+ * @returns {CardEntry[]}
+ */
+function mapEntriesForStudy(raw, salt) {
+  const base = raw.map((e) => ({
+    word: e.word,
+    senses: e.senses,
+    ...(e.ipa ? { ipa: e.ipa } : {}),
+    ...(e.relations ? { relations: e.relations } : {}),
+  }))
+  return base.map((e) => attachExamples(attachLocalRelations(e, base, salt), salt))
+}
+
 const MANIFEST_URL = '/wordbooks/manifest.json'
 /** 本轮答错时，隔几个词后再测（不推到整轮队尾） */
 const SESSION_REQUEUE_OFFSET = 4
@@ -181,17 +196,7 @@ export function useBookshelfStudy() {
         return { ok: false }
       }
       const salt = Date.now()
-      const withEx = raw.map((e) =>
-        attachExamples(
-          {
-            word: e.word,
-            senses: e.senses,
-            ...(e.ipa ? { ipa: e.ipa } : {}),
-            ...(e.relations ? { relations: e.relations } : {}),
-          },
-          salt,
-        ),
-      )
+      const withEx = mapEntriesForStudy(raw, salt)
       setEntries(withEx)
       enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
       const today = localTodayYMD()
@@ -219,7 +224,7 @@ export function useBookshelfStudy() {
         return { ok: false }
       }
       const salt = Date.now()
-      const withEx = parsed.map((e) => attachExamples(e, salt))
+      const withEx = mapEntriesForStudy(parsed, salt)
       setEntries(withEx)
       enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
       const today = localTodayYMD()
@@ -444,12 +449,7 @@ export function useBookshelfStudy() {
         const raw = loadBookEntries(targetId)
         if (raw?.length) {
           const salt = Date.now()
-          const withEx = raw.map((e) =>
-            attachExamples(
-              { word: e.word, senses: e.senses, ...(e.ipa ? { ipa: e.ipa } : {}) },
-              salt,
-            ),
-          )
+          const withEx = mapEntriesForStudy(raw, salt)
           setEntries(withEx)
           enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
           const today = localTodayYMD()

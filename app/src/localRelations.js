@@ -291,15 +291,25 @@ function buildLocalRelations(entry, pool, index, salt) {
   return out
 }
 
+/** @param {PoolEntry} e */
+function includeInPool(e) {
+  const w = e.word
+  if (!w || w.length > 60) return false
+  if (/node_modules|\.git[\\/]|[/\\]dist[/\\]/.test(w)) return false
+  if (/\.(png|jpe?g|gif|css|scss|map|woff2?|ttf|ico|svg|json|lock|node)$/i.test(w)) return false
+  return true
+}
+
 /**
  * @param {PoolEntry} entry
  * @param {PoolEntry[]} pool
  * @param {string|number} [salt]
  */
 export function attachLocalRelations(entry, pool, salt = 0) {
-  const index = new Map(pool.map((e) => [e.word.toLowerCase().split(/\s+/)[0], e]))
-  for (const e of pool) index.set(e.word.toLowerCase(), e)
-  const local = buildLocalRelations(entry, pool, index, salt)
+  const filtered = pool.filter(includeInPool)
+  const index = new Map(filtered.map((e) => [e.word.toLowerCase().split(/\s+/)[0], e]))
+  for (const e of filtered) index.set(e.word.toLowerCase(), e)
+  const local = buildLocalRelations(entry, filtered, index, salt)
   return {
     ...entry,
     relations: mergeRelations(entry.relations, local),
