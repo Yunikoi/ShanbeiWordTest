@@ -22,17 +22,64 @@ const ANTONYM_GLOSS = [
   ['优点', '缺点'],
   ['成功', '失败'],
   ['繁荣', '衰退'],
+  ['花', '素'],
+  ['复杂', '简单'],
+  ['公开', '秘密'],
+  ['明显', '隐蔽'],
 ]
 
 const PREFIXES = ['un', 're', 'dis', 'mis', 'non', 'in', 'im', 'il', 'ir', 'over', 'under', 'pre', 'post', 'sub', 'inter', 'trans', 'multi']
-const SUFFIXES = ['tion', 'sion', 'ment', 'ness', 'ity', 'ive', 'ize', 'ise', 'able', 'ible', 'ful', 'less', 'ly', 'er', 'est', 'ist', 'ing', 'ed', 'es', 's']
+const STRIP_SUFFIXES = [
+  'tion',
+  'sion',
+  'ment',
+  'ness',
+  'ity',
+  'ive',
+  'ize',
+  'ise',
+  'able',
+  'ible',
+  'ful',
+  'less',
+  'ally',
+  'ial',
+  'ical',
+  'ous',
+  'ent',
+  'ant',
+  'ance',
+  'ence',
+  'ing',
+  'ed',
+  'ly',
+  'al',
+  'er',
+  'est',
+  'ist',
+  'es',
+  's',
+]
 
 /** @param {string} zh */
 function glossParts(zh) {
   return String(zh)
-    .split(/[；，、/\s]+/)
+    .split(/[；，、/\s()（）]+/)
     .map((s) => s.trim())
-    .filter((s) => s.length >= 2)
+    .filter((s) => s.length >= 1)
+}
+
+/** @param {string} zh */
+function glossKeywords(zh) {
+  /** @type {Set<string>} */
+  const keys = new Set()
+  for (const p of glossParts(zh)) {
+    if (p.length >= 2) keys.add(p)
+    for (const ch of p) {
+      if (/[\u4e00-\u9fff]/.test(ch)) keys.add(ch)
+    }
+  }
+  return [...keys]
 }
 
 /** @param {string} a @param {string} b */
@@ -46,6 +93,13 @@ function glossOverlap(a, b) {
       else if (x.length >= 2 && y.length >= 2 && (x.includes(y) || y.includes(x))) {
         score += Math.min(x.length, y.length)
       }
+    }
+  }
+  const ka = glossKeywords(a)
+  const kb = glossKeywords(b)
+  for (const x of ka) {
+    for (const y of kb) {
+      if (x === y && x.length >= 1) score += x.length >= 2 ? 4 : 3
     }
   }
   return score
@@ -75,20 +129,36 @@ function levenshtein(a, b) {
 /** @param {string} w */
 function stemWord(w) {
   let s = w.toLowerCase().replace(/[^a-z]/g, '')
-  if (s.length < 4) return null
+  if (s.length < 3) return null
   for (const p of PREFIXES) {
-    if (s.startsWith(p) && s.length > p.length + 3) {
+    if (s.startsWith(p) && s.length > p.length + 2) {
       s = s.slice(p.length)
       break
     }
   }
-  for (const suf of SUFFIXES) {
-    if (s.endsWith(suf) && s.length > suf.length + 3) {
+  for (const suf of STRIP_SUFFIXES) {
+    if (s.endsWith(suf) && s.length > suf.length + 2) {
       s = s.slice(0, -suf.length)
       break
     }
   }
-  return s.length >= 4 ? s : null
+  return s.length >= 3 ? s : null
+}
+
+/** @param {string} w */
+function englishStems(w) {
+  const s = w.toLowerCase().replace(/[^a-z]/g, '')
+  const stem = stemWord(w)
+  /** @type {string[]} */
+  const out = []
+  if (stem) {
+    out.push(stem)
+    if (stem.length >= 5) out.push(stem.slice(0, 4))
+    if (stem.length >= 4) out.push(stem.slice(0, 3))
+  }
+  if (s.length >= 4) out.push(s.slice(0, 4))
+  if (s.length >= 3) out.push(s.slice(0, 3))
+  return [...new Set(out.filter((x) => x.length >= 3))]
 }
 
 /** @param {string} w */
@@ -101,17 +171,125 @@ function morphCandidates(w) {
   if (base.endsWith('e')) {
     out.add(base.slice(0, -1) + 'tion')
     out.add(base.slice(0, -1) + 'ive')
+    out.add(base.slice(0, -1) + 'al')
   }
   if (base.endsWith('y') && base.length > 3) {
     out.add(base.slice(0, -1) + 'ies')
     out.add(base.slice(0, -1) + 'iness')
     out.add(base.slice(0, -1) + 'ily')
   }
-  for (const suf of ['s', 'ed', 'ing', 'ly', 'ness', 'ment', 'tion', 'ity', 'ive', 'ize', 'able']) {
+  if (base.endsWith('al') && base.length > 4) {
+    const root = base.slice(0, -2)
+    out.add(root)
+    out.add(root + 'a')
+    out.add(root + 'ally')
+    out.add(root + 'ist')
+    out.add(root + 'iculture')
+  }
+  if (base.endsWith('ic') && base.length > 4) {
+    const root = base.slice(0, -2)
+    out.add(root + 'ally')
+    out.add(root + 'ity')
+  }
+  for (const suf of ['s', 'ed', 'ing', 'ly', 'ness', 'ment', 'tion', 'ity', 'ive', 'ize', 'able', 'ful', 'less']) {
     out.add(base + suf)
   }
   out.delete(base)
   return [...out]
+}
+
+/**
+ * @param {string} form
+ * @param {string} gloss
+ * @param {string} [pos]
+ */
+function syntheticDerivative(form, gloss, pos) {
+  const f = form.toLowerCase()
+  let zh = gloss
+  let p = pos
+  if (f.endsWith('ly')) {
+    zh = `${gloss}地`
+    p = 'adv'
+  } else if (f.endsWith('tion') || f.endsWith('ment') || f.endsWith('ness') || f.endsWith('ity')) {
+    zh = `${gloss}（名词形式）`
+    p = 'n'
+  } else if (f.endsWith('ive') || f.endsWith('ful') || f.endsWith('less') || f.endsWith('ous') || f.endsWith('al')) {
+    zh = `与${gloss}相关的`
+    p = 'adj'
+  } else if (f.endsWith('ize') || f.endsWith('ify') || f.endsWith('ate')) {
+    zh = `使…${gloss}`
+    p = 'v'
+  } else if (f.endsWith('ist')) {
+    zh = `与${gloss}相关的人/物`
+    p = 'n'
+  }
+  return { label: form, zh, ...(p ? { pos: p } : {}) }
+}
+
+/** @param {string} pos @param {string} word */
+function inferPos(pos, word) {
+  const p = String(pos || '')
+    .toLowerCase()
+    .replace(/\.$/, '')
+  if (/^(n|noun|名词)/.test(p)) return 'n'
+  if (/^(v|verb|动词)/.test(p)) return 'v'
+  if (/^(adj|adjective|形容词)/.test(p)) return 'adj'
+  if (/^(adv|adverb|副词)/.test(p)) return 'adv'
+  const w = word.toLowerCase().replace(/[^a-z]/g, '')
+  if (w.endsWith('tion') || w.endsWith('ment') || w.endsWith('ness') || w.endsWith('ity')) return 'n'
+  if (w.endsWith('ize') || w.endsWith('ify') || w.endsWith('ate')) return 'v'
+  if (w.endsWith('ly')) return 'adv'
+  if (w.endsWith('al') || w.endsWith('ic') || w.endsWith('ous') || w.endsWith('ful') || w.endsWith('less')) return 'adj'
+  return 'unknown'
+}
+
+/**
+ * @param {string} head
+ * @param {string} gloss
+ * @param {string} posKind
+ */
+function collocationTemplates(head, gloss, posKind) {
+  const g = gloss || '…'
+  if (posKind === 'adj') {
+    return [
+      { label: `${head} pattern`, zh: `${g}图案` },
+      { label: `${head} design`, zh: `${g}设计` },
+      { label: `${head} scent`, zh: `${g}香气` },
+      { label: `${head} display`, zh: `${g}展示` },
+      { label: `${head} arrangement`, zh: `${g}陈设/插花` },
+      { label: `${head} motif`, zh: `${g}元素/母题` },
+      { label: `a ${head} theme`, zh: `${g}主题` },
+      { label: `${head} elements`, zh: `${g}元素` },
+    ]
+  }
+  if (posKind === 'n') {
+    return [
+      { label: `a ${head} of`, zh: `一种${g}` },
+      { label: `the ${head} of`, zh: `…的${g}` },
+      { label: `${head} between`, zh: `…之间的${g}` },
+      { label: `a range of ${head}`, zh: `一系列${g}` },
+      { label: `${head} for`, zh: `用于…的${g}` },
+      { label: `in terms of ${head}`, zh: `就${g}而言` },
+    ]
+  }
+  if (posKind === 'v') {
+    return [
+      { label: `${head} sth`, zh: `${g}某事物` },
+      { label: `${head} from`, zh: `从…${g}` },
+      { label: `${head} to`, zh: `向…${g}` },
+      { label: `${head} with`, zh: `与…${g}` },
+      { label: `be ${head.replace(/e$/, '')}ed`, zh: `被${g}` },
+      { label: `${head} effectively`, zh: `有效地${g}` },
+    ]
+  }
+  return [
+    { label: `${head}`, zh: g },
+    { label: `related to ${head}`, zh: `与${g}相关` },
+    { label: `associated with ${head}`, zh: `与${g}有关` },
+    { label: `in ${head}`, zh: `在${g}中` },
+    { label: `${head} and …`, zh: `${g}与…` },
+    { label: `the role of ${head}`, zh: `${g}的作用` },
+  ]
 }
 
 /**
@@ -149,6 +327,21 @@ function primaryPos(e) {
   return e.senses.find((s) => s.pos)?.pos
 }
 
+/** @param {import('./wordRelations.js').RelationItem[]} items @param {number} min @param {() => import('./wordRelations.js').RelationItem | null} next */
+function ensureMinItems(items, min, next) {
+  const out = [...items]
+  const seen = new Set(out.map((x) => x.label.toLowerCase()))
+  for (let guard = 0; out.length < min && guard < 20; guard++) {
+    const item = next()
+    if (!item) break
+    const key = item.label.toLowerCase()
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push(item)
+  }
+  return out
+}
+
 /**
  * @param {PoolEntry} entry
  * @param {PoolEntry[]} pool
@@ -160,7 +353,10 @@ function buildLocalRelations(entry, pool, index, salt) {
   const self = entry.word.toLowerCase()
   const gloss = primaryGloss(entry)
   const head = entry.word.trim()
+  const headAlpha = head.toLowerCase().replace(/[^a-z]/g, '')
+  const posKind = inferPos(primaryPos(entry), head)
   const seedBase = `${head}|${salt}`
+  const stems = englishStems(head)
 
   /** @type {{ label: string, zh?: string, pos?: string, score: number }[]} */
   const synCandidates = []
@@ -173,7 +369,8 @@ function buildLocalRelations(entry, pool, index, salt) {
     if (other.word.toLowerCase() === self) continue
     const og = primaryGloss(other)
     const overlap = glossOverlap(gloss, og)
-    if (overlap >= 4) {
+    const minSyn = gloss.length <= 3 ? 2 : 3
+    if (overlap >= minSyn) {
       synCandidates.push({
         label: other.word,
         zh: og,
@@ -182,25 +379,37 @@ function buildLocalRelations(entry, pool, index, salt) {
       })
     }
 
-    const a = head.toLowerCase().replace(/[^a-z]/g, '')
     const b = other.word.toLowerCase().replace(/[^a-z]/g, '')
-    if (a && b && a !== b) {
-      const dist = levenshtein(a, b)
-      const lenDiff = Math.abs(a.length - b.length)
-      if (dist <= 2 && lenDiff <= 2 && a.length >= 4) {
+    if (headAlpha && b && headAlpha !== b) {
+      const dist = levenshtein(headAlpha, b)
+      const lenDiff = Math.abs(headAlpha.length - b.length)
+      if (dist <= 3 && lenDiff <= 3 && headAlpha.length >= 4) {
         simCandidates.push({
           label: other.word,
           zh: og,
           pos: primaryPos(other),
           score: 10 - dist,
         })
-      } else if (a.length >= 4 && b.length >= 4 && a.slice(0, 4) === b.slice(0, 4)) {
-        simCandidates.push({
-          label: other.word,
-          zh: og,
-          pos: primaryPos(other),
-          score: 5,
-        })
+      }
+      for (let i = 3; i <= 5; i++) {
+        if (headAlpha.length >= i && b.length >= i && headAlpha.slice(0, i) === b.slice(0, i)) {
+          simCandidates.push({
+            label: other.word,
+            zh: og,
+            pos: primaryPos(other),
+            score: 4 + i,
+          })
+        }
+      }
+      for (const st of stems) {
+        if (b.includes(st) && b !== st) {
+          synCandidates.push({
+            label: other.word,
+            zh: og,
+            pos: primaryPos(other),
+            score: 5 + st.length,
+          })
+        }
       }
     }
 
@@ -227,9 +436,9 @@ function buildLocalRelations(entry, pool, index, salt) {
     }
   }
 
-  out.synonyms = pickScored(synCandidates, 5, `${seedBase}|syn`)
-  out.similar = pickScored(simCandidates, 4, `${seedBase}|sim`)
-  out.antonyms = pickScored(antCandidates, 3, `${seedBase}|ant`)
+  out.synonyms = pickScored(synCandidates, 6, `${seedBase}|syn`)
+  out.similar = pickScored(simCandidates, 5, `${seedBase}|sim`)
+  out.antonyms = pickScored(antCandidates, 4, `${seedBase}|ant`)
 
   /** @type {{ label: string, zh?: string, pos?: string, score: number }[]} */
   const derCandidates = []
@@ -240,11 +449,13 @@ function buildLocalRelations(entry, pool, index, salt) {
         label: hit.word,
         zh: primaryGloss(hit),
         pos: primaryPos(hit),
-        score: 7,
+        score: 8,
       })
+    } else {
+      derCandidates.push({ ...syntheticDerivative(cand, gloss), score: 4 })
     }
   }
-  out.derivatives = pickScored(derCandidates, 5, `${seedBase}|der`)
+  out.derivatives = pickScored(derCandidates, 6, `${seedBase}|der`)
 
   const stem = stemWord(head)
   if (stem) {
@@ -253,39 +464,65 @@ function buildLocalRelations(entry, pool, index, salt) {
     for (const other of pool) {
       if (other.word.toLowerCase() === self) continue
       const ow = other.word.toLowerCase().replace(/[^a-z]/g, '')
-      if (ow.includes(stem) && ow !== stem) {
-        rootHits.push({
-          label: other.word,
-          zh: primaryGloss(other),
-          pos: primaryPos(other),
-          score: ow === stem ? 10 : 6,
-        })
+      for (const st of englishStems(head)) {
+        if (ow.includes(st) && ow !== st) {
+          rootHits.push({
+            label: other.word,
+            zh: primaryGloss(other),
+            pos: primaryPos(other),
+            score: 5 + st.length,
+          })
+        }
       }
     }
-  const pickedRoots = pickScored(rootHits, 4, `${seedBase}|root`)
-    if (pickedRoots.length) {
-      out.roots = [{ label: stem, zh: '词干 / 词族核心' }, ...pickedRoots.slice(0, 3)]
-    }
+    const pickedRoots = pickScored(rootHits, 5, `${seedBase}|root`)
+    out.roots = [{ label: stem, zh: '词干 / 词族核心' }, ...pickedRoots.slice(0, 4)]
   }
 
-  const g0 = entry.senses[0]?.zh || '…'
-  const colTemplates = [
-    { label: `the ${head} of`, zh: `…的${g0}` },
-    { label: `a ${head}`, zh: `一种${g0}` },
-    { label: `${head} for`, zh: `为…而${g0}` },
-    { label: `${head} to`, zh: `向…${g0}` },
-    { label: `${head} in`, zh: `在…中${g0}` },
-    { label: `${head} with`, zh: `与…${g0}` },
-    { label: `in terms of ${head}`, zh: `就${g0}而言` },
-    { label: `play a role in ${head}`, zh: `在${g0}中发挥作用` },
-    { label: `be associated with ${head}`, zh: `与${g0}相关` },
-    { label: `a range of ${head}`, zh: `一系列${g0}` },
-  ]
+  const colTemplates = collocationTemplates(head, entry.senses[0]?.zh || gloss, posKind)
   const colStart = hash32(`${seedBase}|col`) % colTemplates.length
   out.collocations = []
-  for (let i = 0; i < 4; i++) {
-    const t = colTemplates[(colStart + i) % colTemplates.length]
-    out.collocations.push(t)
+  for (let i = 0; i < 6; i++) {
+    out.collocations.push(colTemplates[(colStart + i) % colTemplates.length])
+  }
+
+  out.synonyms = ensureMinItems(out.synonyms, 2, () => {
+    for (const st of stems) {
+      for (const other of pool) {
+        if (other.word.toLowerCase() === self) continue
+        const ow = other.word.toLowerCase().replace(/[^a-z]/g, '')
+        if (ow.includes(st)) {
+          return {
+            label: other.word,
+            zh: primaryGloss(other),
+            ...(primaryPos(other) ? { pos: primaryPos(other) } : {}),
+          }
+        }
+      }
+    }
+    return null
+  })
+
+  out.derivatives = ensureMinItems(out.derivatives, 3, () => {
+    const forms = morphCandidates(head)
+    const form = forms[out.derivatives.length % Math.max(forms.length, 1)]
+    return form ? syntheticDerivative(form, gloss) : null
+  })
+
+  if (!out.roots.length && stem) {
+    out.roots = [{ label: stem, zh: '词干 / 词族核心' }]
+  }
+
+  for (const p of ['un', 'non', 'dis']) {
+    const label = p + headAlpha
+    if (label.toLowerCase() !== self) {
+      out.antonyms = ensureMinItems(out.antonyms, 1, () => ({
+        label,
+        zh: `非${gloss}的 / 否定形式`,
+        pos: primaryPos(entry),
+      }))
+      break
+    }
   }
 
   return out
