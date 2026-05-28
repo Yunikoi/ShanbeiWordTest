@@ -4,6 +4,16 @@
  * @type {Record<string, { meaning: string, source: string, pie?: string }>}
  */
 export const EXTENDED_ROOTS = {
+  vide: { meaning: '看', source: 'Latin videre', pie: 'PIE *weid-' },
+  vis: { meaning: '看', source: 'Latin videre', pie: 'PIE *weid-' },
+  ploy: { meaning: '折、用', source: 'Latin implicare', pie: 'PIE *plek-「编」' },
+  ploi: { meaning: '折', source: 'Latin plicare', pie: 'PIE *plek-' },
+  rept: { meaning: '爬', source: 'Latin repere', pie: 'PIE *rep-' },
+  dem: { meaning: '人民', source: 'Greek demos', pie: 'PIE *dā-「分」' },
+  demo: { meaning: '人民', source: 'Greek demos', pie: 'PIE *dā-' },
+  epidem: { meaning: '在人民中', source: 'Greek epidemia', pie: 'Greek epi + demos' },
+  pan: { meaning: '全', source: 'Greek pan', pie: 'PIE *peh₂-' },
+  pandem: { meaning: '全民', source: 'Greek pandemos', pie: 'Greek pan + demos' },
   organ: { meaning: '器官', source: 'Greek organon', pie: 'PIE *werg-「工作」' },
   org: { meaning: '器官', source: 'Greek organon', pie: 'PIE *werg-' },
   seism: { meaning: '震动', source: 'Greek seismos', pie: 'PIE *tweye-「震动」' },
