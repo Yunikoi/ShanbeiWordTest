@@ -371,6 +371,11 @@ export const PREFIX_ETYMOLOGY = {
   fore: { meaning: '在前', source: 'Germanic fore' },
   hyper: { meaning: '过度', source: 'Greek hyper' },
   hypo: { meaning: '不足', source: 'Greek hypo' },
+  epi: { meaning: '在上', source: 'Greek epi' },
+  para: { meaning: '旁', source: 'Greek para' },
+  peri: { meaning: '周围', source: 'Greek peri' },
+  meta: { meaning: '超越', source: 'Greek meta' },
+  proto: { meaning: '最初', source: 'Greek protos' },
   in: { meaning: '入、不', source: 'Latin in' },
   im: { meaning: '入、不', source: 'Latin in → im' },
   il: { meaning: '入、不', source: 'Latin in → il' },
@@ -846,7 +851,10 @@ const SHORT_PREFIX_OK = new Set([
  */
 function prefixAllowed(p, next) {
   if (next.length < MIN_STEM) return false
-  if (p === 'pro' && next.length < 6) return false
+  if (p === 'pro') {
+    const hasRoot = ROOT_FORMS.some((r) => r.length >= 3 && next.startsWith(r))
+    if (!hasRoot && next.length < 6) return false
+  }
   if (p.length >= 3) return next.length >= MIN_STEM
   if (!SHORT_PREFIX_OK.has(p)) return false
   return next.length >= 3
