@@ -870,6 +870,19 @@ function stripPrefixes(rest, parts) {
 }
 
 /**
+ * @param {string} s
+ * @param {string} next
+ */
+function suffixAllowed(s, next) {
+  if (next.length < MIN_STEM) return false
+  if (s === 'ism' && next.length < 6) return false
+  if (s === 'ist' && next.length < 5) return false
+  if (s === 'ic' && next.length < 4) return false
+  if (s === 'al' && next.length < 4) return false
+  return true
+}
+
+/**
  * @param {string} rest
  * @param {EtyPart[]} suffixParts
  */
@@ -880,7 +893,7 @@ function stripSuffixes(rest, suffixParts) {
     for (const s of SUFFIX_FORMS) {
       if (!rest.endsWith(s)) continue
       const next = rest.slice(0, -s.length)
-      if (next.length < MIN_STEM) continue
+      if (!suffixAllowed(s, next)) continue
       const meta = SUFFIX_ETYMOLOGY[s]
       suffixParts.unshift({
         type: 'suffix',
