@@ -5,6 +5,7 @@
 
 import { EXTENDED_ROOTS } from './extendedRoots.js'
 import { decomposeCompound } from './compoundMorphology.js'
+import { GERMANIC_LEXICON } from './germanicLexicon.js'
 
 /** @type {Record<string, { meaning: string, source: string, pie?: string }>} */
 export const ROOT_ETYMOLOGY = {
@@ -1000,6 +1001,18 @@ export function decomposeEtymology(token) {
 
   const compound = decomposeCompound(w)
   if (compound?.some((p) => p.type === 'root' || p.type === 'prefix')) return compound
+
+  const germ = GERMANIC_LEXICON[w]
+  if (germ) {
+    return [
+      {
+        type: 'root',
+        part: w,
+        meaning: germ.meaning,
+        etymology: [germ.source, germ.pie].filter(Boolean).join('; '),
+      },
+    ]
+  }
 
   return null
 }
