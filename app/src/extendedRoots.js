@@ -4,6 +4,8 @@
  * @type {Record<string, { meaning: string, source: string, pie?: string }>}
  */
 export const EXTENDED_ROOTS = {
+  organ: { meaning: '器官', source: 'Greek organon', pie: 'PIE *werg-「工作」' },
+  org: { meaning: '器官', source: 'Greek organon', pie: 'PIE *werg-' },
   seism: { meaning: '震动', source: 'Greek seismos', pie: 'PIE *tweye-「震动」' },
   seismo: { meaning: '地震', source: 'Greek seismos', pie: 'PIE *tweye-' },
   chron: { meaning: '时间', source: 'Greek chronos', pie: 'PIE *sker-「切」' },

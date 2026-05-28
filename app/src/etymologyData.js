@@ -785,6 +785,15 @@ export const WORD_LEXICON = {
     { type: 'root', part: 'peri', meaning: '试、经历', etymology: 'Latin experiri; PIE *per-' },
     { type: 'suffix', part: '-ence', meaning: '名词状态', etymology: 'Latin -entia' },
   ],
+  property: [
+    { type: 'prefix', part: 'pro-', meaning: '向前', etymology: 'Latin pro' },
+    { type: 'root', part: 'pri', meaning: '自己的', etymology: 'Latin privus; PIE *per-' },
+    { type: 'suffix', part: '-ty', meaning: '性质', etymology: 'Latin -tas' },
+  ],
+  seismic: [
+    { type: 'root', part: 'seism', meaning: '震动', etymology: 'Greek seismos; PIE *tweye-' },
+    { type: 'suffix', part: '-ic', meaning: '…的', etymology: 'Greek -ikos' },
+  ],
 }
 
 Object.assign(ROOT_ETYMOLOGY, EXTENDED_ROOTS)
@@ -836,6 +845,7 @@ const SHORT_PREFIX_OK = new Set([
  */
 function prefixAllowed(p, next) {
   if (next.length < MIN_STEM) return false
+  if (p === 'pro' && next.length < 6) return false
   if (p.length >= 3) return next.length >= MIN_STEM
   if (!SHORT_PREFIX_OK.has(p)) return false
   return next.length >= 3
