@@ -796,6 +796,52 @@ let ROOT_FORMS = Object.keys(ROOT_ETYMOLOGY).sort((a, b) => b.length - a.length)
 
 const MIN_STEM = 2
 
+/** 允许匹配的 2 字母前缀（避免 se- 误伤 seismic、set 等） */
+const SHORT_PREFIX_OK = new Set([
+  're',
+  'de',
+  'in',
+  'im',
+  'il',
+  'ir',
+  'un',
+  'ex',
+  'e',
+  'en',
+  'em',
+  'be',
+  'bi',
+  'co',
+  'ab',
+  'ad',
+  'ac',
+  'af',
+  'ag',
+  'al',
+  'ap',
+  'ar',
+  'as',
+  'at',
+  'ob',
+  'oc',
+  'of',
+  'op',
+  'di',
+  'dif',
+  'dis',
+])
+
+/**
+ * @param {string} p
+ * @param {string} next
+ */
+function prefixAllowed(p, next) {
+  if (next.length < MIN_STEM) return false
+  if (p.length >= 3) return next.length >= MIN_STEM
+  if (!SHORT_PREFIX_OK.has(p)) return false
+  return next.length >= 3
+}
+
 /**
  * @param {string} rest
  * @param {EtyPart[]} parts
@@ -807,7 +853,7 @@ function stripPrefixes(rest, parts) {
     for (const p of PREFIX_FORMS) {
       if (!rest.startsWith(p)) continue
       const next = rest.slice(p.length)
-      if (next.length < MIN_STEM) continue
+      if (!prefixAllowed(p, next)) continue
       const meta = PREFIX_ETYMOLOGY[p]
       parts.push({
         type: 'prefix',
