@@ -221,6 +221,10 @@ function buildEnglishRootAnalysis(entry, pool, noteRoots) {
   /** @type {MorphPart[]} */
   const parts = decomposeEtymology(token) || []
   const compound = isCompoundMorphology(parts)
+  const germanic =
+    parts.length === 1 &&
+    parts[0].type === 'root' &&
+    /Old English|Germanic|Old Norse|Middle English/i.test(parts[0].etymology || '')
 
   let prefixLine = '无'
   let rootLine = '无'
@@ -231,7 +235,14 @@ function buildEnglishRootAnalysis(entry, pool, noteRoots) {
   let family = []
   const tips = []
 
-  if (parts.length && compound) {
+  if (parts.length && germanic) {
+    prefixLine = '无'
+    rootLine = `${parts[0].part}（${parts[0].meaning}）← ${parts[0].etymology || ''}`
+    suffixLine = '无'
+    evolution = `${parts[0].part}（${parts[0].etymology?.split(';')[0] || parts[0].meaning}）→ ${gloss}`
+    insight = '日耳曼本土词：无拉丁/希腊前后缀，整词即古英语词干，可沿 PIE 追溯。'
+    tips.push('构词类型：日耳曼本土词（单一词根，非整词敷衍为拉丁词干）。')
+  } else if (parts.length && compound) {
     const pre = parts.filter((p) => p.type === 'prefix')
     const roots = parts.filter((p) => p.type === 'root')
     const suf = parts.filter((p) => p.type === 'suffix')
@@ -275,7 +286,7 @@ function buildEnglishRootAnalysis(entry, pool, noteRoots) {
 
   return {
     gloss,
-    morphKind: compound ? 'compound' : parts.length ? 'classical' : undefined,
+    morphKind: germanic ? 'germanic' : compound ? 'compound' : parts.length ? 'classical' : undefined,
     prefixLine,
     rootLine,
     suffixLine,
