@@ -4,9 +4,7 @@
  */
 
 import { EXTENDED_ROOTS } from './extendedRoots.js'
-import { analyzeMorphology } from './morphAnalyzer.js'
-
-Object.assign(ROOT_ETYMOLOGY, EXTENDED_ROOTS)
+import { decomposeCompound } from './compoundMorphology.js'
 
 /** @type {Record<string, { meaning: string, source: string, pie?: string }>} */
 export const ROOT_ETYMOLOGY = {
