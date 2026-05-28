@@ -395,7 +395,6 @@ export const PREFIX_ETYMOLOGY = {
   pseudo: { meaning: '假', source: 'Greek pseudes' },
   re: { meaning: '再', source: 'Latin re' },
   retro: { meaning: '向后', source: 'Latin retro' },
-  se: { meaning: '分开', source: 'Latin sed' },
   semi: { meaning: '半', source: 'Latin semi' },
   sub: { meaning: '下', source: 'Latin sub' },
   suc: { meaning: '下', source: 'Latin sub → suc' },

@@ -80,6 +80,8 @@ export const EXTENDED_ROOTS = {
   volut: { meaning: '卷', source: 'Latin volvere', pie: 'PIE *wel-' },
   prop: { meaning: '自己的', source: 'Latin proprius', pie: 'PIE *pro-' },
   propri: { meaning: '自己的', source: 'Latin proprius', pie: 'PIE *pro-' },
+  pri: { meaning: '私有的', source: 'Latin privus', pie: 'PIE *per-' },
+  ceiv: { meaning: '取', source: 'Latin capere', pie: 'PIE *kap-' },
   erty: { meaning: '性质', source: 'French -ité → -ty', pie: 'Latin -itas' },
   ceive: { meaning: '取', source: 'Latin capere', pie: 'PIE *kap-' },
   cept: { meaning: '拿', source: 'Latin capere', pie: 'PIE *kap-' },
