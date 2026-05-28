@@ -877,8 +877,14 @@ function suffixAllowed(s, next) {
   if (next.length < MIN_STEM) return false
   if (s === 'ism' && next.length < 6) return false
   if (s === 'ist' && next.length < 5) return false
+  if (s === 'ive' && next.length < 4) return false
+  if (s === 'ous' && next.length < 4) return false
+  if (s === 'ent' && next.length < 4) return false
+  if (s === 'ant' && next.length < 4) return false
+  if (s === 'ate' && next.length < 4) return false
   if (s === 'ic' && next.length < 4) return false
   if (s === 'al' && next.length < 4) return false
+  if (s === 'ty' && next.length < 5) return false
   return true
 }
 
