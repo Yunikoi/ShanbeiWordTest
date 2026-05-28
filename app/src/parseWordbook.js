@@ -5,9 +5,11 @@
  * - 词条,释义1；释义2
  * - # 注释行、【章节标题】行忽略
  * Obsidian Yasi.md：见 parseYasiMarkdown.js
+ * Obsidian JLPT*.md：见 parseJlptMarkdown.js
  */
 
 import { detectYasiMarkdown, parseYasiMarkdownText } from './parseYasiMarkdown.js'
+import { detectJlptMarkdown, parseJlptMarkdownText } from './parseJlptMarkdown.js'
 import { firstWordDelimiterColon, sensesFromColonTail, splitWordAndIpa } from './parseWordbookCore.js'
 
 export { splitWordAndIpa, firstWordDelimiterColon, sensesFromColonTail } from './parseWordbookCore.js'
@@ -119,10 +121,17 @@ export function detectMarkdownWordbook(text) {
 
 /**
  * @param {string} text
- * @returns {{ entries: { word: string, senses: import('./parseWordbookCore.js').Sense[] }[], badLineNumbers: number[], format: 'markdown' | 'plain' }}
+ * @returns {{ entries: { word: string, senses: import('./parseWordbookCore.js').Sense[] }[], badLineNumbers: number[], format: 'jlpt' | 'markdown' | 'plain' }}
  */
 export function parseWordbookText(text) {
-  const format = detectYasiMarkdown(text) ? 'markdown' : 'plain'
-  const result = format === 'markdown' ? parseYasiMarkdownText(text) : parsePlainWordbookText(text)
-  return { ...result, format }
+  if (detectJlptMarkdown(text)) {
+    const result = parseJlptMarkdownText(text)
+    return { ...result, format: 'jlpt' }
+  }
+  if (detectYasiMarkdown(text)) {
+    const result = parseYasiMarkdownText(text)
+    return { ...result, format: 'markdown' }
+  }
+  const result = parsePlainWordbookText(text)
+  return { ...result, format: 'plain' }
 }

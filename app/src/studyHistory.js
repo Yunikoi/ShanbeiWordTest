@@ -62,6 +62,63 @@ export function summarizeSession(session) {
 }
 
 /**
+ * @param {StudySession} session
+ * @returns {string} YYYY-MM-DD
+ */
+export function sessionDayKey(session) {
+  try {
+    const d = new Date(session.endedAt || session.startedAt)
+    const y = d.getFullYear()
+    const m = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${y}-${m}-${day}`
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * @param {StudySession[]} sessions
+ * @returns {Map<string, { sessions: StudySession[], testedTotal: number, unknownTotal: number, sessionCount: number }>}
+ */
+export function groupSessionsByDay(sessions) {
+  /** @type {Map<string, { sessions: StudySession[], testedTotal: number, unknownTotal: number, sessionCount: number }>} */
+  const map = new Map()
+  for (const s of sessions) {
+    const key = sessionDayKey(s)
+    if (!key) continue
+    if (!map.has(key)) {
+      map.set(key, { sessions: [], testedTotal: 0, unknownTotal: 0, sessionCount: 0 })
+    }
+    const bucket = map.get(key)
+    const sum = summarizeSession(s)
+    bucket.sessions.push(s)
+    bucket.testedTotal += sum.testedCount
+    bucket.unknownTotal += sum.unknownCount
+    bucket.sessionCount += 1
+  }
+  for (const bucket of map.values()) {
+    bucket.sessions.sort(
+      (a, b) =>
+        new Date(b.endedAt || b.startedAt).getTime() - new Date(a.endedAt || a.startedAt).getTime(),
+    )
+  }
+  return map
+}
+
+/** @param {string} key YYYY-MM-DD */
+export function formatDayKey(key) {
+  const [y, m, d] = key.split('-')
+  if (!y || !m || !d) return key
+  return `${y}年${Number(m)}月${Number(d)}日`
+}
+
+/** @param {number} year @param {number} month 0-based */
+export function formatMonthTitle(year, month) {
+  return `${year}年${month + 1}月`
+}
+
+/**
  * @param {string} iso
  * @returns {string}
  */

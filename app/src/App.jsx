@@ -1,14 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { getLlmSettings, setLlmSettings } from './llmSettings.js'
 import { useBookshelfStudy } from './useBookshelfStudy.js'
 import { StudyHistoryModal } from './StudyHistoryModal.jsx'
 import { WordRelationsPanel } from './WordRelationsPanel.jsx'
+import { RootAnalysisPanel } from './RootAnalysisPanel.jsx'
+import { buildRootAnalysis } from './rootAnalysis.js'
+import { hasJapaneseText } from './japaneseSentence.js'
 
-function speakEnglish(text) {
+function speakWord(text, reading) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return
   window.speechSynthesis.cancel()
-  const u = new SpeechSynthesisUtterance(text)
-  u.lang = 'en-US'
+  const u = new SpeechSynthesisUtterance()
+  const ja = hasJapaneseText(text)
+  u.lang = ja ? 'ja-JP' : 'en-US'
+  u.text = ja && reading?.trim() ? reading.trim() : text
   window.speechSynthesis.speak(u)
 }
 
@@ -19,6 +24,12 @@ function readFileAsText(file) {
     reader.onerror = () => reject(new Error('读取文件失败'))
     reader.readAsText(file, 'UTF-8')
   })
+}
+
+function importFormatLabel(format) {
+  if (format === 'jlpt') return 'JLPT 日语'
+  if (format === 'markdown') return 'Obsidian/雅思'
+  return 'txt'
 }
 
 export default function App() {
@@ -42,6 +53,7 @@ export default function App() {
     sessionExtra,
     sessionEmpty,
     currentCard,
+    sessionQueue,
     commitGrade,
     importFromText,
     clearActiveBook,
@@ -77,9 +89,26 @@ export default function App() {
   /** 释义页是否展开例句 */
   const [showExamples, setShowExamples] = useState(false)
   const [showRelations, setShowRelations] = useState(false)
+  const [showRoots, setShowRoots] = useState(false)
   const [feedbackBusy, setFeedbackBusy] = useState(false)
   const [cardKey, setCardKey] = useState(0)
   const [doneOpen, setDoneOpen] = useState(false)
+
+  useEffect(() => {
+    if (view !== 'study' || studyPhase !== 'word' || !currentCard?.word || doneOpen || sessionEmpty) return
+    const word = currentCard.word
+    const reading = currentCard.ipa
+    const timer = window.setTimeout(() => speakWord(word, reading), 60)
+    return () => window.clearTimeout(timer)
+  }, [view, studyPhase, cardKey, currentCard?.word, currentCard?.ipa, doneOpen, sessionEmpty])
+
+  const liveRootAnalysis = useMemo(() => {
+    if (!currentCard?.word) return null
+    const pool = entries.length > 0 ? entries : sessionQueue
+    if (!pool.length) return null
+    const entry = entries.find((e) => e.word === currentCard.word) ?? currentCard
+    return buildRootAnalysis(entry, pool)
+  }, [currentCard, entries, sessionQueue, cardKey])
 
   const onPickBook = useCallback(
     async (book) => {
@@ -128,6 +157,7 @@ export default function App() {
       setPreliminary(null)
       setShowExamples(false)
       setShowRelations(false)
+      setShowRoots(false)
       setCardKey((k) => k + 1)
     } catch {
       setImportTip('开始学习失败，请检查网络或大模型 API 设置')
@@ -141,6 +171,7 @@ export default function App() {
       setPreliminary(firstKind)
       setShowExamples(false)
       setShowRelations(false)
+      setShowRoots(false)
       setRevealed(true)
       setStudyPhase('meaning')
     },
@@ -159,6 +190,7 @@ export default function App() {
         setPreliminary(null)
         setShowExamples(false)
         setShowRelations(false)
+        setShowRoots(false)
 
         if (done) {
           setRevealed(true)
@@ -183,7 +215,7 @@ export default function App() {
         const base = file.name.replace(/\.(txt|md)$/i, '')
         const r = importFromText(text, base, { sourceFile: file.name })
         if (r.ok) {
-          const fmt = r.format === 'markdown' ? 'Obsidian/Markdown' : 'txt'
+          const fmt = importFormatLabel(r.format)
           const verb = r.updated ? '已更新' : '已导入'
           let msg = `${verb}「${base}」（${fmt}）共 ${r.count} 词`
           if (r.updated) msg += '，学习进度已保留'
@@ -467,6 +499,7 @@ export default function App() {
                 setPreliminary(null)
                 setShowExamples(false)
                 setShowRelations(false)
+                setShowRoots(false)
                 setRevealed(false)
                 backToBook()
               }}
@@ -522,14 +555,18 @@ export default function App() {
                         {currentCard.word}
                       </h1>
                       {currentCard.ipa ? (
-                        <p className="mt-2 font-mono text-lg tracking-wide text-slate-500 sm:text-xl">
-                          {currentCard.ipa}
+                        <p className="mt-2 text-lg tracking-wide text-slate-500 sm:text-xl">
+                          {hasJapaneseText(currentCard.word) ? (
+                            <span className="font-normal text-slate-600">{currentCard.ipa}</span>
+                          ) : (
+                            <span className="font-mono">{currentCard.ipa}</span>
+                          )}
                         </p>
                       ) : null}
                     </div>
                     <button
                       type="button"
-                      onClick={() => speakEnglish(currentCard.word)}
+                      onClick={() => speakWord(currentCard.word, currentCard.ipa)}
                       disabled={feedbackBusy}
                       className="shrink-0 rounded-full bg-slate-100 p-2 text-slate-600 hover:bg-slate-200 disabled:opacity-50"
                       aria-label="朗读"
@@ -579,8 +616,25 @@ export default function App() {
                         >
                           {showRelations ? '隐藏联想' : '查看联想'}
                         </button>
+                        <button
+                          type="button"
+                          onClick={() => setShowRoots((v) => !v)}
+                          disabled={feedbackBusy || doneOpen}
+                          className="rounded-2xl border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-900 shadow-sm hover:bg-violet-100 disabled:opacity-50"
+                        >
+                          {showRoots ? '隐藏词根' : '查看词根'}
+                        </button>
                       </div>
                       {showRelations ? <WordRelationsPanel relations={currentCard?.relations} /> : null}
+                      {showRoots ? (
+                        liveRootAnalysis ? (
+                          <RootAnalysisPanel analysis={liveRootAnalysis} word={currentCard?.word} />
+                        ) : (
+                          <p className="mt-3 rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 text-center text-xs text-amber-900">
+                            词根数据未就绪，请返回书架重新打开词书，或刷新页面后再试。
+                          </p>
+                        )
+                      ) : null}
                     </div>
                   ) : null}
 
@@ -714,7 +768,7 @@ export default function App() {
           </button>
         </div>
         <p className="mb-4 text-center text-xs text-slate-500">
-          导入时会复制到本机浏览器；再次选择<strong>同名文件</strong>会更新该词书并保留已有学习进度。
+          支持 <strong>txt</strong>、<strong>Yasi.md</strong>（雅思）、<strong>JLPT*.md</strong>（日语 N1–N5 笔记）；导入后在本机练习，进度与测试历史自动保存。
         </p>
         {importTip ? (
           <p className="mb-6 rounded-2xl border border-amber-100 bg-amber-50 px-4 py-3 text-center text-sm text-amber-900">

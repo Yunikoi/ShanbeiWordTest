@@ -4,6 +4,8 @@
  * 中文义项 zh 仅参与哈希，不写入英文句。
  */
 
+import { buildJapaneseExamplePair, hasJapaneseText } from './japaneseSentence.js'
+
 /** @param {string} str */
 export function hash32(str) {
   let h = 2166136261
@@ -547,12 +549,15 @@ export function buildIeltsExample(word, pos, zh, senseIndex, salt = 0) {
  */
 export function attachExamples(entry, salt = 0) {
   const saltVal = salt
+  const useJa = hasJapaneseText(entry.word)
   return {
     word: entry.word,
     ...(entry.ipa ? { ipa: entry.ipa } : {}),
     ...(entry.relations ? { relations: entry.relations } : {}),
     senses: entry.senses.map((s, i) => {
-      const { en, zh } = buildExamplePair(entry.word, s.pos, s.zh, i, saltVal)
+      const { en, zh } = useJa
+        ? buildJapaneseExamplePair(entry.word, s.pos, s.zh, i, saltVal)
+        : buildExamplePair(entry.word, s.pos, s.zh, i, saltVal)
       return { ...s, example: en, exampleZh: zh }
     }),
   }

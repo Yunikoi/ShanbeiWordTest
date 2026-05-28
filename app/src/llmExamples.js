@@ -43,7 +43,7 @@ The array length MUST equal ${entry.senses.length} and preserve sense order.`
 }
 
 /**
- * @param {{ word: string, senses: { pos?: string, zh: string, example?: string, exampleZh?: string }[] }} entry
+ * @param {{ word: string, senses: { pos?: string, zh: string, example?: string, exampleZh?: string }[], ipa?: string, relations?: import('./wordRelations.js').WordRelations, rootAnalysis?: import('./rootAnalysis.js').RootAnalysis }} entry
  * @param {unknown} parsed
  */
 function mergeParsed(entry, parsed) {
@@ -53,6 +53,9 @@ function mergeParsed(entry, parsed) {
   }
   return {
     word: entry.word,
+    ...(entry.ipa ? { ipa: entry.ipa } : {}),
+    ...(entry.relations ? { relations: entry.relations } : {}),
+    ...(entry.rootAnalysis ? { rootAnalysis: entry.rootAnalysis } : {}),
     senses: entry.senses.map((s, i) => {
       const p = arr[i]
       const ex = typeof p?.example === 'string' ? p.example.trim() : ''

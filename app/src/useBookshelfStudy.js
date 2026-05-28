@@ -13,6 +13,7 @@ import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings } from './llmSettings.js'
 import { attachExamples } from './ieltsSentence.js'
 import { attachLocalRelations } from './localRelations.js'
+import { attachRootAnalysis } from './rootAnalysis.js'
 import { parseWordbookText } from './parseWordbook.js'
 import { applySrsV2, migrateWordProg } from './srsCurve.js'
 import { enrichEntriesWithIpa } from './ipaLookup.js'
@@ -21,7 +22,7 @@ import { appendStudySession, loadStudyHistory } from './studyHistory.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
-/** @typedef {{ word: string, ipa?: string, senses: SenseEx[], relations?: import('./wordRelations.js').WordRelations }} CardEntry */
+/** @typedef {{ word: string, ipa?: string, senses: SenseEx[], relations?: import('./wordRelations.js').WordRelations, rootAnalysis?: import('./rootAnalysis.js').RootAnalysis }} CardEntry */
 
 /**
  * @param {Array<{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, relations?: import('./wordRelations.js').WordRelations }>} raw
@@ -35,7 +36,7 @@ function mapEntriesForStudy(raw, salt) {
     ...(e.ipa ? { ipa: e.ipa } : {}),
     ...(e.relations ? { relations: e.relations } : {}),
   }))
-  return base.map((e) => attachExamples(attachLocalRelations(e, base, salt), salt))
+  return base.map((e) => attachExamples(attachRootAnalysis(attachLocalRelations(e, base, salt), base), salt))
 }
 
 const MANIFEST_URL = '/wordbooks/manifest.json'
@@ -273,6 +274,7 @@ export function useBookshelfStudy() {
           queue = await enrichQueueWithLLM(queue, cfg)
         }
         queue = await enrichEntriesWithIpa(queue)
+        queue = queue.map((e) => attachRootAnalysis(e, entries))
         setSessionPlanTotal(queue.length)
         setSessionQueue(queue)
         setSessionIndex(0)
@@ -410,7 +412,7 @@ export function useBookshelfStudy() {
         return {
           ok: false,
           message:
-            '没有解析到有效词条。支持 txt：单词：释义。支持 Obsidian（Yasi.md）：#### 词条：释义、> - 短语：释义、词根行 subtle adj. 中文、**短语** 下一行释义等',
+            '没有解析到有效词条。支持 txt：单词：释义；Obsidian Yasi.md；JLPT 日语笔记（JLPT05.md 等）：#### 詞（よみ）[N2]：中文释义',
         }
       }
     const withSenses = parsed.map((e) => ({

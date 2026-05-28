@@ -1,5 +1,7 @@
 const CACHE_KEY = 'swt-ipa-cache-v1'
 
+import { hasJapaneseText } from './japaneseSentence.js'
+
 /** @returns {Record<string, string>} */
 function loadCache() {
   try {
@@ -93,7 +95,7 @@ export async function enrichEntriesWithIpa(entries, opts = {}) {
   const out = []
   let done = 0
   for (const entry of entries) {
-    if (entry.ipa?.trim()) {
+    if (entry.ipa?.trim() || hasJapaneseText(entry.word)) {
       out.push(entry)
     } else {
       const ipa = await fetchIpa(entry.word)
