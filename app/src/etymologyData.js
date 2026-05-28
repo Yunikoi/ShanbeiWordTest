@@ -788,9 +788,115 @@ export const WORD_LEXICON = {
   ],
 }
 
+Object.assign(ROOT_ETYMOLOGY, EXTENDED_ROOTS)
+
 const PREFIX_FORMS = Object.keys(PREFIX_ETYMOLOGY).sort((a, b) => b.length - a.length)
 const SUFFIX_FORMS = Object.keys(SUFFIX_ETYMOLOGY).sort((a, b) => b.length - a.length)
-const ROOT_FORMS = Object.keys(ROOT_ETYMOLOGY).sort((a, b) => b.length - a.length)
+let ROOT_FORMS = Object.keys(ROOT_ETYMOLOGY).sort((a, b) => b.length - a.length)
+
+const MIN_STEM = 2
+
+/**
+ * @param {string} rest
+ * @param {EtyPart[]} parts
+ */
+function stripPrefixes(rest, parts) {
+  let guard = 0
+  while (guard++ < 8) {
+    let hit = false
+    for (const p of PREFIX_FORMS) {
+      if (!rest.startsWith(p)) continue
+      const next = rest.slice(p.length)
+      if (next.length < MIN_STEM) continue
+      const meta = PREFIX_ETYMOLOGY[p]
+      parts.push({
+        type: 'prefix',
+        part: p.endsWith('-') ? p : `${p}-`,
+        meaning: meta.meaning,
+        etymology: meta.source,
+      })
+      rest = next
+      hit = true
+      break
+    }
+    if (!hit) break
+  }
+  return rest
+}
+
+/**
+ * @param {string} rest
+ * @param {EtyPart[]} suffixParts
+ */
+function stripSuffixes(rest, suffixParts) {
+  let guard = 0
+  while (guard++ < 8) {
+    let hit = false
+    for (const s of SUFFIX_FORMS) {
+      if (!rest.endsWith(s)) continue
+      const next = rest.slice(0, -s.length)
+      if (next.length < MIN_STEM) continue
+      const meta = SUFFIX_ETYMOLOGY[s]
+      suffixParts.unshift({
+        type: 'suffix',
+        part: s.startsWith('-') ? s : `-${s}`,
+        meaning: meta.meaning,
+        etymology: meta.source,
+      })
+      rest = next
+      hit = true
+      break
+    }
+    if (!hit) break
+  }
+  return rest
+}
+
+/**
+ * @param {string} rest
+ * @returns {EtyPart[]}
+ */
+function greedyRoots(rest) {
+  /** @type {EtyPart[]} */
+  const roots = []
+  let guard = 0
+  while (rest.length >= MIN_STEM && guard++ < 6) {
+    let best = ''
+    for (const r of ROOT_FORMS) {
+      if (r.length < 3) continue
+      if (!rest.startsWith(r)) continue
+      if (r.length > best.length) best = r
+    }
+    if (!best) break
+    const meta = ROOT_ETYMOLOGY[best]
+    roots.push({
+      type: 'root',
+      part: best,
+      meaning: meta.meaning,
+      etymology: [meta.source, meta.pie].filter(Boolean).join('; '),
+    })
+    rest = rest.slice(best.length)
+    if (rest.length === 1 && /[aeiouy]/i.test(rest)) rest = ''
+  }
+  return roots
+}
+
+/**
+ * @param {string} rest
+ */
+function matchSingleRoot(rest) {
+  if (rest.length < 3) return null
+  if (ROOT_ETYMOLOGY[rest]) {
+    const meta = ROOT_ETYMOLOGY[rest]
+    return {
+      type: 'root',
+      part: rest,
+      meaning: meta.meaning,
+      etymology: [meta.source, meta.pie].filter(Boolean).join('; '),
+    }
+  }
+  return null
+}
 
 /**
  * @param {string} token
@@ -803,110 +909,23 @@ export function decomposeEtymology(token) {
   if (WORD_LEXICON[w]) return WORD_LEXICON[w].map((p) => ({ ...p }))
 
   /** @type {EtyPart[]} */
-  const parts = []
-  let rest = w
-  let guard = 0
+  const prefixParts = []
+  /** @type {EtyPart[]} */
+  const suffixParts = []
 
-  while (guard++ < 6) {
-    let hit = false
-    for (const p of PREFIX_FORMS) {
-      if (rest.startsWith(p) && rest.length > p.length + 3) {
-        const meta = PREFIX_ETYMOLOGY[p]
-        parts.push({
-          type: 'prefix',
-          part: p,
-          meaning: meta.meaning,
-          etymology: meta.source,
-        })
-        rest = rest.slice(p.length)
-        hit = true
-        break
-      }
-    }
-    if (!hit) break
+  let rest = stripPrefixes(w, prefixParts)
+  rest = stripSuffixes(rest, suffixParts)
+
+  let rootParts = greedyRoots(rest)
+  if (!rootParts.length) {
+    const single = matchSingleRoot(rest)
+    if (single) rootParts = [single]
   }
 
-  guard = 0
-  while (guard++ < 6) {
-    let hit = false
-    for (const s of SUFFIX_FORMS) {
-      if (rest.endsWith(s) && rest.length > s.length + 3) {
-        const meta = SUFFIX_ETYMOLOGY[s]
-        parts.push({
-          type: 'suffix',
-          part: s,
-          meaning: meta.meaning,
-          etymology: meta.source,
-        })
-        rest = rest.slice(0, -s.length)
-        hit = true
-        break
-      }
-    }
-    if (!hit) break
-  }
-
-  if (rest.length >= 3) {
-    let rootMatched = false
-    for (const r of ROOT_FORMS) {
-      if (rest === r || (rest.length > r.length && rest.includes(r) && r.length >= 4)) {
-        if (rest !== r && rest.length > r.length + 2) continue
-        const meta = ROOT_ETYMOLOGY[r]
-        parts.splice(parts.findIndex((x) => x.type === 'prefix') + 1 || 0, 0, {
-          type: 'root',
-          part: r,
-          meaning: meta.meaning,
-          etymology: [meta.source, meta.pie].filter(Boolean).join('; '),
-        })
-        rootMatched = true
-        rest = rest.replace(r, '')
-        break
-      }
-    }
-    if (!rootMatched) {
-      for (const r of ROOT_FORMS) {
-        if (rest.startsWith(r) && rest.length >= r.length + 1) {
-          const meta = ROOT_ETYMOLOGY[r]
-          parts.splice(
-            parts.filter((x) => x.type === 'prefix').length,
-            0,
-            {
-              type: 'root',
-              part: r,
-              meaning: meta.meaning,
-              etymology: [meta.source, meta.pie].filter(Boolean).join('; '),
-            },
-          )
-          rest = rest.slice(r.length)
-          rootMatched = true
-          break
-        }
-      }
-    }
-    if (!rootMatched && rest.length >= 4) {
-      for (const r of ROOT_FORMS) {
-        if (rest.endsWith(r) && rest.length > r.length + 1) {
-          const meta = ROOT_ETYMOLOGY[r]
-          const idx = parts.findIndex((x) => x.type === 'suffix')
-          parts.splice(idx >= 0 ? idx : parts.length, 0, {
-            type: 'root',
-            part: r,
-            meaning: meta.meaning,
-            etymology: [meta.source, meta.pie].filter(Boolean).join('; '),
-          })
-          rest = rest.slice(0, -r.length)
-          rootMatched = true
-          break
-        }
-      }
-    }
-  }
-
-  const hasRoot = parts.some((p) => p.type === 'root')
-  if (hasRoot) return parts
+  if (rootParts.length) return [...prefixParts, ...rootParts, ...suffixParts]
 
   const compound = decomposeCompound(w)
-  if (compound?.length) return compound
+  if (compound?.some((p) => p.type === 'root' || p.type === 'prefix')) return compound
 
   return null
 }
