@@ -44,6 +44,8 @@ export function RootAnalysisPanel({ analysis, word }) {
           : null
 
   const derivativeGroups = groupByPos(analysis?.derivatives)
+  const bookSameRootGroups = groupByPos(analysis?.bookSameRoot)
+  const themeWordGroups = groupByPos(analysis?.themeWords)
 
   return (
     <div className="mt-3 space-y-4 rounded-2xl border border-violet-100 bg-violet-50/50 p-4">
@@ -107,7 +109,7 @@ export function RootAnalysisPanel({ analysis, word }) {
       {derivativeGroups.length ? (
         <section>
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700">
-            3. 同根衍生词（按词性）
+            3. 同根衍生词 · 雅思常考（按词性）
           </h4>
           <div className="space-y-3">
             {derivativeGroups.map((g) => (
@@ -129,8 +131,37 @@ export function RootAnalysisPanel({ analysis, word }) {
           </div>
           <p className="mt-2 text-[10px] text-slate-400">
             {analysis?.source === 'deepseek'
-              ? 'DeepSeek 按词性列出同词根派生；仅共享同一底层词源血统。'
-              : '本词书中同血统词，词性由词尾/词书标注推断。'}
+              ? 'DeepSeek 列出雅思常考同词根派生；仅共享同一底层词源血统。'
+              : '本雅思词书中同血统词，词性由词尾/词书标注推断。'}
+          </p>
+        </section>
+      ) : null}
+
+      {bookSameRootGroups.length ? (
+        <section>
+          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-emerald-700">
+            本词书内同根词（雅思）
+          </h4>
+          <div className="space-y-3">
+            {bookSameRootGroups.map((g) => (
+              <div key={g.pos} className="rounded-xl bg-emerald-50/80 px-3 py-2.5 ring-1 ring-emerald-100">
+                <p className="mb-2 text-[11px] font-semibold text-emerald-800">{g.label}</p>
+                <ul className="space-y-2">
+                  {g.items.map((d) => (
+                    <li key={d.word} className="text-sm">
+                      <span className="font-bold text-emerald-950">{d.word}</span>
+                      {d.morphBreakdown ? (
+                        <span className="ml-1.5 text-xs text-slate-500">{d.morphBreakdown}</span>
+                      ) : null}
+                      {d.zh ? <p className="mt-0.5 text-xs text-slate-600">→ {d.zh}</p> : null}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-[10px] text-slate-400">
+            来自当前词书、与当前词共享同一词源血统的其他词条。
           </p>
         </section>
       ) : null}
@@ -138,7 +169,7 @@ export function RootAnalysisPanel({ analysis, word }) {
       {analysis?.family?.length && !derivativeGroups.length ? (
         <section>
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700">
-            3. 真正的同根词族（本词书）
+            3. 同根词族 · 本词书（雅思）
           </h4>
           <ul className="space-y-2">
             {analysis.family.map((f) => (
@@ -163,9 +194,49 @@ export function RootAnalysisPanel({ analysis, word }) {
         </section>
       ) : null}
 
+      {analysis?.themeTopic || analysis?.themeSummary || themeWordGroups.length ? (
+        <section>
+          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-sky-700">
+            同主题雅思词汇 · 考点归纳
+          </h4>
+          <div className="rounded-xl bg-sky-50/90 px-3 py-3 ring-1 ring-sky-100">
+            {analysis?.themeTopic ? (
+              <p className="text-sm font-semibold text-sky-950">{analysis.themeTopic}</p>
+            ) : null}
+            {analysis?.themeSummary ? (
+              <p className="mt-1.5 text-sm leading-relaxed text-sky-900/90">{analysis.themeSummary}</p>
+            ) : null}
+            {themeWordGroups.length ? (
+              <div className="mt-3 space-y-2 border-t border-sky-100 pt-3">
+                {themeWordGroups.map((g) => (
+                  <div key={g.pos}>
+                    <p className="mb-1 text-[11px] font-semibold text-sky-800">{g.label}</p>
+                    <ul className="flex flex-wrap gap-2">
+                      {g.items.map((d) => (
+                        <li
+                          key={d.word}
+                          title={d.zh || ''}
+                          className="rounded-lg bg-white px-2.5 py-1 text-xs ring-1 ring-sky-100"
+                        >
+                          <span className="font-semibold text-sky-950">{d.word}</span>
+                          {d.zh ? <span className="text-sky-800/80"> · {d.zh}</span> : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+          <p className="mt-2 text-[10px] text-slate-400">
+            与当前词语义场景相近、可能在同一雅思主题/篇章中一起出现的常考词（不要求同词根）。
+          </p>
+        </section>
+      ) : null}
+
       {analysis?.insight ? (
         <section className="rounded-xl bg-amber-50 px-3 py-2 ring-1 ring-amber-100">
-          <h4 className="text-xs font-semibold text-amber-900">4. 深度记忆心法</h4>
+          <h4 className="text-xs font-semibold text-amber-900">深度记忆心法</h4>
           <p className="mt-1 text-sm leading-relaxed text-amber-950">{analysis.insight}</p>
         </section>
       ) : null}
@@ -200,7 +271,7 @@ export function RootAnalysisPanel({ analysis, word }) {
 
       <p className="text-[10px] text-slate-400">
         {analysis?.source === 'deepseek'
-          ? 'DeepSeek 词源学分析 · 含词性派生 · 失败时回退本地词库'
+          ? 'DeepSeek 词源学分析 · 含同根派生与同主题雅思词汇 · 失败时回退本地词库'
           : '印欧语源学 + 现代合成法 · 本地词库'}
       </p>
     </div>

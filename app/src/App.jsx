@@ -5,7 +5,7 @@ import { StudyHistoryModal } from './StudyHistoryModal.jsx'
 import { RootAnalysisPanel } from './RootAnalysisPanel.jsx'
 import { SessionCheckpoint } from './SessionCheckpoint.jsx'
 import { WordDetailView } from './WordDetailView.jsx'
-import { buildRootAnalysis } from './rootAnalysis.js'
+import { buildRootAnalysis, withBookSameRoot } from './rootAnalysis.js'
 import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
 import { countCachedRootAnalysis } from './rootAnalysisCache.js'
 import { hasJapaneseText } from './japaneseSentence.js'
@@ -64,6 +64,7 @@ export default function App() {
     preparingSession,
     prepareStatus,
     rootEnrich,
+    refreshBookRootAnalysis,
     backToShelf,
     backToBook,
     sessionPosition,
@@ -153,9 +154,12 @@ export default function App() {
 
   const displayRootAnalysis = useMemo(() => {
     if (!currentCard?.word) return null
-    if (currentCard.rootAnalysis) return currentCard.rootAnalysis
-    return liveRootAnalysis
-  }, [currentCard, liveRootAnalysis])
+    const pool = entries.length > 0 ? entries : sessionQueue
+    const entry = entries.find((e) => e.word === currentCard.word) ?? currentCard
+    const base = currentCard.rootAnalysis ?? liveRootAnalysis
+    if (!base) return null
+    return withBookSameRoot(base, entry, pool) ?? base
+  }, [currentCard, liveRootAnalysis, entries, sessionQueue])
 
   const onPickBook = useCallback(
     async (book) => {
@@ -482,10 +486,20 @@ export default function App() {
                   </p>
                 </>
               ) : (
-                <p className="text-sm text-violet-900">
-                  词根已缓存 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
-                  {rootCachedCount < total ? ' · 打开词书时会自动补全未分析的词' : ' · 整本词表已分析完毕'}
-                </p>
+                <>
+                  <p className="text-sm text-violet-900">
+                    词根已缓存 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
+                    {rootCachedCount < total ? ' · 打开词书时会自动补全未分析的词' : ' · 整本词表已分析完毕'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => refreshBookRootAnalysis()}
+                    disabled={rootEnrich.running}
+                    className="mt-2 text-xs font-medium text-violet-700 underline hover:text-violet-900 disabled:opacity-50"
+                  >
+                    重新分析整本词根（含同主题词汇）
+                  </button>
+                </>
               )}
             </div>
           ) : null}
@@ -1027,7 +1041,7 @@ export default function App() {
         <details className="mb-6 rounded-2xl border border-violet-200 bg-violet-50/50 px-4 py-3 text-left shadow-sm" open>
           <summary className="cursor-pointer text-sm font-semibold text-violet-900">词根分析 · DeepSeek（推荐）</summary>
           <p className="mt-2 text-xs leading-relaxed text-slate-600">
-            打开词书或更新词表后，后台一次性分析整本词表（仅补未缓存的新词），结果保存在本机。词表悬停看释义、点击进入单词详情。API Key 仅存本机。
+            打开词书或更新词表后，后台一次性分析整本词表（含同根派生、同主题雅思词汇归纳），结果保存在本机。词表悬停看释义、点击进入单词详情。API Key 仅存本机。
           </p>
           <label className="mt-3 flex cursor-pointer items-center gap-2 text-sm">
             <input

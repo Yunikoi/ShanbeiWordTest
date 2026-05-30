@@ -4,8 +4,7 @@ import { openaiChatJson } from './llmOpenai.js'
 /**
  * 可选：用用户自备 API Key 调用大模型，为每个义项生成阅读向英文例句 + 中文译文。
  * - Gemini：浏览器直连 generativelanguage.googleapis.com（需在 Google AI Studio 创建密钥，并可限制 HTTP 来源）。
- * - Groq：开发时走 Vite 代理 /api/groq 避免 CORS；生产静态部署若无代理则可能失败。
- * - DeepSeek：开发时走 /api/deepseek 代理；OpenAI 兼容接口。
+ * - Groq / DeepSeek：走同源 /api/groq、/api/deepseek 代理（开发=Vite，线上=托管平台配置）。
  */
 
 /**
@@ -102,24 +101,10 @@ async function geminiGenerateJson(apiKey, model, userText) {
  */
 export async function generateLlmJson(cfg, userText, systemText) {
   if (cfg.provider === 'groq') {
-    return openaiChatJson(
-      '/api/groq',
-      'https://api.groq.com/openai/v1',
-      cfg.apiKey,
-      cfg.modelGroq,
-      userText,
-      systemText,
-    )
+    return openaiChatJson('/api/groq', cfg.apiKey, cfg.modelGroq, userText, systemText)
   }
   if (cfg.provider === 'deepseek') {
-    return openaiChatJson(
-      '/api/deepseek',
-      'https://api.deepseek.com',
-      cfg.apiKey,
-      cfg.modelDeepseek,
-      userText,
-      systemText,
-    )
+    return openaiChatJson('/api/deepseek', cfg.apiKey, cfg.modelDeepseek, userText, systemText)
   }
   return geminiGenerateJson(cfg.apiKey, cfg.modelGemini, userText)
 }

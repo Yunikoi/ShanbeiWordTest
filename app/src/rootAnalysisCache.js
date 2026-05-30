@@ -1,5 +1,34 @@
 const PREFIX = 'swt-root-llm-'
 
+/** 词根分析缓存结构版本；升级后旧缓存会自动重分析 */
+export const ROOT_ANALYSIS_SCHEMA_VERSION = 2
+
+/** @param {import('./rootAnalysis.js').RootAnalysis | null | undefined} analysis */
+export function isRootAnalysisStale(analysis) {
+  if (!analysis || analysis.source !== 'deepseek') return false
+  const v = /** @type {{ schemaVersion?: number }} */ (analysis).schemaVersion
+  if (v === ROOT_ANALYSIS_SCHEMA_VERSION) return false
+  return true
+}
+
+/** @param {string} bookId */
+export function clearBookRootAnalysisCache(bookId) {
+  localStorage.removeItem(PREFIX + bookId)
+}
+
+/** @param {string} bookId @param {string} word */
+export function removeWordRootAnalysis(bookId, word) {
+  const map = loadBookRootMap(bookId)
+  if (map[word]) {
+    delete map[word]
+    saveBookRootMap(bookId, map)
+  }
+  if (map[word.toLowerCase()]) {
+    delete map[word.toLowerCase()]
+    saveBookRootMap(bookId, map)
+  }
+}
+
 /** @param {string} bookId @returns {Record<string, import('./rootAnalysis.js').RootAnalysis>} */
 function loadBookRootMap(bookId) {
   try {

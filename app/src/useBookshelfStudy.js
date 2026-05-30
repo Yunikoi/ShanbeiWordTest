@@ -11,7 +11,8 @@ import {
 } from './bookStorage.js'
 import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings, getRootLlmSettings } from './llmSettings.js'
-import { enrichBookEntriesWithRootLlm, getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
+import { enrichBookEntriesWithRootLlm, getCachedRootAnalysisLlm, clearRootAnalysisCache } from './llmRootAnalysis.js'
+import { clearBookRootAnalysisCache } from './rootAnalysisCache.js'
 import { attachExamples } from './ieltsSentence.js'
 import { attachRootAnalysis } from './rootAnalysis.js'
 import { parseWordbookText } from './parseWordbook.js'
@@ -204,6 +205,14 @@ export function useBookshelfStudy() {
       })
     })
   }, [])
+
+  const refreshBookRootAnalysis = useCallback(() => {
+    if (!activeBookId || !entries.length) return
+    rootEnrichGenRef.current += 1
+    clearBookRootAnalysisCache(activeBookId)
+    clearRootAnalysisCache()
+    startBookRootEnrichment(activeBookId, entries)
+  }, [activeBookId, entries, startBookRootEnrichment])
 
   const books = useMemo(() => {
     const imp = importMeta.map((b) => ({
@@ -582,6 +591,7 @@ export function useBookshelfStudy() {
     preparingSession,
     prepareStatus,
     rootEnrich,
+    refreshBookRootAnalysis,
     backToShelf,
     backToBook,
     clearActiveBook,

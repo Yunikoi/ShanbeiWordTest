@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "cd app && npm install",
+  "buildCommand": "cd app && npm run build",
+  "outputDirectory": "app/dist",
+  "rewrites": [
+    {
+      "source": "/api/deepseek/:path*",
+      "destination": "https://api.deepseek.com/:path*"
+    },
+    {
+      "source": "/api/groq/:path*",
+      "destination": "https://api.groq.com/openai/v1/:path*"
+    }
+  ]
+}

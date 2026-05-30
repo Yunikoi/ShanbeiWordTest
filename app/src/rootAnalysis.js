@@ -28,11 +28,16 @@ import {
  *   pieSummary?: string,
  *   family: FamilyWord[],
  *   derivatives: DerivativeWord[],
+ *   bookSameRoot?: DerivativeWord[],
+ *   themeTopic?: string,
+ *   themeSummary?: string,
+ *   themeWords?: DerivativeWord[],
  *   relatedNotes: RelatedNote[],
  *   tips: string[],
  *   insight?: string,
  *   strictEtymology?: boolean,
  *   source?: 'local' | 'deepseek',
+ *   schemaVersion?: number,
  * }} RootAnalysis */
 
 /** @typedef {{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, rootAnalysis?: RootAnalysis }} PoolEntry */
@@ -204,6 +209,55 @@ function findDerivativesInPool(entry, pool, myRootKeys, max = 10) {
     if (!picked.some((p) => p.word === d.word)) picked.push(d)
   }
   return picked.slice(0, max)
+}
+
+/**
+ * 从词书中找出与 entry 共享词源血统的同根词（供雅思词书联动展示）。
+ * @param {PoolEntry} entry
+ * @param {PoolEntry[]} pool
+ * @param {number} [max]
+ * @returns {DerivativeWord[]}
+ */
+export function findBookSameRootWords(entry, pool, max = 10) {
+  const token = englishToken(entry.word.split(/\s+/)[0])
+  const parts = decomposeEtymology(token) || []
+  if (isCompoundMorphology(parts)) {
+    return findCompoundFamily(entry, pool, parts)
+      .map((f) => ({
+        word: f.word,
+        pos: normalizePos(f.pos, f.word),
+        zh: f.zh || '',
+        morphBreakdown: f.morphBreakdown,
+      }))
+      .slice(0, max)
+  }
+  if (!parts.length) return []
+  const keys = getCanonicalRootKeysFromParts(parts)
+  return findDerivativesInPool(entry, pool, keys, max)
+}
+
+/**
+ * DeepSeek 结果合并词书内同根词；本地分析已在 derivatives 中含词书匹配，无需重复。
+ * @param {RootAnalysis | null | undefined} analysis
+ * @param {PoolEntry} entry
+ * @param {PoolEntry[]} pool
+ * @returns {RootAnalysis | null | undefined}
+ */
+export function withBookSameRoot(analysis, entry, pool) {
+  if (!analysis || !pool.length || hasJapaneseText(entry.word)) return analysis
+  if (analysis.source !== 'deepseek') return analysis
+
+  const bookWords = findBookSameRootWords(entry, pool, 12)
+  if (!bookWords.length) return analysis
+
+  const seen = new Set([
+    entry.word.toLowerCase(),
+    ...(analysis.derivatives?.map((d) => d.word.toLowerCase()) ?? []),
+    ...(analysis.family?.map((f) => f.word.toLowerCase()) ?? []),
+  ])
+  const bookSameRoot = bookWords.filter((w) => !seen.has(w.word.toLowerCase()))
+  if (!bookSameRoot.length) return analysis
+  return { ...analysis, bookSameRoot }
 }
 
 /**
@@ -468,6 +522,8 @@ export function hasRootAnalysis(a) {
     (a.parts?.length ?? 0) > 0 ||
     (a.family?.length ?? 0) > 0 ||
     (a.derivatives?.length ?? 0) > 0 ||
+    (a.themeWords?.length ?? 0) > 0 ||
+    !!a.themeTopic ||
     (a.tips?.length ?? 0) > 0 ||
     !!a.evolution ||
     !!a.pieSummary ||

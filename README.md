@@ -78,6 +78,35 @@ npm run preview  # 本地预览构建结果
 npm run lint     # ESLint
 ```
 
+### 部署到线上（推荐）
+
+应用是纯前端静态站，可部署到任意静态托管。**DeepSeek / Groq 需平台提供同源 API 代理**（仓库已配好）。
+
+| 平台 | 难度 | DeepSeek 词根 | 说明 |
+|------|------|---------------|------|
+| **[Vercel](https://vercel.com)** | ⭐ 最简单 | ✅ | 连接 GitHub 仓库 `Yunikoi/ShanbeiWordTest`，根目录已有 `vercel.json`，自动构建 |
+| **[Netlify](https://netlify.com)** | ⭐ | ✅ | 导入仓库，使用根目录 `netlify.toml` |
+| **GitHub Pages** | ⭐⭐ | ❌ 无代理 | 仅静态页；推送 `main` 后 Actions 自动部署。DeepSeek/Groq 不可用，Gemini 仍可用 |
+
+**Vercel 一键步骤：**
+
+1. 打开 [vercel.com](https://vercel.com) → Import Git Repository → 选 `ShanbeiWordTest`
+2. 保持默认（Build：`cd app && npm run build`，Output：`app/dist`）
+3. Deploy → 获得 `https://xxx.vercel.app` 公网地址
+
+**Netlify：** 同样导入 GitHub 仓库，Build command / Publish directory 由 `netlify.toml` 自动读取。
+
+**GitHub Pages：**
+
+1. 仓库 Settings → Pages → Source 选 **GitHub Actions**
+2. 推送 `main` 分支，workflow 自动发布到 `https://yunikoi.github.io/ShanbeiWordTest/`
+
+**线上与本地差异：**
+
+- 学习进度、词根缓存、API Key 仍在**各浏览器 localStorage**，换设备/换浏览器数据不互通（未做账号后端）。
+- 用户自备 DeepSeek Key，在网站设置里填写即可；Key 不会进 Git 仓库。
+- Gemini 需在 Google AI Studio 把线上域名加入 API Key 的 HTTP 来源限制。
+
 ### Windows 快捷方式（一键开浏览器）
 
 仓库根目录提供批处理，可**右键 → 发送到 → 桌面快捷方式**，或固定到任务栏：
@@ -93,12 +122,15 @@ npm run lint     # ESLint
 
 1. 书架页展开 **「大模型生成例句+译文（可选）」**，勾选启用并填写 **API Key**（仅 `localStorage`）。
 2. **Gemini**：浏览器直连 Google API，建议在 [Google AI Studio](https://aistudio.google.com/apikey) 创建密钥并限制 HTTP 来源。
-3. **Groq**：`npm run dev` 时通过 `vite.config.js` 里 **`/api/groq` → Groq OpenAI 兼容接口** 转发，减轻浏览器 CORS 问题；静态部署到公网需自行配置同源代理。
+3. **Groq / DeepSeek**：线上经 `/api/groq`、`/api/deepseek` 同源代理（Vercel / Netlify 已配置）；本地 `npm run dev` 由 Vite 转发。
 
 ### 仓库结构（核心）
 
 ```
 ShanbeiWordTest/
+├── vercel.json                 # Vercel 构建 + DeepSeek/Groq 代理
+├── netlify.toml                # Netlify 同上
+├── .github/workflows/          # GitHub Pages 自动部署
 ├── start-dev.bat               # Windows：一键启动 + 浏览器
 ├── start-dev-port6294.bat      # Windows：固定 6294 端口
 ├── app/

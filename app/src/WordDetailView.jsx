@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { RootAnalysisPanel } from './RootAnalysisPanel.jsx'
-import { buildRootAnalysis } from './rootAnalysis.js'
+import { buildRootAnalysis, withBookSameRoot } from './rootAnalysis.js'
 import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
 
 /**
@@ -14,11 +14,15 @@ import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
  */
 export function WordDetailView({ entry, pool, bookId, rootEnrichRunning, onClose }) {
   const rootAnalysis = useMemo(() => {
-    if (entry.rootAnalysis?.source === 'deepseek') return entry.rootAnalysis
-    const cached = bookId ? getCachedRootAnalysisLlm(bookId, entry.word) : null
-    if (cached) return cached
-    if (entry.rootAnalysis) return entry.rootAnalysis
-    return buildRootAnalysis(entry, pool)
+    let base
+    if (entry.rootAnalysis?.source === 'deepseek') base = entry.rootAnalysis
+    else {
+      const cached = bookId ? getCachedRootAnalysisLlm(bookId, entry.word) : null
+      if (cached) base = cached
+      else if (entry.rootAnalysis) base = entry.rootAnalysis
+      else base = buildRootAnalysis(entry, pool)
+    }
+    return withBookSameRoot(base, entry, pool) ?? base
   }, [entry, pool, bookId])
 
   const rootPending =

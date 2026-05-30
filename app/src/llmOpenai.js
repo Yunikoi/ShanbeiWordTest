@@ -11,16 +11,15 @@ export function parseJsonLoose(text) {
 }
 
 /**
- * @param {string} devProxy
- * @param {string} prodBase
+ * 浏览器端统一走同源 /api/* 代理（开发=Vite，线上=Vercel/Netlify/GitHub Pages+Cloudflare）。
+ * @param {string} proxyBase 如 /api/deepseek
  * @param {string} apiKey
  * @param {string} model
  * @param {string} userText
  * @param {string} [systemText]
  */
-export async function openaiChatJson(devProxy, prodBase, apiKey, model, userText, systemText) {
-  const base = import.meta.env.DEV ? devProxy : prodBase
-  const r = await fetch(`${base}/chat/completions`, {
+export async function openaiChatJson(proxyBase, apiKey, model, userText, systemText) {
+  const r = await fetch(`${proxyBase}/chat/completions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -54,5 +53,5 @@ export async function openaiChatJson(devProxy, prodBase, apiKey, model, userText
  * @param {string} systemText
  */
 export function openaiChatJsonForRoot(apiKey, model, userText, systemText) {
-  return openaiChatJson('/api/deepseek', 'https://api.deepseek.com', apiKey, model, userText, systemText)
+  return openaiChatJson('/api/deepseek', apiKey, model, userText, systemText)
 }
