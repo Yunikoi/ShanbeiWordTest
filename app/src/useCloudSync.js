@@ -6,7 +6,9 @@ import {
   pushRemoteSync,
   applyRemotePayload,
   storageFingerprint,
-  SYNC_LAST_PUSH,
+  fingerprintFromPayload,
+  getLastSyncedAtMs,
+  markSyncedAt,
 } from './cloudSync.js'
 
 const PULL_MS = 12_000
@@ -36,10 +38,20 @@ export function useCloudSync() {
     try {
       const remote = await pullRemoteSync(syncKey)
       if (!remote) return
-      const localPush = localStorage.getItem(SYNC_LAST_PUSH) || ''
-      if (remote.updatedAt <= localPush) return
+      const remoteMs = Date.parse(remote.updatedAt)
+      if (Number.isFinite(remoteMs) && remoteMs <= getLastSyncedAtMs()) return
+
+      const remoteFp = fingerprintFromPayload(remote.payload)
+      const localFp = storageFingerprint()
+      if (remoteFp === localFp) {
+        markSyncedAt(remote.updatedAt)
+        fingerprintRef.current = localFp
+        return
+      }
+
       applyingRemoteRef.current = true
       applyRemotePayload(remote.payload, remote.updatedAt)
+      fingerprintRef.current = storageFingerprint()
       setStatus(`已从云端更新 · ${new Date(remote.updatedAt).toLocaleString()}`)
       window.setTimeout(() => window.location.reload(), 600)
     } catch (e) {
