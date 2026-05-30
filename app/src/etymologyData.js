@@ -800,6 +800,16 @@ export const WORD_LEXICON = {
     { type: 'root', part: 'seism', meaning: '震动', etymology: 'Greek seismos; PIE *tweye-' },
     { type: 'suffix', part: '-ic', meaning: '…的', etymology: 'Greek -ikos' },
   ],
+  subtly: [
+    { type: 'prefix', part: 'sub-', meaning: '在下', etymology: 'Latin sub' },
+    { type: 'root', part: 'tle', meaning: '编织', etymology: 'Latin tela; PIE *teks-' },
+    { type: 'suffix', part: '-ly', meaning: '…地', etymology: 'Germanic -lice' },
+  ],
+  subtlety: [
+    { type: 'prefix', part: 'sub-', meaning: '在下', etymology: 'Latin sub' },
+    { type: 'root', part: 'tle', meaning: '编织', etymology: 'Latin tela; PIE *teks-' },
+    { type: 'suffix', part: '-ty', meaning: '性质', etymology: 'Latin -tas' },
+  ],
 }
 
 Object.assign(ROOT_ETYMOLOGY, EXTENDED_ROOTS)
