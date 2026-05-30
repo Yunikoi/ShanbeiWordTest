@@ -15,6 +15,7 @@ import {
 
 /** @typedef {{ type: 'prefix' | 'suffix' | 'root' | 'kanji' | 'connect', part: string, meaning: string, etymology?: string }} MorphPart */
 /** @typedef {{ word: string, zh?: string, pos?: string, morphBreakdown?: string }} FamilyWord */
+/** @typedef {{ word: string, pos: string, zh: string, morphBreakdown?: string }} DerivativeWord */
 /** @typedef {{ label: string, zh?: string }} RelatedNote */
 /** @typedef {{
  *   gloss: string,
@@ -26,10 +27,12 @@ import {
  *   parts: MorphPart[],
  *   pieSummary?: string,
  *   family: FamilyWord[],
+ *   derivatives: DerivativeWord[],
  *   relatedNotes: RelatedNote[],
  *   tips: string[],
  *   insight?: string,
  *   strictEtymology?: boolean,
+ *   source?: 'local' | 'deepseek',
  * }} RootAnalysis */
 
 /** @typedef {{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, relations?: import('./wordRelations.js').WordRelations, rootAnalysis?: RootAnalysis }} PoolEntry */
@@ -120,18 +123,43 @@ function englishToken(w) {
   return w.toLowerCase().replace(/[^a-z]/g, '')
 }
 
+/** @param {string | undefined} raw @param {string} word */
+export function normalizePos(raw, word) {
+  const s = String(raw || '').toLowerCase()
+  if (/^n\.?$|^noun|^名词|^名/.test(s)) return 'n'
+  if (/^v\.?$|^verb|^动词|^动/.test(s)) return 'v'
+  if (/^adj|^a\.?$|^形容词|^形/.test(s)) return 'adj'
+  if (/^adv|^ad\.?$|^副词|^副/.test(s)) return 'adv'
+  const w = englishToken(word)
+  if (w.endsWith('ly') && w.length > 3) return 'adv'
+  if (/(tion|sion|ment|ness|ity|ence|ance|ship|dom|ism|ist|ure|age)$/.test(w)) return 'n'
+  if (/(ify|ize|ise)$/.test(w) || (w.endsWith('ate') && w.length > 4)) return 'v'
+  if (/(al|ive|ous|ic|able|ible|ful|less|ant|ent|ary|ory|y)$/.test(w)) return 'adj'
+  return 'other'
+}
+
+export const POS_LABELS = {
+  n: '名词',
+  v: '动词',
+  adj: '形容词',
+  adv: '副词',
+  other: '其他',
+}
+
 /**
  * @param {PoolEntry} entry
  * @param {PoolEntry[]} pool
  * @param {string[]} myRootKeys
+ * @param {number} max
  */
-function findEtymologicalFamily(entry, pool, myRootKeys) {
+function findDerivativesInPool(entry, pool, myRootKeys, max = 10) {
   if (!myRootKeys.length) return []
 
   const self = entry.word.toLowerCase()
-  /** @type {FamilyWord[]} */
-  const family = []
+  /** @type {DerivativeWord[]} */
+  const out = []
   const seen = new Set([self])
+  const wantPos = new Set(['n', 'v', 'adj', 'adv'])
 
   for (const other of pool) {
     if (other.word.toLowerCase() === self) continue
@@ -139,21 +167,57 @@ function findEtymologicalFamily(entry, pool, myRootKeys) {
     const otherParts = decomposeEtymology(otherToken)
     if (!otherParts?.length || isCompoundMorphology(otherParts)) continue
     const otherKeys = getCanonicalRootKeysFromParts(otherParts)
-    const shared = myRootKeys.some((k) => otherKeys.includes(k))
-    if (!shared) continue
+    if (!myRootKeys.some((k) => otherKeys.includes(k))) continue
 
     const key = other.word.toLowerCase()
     if (seen.has(key)) continue
     seen.add(key)
-    family.push({
+
+    const sensePos = other.senses.find((s) => s.pos)?.pos
+    const pos = normalizePos(sensePos, other.word)
+    out.push({
       word: other.word,
+      pos,
       zh: primaryGloss(other),
       morphBreakdown: formatMorphBreakdown(otherParts),
-      ...(other.senses.find((s) => s.pos)?.pos ? { pos: other.senses.find((s) => s.pos).pos } : {}),
     })
-    if (family.length >= 4) break
   }
-  return family
+
+  out.sort((a, b) => {
+    const pa = wantPos.has(a.pos) ? 0 : 1
+    const pb = wantPos.has(b.pos) ? 0 : 1
+    if (pa !== pb) return pa - pb
+    const order = { n: 0, v: 1, adj: 2, adv: 3, other: 4 }
+    return (order[a.pos] ?? 9) - (order[b.pos] ?? 9)
+  })
+
+  const picked = []
+  const posCount = { n: 0, v: 0, adj: 0, adv: 0, other: 0 }
+  for (const d of out) {
+    if (picked.length >= max) break
+    if (d.pos !== 'other' && posCount[d.pos] >= 3) continue
+    picked.push(d)
+    posCount[d.pos] = (posCount[d.pos] || 0) + 1
+  }
+  for (const d of out) {
+    if (picked.length >= max) break
+    if (!picked.some((p) => p.word === d.word)) picked.push(d)
+  }
+  return picked.slice(0, max)
+}
+
+/**
+ * @param {PoolEntry} entry
+ * @param {PoolEntry[]} pool
+ * @param {string[]} myRootKeys
+ */
+function findEtymologicalFamily(entry, pool, myRootKeys) {
+  return findDerivativesInPool(entry, pool, myRootKeys, 4).map((d) => ({
+    word: d.word,
+    zh: d.zh,
+    morphBreakdown: d.morphBreakdown,
+    pos: d.pos,
+  }))
 }
 
 /**
@@ -233,7 +297,10 @@ function buildEnglishRootAnalysis(entry, pool, noteRoots) {
   let insight = ''
   /** @type {FamilyWord[]} */
   let family = []
+  /** @type {DerivativeWord[]} */
+  let derivatives = []
   const tips = []
+  let myRootKeys = []
 
   if (parts.length && germanic) {
     prefixLine = '无'
@@ -260,6 +327,12 @@ function buildEnglishRootAnalysis(entry, pool, noteRoots) {
           ? `前缀 ${pre[0].part} 限定方向，词干 ${roots[0].part} 提供核心概念，合成后得到「${gloss}」。`
           : ''
     family = findCompoundFamily(entry, pool, parts)
+    derivatives = family.map((f) => ({
+      word: f.word,
+      pos: normalizePos(f.pos, f.word),
+      zh: f.zh || '',
+      morphBreakdown: f.morphBreakdown,
+    }))
     tips.push('构词类型：现代英语合成法（非拉丁/希腊屈折词干）。')
     tips.push('笔记中的关联词（如 subtle 与 subset）若不同源，不会列入同根词族。')
   } else if (parts.length) {
@@ -268,8 +341,14 @@ function buildEnglishRootAnalysis(entry, pool, noteRoots) {
     suffixLine = formatMorphLine(parts, 'suffix')
     evolution = buildLiteralEvolution(parts, gloss)
     const pieSummary = summarizePie(parts)
-    const myRootKeys = getCanonicalRootKeysFromParts(parts)
-    family = findEtymologicalFamily(entry, pool, myRootKeys)
+    myRootKeys = getCanonicalRootKeysFromParts(parts)
+    derivatives = findDerivativesInPool(entry, pool, myRootKeys, 10)
+    family = derivatives.slice(0, 4).map((d) => ({
+      word: d.word,
+      zh: d.zh,
+      morphBreakdown: d.morphBreakdown,
+      pos: d.pos,
+    }))
     if (pieSummary) tips.push(`印欧语源：${pieSummary}`)
     tips.push('同根词族仅收录共享同一拉丁/希腊/PIE 词源血统者。')
   } else {
@@ -294,6 +373,7 @@ function buildEnglishRootAnalysis(entry, pool, noteRoots) {
     parts,
     ...(pieSummary ? { pieSummary } : {}),
     family,
+    derivatives,
     relatedNotes,
     tips,
     ...(insight ? { insight } : {}),
@@ -366,6 +446,7 @@ function buildJapaneseRootAnalysis(entry, pool, noteRoots) {
       : gloss,
     parts,
     family: [],
+    derivatives: [],
     relatedNotes,
     tips,
     strictEtymology: false,
@@ -387,6 +468,7 @@ export function hasRootAnalysis(a) {
     !!a.gloss ||
     (a.parts?.length ?? 0) > 0 ||
     (a.family?.length ?? 0) > 0 ||
+    (a.derivatives?.length ?? 0) > 0 ||
     (a.tips?.length ?? 0) > 0 ||
     !!a.evolution ||
     !!a.pieSummary ||

@@ -10,7 +10,8 @@ import {
   removeImportedBook,
 } from './bookStorage.js'
 import { enrichQueueWithLLM } from './llmExamples.js'
-import { getLlmSettings } from './llmSettings.js'
+import { getLlmSettings, getRootLlmSettings } from './llmSettings.js'
+import { enrichQueueWithRootLlm } from './llmRootAnalysis.js'
 import { attachExamples } from './ieltsSentence.js'
 import { attachLocalRelations } from './localRelations.js'
 import { attachRootAnalysis } from './rootAnalysis.js'
@@ -141,6 +142,7 @@ export function useBookshelfStudy() {
   const [sessionPlanTotal, setSessionPlanTotal] = useState(0)
   const [sessionFlag, setSessionFlag] = useState(/** @type {'idle' | 'active' | 'done' | 'empty'} */ ('idle'))
   const [preparingSession, setPreparingSession] = useState(false)
+  const [prepareStatus, setPrepareStatus] = useState('')
   const [studyHistory, setStudyHistory] = useState(/** @type {import('./studyHistory.js').StudySession[]} */ ([]))
   /** @type {import('react').MutableRefObject<import('./studyHistory.js').StudySession | null>} */
   const sessionLogRef = useRef(null)
@@ -254,6 +256,7 @@ export function useBookshelfStudy() {
     async (dailyGoal) => {
       if (!activeBookId || !entries.length) return { ok: false, message: '请先选择有效词书' }
       setPreparingSession(true)
+      setPrepareStatus('')
       try {
         const today = localTodayYMD()
         const prog = normalizeProgressMap(loadProgress(activeBookId), today)
@@ -275,6 +278,13 @@ export function useBookshelfStudy() {
         }
         queue = await enrichEntriesWithIpa(queue)
         queue = queue.map((e) => attachRootAnalysis(e, entries))
+        const rootCfg = getRootLlmSettings()
+        if (rootCfg.enabled && rootCfg.apiKey.trim()) {
+          setPrepareStatus('DeepSeek 词根分析 0/' + queue.length)
+          queue = await enrichQueueWithRootLlm(queue, rootCfg, {
+            onProgress: (done, total) => setPrepareStatus(`DeepSeek 词根分析 ${done}/${total}`),
+          })
+        }
         setSessionPlanTotal(queue.length)
         setSessionQueue(queue)
         setSessionIndex(0)
@@ -291,6 +301,7 @@ export function useBookshelfStudy() {
         return { ok: true, count: queue.length }
       } finally {
         setPreparingSession(false)
+        setPrepareStatus('')
       }
     },
     [activeBookId, entries],
@@ -513,6 +524,7 @@ export function useBookshelfStudy() {
     loadBook,
     beginSession,
     preparingSession,
+    prepareStatus,
     backToShelf,
     backToBook,
     clearActiveBook,

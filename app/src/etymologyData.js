@@ -830,7 +830,6 @@ const SHORT_PREFIX_OK = new Set([
   'ir',
   'un',
   'ex',
-  'e',
   'en',
   'em',
   'be',
@@ -861,6 +860,7 @@ const SHORT_PREFIX_OK = new Set([
  */
 function prefixAllowed(p, next) {
   if (next.length < MIN_STEM) return false
+  if (p === 'e' && !/^x|^f|^j/i.test(next)) return false
   if (p === 'pro') {
     const hasRoot = ROOT_FORMS.some((r) => r.length >= 3 && next.startsWith(r))
     if (!hasRoot && next.length < 6) return false
@@ -914,6 +914,7 @@ function suffixAllowed(s, next) {
   if (s === 'ic' && next.length < 4) return false
   if (s === 'al' && next.length < 4) return false
   if (s === 'ty' && next.length < 5) return false
+  if (s === 'y' && next.length < 5) return false
   return true
 }
 

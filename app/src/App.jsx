@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { getLlmSettings, setLlmSettings } from './llmSettings.js'
+import { getLlmSettings, setLlmSettings, getRootLlmSettings, setRootLlmSettings } from './llmSettings.js'
 import { useBookshelfStudy } from './useBookshelfStudy.js'
 import { StudyHistoryModal } from './StudyHistoryModal.jsx'
 import { WordRelationsPanel } from './WordRelationsPanel.jsx'
 import { RootAnalysisPanel } from './RootAnalysisPanel.jsx'
+import { SessionCheckpoint } from './SessionCheckpoint.jsx'
 import { buildRootAnalysis } from './rootAnalysis.js'
 import { hasJapaneseText } from './japaneseSentence.js'
 
@@ -32,6 +33,21 @@ function importFormatLabel(format) {
   return 'txt'
 }
 
+const CHECKPOINT_EVERY = 6
+
+function resetStudyUiState(setters) {
+  setters.setRevealed(false)
+  setters.setStudyPhase('word')
+  setters.setPreliminary(null)
+  setters.setShowExamples(false)
+  setters.setShowRelations(false)
+  setters.setShowRoots(false)
+  setters.setCheckpointOpen(false)
+  setters.setCheckpointWords([])
+  setters.setPendingDone(false)
+  setters.setSessionCompletedCount(0)
+}
+
 export default function App() {
   const {
     shelfLoading,
@@ -45,6 +61,7 @@ export default function App() {
     loadBook,
     beginSession,
     preparingSession,
+    prepareStatus,
     backToShelf,
     backToBook,
     sessionPosition,
@@ -93,14 +110,23 @@ export default function App() {
   const [feedbackBusy, setFeedbackBusy] = useState(false)
   const [cardKey, setCardKey] = useState(0)
   const [doneOpen, setDoneOpen] = useState(false)
+  const [checkpointOpen, setCheckpointOpen] = useState(false)
+  const [checkpointWords, setCheckpointWords] = useState(/** @type {typeof currentCard[]} */ ([]))
+  const [pendingDone, setPendingDone] = useState(false)
+  const [sessionCompletedCount, setSessionCompletedCount] = useState(0)
+  const checkpointBufferRef = useRef(/** @type {typeof currentCard[]} */ ([]))
+
+  const [llm, setLlm] = useState(() => getLlmSettings())
+  const [rootLlm, setRootLlm] = useState(() => getRootLlmSettings())
 
   useEffect(() => {
-    if (view !== 'study' || studyPhase !== 'word' || !currentCard?.word || doneOpen || sessionEmpty) return
+    if (view !== 'study' || studyPhase !== 'word' || !currentCard?.word || doneOpen || sessionEmpty || checkpointOpen)
+      return
     const word = currentCard.word
     const reading = currentCard.ipa
     const timer = window.setTimeout(() => speakWord(word, reading), 60)
     return () => window.clearTimeout(timer)
-  }, [view, studyPhase, cardKey, currentCard?.word, currentCard?.ipa, doneOpen, sessionEmpty])
+  }, [view, studyPhase, cardKey, currentCard?.word, currentCard?.ipa, doneOpen, sessionEmpty, checkpointOpen])
 
   const liveRootAnalysis = useMemo(() => {
     if (!currentCard?.word) return null
@@ -109,6 +135,12 @@ export default function App() {
     const entry = entries.find((e) => e.word === currentCard.word) ?? currentCard
     return buildRootAnalysis(entry, pool)
   }, [currentCard, entries, sessionQueue, cardKey])
+
+  const displayRootAnalysis = useMemo(() => {
+    if (!currentCard?.word) return null
+    if (currentCard.rootAnalysis) return currentCard.rootAnalysis
+    return liveRootAnalysis
+  }, [currentCard, liveRootAnalysis])
 
   const onPickBook = useCallback(
     async (book) => {
@@ -140,24 +172,35 @@ export default function App() {
     [deleteImportedBook],
   )
 
-  const [llm, setLlm] = useState(() => getLlmSettings())
-
   const patchLlm = useCallback((p) => {
     const next = { ...llm, ...p }
     setLlm(next)
     setLlmSettings(next)
   }, [llm])
 
+  const patchRootLlm = useCallback((p) => {
+    const next = { ...rootLlm, ...p }
+    setRootLlm(next)
+    setRootLlmSettings(next)
+  }, [rootLlm])
+
   const startFromPicker = useCallback(async () => {
     setDoneOpen(false)
+    checkpointBufferRef.current = []
+    resetStudyUiState({
+      setRevealed,
+      setStudyPhase,
+      setPreliminary,
+      setShowExamples,
+      setShowRelations,
+      setShowRoots,
+      setCheckpointOpen,
+      setCheckpointWords,
+      setPendingDone,
+      setSessionCompletedCount,
+    })
     try {
       await beginSession(dailyCount)
-      setRevealed(false)
-      setStudyPhase('word')
-      setPreliminary(null)
-      setShowExamples(false)
-      setShowRelations(false)
-      setShowRoots(false)
       setCardKey((k) => k + 1)
     } catch {
       setImportTip('开始学习失败，请检查网络或大模型 API 设置')
@@ -178,31 +221,68 @@ export default function App() {
     [feedbackBusy, currentCard],
   )
 
+  const continueFromCheckpoint = useCallback(() => {
+    setCheckpointOpen(false)
+    setCheckpointWords([])
+    checkpointBufferRef.current = []
+    setStudyPhase('word')
+    setPreliminary(null)
+    setShowExamples(false)
+    setShowRelations(false)
+    setShowRoots(false)
+    setRevealed(false)
+    setCardKey((k) => k + 1)
+    if (pendingDone) {
+      setPendingDone(false)
+      setRevealed(true)
+      setDoneOpen(true)
+    }
+  }, [pendingDone])
+
   /** 释义页最终确认：写入 SRS 并无动画切下一词 */
   const finalizeGrade = useCallback(
     async (kind) => {
       if (feedbackBusy || !currentCard) return
       setFeedbackBusy(true)
       try {
+        const graded = currentCard
         const { done } = commitGrade(kind)
-        setCardKey((k) => k + 1)
-        setStudyPhase('word')
-        setPreliminary(null)
-        setShowExamples(false)
-        setShowRelations(false)
-        setShowRoots(false)
+        const nextCompleted = sessionCompletedCount + 1
+        setSessionCompletedCount(nextCompleted)
 
-        if (done) {
+        checkpointBufferRef.current = [...checkpointBufferRef.current, graded].slice(-CHECKPOINT_EVERY)
+        const shouldCheckpoint =
+          nextCompleted % CHECKPOINT_EVERY === 0 && checkpointBufferRef.current.length > 0
+
+        if (shouldCheckpoint) {
+          setCheckpointWords([...checkpointBufferRef.current])
+          setCheckpointOpen(true)
+          checkpointBufferRef.current = []
+          setStudyPhase('word')
+          setPreliminary(null)
+          setShowExamples(false)
+          setShowRelations(false)
+          setShowRoots(false)
+          setRevealed(false)
+          if (done) setPendingDone(true)
+        } else if (done) {
           setRevealed(true)
           setDoneOpen(true)
+          setCardKey((k) => k + 1)
         } else {
+          setCardKey((k) => k + 1)
+          setStudyPhase('word')
+          setPreliminary(null)
+          setShowExamples(false)
+          setShowRelations(false)
+          setShowRoots(false)
           setRevealed(false)
         }
       } finally {
         setFeedbackBusy(false)
       }
     },
-    [feedbackBusy, currentCard, commitGrade],
+    [feedbackBusy, currentCard, commitGrade, sessionCompletedCount],
   )
 
   const onVocabFile = useCallback(
@@ -400,7 +480,7 @@ export default function App() {
                 <path fillRule="evenodd" d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
               </svg>
             </span>
-            {preparingSession ? '准备中…' : '开始学习'}
+            {preparingSession ? (prepareStatus || '准备中…') : '开始学习'}
           </button>
 
           {dash && dash.dueTodayTotal === 0 ? (
@@ -495,12 +575,19 @@ export default function App() {
               type="button"
               onClick={() => {
                 setDoneOpen(false)
-                setStudyPhase('word')
-                setPreliminary(null)
-                setShowExamples(false)
-                setShowRelations(false)
-                setShowRoots(false)
-                setRevealed(false)
+                checkpointBufferRef.current = []
+                resetStudyUiState({
+                  setRevealed,
+                  setStudyPhase,
+                  setPreliminary,
+                  setShowExamples,
+                  setShowRelations,
+                  setShowRoots,
+                  setCheckpointOpen,
+                  setCheckpointWords,
+                  setPendingDone,
+                  setSessionCompletedCount,
+                })
                 backToBook()
               }}
               className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur hover:bg-white"
@@ -542,6 +629,13 @@ export default function App() {
                 返回书架
               </button>
             </section>
+          ) : checkpointOpen && checkpointWords.length ? (
+            <SessionCheckpoint
+              words={checkpointWords}
+              completedCount={sessionCompletedCount}
+              sessionTotal={sessionQueueLength}
+              onContinue={continueFromCheckpoint}
+            />
           ) : currentCard && !doneOpen ? (
             <main className="flex flex-1 flex-col items-center justify-center pb-8">
               <div className="relative w-full overflow-hidden">
@@ -627,8 +721,12 @@ export default function App() {
                       </div>
                       {showRelations ? <WordRelationsPanel relations={currentCard?.relations} /> : null}
                       {showRoots ? (
-                        liveRootAnalysis ? (
-                          <RootAnalysisPanel analysis={liveRootAnalysis} word={currentCard?.word} />
+                        displayRootAnalysis ? (
+                          <RootAnalysisPanel
+                            analysis={displayRootAnalysis}
+                            word={currentCard?.word}
+                            loading={false}
+                          />
                         ) : (
                           <p className="mt-3 rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 text-center text-xs text-amber-900">
                             词根数据未就绪，请返回书架重新打开词书，或刷新页面后再试。
@@ -792,11 +890,14 @@ export default function App() {
             </label>
             <select
               value={llm.provider}
-              onChange={(e) => patchLlm({ provider: /** @type {'gemini'|'groq'} */ (e.target.value) })}
+              onChange={(e) =>
+                patchLlm({ provider: /** @type {'gemini'|'groq'|'deepseek'} */ (e.target.value) })
+              }
               className="rounded-lg border border-slate-200 px-2 py-1"
             >
               <option value="gemini">Google Gemini（浏览器直连）</option>
               <option value="groq">Groq（开发环境走 Vite 代理）</option>
+              <option value="deepseek">DeepSeek</option>
             </select>
           </div>
           <input
@@ -807,7 +908,7 @@ export default function App() {
             onChange={(e) => patchLlm({ apiKey: e.target.value })}
             className="mt-2 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
           />
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+          <div className="mt-2 grid gap-2 sm:grid-cols-3">
             <input
               type="text"
               placeholder="Gemini 模型名"
@@ -822,6 +923,13 @@ export default function App() {
               onChange={(e) => patchLlm({ modelGroq: e.target.value })}
               className="rounded-xl border border-slate-200 px-3 py-2 text-xs"
             />
+            <input
+              type="text"
+              placeholder="DeepSeek 模型名"
+              value={llm.modelDeepseek}
+              onChange={(e) => patchLlm({ modelDeepseek: e.target.value })}
+              className="rounded-xl border border-slate-200 px-3 py-2 text-xs"
+            />
           </div>
           <p className="mt-2 text-xs text-slate-500">
             <a className="text-indigo-600 underline" href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">
@@ -831,7 +939,41 @@ export default function App() {
             <a className="text-indigo-600 underline" href="https://console.groq.com/keys" target="_blank" rel="noreferrer">
               Groq 密钥
             </a>
+            {' · '}
+            <a className="text-indigo-600 underline" href="https://platform.deepseek.com/api_keys" target="_blank" rel="noreferrer">
+              DeepSeek 密钥
+            </a>
           </p>
+        </details>
+
+        <details className="mb-6 rounded-2xl border border-violet-200 bg-violet-50/50 px-4 py-3 text-left shadow-sm" open>
+          <summary className="cursor-pointer text-sm font-semibold text-violet-900">词根分析 · DeepSeek（推荐）</summary>
+          <p className="mt-2 text-xs leading-relaxed text-slate-600">
+            点击「开始学习」时批量调用 DeepSeek 生成本轮全部词根分析；释义页「查看词根」直接展示，无需等待。API Key 仅存本机浏览器。
+          </p>
+          <label className="mt-3 flex cursor-pointer items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={rootLlm.enabled}
+              onChange={(e) => patchRootLlm({ enabled: e.target.checked })}
+            />
+            启用 DeepSeek 词根分析
+          </label>
+          <input
+            type="password"
+            autoComplete="off"
+            placeholder="DeepSeek API Key（sk-…）"
+            value={rootLlm.apiKey}
+            onChange={(e) => patchRootLlm({ apiKey: e.target.value })}
+            className="mt-2 w-full rounded-xl border border-violet-200 bg-white px-3 py-2 text-sm"
+          />
+          <input
+            type="text"
+            placeholder="模型名"
+            value={rootLlm.model}
+            onChange={(e) => patchRootLlm({ model: e.target.value })}
+            className="mt-2 w-full rounded-xl border border-violet-200 bg-white px-3 py-2 text-xs"
+          />
         </details>
 
         <section>

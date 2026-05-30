@@ -1,4 +1,25 @@
-import { hasRootAnalysis } from './rootAnalysis.js'
+import { hasRootAnalysis, POS_LABELS } from './rootAnalysis.js'
+
+const POS_ORDER = ['n', 'v', 'adj', 'adv', 'other']
+
+/**
+ * @param {import('./rootAnalysis.js').DerivativeWord[] | undefined} list
+ */
+function groupByPos(list) {
+  if (!list?.length) return []
+  /** @type {Map<string, import('./rootAnalysis.js').DerivativeWord[]>} */
+  const map = new Map()
+  for (const d of list) {
+    const p = d.pos && POS_LABELS[d.pos] ? d.pos : 'other'
+    if (!map.has(p)) map.set(p, [])
+    map.get(p).push(d)
+  }
+  return POS_ORDER.filter((p) => map.has(p)).map((p) => ({
+    pos: p,
+    label: POS_LABELS[p] || p,
+    items: map.get(p),
+  }))
+}
 
 /**
  * @param {{ analysis?: import('./rootAnalysis.js').RootAnalysis | null, word?: string }} props
@@ -16,9 +37,13 @@ export function RootAnalysisPanel({ analysis, word }) {
   const morphLabel =
     analysis?.morphKind === 'compound'
       ? '现代英语合成法'
-      : analysis?.morphKind === 'classical'
-        ? '拉丁 / 希腊词根词'
-        : null
+      : analysis?.morphKind === 'germanic'
+        ? '日耳曼本土词'
+        : analysis?.morphKind === 'classical'
+          ? '拉丁 / 希腊词根词'
+          : null
+
+  const derivativeGroups = groupByPos(analysis?.derivatives)
 
   return (
     <div className="mt-3 space-y-4 rounded-2xl border border-violet-100 bg-violet-50/50 p-4">
@@ -79,17 +104,41 @@ export function RootAnalysisPanel({ analysis, word }) {
         </section>
       ) : null}
 
-      {analysis?.insight ? (
-        <section className="rounded-xl bg-amber-50 px-3 py-2 ring-1 ring-amber-100">
-          <h4 className="text-xs font-semibold text-amber-900">4. 深度记忆心法</h4>
-          <p className="mt-1 text-sm leading-relaxed text-amber-950">{analysis.insight}</p>
+      {derivativeGroups.length ? (
+        <section>
+          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700">
+            3. 同根衍生词（按词性）
+          </h4>
+          <div className="space-y-3">
+            {derivativeGroups.map((g) => (
+              <div key={g.pos} className="rounded-xl bg-white px-3 py-2.5 ring-1 ring-violet-100">
+                <p className="mb-2 text-[11px] font-semibold text-violet-700">{g.label}</p>
+                <ul className="space-y-2">
+                  {g.items.map((d) => (
+                    <li key={d.word} className="text-sm">
+                      <span className="font-bold text-violet-950">{d.word}</span>
+                      {d.morphBreakdown ? (
+                        <span className="ml-1.5 text-xs text-slate-500">{d.morphBreakdown}</span>
+                      ) : null}
+                      {d.zh ? <p className="mt-0.5 text-xs text-slate-600">→ {d.zh}</p> : null}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-[10px] text-slate-400">
+            {analysis?.source === 'deepseek'
+              ? 'DeepSeek 按词性列出同词根派生；仅共享同一底层词源血统。'
+              : '本词书中同血统词，词性由词尾/词书标注推断。'}
+          </p>
         </section>
       ) : null}
 
-      {analysis?.family?.length ? (
+      {analysis?.family?.length && !derivativeGroups.length ? (
         <section>
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700">
-            3. 真正的同根 / 同合成词族（本词书 · 限 2–4 个）
+            3. 真正的同根词族（本词书）
           </h4>
           <ul className="space-y-2">
             {analysis.family.map((f) => (
@@ -98,6 +147,11 @@ export function RootAnalysisPanel({ analysis, word }) {
                 className="rounded-xl bg-white px-3 py-2 text-sm ring-1 ring-violet-100"
               >
                 <span className="font-bold text-violet-950">{f.word}</span>
+                {f.pos ? (
+                  <span className="ml-1.5 rounded bg-violet-100 px-1 py-0.5 text-[10px] text-violet-700">
+                    {POS_LABELS[f.pos] || f.pos}
+                  </span>
+                ) : null}
                 {f.morphBreakdown ? (
                   <p className="mt-1 text-xs text-slate-600">{f.morphBreakdown} → {f.zh || ''}</p>
                 ) : f.zh ? (
@@ -106,14 +160,14 @@ export function RootAnalysisPanel({ analysis, word }) {
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-[10px] text-slate-400">
-            {analysis.morphKind === 'compound'
-              ? '仅列出相同合成模式或共享同一合成成分者；形似不同源（如 subtle 与 subset）不会入选。'
-              : '仅列出共享同一拉丁/希腊/PIE 词源血统者。'}
-          </p>
         </section>
-      ) : analysis?.strictEtymology && analysis?.parts?.length ? (
-        <p className="text-xs text-slate-500">本词书中暂无其它同血统词。</p>
+      ) : null}
+
+      {analysis?.insight ? (
+        <section className="rounded-xl bg-amber-50 px-3 py-2 ring-1 ring-amber-100">
+          <h4 className="text-xs font-semibold text-amber-900">4. 深度记忆心法</h4>
+          <p className="mt-1 text-sm leading-relaxed text-amber-950">{analysis.insight}</p>
+        </section>
       ) : null}
 
       {analysis?.relatedNotes?.length ? (
@@ -144,7 +198,11 @@ export function RootAnalysisPanel({ analysis, word }) {
         </section>
       ) : null}
 
-      <p className="text-[10px] text-slate-400">印欧语源学 + 现代合成法 · 本地词库 · 不调用 API</p>
+      <p className="text-[10px] text-slate-400">
+        {analysis?.source === 'deepseek'
+          ? 'DeepSeek 词源学分析 · 含词性派生 · 失败时回退本地词库'
+          : '印欧语源学 + 现代合成法 · 本地词库'}
+      </p>
     </div>
   )
 }

@@ -1,9 +1,11 @@
 import { polishExampleZh } from './ieltsSentence.js'
+import { openaiChatJson } from './llmOpenai.js'
 
 /**
  * 可选：用用户自备 API Key 调用大模型，为每个义项生成阅读向英文例句 + 中文译文。
  * - Gemini：浏览器直连 generativelanguage.googleapis.com（需在 Google AI Studio 创建密钥，并可限制 HTTP 来源）。
  * - Groq：开发时走 Vite 代理 /api/groq 避免 CORS；生产静态部署若无代理则可能失败。
+ * - DeepSeek：开发时走 /api/deepseek 代理；OpenAI 兼容接口。
  */
 
 /**
@@ -95,57 +97,32 @@ async function geminiGenerateJson(apiKey, model, userText) {
 }
 
 /**
- * @param {string} apiKey
- * @param {string} model
- * @param {string} userText
- */
-/**
  * @param {import('./llmSettings.js').LlmSettings} cfg
  * @param {string} userText
  * @param {string} [systemText]
  */
 export async function generateLlmJson(cfg, userText, systemText) {
   if (cfg.provider === 'groq') {
-    return groqGenerateJson(cfg.apiKey, cfg.modelGroq, userText, systemText)
+    return openaiChatJson(
+      '/api/groq',
+      'https://api.groq.com/openai/v1',
+      cfg.apiKey,
+      cfg.modelGroq,
+      userText,
+      systemText,
+    )
+  }
+  if (cfg.provider === 'deepseek') {
+    return openaiChatJson(
+      '/api/deepseek',
+      'https://api.deepseek.com',
+      cfg.apiKey,
+      cfg.modelDeepseek,
+      userText,
+      systemText,
+    )
   }
   return geminiGenerateJson(cfg.apiKey, cfg.modelGemini, userText)
-}
-
-/**
- * @param {string} apiKey
- * @param {string} model
- * @param {string} userText
- * @param {string} [systemText]
- */
-async function groqGenerateJson(apiKey, model, userText, systemText) {
-  const base = import.meta.env.DEV ? '/api/groq' : 'https://api.groq.com/openai/v1'
-  const r = await fetch(`${base}/chat/completions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model,
-      messages: [
-        {
-          role: 'system',
-          content:
-            systemText ||
-            'You reply with valid JSON only. The user asks for a JSON object with a "senses" array.',
-        },
-        { role: 'user', content: userText },
-      ],
-      temperature: 0.65,
-      response_format: { type: 'json_object' },
-    }),
-  })
-  const raw = await r.text()
-  if (!r.ok) throw new Error(raw.slice(0, 400) || `Groq HTTP ${r.status}`)
-  const data = JSON.parse(raw)
-  const text = data.choices?.[0]?.message?.content
-  if (!text) throw new Error('Groq 未返回文本')
-  return parseJsonLoose(text)
 }
 
 function sleep(ms) {
@@ -158,12 +135,7 @@ function sleep(ms) {
  */
 export async function generateEntryExamples(entry, cfg) {
   const prompt = buildUserPrompt(entry)
-  let parsed
-  if (cfg.provider === 'groq') {
-    parsed = await groqGenerateJson(cfg.apiKey, cfg.modelGroq, prompt)
-  } else {
-    parsed = await geminiGenerateJson(cfg.apiKey, cfg.modelGemini, prompt)
-  }
+  const parsed = await generateLlmJson(cfg, prompt)
   return mergeParsed(entry, parsed)
 }
 
