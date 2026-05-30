@@ -25,8 +25,11 @@ function toSyncError(e) {
   const msg = e instanceof Error ? e.message : String(e)
   if (/failed to fetch|networkerror|load failed/i.test(msg)) {
     return new Error(
-      '无法连接云端。请检查：① Supabase 项目是否已恢复运行（Dashboard 未暂停）；② Vercel 环境变量 VITE_SUPABASE_URL 是否为 https://xxx.supabase.co（不是 .com）；③ 重新 Redeploy 后再试',
+      '无法连接云端。请检查：① Supabase 项目是否已恢复运行；② Vercel 环境变量 VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY 已配置并 Redeploy；③ 若页面显示 NOT_FOUND，请在 Vercel 把 Root Directory 留空（不要用 app 子目录）',
     )
+  }
+  if (/not_found|404/i.test(msg)) {
+    return new Error('云同步接口 404：请重新部署最新代码，并确认 Vercel Root Directory 为仓库根目录（留空）')
   }
   return e instanceof Error ? e : new Error(msg)
 }

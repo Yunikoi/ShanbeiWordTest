@@ -11,6 +11,10 @@
     {
       "source": "/api/groq/:path*",
       "destination": "https://api.groq.com/openai/v1/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
