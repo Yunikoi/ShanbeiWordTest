@@ -35,7 +35,7 @@ import {
  *   source?: 'local' | 'deepseek',
  * }} RootAnalysis */
 
-/** @typedef {{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, relations?: import('./wordRelations.js').WordRelations, rootAnalysis?: RootAnalysis }} PoolEntry */
+/** @typedef {{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, rootAnalysis?: RootAnalysis }} PoolEntry */
 
 const KANJI_HINTS = {
   移: '移动、迁移',
@@ -454,11 +454,10 @@ function buildJapaneseRootAnalysis(entry, pool, noteRoots) {
 }
 
 export function buildRootAnalysis(entry, pool) {
-  const noteRoots = entry.relations?.roots ?? []
   if (hasJapaneseText(entry.word)) {
-    return buildJapaneseRootAnalysis(entry, pool, noteRoots)
+    return buildJapaneseRootAnalysis(entry, pool, [])
   }
-  return buildEnglishRootAnalysis(entry, pool, noteRoots)
+  return buildEnglishRootAnalysis(entry, pool, [])
 }
 
 /** @param {RootAnalysis | undefined} a */

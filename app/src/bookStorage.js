@@ -1,5 +1,5 @@
 import { removeStudyHistory } from './studyHistory.js'
-import { removeRelationsCache } from './relationsCache.js'
+import { removeRootAnalysisCache, pruneRootAnalysisCache } from './rootAnalysisCache.js'
 
 const META_KEY = 'swt-books-meta'
 const PREFIX_BOOK = 'swt-book-'
@@ -96,6 +96,7 @@ export function updateImportedBook(bookId, entries, opts = {}) {
 
   saveBookEntries(bookId, entries)
   saveProgress(bookId, mergedProg)
+  pruneRootAnalysisCache(bookId, newWords)
   if (opts.title) meta[idx].title = opts.title
   if (opts.sourceFile) meta[idx].sourceFile = opts.sourceFile
   meta[idx].updatedAt = new Date().toISOString()
@@ -132,5 +133,5 @@ export function removeImportedBook(bookId) {
   localStorage.removeItem(PREFIX_BOOK + bookId)
   localStorage.removeItem(PREFIX_PROG + bookId)
   removeStudyHistory(bookId)
-  removeRelationsCache(bookId)
+  removeRootAnalysisCache(bookId)
 }

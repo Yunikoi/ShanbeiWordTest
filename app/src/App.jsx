@@ -2,10 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { getLlmSettings, setLlmSettings, getRootLlmSettings, setRootLlmSettings } from './llmSettings.js'
 import { useBookshelfStudy } from './useBookshelfStudy.js'
 import { StudyHistoryModal } from './StudyHistoryModal.jsx'
-import { WordRelationsPanel } from './WordRelationsPanel.jsx'
 import { RootAnalysisPanel } from './RootAnalysisPanel.jsx'
 import { SessionCheckpoint } from './SessionCheckpoint.jsx'
+import { WordDetailView } from './WordDetailView.jsx'
 import { buildRootAnalysis } from './rootAnalysis.js'
+import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
+import { countCachedRootAnalysis } from './rootAnalysisCache.js'
 import { hasJapaneseText } from './japaneseSentence.js'
 
 function speakWord(text, reading) {
@@ -40,7 +42,6 @@ function resetStudyUiState(setters) {
   setters.setStudyPhase('word')
   setters.setPreliminary(null)
   setters.setShowExamples(false)
-  setters.setShowRelations(false)
   setters.setShowRoots(false)
   setters.setCheckpointOpen(false)
   setters.setCheckpointWords([])
@@ -62,6 +63,7 @@ export default function App() {
     beginSession,
     preparingSession,
     prepareStatus,
+    rootEnrich,
     backToShelf,
     backToBook,
     sessionPosition,
@@ -96,6 +98,7 @@ export default function App() {
 
   const [dailyCount, setDailyCount] = useState(30)
   const [wordListOpen, setWordListOpen] = useState(false)
+  const [browseWord, setBrowseWord] = useState(/** @type {string | null} */ (null))
   const [historyOpen, setHistoryOpen] = useState(false)
 
   const [revealed, setRevealed] = useState(false)
@@ -105,7 +108,6 @@ export default function App() {
   const [preliminary, setPreliminary] = useState(null)
   /** 释义页是否展开例句 */
   const [showExamples, setShowExamples] = useState(false)
-  const [showRelations, setShowRelations] = useState(false)
   const [showRoots, setShowRoots] = useState(false)
   const [feedbackBusy, setFeedbackBusy] = useState(false)
   const [cardKey, setCardKey] = useState(0)
@@ -118,6 +120,19 @@ export default function App() {
 
   const [llm, setLlm] = useState(() => getLlmSettings())
   const [rootLlm, setRootLlm] = useState(() => getRootLlmSettings())
+
+  const browseEntry = useMemo(
+    () => (browseWord ? entries.find((e) => e.word === browseWord) ?? null : null),
+    [browseWord, entries],
+  )
+
+  const rootCachedCount = useMemo(() => {
+    if (!activeBookId) return 0
+    return countCachedRootAnalysis(
+      activeBookId,
+      entries.map((e) => e.word),
+    )
+  }, [activeBookId, entries, rootEnrich.done])
 
   useEffect(() => {
     if (view !== 'study' || studyPhase !== 'word' || !currentCard?.word || doneOpen || sessionEmpty || checkpointOpen)
@@ -192,7 +207,6 @@ export default function App() {
       setStudyPhase,
       setPreliminary,
       setShowExamples,
-      setShowRelations,
       setShowRoots,
       setCheckpointOpen,
       setCheckpointWords,
@@ -213,7 +227,6 @@ export default function App() {
       if (feedbackBusy || !currentCard) return
       setPreliminary(firstKind)
       setShowExamples(false)
-      setShowRelations(false)
       setShowRoots(false)
       setRevealed(true)
       setStudyPhase('meaning')
@@ -228,7 +241,6 @@ export default function App() {
     setStudyPhase('word')
     setPreliminary(null)
     setShowExamples(false)
-    setShowRelations(false)
     setShowRoots(false)
     setRevealed(false)
     setCardKey((k) => k + 1)
@@ -261,7 +273,6 @@ export default function App() {
           setStudyPhase('word')
           setPreliminary(null)
           setShowExamples(false)
-          setShowRelations(false)
           setShowRoots(false)
           setRevealed(false)
           if (done) setPendingDone(true)
@@ -274,7 +285,6 @@ export default function App() {
           setStudyPhase('word')
           setPreliminary(null)
           setShowExamples(false)
-          setShowRelations(false)
           setShowRoots(false)
           setRevealed(false)
         }
@@ -452,6 +462,34 @@ export default function App() {
             </div>
           </section>
 
+          {rootLlm.enabled && rootLlm.apiKey.trim() ? (
+            <div className="mt-4 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3">
+              {rootEnrich.running ? (
+                <>
+                  <p className="text-sm font-medium text-violet-900">
+                    DeepSeek 整本词表词根分析 {rootEnrich.done}/{rootEnrich.total}
+                  </p>
+                  <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-violet-100">
+                    <div
+                      className="h-full rounded-full bg-violet-500 transition-all duration-300"
+                      style={{
+                        width: `${rootEnrich.total ? (rootEnrich.done / rootEnrich.total) * 100 : 0}%`,
+                      }}
+                    />
+                  </div>
+                  <p className="mt-2 text-xs text-violet-700">
+                    后台进行，可浏览词表或开始学习；已分析的词会保存到本机
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-violet-900">
+                  词根已缓存 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
+                  {rootCachedCount < total ? ' · 打开词书时会自动补全未分析的词' : ' · 整本词表已分析完毕'}
+                </p>
+              )}
+            </div>
+          ) : null}
+
           <details className="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left shadow-sm">
             <summary className="cursor-pointer text-sm font-semibold text-slate-800">今日学习量</summary>
             <p className="mt-2 text-xs text-slate-500">从今日到期词中抽取（10–100，步长 5）。</p>
@@ -533,7 +571,10 @@ export default function App() {
           >
             <div className="mx-auto flex max-h-[85vh] w-full max-w-lg flex-col rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl">
               <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
-                <h3 className="text-lg font-bold text-slate-900">词表 · {total} 词</h3>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">词表 · {total} 词</h3>
+                  <p className="mt-0.5 text-xs text-slate-500">悬停查看释义 · 点击进入详情</p>
+                </div>
                 <button
                   type="button"
                   onClick={() => setWordListOpen(false)}
@@ -543,17 +584,64 @@ export default function App() {
                 </button>
               </div>
               <ul className="flex-1 overflow-y-auto px-5 py-3">
-                {entries.map((e) => (
-                  <li key={e.word} className="border-b border-slate-50 py-2.5 last:border-0">
-                    <span className="font-medium text-slate-900">{e.word}</span>
-                    {e.senses[0]?.zh ? (
-                      <span className="ml-2 text-sm text-slate-500">{e.senses[0].zh}</span>
-                    ) : null}
-                  </li>
-                ))}
+                {entries.map((e) => {
+                  const hasRoot =
+                    e.rootAnalysis?.source === 'deepseek' ||
+                    (activeBookId ? !!getCachedRootAnalysisLlm(activeBookId, e.word) : false)
+                  return (
+                    <li key={e.word} className="border-b border-slate-50 py-1 last:border-0">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBrowseWord(e.word)
+                          setWordListOpen(false)
+                        }}
+                        className="group w-full rounded-xl px-2 py-2.5 text-left outline-none transition hover:bg-violet-50/80 focus:bg-violet-50/80"
+                      >
+                        <div className="flex items-start gap-2">
+                          <span className="font-medium text-slate-900">{e.word}</span>
+                          {hasRoot ? (
+                            <span
+                              className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-500"
+                              title="已有 DeepSeek 词根"
+                            />
+                          ) : null}
+                        </div>
+                        {e.senses.length ? (
+                          <div
+                            className="mt-1 hidden max-h-28 overflow-y-auto group-hover:block group-focus:block"
+                            role="region"
+                            aria-label={`${e.word} 释义`}
+                          >
+                            <ul className="space-y-0.5">
+                              {e.senses.map((s, si) => (
+                                <li key={si} className="text-sm leading-snug text-slate-600">
+                                  {s.pos ? (
+                                    <span className="mr-1 text-xs font-medium text-indigo-600">{s.pos}.</span>
+                                  ) : null}
+                                  {s.zh}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ) : null}
+                      </button>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>
+        ) : null}
+
+        {browseEntry ? (
+          <WordDetailView
+            entry={browseEntry}
+            pool={entries}
+            bookId={activeBookId}
+            rootEnrichRunning={rootEnrich.running}
+            onClose={() => setBrowseWord(null)}
+          />
         ) : null}
 
         <StudyHistoryModal
@@ -581,7 +669,6 @@ export default function App() {
                   setStudyPhase,
                   setPreliminary,
                   setShowExamples,
-                  setShowRelations,
                   setShowRoots,
                   setCheckpointOpen,
                   setCheckpointWords,
@@ -704,14 +791,6 @@ export default function App() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setShowRelations((v) => !v)}
-                          disabled={feedbackBusy || doneOpen}
-                          className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-semibold text-indigo-900 shadow-sm hover:bg-indigo-100 disabled:opacity-50"
-                        >
-                          {showRelations ? '隐藏联想' : '查看联想'}
-                        </button>
-                        <button
-                          type="button"
                           onClick={() => setShowRoots((v) => !v)}
                           disabled={feedbackBusy || doneOpen}
                           className="rounded-2xl border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-semibold text-violet-900 shadow-sm hover:bg-violet-100 disabled:opacity-50"
@@ -719,7 +798,6 @@ export default function App() {
                           {showRoots ? '隐藏词根' : '查看词根'}
                         </button>
                       </div>
-                      {showRelations ? <WordRelationsPanel relations={currentCard?.relations} /> : null}
                       {showRoots ? (
                         displayRootAnalysis ? (
                           <RootAnalysisPanel
@@ -877,7 +955,7 @@ export default function App() {
         <details className="mb-6 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 text-left shadow-sm">
           <summary className="cursor-pointer text-sm font-semibold text-slate-800">大模型生成例句（可选）</summary>
           <p className="mt-2 text-xs leading-relaxed text-slate-500">
-            默认使用本地模板例句与本地联想词。若填写 API 密钥并勾选，则在点击「开始学习」后对今日抽中的词依次生成例句（密钥仅存本机）。
+            默认使用本地模板例句。若填写 API 密钥并勾选，则在点击「开始学习」后对今日抽中的词依次生成例句（密钥仅存本机）。
           </p>
           <div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
             <label className="flex cursor-pointer items-center gap-2">
@@ -949,7 +1027,7 @@ export default function App() {
         <details className="mb-6 rounded-2xl border border-violet-200 bg-violet-50/50 px-4 py-3 text-left shadow-sm" open>
           <summary className="cursor-pointer text-sm font-semibold text-violet-900">词根分析 · DeepSeek（推荐）</summary>
           <p className="mt-2 text-xs leading-relaxed text-slate-600">
-            点击「开始学习」时批量调用 DeepSeek 生成本轮全部词根分析；释义页「查看词根」直接展示，无需等待。API Key 仅存本机浏览器。
+            打开词书或更新词表后，后台一次性分析整本词表（仅补未缓存的新词），结果保存在本机。词表悬停看释义、点击进入单词详情。API Key 仅存本机。
           </p>
           <label className="mt-3 flex cursor-pointer items-center gap-2 text-sm">
             <input

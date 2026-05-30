@@ -1,6 +1,7 @@
 import { openaiChatJsonForRoot } from './llmOpenai.js'
 import { hasJapaneseText } from './japaneseSentence.js'
 import { normalizePos } from './rootAnalysis.js'
+import { loadWordRootAnalysis, saveWordRootAnalysis } from './rootAnalysisCache.js'
 
 const SYSTEM_PROMPT = `你是一位精通印欧语源学（PIE）、比较语言学的高级英语词源专家。
 
@@ -35,6 +36,21 @@ derivatives：4-10 个，必须共享同一底层词根，尽量覆盖名词(n)�
 
 /** @type {Map<string, import('./rootAnalysis.js').RootAnalysis>} */
 const cache = new Map()
+
+function memKey(bookId, word) {
+  const w = word.toLowerCase()
+  return bookId ? `${bookId}:${w}` : w
+}
+
+/** @param {string} [bookId] @param {string} word */
+export function getCachedRootAnalysisLlm(bookId, word) {
+  const key = memKey(bookId || '', word)
+  if (cache.has(key)) return cache.get(key)
+  if (!bookId) return null
+  const stored = loadWordRootAnalysis(bookId, word)
+  if (stored) cache.set(key, stored)
+  return stored
+}
 
 /**
  * @param {unknown} raw
@@ -98,10 +114,12 @@ function toRootAnalysis(raw, gloss) {
 /**
  * @param {{ word: string, senses: { pos?: string, zh: string }[], ipa?: string }} entry
  * @param {import('./llmSettings.js').RootLlmSettings} cfg
+ * @param {string} [bookId]
  */
-export async function fetchRootAnalysisLlm(entry, cfg) {
-  const key = entry.word.toLowerCase()
-  if (cache.has(key)) return cache.get(key)
+export async function fetchRootAnalysisLlm(entry, cfg, bookId) {
+  const key = memKey(bookId || '', entry.word)
+  const hit = getCachedRootAnalysisLlm(bookId, entry.word)
+  if (hit) return hit
 
   const gloss = entry.senses.map((s) => s.zh).filter(Boolean).join('；')
   const userPrompt = `分析单词：${entry.word}
@@ -118,6 +136,7 @@ export async function fetchRootAnalysisLlm(entry, cfg) {
   )
   const analysis = toRootAnalysis(raw, gloss)
   cache.set(key, analysis)
+  if (bookId) saveWordRootAnalysis(bookId, entry.word, analysis)
   return analysis
 }
 
@@ -125,14 +144,56 @@ function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms))
 }
 
+export async function enrichBookEntriesWithRootLlm(entries, cfg, opts = {}) {
+  const { bookId, onProgress } = opts
+  if (!cfg.enabled || !cfg.apiKey.trim() || !bookId) {
+    return { analyzed: 0, cached: entries.length, failed: 0, total: entries.length }
+  }
+
+  let analyzed = 0
+  let cached = 0
+  let failed = 0
+  const total = entries.length
+
+  for (let i = 0; i < entries.length; i++) {
+    const entry = entries[i]
+    if (hasJapaneseText(entry.word)) {
+      onProgress?.({ done: i + 1, total, word: entry.word, status: 'skip' })
+      continue
+    }
+    if (getCachedRootAnalysisLlm(bookId, entry.word)) {
+      cached += 1
+      onProgress?.({
+        done: i + 1,
+        total,
+        word: entry.word,
+        status: 'cached',
+        rootAnalysis: getCachedRootAnalysisLlm(bookId, entry.word),
+      })
+      continue
+    }
+    try {
+      const rootAnalysis = await fetchRootAnalysisLlm(entry, cfg, bookId)
+      analyzed += 1
+      onProgress?.({ done: i + 1, total, word: entry.word, status: 'done', rootAnalysis })
+      await sleep(350)
+    } catch {
+      failed += 1
+      onProgress?.({ done: i + 1, total, word: entry.word, status: 'error' })
+    }
+  }
+
+  return { analyzed, cached, failed, total }
+}
+
 /**
  * 开始学习前批量生成词根分析（与例句 LLM 同样策略）。
  * @param {Array<{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, rootAnalysis?: import('./rootAnalysis.js').RootAnalysis }>} queue
  * @param {import('./llmSettings.js').RootLlmSettings} cfg
- * @param {{ onProgress?: (done: number, total: number) => void }} [opts]
+ * @param {{ onProgress?: (done: number, total: number) => void, bookId?: string }} [opts]
  */
 export async function enrichQueueWithRootLlm(queue, cfg, opts = {}) {
-  const { onProgress } = opts
+  const { onProgress, bookId } = opts
   if (!cfg.enabled || !cfg.apiKey.trim()) return queue
 
   /** @type {typeof queue} */
@@ -145,15 +206,16 @@ export async function enrichQueueWithRootLlm(queue, cfg, opts = {}) {
       onProgress?.(done, queue.length)
       continue
     }
+    const cached = !!getCachedRootAnalysisLlm(bookId, entry.word)
     try {
-      const rootAnalysis = await fetchRootAnalysisLlm(entry, cfg)
+      const rootAnalysis = await fetchRootAnalysisLlm(entry, cfg, bookId)
       out.push({ ...entry, rootAnalysis })
+      if (!cached) await sleep(350)
     } catch {
       out.push(entry)
     }
     done += 1
     onProgress?.(done, queue.length)
-    await sleep(350)
   }
   return out
 }

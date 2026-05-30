@@ -11,9 +11,8 @@ import {
 } from './bookStorage.js'
 import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings, getRootLlmSettings } from './llmSettings.js'
-import { enrichQueueWithRootLlm } from './llmRootAnalysis.js'
+import { enrichBookEntriesWithRootLlm, getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
 import { attachExamples } from './ieltsSentence.js'
-import { attachLocalRelations } from './localRelations.js'
 import { attachRootAnalysis } from './rootAnalysis.js'
 import { parseWordbookText } from './parseWordbook.js'
 import { applySrsV2, migrateWordProg } from './srsCurve.js'
@@ -23,10 +22,10 @@ import { appendStudySession, loadStudyHistory } from './studyHistory.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
-/** @typedef {{ word: string, ipa?: string, senses: SenseEx[], relations?: import('./wordRelations.js').WordRelations, rootAnalysis?: import('./rootAnalysis.js').RootAnalysis }} CardEntry */
+/** @typedef {{ word: string, ipa?: string, senses: SenseEx[], rootAnalysis?: import('./rootAnalysis.js').RootAnalysis }} CardEntry */
 
 /**
- * @param {Array<{ word: string, senses: { pos?: string, zh: string }[], ipa?: string, relations?: import('./wordRelations.js').WordRelations }>} raw
+ * @param {Array<{ word: string, senses: { pos?: string, zh: string }[], ipa?: string }>} raw
  * @param {number} salt
  * @returns {CardEntry[]}
  */
@@ -35,9 +34,19 @@ function mapEntriesForStudy(raw, salt) {
     word: e.word,
     senses: e.senses,
     ...(e.ipa ? { ipa: e.ipa } : {}),
-    ...(e.relations ? { relations: e.relations } : {}),
   }))
-  return base.map((e) => attachExamples(attachRootAnalysis(attachLocalRelations(e, base, salt), base), salt))
+  return base.map((e) => attachExamples(attachRootAnalysis(e, base), salt))
+}
+
+/**
+ * @param {CardEntry} entry
+ * @param {string | null} bookId
+ * @param {CardEntry[]} pool
+ */
+function attachEntryRootAnalysis(entry, bookId, pool) {
+  const withLocal = attachRootAnalysis(entry, pool)
+  const cached = bookId ? getCachedRootAnalysisLlm(bookId, entry.word) : null
+  return cached ? { ...withLocal, rootAnalysis: cached } : withLocal
 }
 
 const MANIFEST_URL = '/wordbooks/manifest.json'
@@ -143,9 +152,58 @@ export function useBookshelfStudy() {
   const [sessionFlag, setSessionFlag] = useState(/** @type {'idle' | 'active' | 'done' | 'empty'} */ ('idle'))
   const [preparingSession, setPreparingSession] = useState(false)
   const [prepareStatus, setPrepareStatus] = useState('')
+  const [rootEnrich, setRootEnrich] = useState(
+    /** @type {{ running: boolean, done: number, total: number, analyzed: number, failed: number }} */ ({
+      running: false,
+      done: 0,
+      total: 0,
+      analyzed: 0,
+      failed: 0,
+    }),
+  )
   const [studyHistory, setStudyHistory] = useState(/** @type {import('./studyHistory.js').StudySession[]} */ ([]))
   /** @type {import('react').MutableRefObject<import('./studyHistory.js').StudySession | null>} */
   const sessionLogRef = useRef(null)
+  const rootEnrichGenRef = useRef(0)
+
+  const startBookRootEnrichment = useCallback((bookId, bookEntries) => {
+    const rootCfg = getRootLlmSettings()
+    if (!rootCfg.enabled || !rootCfg.apiKey.trim() || !bookId || !bookEntries.length) {
+      setRootEnrich({ running: false, done: 0, total: 0, analyzed: 0, failed: 0 })
+      return
+    }
+
+    const generation = ++rootEnrichGenRef.current
+    setRootEnrich({ running: true, done: 0, total: bookEntries.length, analyzed: 0, failed: 0 })
+
+    enrichBookEntriesWithRootLlm(bookEntries, rootCfg, {
+      bookId,
+      onProgress: ({ done, total, word, status, rootAnalysis }) => {
+        if (generation !== rootEnrichGenRef.current) return
+        setRootEnrich((prev) => ({
+          running: true,
+          done,
+          total,
+          analyzed: prev.analyzed + (status === 'done' ? 1 : 0),
+          failed: prev.failed + (status === 'error' ? 1 : 0),
+        }))
+        if (rootAnalysis && status !== 'skip') {
+          setEntries((prev) =>
+            prev.map((e) => (e.word === word ? { ...e, rootAnalysis } : e)),
+          )
+        }
+      },
+    }).then((result) => {
+      if (generation !== rootEnrichGenRef.current) return
+      setRootEnrich({
+        running: false,
+        done: result.total,
+        total: result.total,
+        analyzed: result.analyzed,
+        failed: result.failed,
+      })
+    })
+  }, [])
 
   const books = useMemo(() => {
     const imp = importMeta.map((b) => ({
@@ -208,6 +266,7 @@ export function useBookshelfStudy() {
       saveProgress(book.id, progMap)
       setStudyHistory(loadStudyHistory(book.id))
       setView('book')
+      startBookRootEnrichment(book.id, withEx)
       return { ok: true }
     }
 
@@ -236,13 +295,14 @@ export function useBookshelfStudy() {
       saveProgress(book.id, progMap)
       setStudyHistory(loadStudyHistory(book.id))
       setView('book')
+      startBookRootEnrichment(book.id, withEx)
       return { ok: true }
     } catch (e) {
       setBookLoadError(e.message ?? String(e))
       setEntries([])
       return { ok: false }
     }
-  }, [])
+  }, [startBookRootEnrichment])
 
   const bookDashboard = useMemo(() => {
     if (!entries.length) return null
@@ -277,14 +337,7 @@ export function useBookshelfStudy() {
           queue = await enrichQueueWithLLM(queue, cfg)
         }
         queue = await enrichEntriesWithIpa(queue)
-        queue = queue.map((e) => attachRootAnalysis(e, entries))
-        const rootCfg = getRootLlmSettings()
-        if (rootCfg.enabled && rootCfg.apiKey.trim()) {
-          setPrepareStatus('DeepSeek 词根分析 0/' + queue.length)
-          queue = await enrichQueueWithRootLlm(queue, rootCfg, {
-            onProgress: (done, total) => setPrepareStatus(`DeepSeek 词根分析 ${done}/${total}`),
-          })
-        }
+        queue = queue.map((e) => attachEntryRootAnalysis(e, activeBookId, entries))
         setSessionPlanTotal(queue.length)
         setSessionQueue(queue)
         setSessionIndex(0)
@@ -308,6 +361,8 @@ export function useBookshelfStudy() {
   )
 
   const backToShelf = useCallback(() => {
+    rootEnrichGenRef.current += 1
+    setRootEnrich({ running: false, done: 0, total: 0, analyzed: 0, failed: 0 })
     sessionLogRef.current = null
     setView('shelf')
     setSessionFlag('idle')
@@ -429,7 +484,6 @@ export function useBookshelfStudy() {
     const withSenses = parsed.map((e) => ({
       word: e.word,
       ...(e.ipa ? { ipa: e.ipa } : {}),
-      ...(e.relations ? { relations: e.relations } : {}),
       senses: e.senses.map((s) => ({ pos: s.pos, zh: s.zh })),
     }))
       const bookTitle = title?.trim() || '导入词书'
@@ -458,20 +512,20 @@ export function useBookshelfStudy() {
 
       refreshImports()
 
+      const salt = Date.now()
+      const withEx = mapEntriesForStudy(withSenses, salt)
+
       if (updated && activeBookId === targetId) {
-        const raw = loadBookEntries(targetId)
-        if (raw?.length) {
-          const salt = Date.now()
-          const withEx = mapEntriesForStudy(raw, salt)
-          setEntries(withEx)
-          enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
-          const today = localTodayYMD()
-          const progMap = normalizeProgressMap(loadProgress(targetId), today)
-          setProgress(progMap)
-          saveProgress(targetId, progMap)
-          setActiveTitle(bookTitle)
-        }
+        setEntries(withEx)
+        enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
+        const today = localTodayYMD()
+        const progMap = normalizeProgressMap(loadProgress(targetId), today)
+        setProgress(progMap)
+        saveProgress(targetId, progMap)
+        setActiveTitle(bookTitle)
       }
+
+      startBookRootEnrichment(targetId, withEx)
 
       return {
         ok: true,
@@ -482,7 +536,7 @@ export function useBookshelfStudy() {
         updated,
       }
     },
-    [refreshImports, activeBookId],
+    [refreshImports, activeBookId, startBookRootEnrichment],
   )
 
   const deleteImportedBook = useCallback(
@@ -494,6 +548,8 @@ export function useBookshelfStudy() {
       removeImportedBook(bookId)
       refreshImports()
       if (activeBookId === bookId) {
+        rootEnrichGenRef.current += 1
+        setRootEnrich({ running: false, done: 0, total: 0, analyzed: 0, failed: 0 })
         setView('shelf')
         setSessionFlag('idle')
         setSessionQueue([])
@@ -525,6 +581,7 @@ export function useBookshelfStudy() {
     beginSession,
     preparingSession,
     prepareStatus,
+    rootEnrich,
     backToShelf,
     backToBook,
     clearActiveBook,

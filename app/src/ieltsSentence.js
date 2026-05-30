@@ -553,7 +553,6 @@ export function attachExamples(entry, salt = 0) {
   return {
     word: entry.word,
     ...(entry.ipa ? { ipa: entry.ipa } : {}),
-    ...(entry.relations ? { relations: entry.relations } : {}),
     senses: entry.senses.map((s, i) => {
       const { en, zh } = useJa
         ? buildJapaneseExamplePair(entry.word, s.pos, s.zh, i, saltVal)
