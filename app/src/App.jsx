@@ -9,6 +9,14 @@ import { buildRootAnalysis, withBookSameRoot } from './rootAnalysis.js'
 import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
 import { countCachedRootAnalysis } from './rootAnalysisCache.js'
 import { hasJapaneseText } from './japaneseSentence.js'
+import {
+  exportUserDataBackup,
+  downloadUserDataBackup,
+  importUserDataBackup,
+  summarizeLocalData,
+} from './dataBackup.js'
+import { useCloudSync } from './useCloudSync.js'
+import { generateSyncCode } from './cloudSync.js'
 
 function speakWord(text, reading) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return
@@ -55,6 +63,7 @@ export default function App() {
     shelfError,
     books,
     bookLoadError,
+    refreshImports,
     view,
     activeTitle,
     entries,
@@ -85,6 +94,7 @@ export default function App() {
 
   const fileRef = useRef(null)
   const dirRef = useRef(null)
+  const backupRef = useRef(null)
   const reimportRef = useRef(null)
 
   useEffect(() => {
@@ -95,7 +105,17 @@ export default function App() {
   }, [])
 
   const [importTip, setImportTip] = useState(null)
+  const [backupTip, setBackupTip] = useState(null)
   const [openingId, setOpeningId] = useState(null)
+  const [syncKeyInput, setSyncKeyInput] = useState('')
+  const localDataSummary = useMemo(() => summarizeLocalData(), [books, backupTip])
+  const cloud = useCloudSync()
+
+  useEffect(() => {
+    if (cloud.settings.syncKey && !syncKeyInput) {
+      setSyncKeyInput(cloud.settings.syncKey)
+    }
+  }, [cloud.settings.syncKey, syncKeyInput])
 
   const [dailyCount, setDailyCount] = useState(30)
   const [wordListOpen, setWordListOpen] = useState(false)
@@ -202,6 +222,39 @@ export default function App() {
     setRootLlm(next)
     setRootLlmSettings(next)
   }, [rootLlm])
+
+  const onExportBackup = useCallback(() => {
+    setBackupTip(null)
+    try {
+      const { filename, json, keyCount } = exportUserDataBackup()
+      downloadUserDataBackup(json, filename)
+      setBackupTip(`已导出 ${keyCount} 项数据到 ${filename}。可在 Vercel / 其他浏览器「恢复备份」导入。`)
+    } catch (e) {
+      setBackupTip(e?.message || String(e))
+    }
+  }, [])
+
+  const onImportBackupFile = useCallback(
+    async (e) => {
+      const file = e.target.files?.[0]
+      e.target.value = ''
+      if (!file) return
+      setBackupTip(null)
+      try {
+        const text = await readFileAsText(file)
+        const replace = window.confirm(
+          '恢复备份？\n\n确定 = 用备份完全覆盖当前浏览器里的学习数据\n取消 = 仅合并（同键名以备份为准）',
+        )
+        const { keyCount } = importUserDataBackup(text, { replace })
+        refreshImports()
+        setBackupTip(`已恢复 ${keyCount} 项数据，页面即将刷新…`)
+        window.setTimeout(() => window.location.reload(), 800)
+      } catch (err) {
+        setBackupTip(err?.message || String(err))
+      }
+    },
+    [refreshImports],
+  )
 
   const startFromPicker = useCallback(async () => {
     setDoneOpen(false)
@@ -930,8 +983,115 @@ export default function App() {
       <div className="mx-auto max-w-3xl">
         <header className="mb-8 text-center">
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">雅思梯度记忆 · 书架</h1>
-          <p className="mt-2 text-sm text-slate-600">纯前端离线复习 · 进度保存在本机 localStorage</p>
+          <p className="mt-2 text-sm text-slate-600">
+            启用云同步后，手机与电脑自动共用进度（同一同步码）
+          </p>
         </header>
+
+        <section className="mb-6 rounded-2xl border border-sky-200 bg-sky-50/70 px-4 py-4 text-left shadow-sm">
+          <h2 className="text-sm font-semibold text-sky-950">云同步 · 手机 / 电脑自动同步</h2>
+          {!cloud.configured ? (
+            <p className="mt-2 text-xs leading-relaxed text-sky-900/80">
+              需在 Vercel（及本地 <code className="rounded bg-white px-1">app/.env.local</code>）配置{' '}
+              <code className="rounded bg-white px-1">VITE_SUPABASE_URL</code> 与{' '}
+              <code className="rounded bg-white px-1">VITE_SUPABASE_ANON_KEY</code>。见 README「云同步一次性配置」。
+            </p>
+          ) : cloud.settings.enabled ? (
+            <>
+              <p className="mt-2 text-xs text-sky-900/80">
+                同步码：<span className="font-mono font-bold">{cloud.settings.syncKey}</span>
+                {cloud.syncing ? ' · 同步中…' : ' · 约每 10 秒自动上传/拉取'}
+              </p>
+              {cloud.status ? (
+                <p className="mt-2 rounded-lg bg-white/80 px-2 py-1.5 text-xs text-sky-950">{cloud.status}</p>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => cloud.disableSync()}
+                className="mt-3 rounded-xl border border-sky-300 bg-white px-4 py-2 text-sm font-semibold text-sky-900 hover:bg-sky-50"
+              >
+                关闭云同步
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="mt-2 text-xs leading-relaxed text-sky-900/80">
+                在电脑和手机输入<strong>同一个同步码</strong>并启用，词书、进度、词根缓存会自动同步，无需手动导出文件。
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <input
+                  type="text"
+                  value={syncKeyInput}
+                  onChange={(e) => setSyncKeyInput(e.target.value)}
+                  placeholder="自定义同步码（至少 4 位）"
+                  className="min-w-[12rem] flex-1 rounded-xl border border-sky-200 bg-white px-3 py-2 text-sm"
+                  autoComplete="off"
+                />
+                <button
+                  type="button"
+                  onClick={() => setSyncKeyInput(generateSyncCode())}
+                  className="rounded-xl border border-sky-200 bg-white px-3 py-2 text-xs font-semibold text-sky-800"
+                >
+                  随机生成
+                </button>
+                <button
+                  type="button"
+                  disabled={cloud.syncing}
+                  onClick={() => {
+                    cloud.enableSync(syncKeyInput).catch((e) => setBackupTip(e?.message || String(e)))
+                  }}
+                  className="rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-500 disabled:opacity-50"
+                >
+                  启用自动同步
+                </button>
+              </div>
+            </>
+          )}
+        </section>
+
+        <details className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50/60 px-4 py-3 text-left shadow-sm">
+          <summary className="cursor-pointer text-sm font-semibold text-emerald-900">
+            手动备份（可选）
+          </summary>
+          <p className="mt-2 text-xs leading-relaxed text-emerald-900/80">
+            导出一份 JSON，在 Vercel、换浏览器、换端口（5173 / 6294）后「恢复备份」即可找回词书、学习进度、测试历史、词根缓存与 API 设置。
+          </p>
+          {localDataSummary ? (
+            <p className="mt-2 text-xs text-emerald-800">
+              当前浏览器：{localDataSummary.bookCount} 本导入词书 · {localDataSummary.keyCount} 项存储
+            </p>
+          ) : (
+            <p className="mt-2 text-xs text-emerald-700">当前浏览器尚无学习数据，可先在本机学习后导出。</p>
+          )}
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={onExportBackup}
+              className="rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-500"
+            >
+              导出备份
+            </button>
+            <input
+              ref={backupRef}
+              type="file"
+              accept=".json,application/json"
+              className="hidden"
+              onChange={onImportBackupFile}
+            />
+            <button
+              type="button"
+              onClick={() => backupRef.current?.click()}
+              className="rounded-xl border border-emerald-300 bg-white px-4 py-2 text-sm font-semibold text-emerald-900 hover:bg-emerald-50"
+            >
+              恢复备份
+            </button>
+          </div>
+          {backupTip ? (
+            <p className="mt-3 rounded-xl border border-emerald-200 bg-white/80 px-3 py-2 text-xs text-emerald-950">
+              {backupTip}
+            </p>
+          ) : null}
+        </details>
 
         <div className="mb-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
           <input

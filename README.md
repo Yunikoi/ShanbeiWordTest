@@ -107,6 +107,21 @@ npm run lint     # ESLint
 - 用户自备 DeepSeek Key，在网站设置里填写即可；Key 不会进 Git 仓库。
 - Gemini 需在 Google AI Studio 把线上域名加入 API Key 的 HTTP 来源限制。
 
+### 云同步（手机 / 电脑自动同步，推荐）
+
+一次性配置 [Supabase](https://supabase.com) 免费项目（约 5 分钟）：
+
+1. 新建项目 → **SQL Editor** 运行仓库内 [`supabase/schema.sql`](supabase/schema.sql)
+2. **Settings → API** 复制 Project URL 与 `anon` public key
+3. 本地：复制 `app/.env.example` 为 `app/.env.local` 并填入  
+   Vercel：**Settings → Environment Variables** 添加同名变量后重新 Deploy
+
+使用：书架 **「云同步」** → 设一个同步码（或随机生成）→ **启用**。在手机上打开同一 Vercel 地址，输入**相同同步码**即可自动同步，约每 10 秒上传/拉取。
+
+### 手动备份（可选）
+
+书架 **「手动备份」**：导出 JSON / 恢复备份（无 Supabase 时的备选）。
+
 ### Windows 快捷方式（一键开浏览器）
 
 仓库根目录提供批处理，可**右键 → 发送到 → 桌面快捷方式**，或固定到任务栏：
