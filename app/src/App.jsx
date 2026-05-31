@@ -7,7 +7,14 @@ import { SessionCheckpoint } from './SessionCheckpoint.jsx'
 import { WordDetailView } from './WordDetailView.jsx'
 import { buildRootAnalysis, withBookSameRoot } from './rootAnalysis.js'
 import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
-import { countCachedRootAnalysis } from './rootAnalysisCache.js'
+import { countCachedRootAnalysis, exportBookRootMap, importBookRootMap } from './rootAnalysisCache.js'
+import {
+  isRootFileStorageSupported,
+  bindAndWriteRootFile,
+  loadRootsFromBoundFile,
+  hasBoundRootFile,
+  pickRootLoadFile,
+} from './rootFileStorage.js'
 import { hasJapaneseText } from './japaneseSentence.js'
 import {
   exportUserDataBackup,
@@ -139,6 +146,9 @@ export default function App() {
   const [sessionCompletedCount, setSessionCompletedCount] = useState(0)
   const checkpointBufferRef = useRef(/** @type {typeof currentCard[]} */ ([]))
 
+  const [rootFileBound, setRootFileBound] = useState(false)
+  const [rootFileTip, setRootFileTip] = useState('')
+  const [rootStoreTick, setRootStoreTick] = useState(0)
   const [llm, setLlm] = useState(() => getLlmSettings())
   const [rootLlm, setRootLlm] = useState(() => getRootLlmSettings())
 
@@ -153,7 +163,15 @@ export default function App() {
       activeBookId,
       entries.map((e) => e.word),
     )
-  }, [activeBookId, entries, rootEnrich.done])
+  }, [activeBookId, entries, rootEnrich.done, rootStoreTick])
+
+  useEffect(() => {
+    if (!activeBookId) {
+      setRootFileBound(false)
+      return
+    }
+    hasBoundRootFile(activeBookId).then(setRootFileBound)
+  }, [activeBookId, rootStoreTick, rootEnrich.done])
 
   useEffect(() => {
     if (view !== 'study' || studyPhase !== 'word' || !currentCard?.word || doneOpen || sessionEmpty || checkpointOpen)
@@ -535,15 +553,74 @@ export default function App() {
                     />
                   </div>
                   <p className="mt-2 text-xs text-violet-700">
-                    只分析尚未保存的词；已保存到本机的不会重复调用 API
+                    只分析尚未保存的词；已保存的不会重复调用 API
                   </p>
+                  {isRootFileStorageSupported() ? (
+                    <p className="mt-1 text-xs text-violet-600">
+                      {rootFileBound
+                        ? '已绑定本机 .json 文件，每分析一个词会自动写入磁盘'
+                        : '建议先点下方「绑定本机词根文件」，分析结果会写入你选的 JSON 文件'}
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-xs text-violet-600">
+                      手机浏览器无法写本机文件；请用电脑 Chrome/Edge 绑定 JSON 保存
+                    </p>
+                  )}
                 </>
               ) : (
                 <>
                   <p className="text-sm text-violet-900">
-                    词根已保存到本机 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
+                    词根已保存 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
                     {rootCachedCount < total ? ' · 再次打开只补全缺失的词' : ' · 整本词表已分析完毕'}
                   </p>
+                  {isRootFileStorageSupported() ? (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!activeBookId) return
+                          try {
+                            await bindAndWriteRootFile(
+                              activeBookId,
+                              exportBookRootMap(activeBookId),
+                              activeTitle,
+                            )
+                            setRootFileBound(true)
+                            setRootFileTip('已绑定本机 JSON，之后每分析一个词会自动写入该文件')
+                          } catch (e) {
+                            setRootFileTip(e?.message || String(e))
+                          }
+                        }}
+                        className="rounded-lg border border-violet-300 bg-white px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-100"
+                      >
+                        {rootFileBound ? '更换词根保存文件' : '绑定本机词根文件 (.json)'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!activeBookId) return
+                          try {
+                            await pickRootLoadFile(activeBookId)
+                            const words = await loadRootsFromBoundFile(activeBookId)
+                            if (words) {
+                              const n = importBookRootMap(activeBookId, words)
+                              setRootStoreTick((t) => t + 1)
+                              setRootFileBound(true)
+                              setRootFileTip(`已从本机 JSON 恢复 ${n} 个词根`)
+                            }
+                          } catch (e) {
+                            setRootFileTip(e?.message || String(e))
+                          }
+                        }}
+                        className="rounded-lg border border-violet-300 bg-white px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-100"
+                      >
+                        从本机文件加载词根
+                      </button>
+                    </div>
+                  ) : null}
+                  {rootFileTip ? (
+                    <p className="mt-2 text-xs text-violet-800">{rootFileTip}</p>
+                  ) : null}
                   <button
                     type="button"
                     onClick={() => refreshBookRootAnalysis()}

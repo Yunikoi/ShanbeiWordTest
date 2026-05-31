@@ -1,4 +1,5 @@
 import { resolveRootStorageKey, migrateLegacyRootStorage } from './rootStorageKey.js'
+import { scheduleRootFileSync } from './rootFileStorage.js'
 
 const PREFIX = 'swt-root-llm-'
 
@@ -8,9 +9,9 @@ export const ROOT_ANALYSIS_SCHEMA_VERSION = 2
 /** @param {import('./rootAnalysis.js').RootAnalysis | null | undefined} analysis */
 export function isRootAnalysisStale(analysis) {
   if (!analysis || analysis.source !== 'deepseek') return false
-  const v = /** @type {{ schemaVersion?: number }} */ (analysis).schemaVersion
-  if (v === ROOT_ANALYSIS_SCHEMA_VERSION) return false
-  return true
+  // 只要核心字段完整就视为有效，不因 schema 升级隔天又全量重跑（手动点「重新分析」即可）
+  if (!analysis.rootLine || !analysis.gloss) return true
+  return false
 }
 
 /** @param {string} bookId */
@@ -51,6 +52,32 @@ function loadBookRootMap(bookId) {
 /** @param {string} bookId @param {Record<string, import('./rootAnalysis.js').RootAnalysis>} map */
 function saveBookRootMap(bookId, map) {
   localStorage.setItem(storageKey(bookId), JSON.stringify(map))
+  scheduleRootFileSync(bookId, map)
+}
+
+/** @param {string} bookId @returns {Record<string, import('./rootAnalysis.js').RootAnalysis>} */
+export function exportBookRootMap(bookId) {
+  return loadBookRootMap(bookId)
+}
+
+/**
+ * @param {string} bookId
+ * @param {Record<string, unknown>} wordsMap
+ * @returns {number} imported count
+ */
+export function importBookRootMap(bookId, wordsMap) {
+  if (!bookId || !wordsMap) return 0
+  const map = loadBookRootMap(bookId)
+  let n = 0
+  for (const [word, raw] of Object.entries(wordsMap)) {
+    const norm = normalizeStored(raw)
+    if (norm) {
+      map[word] = norm
+      n += 1
+    }
+  }
+  if (n) saveBookRootMap(bookId, map)
+  return n
 }
 
 /** @param {unknown} raw @returns {import('./rootAnalysis.js').RootAnalysis | null} */

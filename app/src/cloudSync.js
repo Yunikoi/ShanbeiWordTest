@@ -107,6 +107,79 @@ export function storageFingerprint() {
     .join('\n')
 }
 
+/** @param {string | undefined} raw @returns {Record<string, unknown>} */
+function parseRootMapJson(raw) {
+  if (!raw) return {}
+  try {
+    const o = JSON.parse(raw)
+    return o && typeof o === 'object' ? o : {}
+  } catch {
+    return {}
+  }
+}
+
+/** @param {unknown} a @param {unknown} b */
+function pickRicherRootEntry(a, b) {
+  if (!a) return b
+  if (!b) return a
+  const score = (x) => {
+    if (!x || typeof x !== 'object') return 0
+    const o = /** @type {Record<string, unknown>} */ (x)
+    let s = 0
+    if (o.rootLine) s += 2
+    if (Array.isArray(o.derivatives) && o.derivatives.length) s += 1
+    if (Array.isArray(o.themeWords) && o.themeWords.length) s += 1
+    if (o.schemaVersion) s += 0.5
+    return s
+  }
+  return score(a) >= score(b) ? a : b
+}
+
+/** @param {string | undefined} localRaw @param {string | undefined} remoteRaw */
+function mergeRootMapJson(localRaw, remoteRaw) {
+  const a = parseRootMapJson(localRaw)
+  const b = parseRootMapJson(remoteRaw)
+  /** @type {Record<string, unknown>} */
+  const out = { ...b }
+  for (const word of new Set([...Object.keys(a), ...Object.keys(b)])) {
+    out[word] = pickRicherRootEntry(a[word], b[word])
+  }
+  if (!Object.keys(out).length) return null
+  return JSON.stringify(out)
+}
+
+/**
+ * 词根数据合并：云同步时取本地+云端并集，避免手机进度覆盖电脑已分析词根。
+ * @param {Record<string, string>} base
+ * @param {Record<string, string>} other
+ */
+function mergeRootStorageRecords(base, other) {
+  const out = { ...base }
+  const rootKeys = new Set([
+    ...Object.keys(base).filter((k) => k.startsWith('swt-root-llm-')),
+    ...Object.keys(other).filter((k) => k.startsWith('swt-root-llm-')),
+  ])
+  for (const key of rootKeys) {
+    const merged = mergeRootMapJson(base[key], other[key])
+    if (merged) out[key] = merged
+  }
+  return out
+}
+
+/** @returns {Record<string, string>} */
+function collectLocalRootStorage() {
+  /** @type {Record<string, string>} */
+  const localRoots = {}
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i)
+    if (k?.startsWith('swt-root-llm-')) {
+      const v = localStorage.getItem(k)
+      if (v) localRoots[k] = v
+    }
+  }
+  return localRoots
+}
+
 /** @param {string} remoteUpdatedAt */
 export function markSyncedAt(remoteUpdatedAt) {
   localStorage.setItem(SYNC_LAST_PULL, remoteUpdatedAt)
@@ -142,7 +215,21 @@ export async function pullRemoteSync(syncKey) {
  */
 export async function pushRemoteSync(syncKey) {
   try {
-    const payload = buildBackupPayload()
+    let storage = buildBackupPayload().storage
+    try {
+      const remote = await pullRemoteSync(syncKey)
+      if (remote?.payload?.storage) {
+        storage = mergeRootStorageRecords(storage, remote.payload.storage)
+      }
+    } catch {
+      /* 拉取失败仍上传本机 */
+    }
+    const payload = {
+      format: 'shanbei-word-test-backup',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      storage,
+    }
     const sb = client()
     const updatedAt = new Date().toISOString()
     const { error } = await sb.from('app_sync').upsert({
@@ -151,6 +238,9 @@ export async function pushRemoteSync(syncKey) {
       updated_at: updatedAt,
     })
     if (error) throw new Error(error.message)
+    for (const [key, val] of Object.entries(storage)) {
+      if (key.startsWith('swt-root-llm-')) localStorage.setItem(key, val)
+    }
     localStorage.setItem(SYNC_LAST_PUSH, updatedAt)
     return updatedAt
   } catch (e) {
@@ -163,7 +253,9 @@ export async function pushRemoteSync(syncKey) {
  * @param {string} remoteUpdatedAt
  */
 export function applyRemotePayload(payload, remoteUpdatedAt) {
-  applyStorageRecord(payload.storage, { replace: true })
+  const localRoots = collectLocalRootStorage()
+  const merged = mergeRootStorageRecords(payload.storage, localRoots)
+  applyStorageRecord(merged, { replace: true })
   markSyncedAt(remoteUpdatedAt)
 }
 

@@ -12,8 +12,9 @@ import {
 import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings, getRootLlmSettings } from './llmSettings.js'
 import { enrichBookEntriesWithRootLlm, getCachedRootAnalysisLlm, clearRootAnalysisCache } from './llmRootAnalysis.js'
-import { clearBookRootAnalysisCache, countCachedRootAnalysis, isRootAnalysisStale } from './rootAnalysisCache.js'
+import { clearBookRootAnalysisCache, countCachedRootAnalysis, isRootAnalysisStale, importBookRootMap } from './rootAnalysisCache.js'
 import { hasJapaneseText } from './japaneseSentence.js'
+import { loadRootsFromBoundFile, setRootFileBookTitle } from './rootFileStorage.js'
 import { attachExamples } from './ieltsSentence.js'
 import { attachRootAnalysis } from './rootAnalysis.js'
 import { parseWordbookText } from './parseWordbook.js'
@@ -276,6 +277,15 @@ export function useBookshelfStudy() {
     }
   }, [])
 
+  const hydrateRootsFromFile = useCallback(async (bookId) => {
+    try {
+      const fromFile = await loadRootsFromBoundFile(bookId)
+      if (fromFile) importBookRootMap(bookId, fromFile)
+    } catch {
+      /* ignore */
+    }
+  }, [])
+
   const loadBook = useCallback(async (book) => {
     setBookLoadError(null)
     setActiveBookId(book.id)
@@ -298,6 +308,8 @@ export function useBookshelfStudy() {
       saveProgress(book.id, progMap)
       setStudyHistory(loadStudyHistory(book.id))
       setView('book')
+      setRootFileBookTitle(book.id, book.title)
+      await hydrateRootsFromFile(book.id)
       startBookRootEnrichment(book.id, withEx)
       return { ok: true }
     }
@@ -327,6 +339,8 @@ export function useBookshelfStudy() {
       saveProgress(book.id, progMap)
       setStudyHistory(loadStudyHistory(book.id))
       setView('book')
+      setRootFileBookTitle(book.id, book.title)
+      await hydrateRootsFromFile(book.id)
       startBookRootEnrichment(book.id, withEx)
       return { ok: true }
     } catch (e) {
@@ -334,7 +348,7 @@ export function useBookshelfStudy() {
       setEntries([])
       return { ok: false }
     }
-  }, [startBookRootEnrichment])
+  }, [startBookRootEnrichment, hydrateRootsFromFile])
 
   const bookDashboard = useMemo(() => {
     if (!entries.length) return null
