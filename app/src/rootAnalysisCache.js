@@ -1,3 +1,5 @@
+import { resolveRootStorageKey, migrateLegacyRootStorage } from './rootStorageKey.js'
+
 const PREFIX = 'swt-root-llm-'
 
 /** 词根分析缓存结构版本；升级后旧缓存会自动重分析 */
@@ -13,7 +15,7 @@ export function isRootAnalysisStale(analysis) {
 
 /** @param {string} bookId */
 export function clearBookRootAnalysisCache(bookId) {
-  localStorage.removeItem(PREFIX + bookId)
+  localStorage.removeItem(storageKey(bookId))
 }
 
 /** @param {string} bookId @param {string} word */
@@ -29,10 +31,16 @@ export function removeWordRootAnalysis(bookId, word) {
   }
 }
 
+/** @param {string} bookId */
+function storageKey(bookId) {
+  migrateLegacyRootStorage(bookId)
+  return PREFIX + resolveRootStorageKey(bookId)
+}
+
 /** @param {string} bookId @returns {Record<string, import('./rootAnalysis.js').RootAnalysis>} */
 function loadBookRootMap(bookId) {
   try {
-    const raw = localStorage.getItem(PREFIX + bookId)
+    const raw = localStorage.getItem(storageKey(bookId))
     const data = raw ? JSON.parse(raw) : {}
     return data && typeof data === 'object' ? data : {}
   } catch {
@@ -42,7 +50,7 @@ function loadBookRootMap(bookId) {
 
 /** @param {string} bookId @param {Record<string, import('./rootAnalysis.js').RootAnalysis>} map */
 function saveBookRootMap(bookId, map) {
-  localStorage.setItem(PREFIX + bookId, JSON.stringify(map))
+  localStorage.setItem(storageKey(bookId), JSON.stringify(map))
 }
 
 /** @param {unknown} raw @returns {import('./rootAnalysis.js').RootAnalysis | null} */
@@ -88,7 +96,7 @@ export function pruneRootAnalysisCache(bookId, keepWords) {
 
 /** @param {string} bookId */
 export function removeRootAnalysisCache(bookId) {
-  localStorage.removeItem(PREFIX + bookId)
+  localStorage.removeItem(storageKey(bookId))
 }
 
 /** @param {string} bookId @param {string[]} words */

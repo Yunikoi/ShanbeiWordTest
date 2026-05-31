@@ -12,7 +12,8 @@ import {
 import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings, getRootLlmSettings } from './llmSettings.js'
 import { enrichBookEntriesWithRootLlm, getCachedRootAnalysisLlm, clearRootAnalysisCache } from './llmRootAnalysis.js'
-import { clearBookRootAnalysisCache } from './rootAnalysisCache.js'
+import { clearBookRootAnalysisCache, countCachedRootAnalysis, isRootAnalysisStale } from './rootAnalysisCache.js'
+import { hasJapaneseText } from './japaneseSentence.js'
 import { attachExamples } from './ieltsSentence.js'
 import { attachRootAnalysis } from './rootAnalysis.js'
 import { parseWordbookText } from './parseWordbook.js'
@@ -174,8 +175,30 @@ export function useBookshelfStudy() {
       return
     }
 
+    const total = bookEntries.length
+    const englishEntries = bookEntries.filter((e) => !hasJapaneseText(e.word))
+    const cachedCount = countCachedRootAnalysis(
+      bookId,
+      englishEntries.map((e) => e.word),
+    )
+    const pendingCount = englishEntries.filter((e) => {
+      const stored = getCachedRootAnalysisLlm(bookId, e.word)
+      return !stored || isRootAnalysisStale(stored)
+    }).length
+
+    if (pendingCount === 0) {
+      setRootEnrich({ running: false, done: total, total, analyzed: 0, failed: 0 })
+      return
+    }
+
     const generation = ++rootEnrichGenRef.current
-    setRootEnrich({ running: true, done: 0, total: bookEntries.length, analyzed: 0, failed: 0 })
+    setRootEnrich({
+      running: true,
+      done: cachedCount,
+      total,
+      analyzed: 0,
+      failed: 0,
+    })
 
     enrichBookEntriesWithRootLlm(bookEntries, rootCfg, {
       bookId,

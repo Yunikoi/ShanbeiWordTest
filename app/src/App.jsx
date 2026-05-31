@@ -524,7 +524,7 @@ export default function App() {
               {rootEnrich.running ? (
                 <>
                   <p className="text-sm font-medium text-violet-900">
-                    DeepSeek 整本词表词根分析 {rootEnrich.done}/{rootEnrich.total}
+                    DeepSeek 补全词根 {rootEnrich.done}/{rootEnrich.total}
                   </p>
                   <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-violet-100">
                     <div
@@ -535,14 +535,14 @@ export default function App() {
                     />
                   </div>
                   <p className="mt-2 text-xs text-violet-700">
-                    后台进行，可浏览词表或开始学习；已分析的词会保存到本机
+                    只分析尚未保存的词；已保存到本机的不会重复调用 API
                   </p>
                 </>
               ) : (
                 <>
                   <p className="text-sm text-violet-900">
-                    词根已缓存 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
-                    {rootCachedCount < total ? ' · 打开词书时会自动补全未分析的词' : ' · 整本词表已分析完毕'}
+                    词根已保存到本机 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
+                    {rootCachedCount < total ? ' · 再次打开只补全缺失的词' : ' · 整本词表已分析完毕'}
                   </p>
                   <button
                     type="button"
