@@ -131,6 +131,33 @@ function shuffleCopy(arr) {
   return a
 }
 
+/**
+ * @param {CardEntry[]} cardEntries
+ * @param {string} bookId
+ * @param {CardEntry[]} allEntries
+ */
+async function buildSessionQueue(cardEntries, bookId, allEntries) {
+  let queue = shuffleCopy(cardEntries)
+  const cfg = getLlmSettings()
+  if (cfg.enabled && cfg.apiKey.trim()) {
+    queue = await enrichQueueWithLLM(queue, cfg)
+  }
+  queue = await enrichEntriesWithIpa(queue)
+  return queue.map((e) => attachEntryRootAnalysis(e, bookId, allEntries))
+}
+
+/** @param {CardEntry[]} queue @param {number} dailyGoal */
+function startSessionLog(queue, dailyGoal) {
+  return {
+    id: `sess-${Date.now()}`,
+    startedAt: new Date().toISOString(),
+    endedAt: '',
+    planTotal: queue.length,
+    dailyGoal,
+    events: [],
+  }
+}
+
 export function useBookshelfStudy() {
   const [shelfLoading, setShelfLoading] = useState(true)
   const [shelfError, setShelfError] = useState(null)
@@ -152,6 +179,8 @@ export function useBookshelfStudy() {
   const [sessionIndex, setSessionIndex] = useState(0)
   /** 本次会话计划词数（进度分母，不因加练变长而改变） */
   const [sessionPlanTotal, setSessionPlanTotal] = useState(0)
+  /** @type {'daily' | 'history-review'} */
+  const [sessionMode, setSessionMode] = useState('daily')
   const [sessionFlag, setSessionFlag] = useState(/** @type {'idle' | 'active' | 'done' | 'empty'} */ ('idle'))
   const [preparingSession, setPreparingSession] = useState(false)
   const [prepareStatus, setPrepareStatus] = useState('')
@@ -378,26 +407,47 @@ export function useBookshelfStudy() {
         }
         const pool = shuffleCopy(dueSorted)
         let queue = pool.slice(0, n)
-        const cfg = getLlmSettings()
-        if (cfg.enabled && cfg.apiKey.trim()) {
-          queue = await enrichQueueWithLLM(queue, cfg)
-        }
-        queue = await enrichEntriesWithIpa(queue)
-        queue = queue.map((e) => attachEntryRootAnalysis(e, activeBookId, entries))
+        queue = await buildSessionQueue(queue, activeBookId, entries)
         setSessionPlanTotal(queue.length)
         setSessionQueue(queue)
         setSessionIndex(0)
         setSessionFlag('active')
-        sessionLogRef.current = {
-          id: `sess-${Date.now()}`,
-          startedAt: new Date().toISOString(),
-          endedAt: '',
-          planTotal: queue.length,
-          dailyGoal: n,
-          events: [],
-        }
+        setSessionMode('daily')
+        sessionLogRef.current = startSessionLog(queue, n)
         setView('study')
         return { ok: true, count: queue.length }
+      } finally {
+        setPreparingSession(false)
+        setPrepareStatus('')
+      }
+    },
+    [activeBookId, entries],
+  )
+
+  /**
+   * 复习某次测试中标记为「不熟悉 / 不认识」的词
+   * @param {string[]} words
+   */
+  const beginReviewSession = useCallback(
+    async (words) => {
+      if (!activeBookId || !entries.length) return { ok: false, message: '请先选择有效词书' }
+      const wordSet = new Set(words)
+      const pool = entries.filter((e) => wordSet.has(e.word))
+      if (!pool.length) {
+        return { ok: false, message: '本次不会的词在当前词书中未找到（可能词表已更新）' }
+      }
+      setPreparingSession(true)
+      setPrepareStatus('')
+      try {
+        const queue = await buildSessionQueue(pool, activeBookId, entries)
+        setSessionPlanTotal(queue.length)
+        setSessionQueue(queue)
+        setSessionIndex(0)
+        setSessionFlag('active')
+        setSessionMode('history-review')
+        sessionLogRef.current = startSessionLog(queue, queue.length)
+        setView('study')
+        return { ok: true, count: queue.length, skipped: words.length - pool.length }
       } finally {
         setPreparingSession(false)
         setPrepareStatus('')
@@ -415,6 +465,7 @@ export function useBookshelfStudy() {
     setSessionQueue([])
     setSessionIndex(0)
     setSessionPlanTotal(0)
+    setSessionMode('daily')
     setActiveBookId(null)
     setEntries([])
     setActiveTitle('')
@@ -429,6 +480,7 @@ export function useBookshelfStudy() {
     setSessionQueue([])
     setSessionIndex(0)
     setSessionPlanTotal(0)
+    setSessionMode('daily')
     if (activeBookId) {
       const today = localTodayYMD()
       setProgress(normalizeProgressMap(loadProgress(activeBookId), today))
@@ -625,6 +677,7 @@ export function useBookshelfStudy() {
     bookDashboard,
     loadBook,
     beginSession,
+    beginReviewSession,
     preparingSession,
     prepareStatus,
     rootEnrich,
@@ -635,6 +688,7 @@ export function useBookshelfStudy() {
     sessionQueue,
     sessionIndex,
     sessionPlanTotal,
+    sessionMode,
     sessionQueueLength,
     sessionExtra,
     sessionPosition,

@@ -77,6 +77,7 @@ export default function App() {
     bookDashboard,
     loadBook,
     beginSession,
+    beginReviewSession,
     preparingSession,
     prepareStatus,
     rootEnrich,
@@ -85,6 +86,7 @@ export default function App() {
     backToBook,
     sessionPosition,
     sessionPlanTotal,
+    sessionMode,
     sessionQueueLength,
     sessionExtra,
     sessionEmpty,
@@ -295,6 +297,39 @@ export default function App() {
       setImportTip('开始学习失败，请检查网络或大模型 API 设置')
     }
   }, [beginSession, dailyCount])
+
+  const startHistoryReview = useCallback(
+    async (words) => {
+      setDoneOpen(false)
+      checkpointBufferRef.current = []
+      resetStudyUiState({
+        setRevealed,
+        setStudyPhase,
+        setPreliminary,
+        setShowExamples,
+        setShowRoots,
+        setCheckpointOpen,
+        setCheckpointWords,
+        setPendingDone,
+        setSessionCompletedCount,
+      })
+      try {
+        const r = await beginReviewSession(words)
+        if (!r.ok) {
+          setImportTip(r.message || '无法开始复习')
+          return
+        }
+        setHistoryOpen(false)
+        setCardKey((k) => k + 1)
+        if (r.skipped && r.skipped > 0) {
+          setImportTip(`已开始复习 ${r.count} 词（${r.skipped} 词在词书中未找到已跳过）`)
+        }
+      } catch {
+        setImportTip('开始复习失败，请检查网络或大模型 API 设置')
+      }
+    },
+    [beginReviewSession],
+  )
 
   /** 首轮点认识/不熟悉/不认识：进入释义页，不写入 SRS */
   const goToMeaning = useCallback(
@@ -793,6 +828,8 @@ export default function App() {
           onClose={() => setHistoryOpen(false)}
           sessions={studyHistory}
           entries={entries}
+          onReviewUnknown={startHistoryReview}
+          reviewStarting={preparingSession}
         />
       </div>
     )
@@ -827,6 +864,9 @@ export default function App() {
             </button>
             <div className="text-right text-xs text-slate-500">
               <div className="font-medium text-slate-800">{activeTitle}</div>
+              {sessionMode === 'history-review' ? (
+                <div className="text-indigo-600">复习本次不会的词</div>
+              ) : null}
               {!sessionEmpty && sessionQueueLength ? (
                 <div>
                   <div>

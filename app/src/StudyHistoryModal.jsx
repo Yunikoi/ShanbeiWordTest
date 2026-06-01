@@ -45,9 +45,11 @@ function todayKey() {
  *   onClose: () => void,
  *   sessions: import('./studyHistory.js').StudySession[],
  *   entries: { word: string, senses?: { zh?: string }[] }[],
+ *   onReviewUnknown?: (words: string[]) => void,
+ *   reviewStarting?: boolean,
  * }} props
  */
-export function StudyHistoryModal({ open, onClose, sessions, entries }) {
+export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUnknown, reviewStarting }) {
   const [selectedId, setSelectedId] = useState(null)
   const [selectedDate, setSelectedDate] = useState(/** @type {string | null} */ (null))
   const [viewYear, setViewYear] = useState(() => new Date().getFullYear())
@@ -136,6 +138,8 @@ export function StudyHistoryModal({ open, onClose, sessions, entries }) {
               summary={selectedSummary}
               unknownSet={unknownSet}
               glossMap={glossMap}
+              onReviewUnknown={onReviewUnknown}
+              reviewStarting={reviewStarting}
             />
           ) : selectedDate ? (
             dayBucket?.sessions.length ? (
@@ -281,9 +285,11 @@ function HistoryCalendar({ cells, byDay, today, viewYear, viewMonth, onPrevMonth
  *   summary: ReturnType<typeof summarizeSession>,
  *   unknownSet: Set<string>,
  *   glossMap: Map<string, string>,
+ *   onReviewUnknown?: (words: string[]) => void,
+ *   reviewStarting?: boolean,
  * }} props
  */
-function SessionDetail({ summary, unknownSet, glossMap }) {
+function SessionDetail({ summary, unknownSet, glossMap, onReviewUnknown, reviewStarting }) {
   return (
     <div>
       <div className="mb-4 flex flex-wrap gap-2 text-xs text-slate-600">
@@ -293,6 +299,17 @@ function SessionDetail({ summary, unknownSet, glossMap }) {
           认识 {summary.testedCount - summary.unknownCount} 词
         </span>
       </div>
+
+      {summary.unknownCount > 0 && onReviewUnknown ? (
+        <button
+          type="button"
+          disabled={reviewStarting}
+          onClick={() => onReviewUnknown(summary.unknown)}
+          className="mb-5 w-full rounded-2xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow-md hover:bg-indigo-500 disabled:opacity-50"
+        >
+          {reviewStarting ? '准备复习中…' : `复习不会的 ${summary.unknownCount} 个词`}
+        </button>
+      ) : null}
 
       {summary.unknownCount > 0 ? (
         <>
