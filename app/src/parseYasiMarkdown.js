@@ -90,7 +90,7 @@ function entryFromColon(body) {
   if (!wordPart || !tail || wordPart.length > MD_WORD_MAX_LEN) return null
   if (isSectionLabel(wordPart)) return null
   const { word, ipa } = splitWordAndIpa(wordPart)
-  if (!word) return null
+  if (!word || !isValidWordToken(word)) return null
   const senses = sensesFromTail(tail)
   if (!senses.length) return null
   return ipa ? { word, ipa, senses } : { word, senses }
@@ -100,30 +100,46 @@ function isSectionLabel(text) {
   return /^(衍生|形近|同义|语法|必背|词根|常用|词族|易混|对应|高频|核心|必背|词族衍生|常用句型)/u.test(text)
 }
 
+/** @param {string} word */
+function isValidWordToken(word) {
+  if (!word || word.length > MD_WORD_MAX_LEN) return false
+  if (/[\u4e00-\u9fff]|[|]|[：:]/.test(word)) return false
+  return /[a-zA-Z]/.test(word)
+}
+
+/** @param {Entry | null} entry @returns {Entry | null} */
+function normalizeEntry(entry) {
+  if (!entry || !isValidWordToken(entry.word)) return null
+  return entry
+}
+
 /** @returns {Entry | null} */
 function entryFromSegment(seg) {
   const body = stripMdDecorations(seg.trim())
   if (!body || body.length > MD_WORD_MAX_LEN * 2) return null
 
   const colon = entryFromColon(body)
-  if (colon) return colon
+  if (colon) return normalizeEntry(colon)
 
   const posM = body.match(/^(.+?)\s+([a-z]{1,6})\.(?:\/?([a-z]{1,6})\.)?\s*([\u4e00-\u9fff].+)$/iu)
   if (posM) {
-    const { word, ipa } = splitWordAndIpa(stripMdDecorations(posM[1]))
-    if (!word) return null
-    const zh = posM[4].trim()
-    return {
-      word,
-      ...(ipa ? { ipa } : {}),
-      senses: [{ pos: posM[2].replace(/\.$/, ''), zh }],
+    const rawWord = stripMdDecorations(posM[1]).trim()
+    if (!/[\u4e00-\u9fff]|[|]/.test(rawWord)) {
+      const { word, ipa } = splitWordAndIpa(rawWord)
+      if (word && isValidWordToken(word)) {
+        return {
+          word,
+          ...(ipa ? { ipa } : {}),
+          senses: [{ pos: posM[2].replace(/\.$/, ''), zh: posM[4].trim() }],
+        }
+      }
     }
   }
 
   const ez = splitEnglishChinese(body)
   if (ez) {
     const { word, ipa } = splitWordAndIpa(ez.en)
-    if (!word) return null
+    if (!word || !isValidWordToken(word)) return null
     return {
       word,
       ...(ipa ? { ipa } : {}),
@@ -187,23 +203,30 @@ function entriesFromBody(body) {
   const trimmed = stripMdDecorations(body)
   if (!trimmed) return []
 
+  if (firstWordDelimiterColon(trimmed)) {
+    const single = entryFromSegment(trimmed)
+    return single ? [single] : []
+  }
+
+  if (/[；;|]/.test(trimmed)) {
+    /** @type {Entry[]} */
+    const out = []
+    for (const part of trimmed.split(/[；;|]/).map((p) => p.trim()).filter(Boolean)) {
+      out.push(...entriesFromBody(part))
+    }
+    return out
+  }
+
   const single = entryFromSegment(trimmed)
   if (single) return [single]
 
-  if (!/[；;|]/.test(trimmed)) {
-    if (/^[a-zA-Z][a-zA-Z0-9\s/'.+?-]*$/u.test(trimmed) && trimmed.length <= MD_WORD_MAX_LEN) {
-      const { word, ipa } = splitWordAndIpa(trimmed)
-      if (word) return [{ word, ...(ipa ? { ipa } : {}), senses: [{ zh: NOTE_GLOSS }] }]
+  if (/^[a-zA-Z][a-zA-Z0-9\s/'.+?-]*$/u.test(trimmed) && trimmed.length <= MD_WORD_MAX_LEN) {
+    const { word, ipa } = splitWordAndIpa(trimmed)
+    if (word && isValidWordToken(word)) {
+      return [{ word, ...(ipa ? { ipa } : {}), senses: [{ zh: NOTE_GLOSS }] }]
     }
-    return []
   }
-
-  const out = []
-  for (const part of trimmed.split(/[；;]/).map((p) => p.trim()).filter(Boolean)) {
-    const e = entryFromSegment(part)
-    if (e) out.push(e)
-  }
-  return out
+  return []
 }
 
 /** @param {string} t */
@@ -250,6 +273,7 @@ function glossFromInThatBlock(block) {
 
 /** @param {Map<string, Entry>} byWord @param {Entry} e */
 function mergeEntry(byWord, e) {
+  if (!isValidWordToken(e.word)) return
   const key = e.word.toLowerCase()
   const prev = byWord.get(key)
   if (prev) {
