@@ -79,7 +79,16 @@ export function exportBookRootMap(bookId) {
  */
 export function importBookRootMap(bookId, wordsMap) {
   if (!bookId || !wordsMap) return 0
+  const fileKeys = Object.keys(wordsMap)
+  if (!fileKeys.length) return 0
   const map = loadBookRootMap(bookId)
+  if (Object.keys(map).length >= fileKeys.length) {
+    let missing = 0
+    for (const word of fileKeys) {
+      if (!normalizeStored(map[word] ?? map[word.toLowerCase()])) missing += 1
+    }
+    if (missing === 0) return 0
+  }
   let n = 0
   for (const [word, raw] of Object.entries(wordsMap)) {
     const norm = normalizeStored(raw)

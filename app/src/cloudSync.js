@@ -103,7 +103,18 @@ function listAppStorageKeysForSync() {
 /** @returns {string} */
 export function storageFingerprint() {
   return listAppStorageKeysForSync()
-    .map((k) => `${k}\0${localStorage.getItem(k)}`)
+    .map((k) => {
+      const v = localStorage.getItem(k)
+      const len = v?.length ?? 0
+      // 词根/词书体积大，只用长度做变更检测，避免每 8s 拼接数 MB 字符串卡死页面
+      if (k.startsWith('swt-root-llm-') || k.startsWith('swt-book-')) {
+        return `${k}:${len}`
+      }
+      if (len > 8192) {
+        return `${k}:${len}:${v?.slice(0, 48)}`
+      }
+      return `${k}\0${v}`
+    })
     .join('\n')
 }
 

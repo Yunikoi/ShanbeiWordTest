@@ -24,9 +24,10 @@ function saveAll(map) {
 
 /** @param {string} bookId */
 export function isBookRootAnalysisEnabled(bookId) {
-  if (!bookId) return true
+  if (!bookId) return false
   const prefs = loadAll()[bookId]
-  return prefs?.rootAnalysisEnabled !== false
+  // 默认关闭，需用户在词书页手动开启（避免打开大词书就后台跑 API）
+  return prefs?.rootAnalysisEnabled === true
 }
 
 /** @param {string} bookId @param {boolean} enabled */

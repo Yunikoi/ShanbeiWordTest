@@ -1348,7 +1348,7 @@ export default function App() {
         <details className="mb-6 rounded-2xl border border-violet-200 bg-violet-50/50 px-4 py-3 text-left shadow-sm" open>
           <summary className="cursor-pointer text-sm font-semibold text-violet-900">词根分析 · DeepSeek（推荐）</summary>
           <p className="mt-2 text-xs leading-relaxed text-slate-600">
-            打开词书或更新词表后，后台一次性分析整本词表（含同根派生、同主题雅思词汇归纳），结果保存在本机。词表悬停看释义、点击进入单词详情。API Key 仅存本机。
+            在词书页可单独开启「本书自动分析词根」。全局开关只控制是否可用 DeepSeek；默认不会打开词书就整本跑 API。已保存词根仍可查看。
           </p>
           <label className="mt-3 flex cursor-pointer items-center gap-2 text-sm">
             <input

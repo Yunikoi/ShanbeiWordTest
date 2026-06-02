@@ -186,14 +186,8 @@ export async function enrichBookEntriesWithRootLlm(entries, cfg, opts = {}) {
     const stored = getCachedRootAnalysisLlm(bookId, entry.word)
     if (stored && !isRootAnalysisStale(stored)) {
       cached += 1
-      const merged = withBookSameRoot(stored, entry, entries) ?? stored
-      onProgress?.({
-        done: i + 1,
-        total,
-        word: entry.word,
-        status: 'cached',
-        rootAnalysis: merged,
-      })
+      onProgress?.({ done: i + 1, total, word: entry.word, status: 'cached' })
+      if (i % 40 === 39) await sleep(0)
       continue
     }
     try {
