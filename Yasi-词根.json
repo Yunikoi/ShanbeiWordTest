@@ -4,7 +4,7 @@
   "storageKey": "src:Yasi.md",
   "bookId": "import-1780133567508",
   "bookTitle": "",
-  "updatedAt": "2026-06-02T09:51:58.766Z",
+  "updatedAt": "2026-06-02T09:56:13.531Z",
   "words": {
     "provide insight into": {
       "gloss": "对……提供深入见解/洞察",
@@ -199495,6 +199495,2160 @@
         "Alpine plants 常见于雅思阅读关于高山植物适应性的文章。"
       ],
       "insight": "Alpine 与 album (相册，原指白色石板) 同源，都来自\"白色\"概念。想象阿尔卑斯山白雪皑皑的山顶，记住 alpine 即\"高山的\"。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "abrupt halt": {
+      "gloss": "骤然停止",
+      "morphKind": "classical",
+      "prefixLine": "ab-: 离开, 脱离 (来自拉丁语 ab-)",
+      "rootLine": "rupt: 打破, 断裂 (来自拉丁语 rumpere, 过去分词 ruptum; PIE *reup- 打破)",
+      "suffixLine": "无",
+      "evolution": "ab- (离开) + rupt (打破) → 突然断裂而停止 → 骤然停止",
+      "parts": [],
+      "pieSummary": "PIE *reup- 意为打破, 断裂",
+      "family": [
+        {
+          "word": "corrupt",
+          "pos": "adj",
+          "zh": "腐败的",
+          "morphBreakdown": "cor- (共同) + rupt (打破) → 完全破坏"
+        },
+        {
+          "word": "abrupt",
+          "pos": "adj",
+          "zh": "突然的",
+          "morphBreakdown": "ab- (离开) + rupt (打破) → 突然断裂"
+        },
+        {
+          "word": "disrupt",
+          "pos": "v",
+          "zh": "扰乱",
+          "morphBreakdown": "dis- (分开) + rupt (打破) → 使分裂"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "abrupt",
+          "pos": "adj",
+          "zh": "突然的",
+          "morphBreakdown": "ab- + rupt"
+        },
+        {
+          "word": "abruptly",
+          "pos": "adv",
+          "zh": "突然地",
+          "morphBreakdown": "abrupt + -ly"
+        },
+        {
+          "word": "abruptness",
+          "pos": "n",
+          "zh": "突然",
+          "morphBreakdown": "abrupt + -ness"
+        },
+        {
+          "word": "corrupt",
+          "pos": "adj",
+          "zh": "腐败的",
+          "morphBreakdown": "cor- + rupt"
+        },
+        {
+          "word": "corruption",
+          "pos": "n",
+          "zh": "腐败",
+          "morphBreakdown": "corrupt + -ion"
+        },
+        {
+          "word": "disrupt",
+          "pos": "v",
+          "zh": "扰乱",
+          "morphBreakdown": "dis- + rupt"
+        },
+        {
+          "word": "disruption",
+          "pos": "n",
+          "zh": "中断",
+          "morphBreakdown": "disrupt + -ion"
+        },
+        {
+          "word": "disruptive",
+          "pos": "adj",
+          "zh": "破坏性的",
+          "morphBreakdown": "disrupt + -ive"
+        },
+        {
+          "word": "erupt",
+          "pos": "v",
+          "zh": "爆发",
+          "morphBreakdown": "e- (出) + rupt (打破) → 喷出"
+        },
+        {
+          "word": "eruption",
+          "pos": "n",
+          "zh": "爆发",
+          "morphBreakdown": "erupt + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "traffic",
+          "pos": "n",
+          "zh": "交通"
+        },
+        {
+          "word": "delay",
+          "pos": "n",
+          "zh": "延误"
+        },
+        {
+          "word": "cancel",
+          "pos": "v",
+          "zh": "取消"
+        },
+        {
+          "word": "disruption",
+          "pos": "n",
+          "zh": "中断"
+        },
+        {
+          "word": "emergency",
+          "pos": "n",
+          "zh": "紧急情况"
+        },
+        {
+          "word": "brake",
+          "pos": "v",
+          "zh": "刹车"
+        },
+        {
+          "word": "stop",
+          "pos": "v",
+          "zh": "停止"
+        },
+        {
+          "word": "accident",
+          "pos": "n",
+          "zh": "事故"
+        },
+        {
+          "word": "commute",
+          "pos": "n",
+          "zh": "通勤"
+        },
+        {
+          "word": "schedule",
+          "pos": "n",
+          "zh": "时间表"
+        }
+      ],
+      "themeTopic": "交通·旅行",
+      "themeSummary": "该词常用于描述交通中断或旅行计划的突然停止，常与 traffic, delay, cancel 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "abrupt halt 是固定搭配，强调突然性；halt 比 stop 更正式。"
+      ],
+      "insight": "想象一个突然断裂的链条，事物戛然而止，就是 abrupt halt。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "come to a halt": {
+      "gloss": "停下来",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "come 来自古英语 cuman，PIE *gwem- '来'；halt 来自古英语 healt '跛的'，PIE *kel- '打'",
+      "suffixLine": "无",
+      "evolution": "字面义为'来到一个停止的状态'，引申为'停下来'",
+      "parts": [],
+      "pieSummary": "come: PIE *gwem- '来'；halt: PIE *kel- '打'",
+      "family": [
+        {
+          "word": "come across",
+          "pos": "v",
+          "zh": "偶然遇到",
+          "morphBreakdown": "come + across"
+        },
+        {
+          "word": "become obsolete",
+          "pos": "v",
+          "zh": "变得过时",
+          "morphBreakdown": "be + come + obsolete"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "come",
+          "pos": "v",
+          "zh": "来",
+          "morphBreakdown": "古英语 cuman"
+        },
+        {
+          "word": "become",
+          "pos": "v",
+          "zh": "成为",
+          "morphBreakdown": "be- + come"
+        },
+        {
+          "word": "outcome",
+          "pos": "n",
+          "zh": "结果",
+          "morphBreakdown": "out- + come"
+        },
+        {
+          "word": "income",
+          "pos": "n",
+          "zh": "收入",
+          "morphBreakdown": "in- + come"
+        },
+        {
+          "word": "overcome",
+          "pos": "v",
+          "zh": "克服",
+          "morphBreakdown": "over- + come"
+        },
+        {
+          "word": "welcome",
+          "pos": "v",
+          "zh": "欢迎",
+          "morphBreakdown": "wel- + come"
+        },
+        {
+          "word": "halt",
+          "pos": "v",
+          "zh": "停止",
+          "morphBreakdown": "古英语 healt"
+        },
+        {
+          "word": "halting",
+          "pos": "adj",
+          "zh": "犹豫的",
+          "morphBreakdown": "halt + -ing"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "traffic jam",
+          "pos": "n",
+          "zh": "交通堵塞"
+        },
+        {
+          "word": "delay",
+          "pos": "adj",
+          "zh": "延误"
+        },
+        {
+          "word": "congestion",
+          "pos": "n",
+          "zh": "拥堵"
+        },
+        {
+          "word": "vehicle",
+          "pos": "n",
+          "zh": "车辆"
+        },
+        {
+          "word": "commute",
+          "pos": "other",
+          "zh": "通勤"
+        },
+        {
+          "word": "pedestrian",
+          "pos": "n",
+          "zh": "行人"
+        },
+        {
+          "word": "intersection",
+          "pos": "n",
+          "zh": "十字路口"
+        },
+        {
+          "word": "brake",
+          "pos": "other",
+          "zh": "刹车"
+        },
+        {
+          "word": "stop sign",
+          "pos": "n",
+          "zh": "停车标志"
+        },
+        {
+          "word": "accident",
+          "pos": "n",
+          "zh": "事故"
+        },
+        {
+          "word": "roadwork",
+          "pos": "n",
+          "zh": "道路施工"
+        },
+        {
+          "word": "diversion",
+          "pos": "n",
+          "zh": "绕行"
+        }
+      ],
+      "themeTopic": "交通·旅行",
+      "themeSummary": "该短语常出现在雅思听力或阅读中描述交通中断、车辆停止等场景，与交通堵塞、延误等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 come to a halt 是固定短语，halt 作名词。"
+      ],
+      "insight": "想象车辆行驶中突然'come to a halt'，即'来到一个停止点'。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "grinding halt": {
+      "gloss": "完全停滞",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "grind（磨碎）来自古英语 grindan，PIE *ghrendh-（磨碎）；halt（停止）来自古英语 healtian，PIE *kel-（驱动，促使）",
+      "suffixLine": "无",
+      "evolution": "grinding 作为现在分词修饰 halt，字面意为“磨碎般的停止”，比喻机器或活动突然且彻底停止，如同被磨碎般无法运转。",
+      "parts": [],
+      "pieSummary": "grind: PIE *ghrendh- (to grind); halt: PIE *kel- (to drive, set in motion)",
+      "family": [
+        {
+          "word": "grind",
+          "pos": "other",
+          "zh": "磨碎；苦差事",
+          "morphBreakdown": "grind"
+        },
+        {
+          "word": "grinder",
+          "pos": "n",
+          "zh": "研磨机；磨工",
+          "morphBreakdown": "grind + -er"
+        },
+        {
+          "word": "grinding",
+          "pos": "adj",
+          "zh": "磨的；折磨人的",
+          "morphBreakdown": "grind + -ing"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "grind",
+          "pos": "v",
+          "zh": "磨碎；磨光",
+          "morphBreakdown": "grind"
+        },
+        {
+          "word": "grinder",
+          "pos": "n",
+          "zh": "研磨机；磨工",
+          "morphBreakdown": "grind + -er"
+        },
+        {
+          "word": "grinding",
+          "pos": "adj",
+          "zh": "磨的；刺耳的；折磨人的",
+          "morphBreakdown": "grind + -ing"
+        },
+        {
+          "word": "grindstone",
+          "pos": "n",
+          "zh": "磨刀石",
+          "morphBreakdown": "grind + stone"
+        },
+        {
+          "word": "halt",
+          "pos": "other",
+          "zh": "停止；暂停",
+          "morphBreakdown": "halt"
+        },
+        {
+          "word": "halting",
+          "pos": "adj",
+          "zh": "犹豫的；跛的",
+          "morphBreakdown": "halt + -ing"
+        },
+        {
+          "word": "haltingly",
+          "pos": "adv",
+          "zh": "犹豫地；蹒跚地",
+          "morphBreakdown": "halting + -ly"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "stagnation",
+          "pos": "n",
+          "zh": "停滞"
+        },
+        {
+          "word": "recession",
+          "pos": "n",
+          "zh": "衰退"
+        },
+        {
+          "word": "shutdown",
+          "pos": "n",
+          "zh": "关闭"
+        },
+        {
+          "word": "disruption",
+          "pos": "n",
+          "zh": "中断"
+        },
+        {
+          "word": "paralysis",
+          "pos": "n",
+          "zh": "瘫痪"
+        },
+        {
+          "word": "bottleneck",
+          "pos": "n",
+          "zh": "瓶颈"
+        },
+        {
+          "word": "slowdown",
+          "pos": "n",
+          "zh": "减速"
+        },
+        {
+          "word": "collapse",
+          "pos": "other",
+          "zh": "崩溃"
+        },
+        {
+          "word": "standstill",
+          "pos": "n",
+          "zh": "停顿"
+        },
+        {
+          "word": "gridlock",
+          "pos": "n",
+          "zh": "交通堵塞"
+        },
+        {
+          "word": "deadlock",
+          "pos": "n",
+          "zh": "僵局"
+        },
+        {
+          "word": "impasse",
+          "pos": "n",
+          "zh": "僵局"
+        }
+      ],
+      "themeTopic": "经济·商业·生产",
+      "themeSummary": "该词常用于描述经济、生产或交通等系统的突然停滞，在雅思阅读或听力中可能出现在关于经济危机、工厂停产、交通瘫痪等场景。",
+      "relatedNotes": [],
+      "tips": [
+        "grinding halt 是固定搭配，强调突然且彻底的停止。",
+        "在雅思写作中可用于描述经济或生产活动的中断。"
+      ],
+      "insight": "想象一个齿轮被磨碎后突然卡死，完全无法转动，就是 grinding halt。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "agro-": {
+      "gloss": "农业",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "agro- 来自希腊语 agros '田地'，源自 PIE *h₂eǵros '田野'",
+      "suffixLine": "无",
+      "evolution": "希腊语 agros '田地' 作为前缀，表示与农业相关",
+      "parts": [],
+      "pieSummary": "PIE *h₂eǵros '田野'",
+      "family": [
+        {
+          "word": "agriculture",
+          "pos": "n",
+          "zh": "农业",
+          "morphBreakdown": "agri- + culture"
+        },
+        {
+          "word": "agronomy",
+          "pos": "n",
+          "zh": "农学",
+          "morphBreakdown": "agro- + -nomy"
+        },
+        {
+          "word": "agrarian",
+          "pos": "adj",
+          "zh": "土地的",
+          "morphBreakdown": "agr- + -arian"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "agriculture",
+          "pos": "n",
+          "zh": "农业",
+          "morphBreakdown": "agri- + culture"
+        },
+        {
+          "word": "agricultural",
+          "pos": "adj",
+          "zh": "农业的",
+          "morphBreakdown": "agriculture + -al"
+        },
+        {
+          "word": "agronomy",
+          "pos": "n",
+          "zh": "农学",
+          "morphBreakdown": "agro- + -nomy"
+        },
+        {
+          "word": "agronomist",
+          "pos": "n",
+          "zh": "农学家",
+          "morphBreakdown": "agronomy + -ist"
+        },
+        {
+          "word": "agribusiness",
+          "pos": "n",
+          "zh": "农业综合企业",
+          "morphBreakdown": "agri- + business"
+        },
+        {
+          "word": "agrochemical",
+          "pos": "n",
+          "zh": "农用化学品",
+          "morphBreakdown": "agro- + chemical"
+        },
+        {
+          "word": "agroforestry",
+          "pos": "n",
+          "zh": "农林复合经营",
+          "morphBreakdown": "agro- + forestry"
+        },
+        {
+          "word": "agroecology",
+          "pos": "n",
+          "zh": "农业生态学",
+          "morphBreakdown": "agro- + ecology"
+        },
+        {
+          "word": "agroindustry",
+          "pos": "n",
+          "zh": "农用工业",
+          "morphBreakdown": "agro- + industry"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "crop",
+          "pos": "n",
+          "zh": "作物"
+        },
+        {
+          "word": "yield",
+          "pos": "n",
+          "zh": "产量"
+        },
+        {
+          "word": "irrigation",
+          "pos": "n",
+          "zh": "灌溉"
+        },
+        {
+          "word": "pesticide",
+          "pos": "n",
+          "zh": "杀虫剂"
+        },
+        {
+          "word": "fertilizer",
+          "pos": "n",
+          "zh": "肥料"
+        },
+        {
+          "word": "soil",
+          "pos": "n",
+          "zh": "土壤"
+        },
+        {
+          "word": "cultivation",
+          "pos": "n",
+          "zh": "耕种"
+        },
+        {
+          "word": "harvest",
+          "pos": "n",
+          "zh": "收获"
+        },
+        {
+          "word": "livestock",
+          "pos": "n",
+          "zh": "牲畜"
+        },
+        {
+          "word": "organic",
+          "pos": "adj",
+          "zh": "有机的"
+        },
+        {
+          "word": "sustainable",
+          "pos": "adj",
+          "zh": "可持续的"
+        },
+        {
+          "word": "genetically modified",
+          "pos": "adj",
+          "zh": "转基因的"
+        }
+      ],
+      "themeTopic": "农业·食品",
+      "themeSummary": "该词常出现在雅思阅读关于农业、食品生产、可持续发展的文章中，与 crop, yield, irrigation, pesticide 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "agro- 是希腊源前缀，常见于学术词汇；注意与 agri- 同源，但 agri- 更常见于 agriculture"
+      ],
+      "insight": "agro- 像田地（agro）一样扎根于农业词汇，联想 agriculture（农耕）",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "-nomist …": {
+      "gloss": "学家",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "来自希腊语 nomos（法律、规则、分配）",
+      "suffixLine": "-ist 表示“从事…的人”",
+      "evolution": "nomos（规则）+ -ist（人）→ 研究规则/法律的人 → 学家",
+      "parts": [],
+      "pieSummary": "PIE *nem-（分配、取）",
+      "family": [
+        {
+          "word": "autonomy",
+          "pos": "n",
+          "zh": "自治",
+          "morphBreakdown": "auto- + nomos + -y"
+        },
+        {
+          "word": "economy",
+          "pos": "n",
+          "zh": "经济",
+          "morphBreakdown": "oikos + nomos + -y"
+        },
+        {
+          "word": "taxonomy",
+          "pos": "n",
+          "zh": "分类学",
+          "morphBreakdown": "taxis + nomos + -y"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "economist",
+          "pos": "n",
+          "zh": "经济学家",
+          "morphBreakdown": "eco- + nom + -ist"
+        },
+        {
+          "word": "autonomous",
+          "pos": "adj",
+          "zh": "自治的",
+          "morphBreakdown": "auto- + nom + -ous"
+        },
+        {
+          "word": "taxonomic",
+          "pos": "adj",
+          "zh": "分类学的",
+          "morphBreakdown": "taxo- + nom + -ic"
+        },
+        {
+          "word": "nominal",
+          "pos": "adj",
+          "zh": "名义上的",
+          "morphBreakdown": "nomin + -al"
+        },
+        {
+          "word": "nominate",
+          "pos": "v",
+          "zh": "提名",
+          "morphBreakdown": "nomin + -ate"
+        },
+        {
+          "word": "nominee",
+          "pos": "n",
+          "zh": "被提名者",
+          "morphBreakdown": "nomin + -ee"
+        },
+        {
+          "word": "denomination",
+          "pos": "n",
+          "zh": "面额；教派",
+          "morphBreakdown": "de- + nomin + -ation"
+        },
+        {
+          "word": "ignominy",
+          "pos": "n",
+          "zh": "耻辱",
+          "morphBreakdown": "ig- + nomin + -y"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "discipline",
+          "pos": "n",
+          "zh": "学科"
+        },
+        {
+          "word": "specialist",
+          "pos": "n",
+          "zh": "专家"
+        },
+        {
+          "word": "scholar",
+          "pos": "n",
+          "zh": "学者"
+        },
+        {
+          "word": "field",
+          "pos": "n",
+          "zh": "领域"
+        },
+        {
+          "word": "research",
+          "pos": "n",
+          "zh": "研究"
+        },
+        {
+          "word": "theory",
+          "pos": "n",
+          "zh": "理论"
+        },
+        {
+          "word": "methodology",
+          "pos": "n",
+          "zh": "方法论"
+        },
+        {
+          "word": "classification",
+          "pos": "n",
+          "zh": "分类"
+        }
+      ],
+      "themeTopic": "学术·学科",
+      "themeSummary": "该词常出现在雅思阅读关于学科分类、专家称谓的篇章中，与各类学科名称（如 economics, biology）共现。",
+      "relatedNotes": [],
+      "tips": [
+        "-nomist 常作为后缀出现在学科专家名称中，如 economist, agronomist。"
+      ],
+      "insight": "nom- 与法律、规则相关，-ist 表示专家，合起来就是“某领域的学家”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "agree": {
+      "gloss": "同意",
+      "morphKind": "classical",
+      "prefixLine": "ad- (朝向) 在 g 前同化为 ag-",
+      "rootLine": "拉丁语 gratus (令人愉快的, 感激的) → PIE *gʷerə- (欢迎, 赞美)",
+      "suffixLine": "无",
+      "evolution": "ad- + gratus → 字面“使感到愉快”→ 引申为“接受、同意”",
+      "parts": [],
+      "pieSummary": "PIE *gʷerə- (欢迎, 赞美)",
+      "family": [
+        {
+          "word": "agreeable",
+          "pos": "adj",
+          "zh": "宜人的；同意的",
+          "morphBreakdown": "agree + -able"
+        },
+        {
+          "word": "agreement",
+          "pos": "n",
+          "zh": "协议；一致",
+          "morphBreakdown": "agree + -ment"
+        },
+        {
+          "word": "disagree",
+          "pos": "v",
+          "zh": "不同意",
+          "morphBreakdown": "dis- + agree"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "agree",
+          "pos": "v",
+          "zh": "同意",
+          "morphBreakdown": "ag- + gree (gratus)"
+        },
+        {
+          "word": "agreeable",
+          "pos": "adj",
+          "zh": "宜人的；同意的",
+          "morphBreakdown": "agree + -able"
+        },
+        {
+          "word": "agreement",
+          "pos": "n",
+          "zh": "协议；一致",
+          "morphBreakdown": "agree + -ment"
+        },
+        {
+          "word": "disagree",
+          "pos": "v",
+          "zh": "不同意",
+          "morphBreakdown": "dis- + agree"
+        },
+        {
+          "word": "disagreement",
+          "pos": "n",
+          "zh": "分歧",
+          "morphBreakdown": "disagree + -ment"
+        },
+        {
+          "word": "grace",
+          "pos": "n",
+          "zh": "优雅；恩惠",
+          "morphBreakdown": "grac (gratus) + -e"
+        },
+        {
+          "word": "gracious",
+          "pos": "adj",
+          "zh": "亲切的；高尚的",
+          "morphBreakdown": "grace + -ious"
+        },
+        {
+          "word": "gratitude",
+          "pos": "n",
+          "zh": "感激",
+          "morphBreakdown": "grat (gratus) + -itude"
+        },
+        {
+          "word": "gratify",
+          "pos": "v",
+          "zh": "使满足",
+          "morphBreakdown": "grat (gratus) + -ify"
+        },
+        {
+          "word": "gratis",
+          "pos": "adv",
+          "zh": "免费地/的",
+          "morphBreakdown": "grat (gratus) + -is"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "consensus",
+          "pos": "n",
+          "zh": "共识"
+        },
+        {
+          "word": "negotiate",
+          "pos": "v",
+          "zh": "谈判"
+        },
+        {
+          "word": "compromise",
+          "pos": "v",
+          "zh": "妥协"
+        },
+        {
+          "word": "approve",
+          "pos": "v",
+          "zh": "批准"
+        },
+        {
+          "word": "consent",
+          "pos": "adj",
+          "zh": "同意"
+        },
+        {
+          "word": "ratify",
+          "pos": "v",
+          "zh": "批准"
+        },
+        {
+          "word": "unanimous",
+          "pos": "adj",
+          "zh": "一致同意的"
+        },
+        {
+          "word": "accord",
+          "pos": "other",
+          "zh": "协议；一致"
+        },
+        {
+          "word": "concur",
+          "pos": "v",
+          "zh": "同意"
+        },
+        {
+          "word": "dissent",
+          "pos": "adj",
+          "zh": "异议"
+        }
+      ],
+      "themeTopic": "社会·协商",
+      "themeSummary": "agree 常用于雅思写作 Task 2 讨论观点一致或达成协议，以及听力 Section 3 学术讨论中表达赞同。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 agree 后接 with (人) / to (建议) / on (点)"
+      ],
+      "insight": "agree 的核心是“让人愉快”，所以同意就是让对方高兴。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "stock up": {
+      "gloss": "囤货",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "stock（古英语 stoc“树干，储备”）+ up（向上）",
+      "suffixLine": "无",
+      "evolution": "stock 原指“树干”或“储备”，up 表示“向上/完成”，合起来字面为“把储备堆起来”，引申为“囤货”。",
+      "parts": [],
+      "pieSummary": "PIE *steu- “推，击打”",
+      "family": [
+        {
+          "word": "stock",
+          "pos": "n",
+          "zh": "库存；股票",
+          "morphBreakdown": "stock"
+        },
+        {
+          "word": "stockpile",
+          "pos": "v",
+          "zh": "囤积",
+          "morphBreakdown": "stock + pile"
+        },
+        {
+          "word": "livestock",
+          "pos": "n",
+          "zh": "牲畜",
+          "morphBreakdown": "live + stock"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "stock",
+          "pos": "n",
+          "zh": "库存；股票",
+          "morphBreakdown": "stock"
+        },
+        {
+          "word": "stockpile",
+          "pos": "v",
+          "zh": "囤积",
+          "morphBreakdown": "stock + pile"
+        },
+        {
+          "word": "stockholder",
+          "pos": "n",
+          "zh": "股东",
+          "morphBreakdown": "stock + holder"
+        },
+        {
+          "word": "stockroom",
+          "pos": "n",
+          "zh": "储藏室",
+          "morphBreakdown": "stock + room"
+        },
+        {
+          "word": "stocktaking",
+          "pos": "n",
+          "zh": "盘点",
+          "morphBreakdown": "stock + taking"
+        },
+        {
+          "word": "stockist",
+          "pos": "n",
+          "zh": "零售商",
+          "morphBreakdown": "stock + -ist"
+        },
+        {
+          "word": "stockbroker",
+          "pos": "n",
+          "zh": "股票经纪人",
+          "morphBreakdown": "stock + broker"
+        },
+        {
+          "word": "restock",
+          "pos": "v",
+          "zh": "补货",
+          "morphBreakdown": "re- + stock"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "inventory",
+          "pos": "n",
+          "zh": "库存"
+        },
+        {
+          "word": "supply",
+          "pos": "n",
+          "zh": "供应"
+        },
+        {
+          "word": "warehouse",
+          "pos": "n",
+          "zh": "仓库"
+        },
+        {
+          "word": "logistics",
+          "pos": "n",
+          "zh": "物流"
+        },
+        {
+          "word": "shortage",
+          "pos": "n",
+          "zh": "短缺"
+        },
+        {
+          "word": "demand",
+          "pos": "n",
+          "zh": "需求"
+        },
+        {
+          "word": "procurement",
+          "pos": "n",
+          "zh": "采购"
+        },
+        {
+          "word": "distribution",
+          "pos": "n",
+          "zh": "分销"
+        },
+        {
+          "word": "retail",
+          "pos": "n",
+          "zh": "零售"
+        },
+        {
+          "word": "wholesale",
+          "pos": "n",
+          "zh": "批发"
+        },
+        {
+          "word": "buffer",
+          "pos": "n",
+          "zh": "缓冲库存"
+        },
+        {
+          "word": "turnover",
+          "pos": "n",
+          "zh": "周转率"
+        }
+      ],
+      "themeTopic": "商业·供应链",
+      "themeSummary": "该词常出现在雅思阅读关于供应链管理、库存控制或消费者行为的文章中，与 supply chain、inventory、warehouse 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "stock up 是动词短语，后面常接 on，如 stock up on food。"
+      ],
+      "insight": "想象把货物堆成树干一样高的储备。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "out of stock": {
+      "gloss": "缺货",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "out（古英语ūt，PIE *ud-“向上，向外”）+ of（古英语of，PIE *apo-“从，离开”）+ stock（古英语stocc“树干，库存”，PIE *steug-“杆，柱”）",
+      "suffixLine": "无",
+      "evolution": "字面义“从库存中出来”，引申为“缺货”",
+      "parts": [],
+      "pieSummary": "PIE *ud-“向上，向外”+ *apo-“从，离开”+ *steug-“杆，柱”",
+      "family": [
+        {
+          "word": "stock",
+          "pos": "n",
+          "zh": "库存；股票",
+          "morphBreakdown": "stock"
+        },
+        {
+          "word": "stockpile",
+          "pos": "v",
+          "zh": "囤积",
+          "morphBreakdown": "stock + pile"
+        },
+        {
+          "word": "stockist",
+          "pos": "n",
+          "zh": "零售商",
+          "morphBreakdown": "stock + -ist"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "stock",
+          "pos": "n",
+          "zh": "库存；股票",
+          "morphBreakdown": "stock"
+        },
+        {
+          "word": "stockpile",
+          "pos": "v",
+          "zh": "囤积",
+          "morphBreakdown": "stock + pile"
+        },
+        {
+          "word": "stockist",
+          "pos": "n",
+          "zh": "零售商",
+          "morphBreakdown": "stock + -ist"
+        },
+        {
+          "word": "stockroom",
+          "pos": "n",
+          "zh": "库房",
+          "morphBreakdown": "stock + room"
+        },
+        {
+          "word": "stocktaking",
+          "pos": "n",
+          "zh": "盘点",
+          "morphBreakdown": "stock + taking"
+        },
+        {
+          "word": "stockholder",
+          "pos": "n",
+          "zh": "股东",
+          "morphBreakdown": "stock + holder"
+        },
+        {
+          "word": "stockbroker",
+          "pos": "n",
+          "zh": "股票经纪人",
+          "morphBreakdown": "stock + broker"
+        },
+        {
+          "word": "stock market",
+          "pos": "n",
+          "zh": "股票市场",
+          "morphBreakdown": "stock + market"
+        },
+        {
+          "word": "livestock",
+          "pos": "n",
+          "zh": "牲畜",
+          "morphBreakdown": "live + stock"
+        },
+        {
+          "word": "stockade",
+          "pos": "n",
+          "zh": "栅栏",
+          "morphBreakdown": "stock + -ade"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "supply",
+          "pos": "n",
+          "zh": "供应"
+        },
+        {
+          "word": "demand",
+          "pos": "n",
+          "zh": "需求"
+        },
+        {
+          "word": "shortage",
+          "pos": "n",
+          "zh": "短缺"
+        },
+        {
+          "word": "inventory",
+          "pos": "n",
+          "zh": "库存"
+        },
+        {
+          "word": "warehouse",
+          "pos": "n",
+          "zh": "仓库"
+        },
+        {
+          "word": "retailer",
+          "pos": "n",
+          "zh": "零售商"
+        },
+        {
+          "word": "wholesaler",
+          "pos": "n",
+          "zh": "批发商"
+        },
+        {
+          "word": "delivery",
+          "pos": "n",
+          "zh": "交货"
+        },
+        {
+          "word": "backorder",
+          "pos": "n",
+          "zh": "延期交货"
+        },
+        {
+          "word": "restock",
+          "pos": "v",
+          "zh": "补货"
+        }
+      ],
+      "themeTopic": "商业·零售·供应链",
+      "themeSummary": "该短语常用于雅思听力Section 1（购物场景）或阅读中关于库存管理、供应链的文章，常与supply, demand, shortage等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "out of stock 是固定短语，stock 不可数；注意与 out of the stock 区分（后者不常用）"
+      ],
+      "insight": "out of 表示“脱离”，stock 是“库存”，合起来就是“库存没了”",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "valuation": {
+      "gloss": "估价",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "词根 val-（拉丁语 valere “强壮，有价值”）源自 PIE *wal-（“强壮”）",
+      "suffixLine": "后缀 -ation（名词后缀，表示动作或过程）",
+      "evolution": "valu(e)（价值）+ -ation（表动作）→ 估价的行为或过程",
+      "parts": [],
+      "pieSummary": "PIE *wal- “强壮” → 拉丁语 valere “强壮，有价值” → 英语 val-",
+      "family": [
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val + -ue"
+        },
+        {
+          "word": "valuable",
+          "pos": "adj",
+          "zh": "有价值的",
+          "morphBreakdown": "value + -able"
+        },
+        {
+          "word": "invaluable",
+          "pos": "adj",
+          "zh": "无价的",
+          "morphBreakdown": "in- + valuable"
+        },
+        {
+          "word": "valour",
+          "pos": "n",
+          "zh": "英勇",
+          "morphBreakdown": "val + -our"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val + -ue"
+        },
+        {
+          "word": "valuable",
+          "pos": "adj",
+          "zh": "有价值的",
+          "morphBreakdown": "value + -able"
+        },
+        {
+          "word": "invaluable",
+          "pos": "adj",
+          "zh": "无价的",
+          "morphBreakdown": "in- + valuable"
+        },
+        {
+          "word": "valour",
+          "pos": "n",
+          "zh": "英勇",
+          "morphBreakdown": "val + -our"
+        },
+        {
+          "word": "valiant",
+          "pos": "adj",
+          "zh": "英勇的",
+          "morphBreakdown": "val + -iant"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- + val + -ent"
+        },
+        {
+          "word": "prevalence",
+          "pos": "n",
+          "zh": "流行",
+          "morphBreakdown": "pre- + val + -ence"
+        },
+        {
+          "word": "evaluate",
+          "pos": "v",
+          "zh": "评估",
+          "morphBreakdown": "e- + valu + -ate"
+        },
+        {
+          "word": "evaluation",
+          "pos": "n",
+          "zh": "评估",
+          "morphBreakdown": "evaluate + -ion"
+        },
+        {
+          "word": "devalue",
+          "pos": "v",
+          "zh": "贬值",
+          "morphBreakdown": "de- + value"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "asset",
+          "pos": "n",
+          "zh": "资产"
+        },
+        {
+          "word": "liability",
+          "pos": "n",
+          "zh": "负债"
+        },
+        {
+          "word": "equity",
+          "pos": "n",
+          "zh": "股权"
+        },
+        {
+          "word": "profit",
+          "pos": "n",
+          "zh": "利润"
+        },
+        {
+          "word": "revenue",
+          "pos": "n",
+          "zh": "收入"
+        },
+        {
+          "word": "market",
+          "pos": "n",
+          "zh": "市场"
+        },
+        {
+          "word": "investment",
+          "pos": "n",
+          "zh": "投资"
+        },
+        {
+          "word": "appraisal",
+          "pos": "n",
+          "zh": "评估"
+        },
+        {
+          "word": "depreciation",
+          "pos": "n",
+          "zh": "折旧"
+        },
+        {
+          "word": "amortization",
+          "pos": "n",
+          "zh": "摊销"
+        }
+      ],
+      "themeTopic": "经济·金融",
+      "themeSummary": "valuation 在雅思阅读和写作中常出现在经济、金融、商业类话题，如公司估值、资产评估等，常与 profit、asset、market 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 valuation 与 evaluation 的区别：valuation 侧重货币价值评估，evaluation 侧重一般性评估。"
+      ],
+      "insight": "val- 核心义是“强壮”，引申为“有价值”，所以 valuation 就是“评估价值”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "invaluable": {
+      "gloss": "极宝贵的",
+      "morphKind": "classical",
+      "prefixLine": "in-（不）",
+      "rootLine": "val（价值），来自拉丁语 valere（强壮，有价值），源自 PIE *wal-（强壮）",
+      "suffixLine": "-able（能…的）",
+      "evolution": "in-（不）+ value（价值）+ -able → 无法估价的 → 极宝贵的",
+      "parts": [],
+      "pieSummary": "PIE *wal-（强壮）",
+      "family": [
+        {
+          "word": "valuable",
+          "pos": "adj",
+          "zh": "有价值的",
+          "morphBreakdown": "value + -able"
+        },
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val + -ue"
+        },
+        {
+          "word": "valuation",
+          "pos": "n",
+          "zh": "估价",
+          "morphBreakdown": "value + -ation"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- + val + -ent"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val + -ue"
+        },
+        {
+          "word": "valuable",
+          "pos": "adj",
+          "zh": "有价值的",
+          "morphBreakdown": "value + -able"
+        },
+        {
+          "word": "invaluable",
+          "pos": "adj",
+          "zh": "极宝贵的",
+          "morphBreakdown": "in- + value + -able"
+        },
+        {
+          "word": "valuation",
+          "pos": "n",
+          "zh": "估价",
+          "morphBreakdown": "value + -ation"
+        },
+        {
+          "word": "evaluate",
+          "pos": "v",
+          "zh": "评估",
+          "morphBreakdown": "e- + value + -ate"
+        },
+        {
+          "word": "evaluation",
+          "pos": "n",
+          "zh": "评估",
+          "morphBreakdown": "evaluate + -ion"
+        },
+        {
+          "word": "equivalent",
+          "pos": "adj",
+          "zh": "等价的",
+          "morphBreakdown": "equi- + val + -ent"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- + val + -ent"
+        },
+        {
+          "word": "prevalence",
+          "pos": "n",
+          "zh": "流行",
+          "morphBreakdown": "pre- + val + -ence"
+        },
+        {
+          "word": "valiant",
+          "pos": "adj",
+          "zh": "英勇的",
+          "morphBreakdown": "val + -iant"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "essential",
+          "pos": "adj",
+          "zh": "必要的"
+        },
+        {
+          "word": "crucial",
+          "pos": "adj",
+          "zh": "关键的"
+        },
+        {
+          "word": "significant",
+          "pos": "adj",
+          "zh": "重要的"
+        },
+        {
+          "word": "beneficial",
+          "pos": "adj",
+          "zh": "有益的"
+        },
+        {
+          "word": "advantageous",
+          "pos": "adj",
+          "zh": "有利的"
+        },
+        {
+          "word": "indispensable",
+          "pos": "adj",
+          "zh": "不可或缺的"
+        },
+        {
+          "word": "vital",
+          "pos": "adj",
+          "zh": "至关重要的"
+        },
+        {
+          "word": "priceless",
+          "pos": "adj",
+          "zh": "无价的"
+        },
+        {
+          "word": "asset",
+          "pos": "n",
+          "zh": "资产"
+        },
+        {
+          "word": "resource",
+          "pos": "n",
+          "zh": "资源"
+        },
+        {
+          "word": "opportunity",
+          "pos": "n",
+          "zh": "机会"
+        },
+        {
+          "word": "experience",
+          "pos": "n",
+          "zh": "经验"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "在雅思阅读或写作中，invaluable 常出现在讨论经验、资源或机会的珍贵性，与 valuable, essential, crucial 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 invaluable 不是 valuable 的反义词，而是强调价值极高。"
+      ],
+      "insight": "invaluable 不是「没有价值」，而是「价值高到无法估量」，与 valuable 相反。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "detect vs detract": {
+      "gloss": "detect: 发现，查明；detract: 贬低，减损",
+      "morphKind": "classical",
+      "prefixLine": "detect: de-（向下/离开）+ tect（覆盖）→ 揭开覆盖物；detract: de-（向下/离开）+ tract（拉）→ 拉开，转移",
+      "rootLine": "detect: 词根 tect- 来自拉丁语 tegere（覆盖），PIE *(s)teg-（覆盖）；detract: 词根 tract- 来自拉丁语 trahere（拉，拖），PIE *tragh-（拉）",
+      "suffixLine": "detect: -ect 为词根变形；detract: -act 为词根变形",
+      "evolution": "detect: 揭开覆盖物 → 发现；detract: 拉开 → 贬低，减损",
+      "parts": [],
+      "pieSummary": "detect: PIE *(s)teg- '覆盖'；detract: PIE *tragh- '拉'",
+      "family": [
+        {
+          "word": "detect",
+          "pos": "v",
+          "zh": "发现",
+          "morphBreakdown": "de- + tect"
+        },
+        {
+          "word": "detector",
+          "pos": "n",
+          "zh": "探测器",
+          "morphBreakdown": "detect + -or"
+        },
+        {
+          "word": "detective",
+          "pos": "n",
+          "zh": "侦探",
+          "morphBreakdown": "detect + -ive"
+        },
+        {
+          "word": "detraction",
+          "pos": "n",
+          "zh": "贬低",
+          "morphBreakdown": "de- + tract + -ion"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "detect",
+          "pos": "v",
+          "zh": "发现，查明",
+          "morphBreakdown": "de- + tect"
+        },
+        {
+          "word": "detection",
+          "pos": "n",
+          "zh": "察觉，侦查",
+          "morphBreakdown": "detect + -ion"
+        },
+        {
+          "word": "detective",
+          "pos": "n",
+          "zh": "侦探",
+          "morphBreakdown": "detect + -ive"
+        },
+        {
+          "word": "detector",
+          "pos": "n",
+          "zh": "探测器",
+          "morphBreakdown": "detect + -or"
+        },
+        {
+          "word": "protect",
+          "pos": "v",
+          "zh": "保护",
+          "morphBreakdown": "pro- + tect"
+        },
+        {
+          "word": "protection",
+          "pos": "n",
+          "zh": "保护",
+          "morphBreakdown": "protect + -ion"
+        },
+        {
+          "word": "protective",
+          "pos": "adj",
+          "zh": "保护的",
+          "morphBreakdown": "protect + -ive"
+        },
+        {
+          "word": "tectonic",
+          "pos": "adj",
+          "zh": "构造的，地壳的",
+          "morphBreakdown": "tecton + -ic"
+        },
+        {
+          "word": "detract",
+          "pos": "v",
+          "zh": "贬低，减损",
+          "morphBreakdown": "de- + tract"
+        },
+        {
+          "word": "detraction",
+          "pos": "n",
+          "zh": "贬低，减损",
+          "morphBreakdown": "de- + tract + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "detect",
+          "pos": "v",
+          "zh": "发现"
+        },
+        {
+          "word": "detection",
+          "pos": "n",
+          "zh": "察觉"
+        },
+        {
+          "word": "detective",
+          "pos": "n",
+          "zh": "侦探"
+        },
+        {
+          "word": "protect",
+          "pos": "v",
+          "zh": "保护"
+        },
+        {
+          "word": "tectonic",
+          "pos": "adj",
+          "zh": "构造的"
+        },
+        {
+          "word": "plate",
+          "pos": "n",
+          "zh": "板块"
+        },
+        {
+          "word": "earthquake",
+          "pos": "n",
+          "zh": "地震"
+        },
+        {
+          "word": "volcano",
+          "pos": "n",
+          "zh": "火山"
+        },
+        {
+          "word": "erosion",
+          "pos": "n",
+          "zh": "侵蚀"
+        },
+        {
+          "word": "fault",
+          "pos": "n",
+          "zh": "断层"
+        },
+        {
+          "word": "seismic",
+          "pos": "adj",
+          "zh": "地震的"
+        },
+        {
+          "word": "crust",
+          "pos": "n",
+          "zh": "地壳"
+        }
+      ],
+      "themeTopic": "科技·侦查 / 地质·构造",
+      "themeSummary": "detect 常用于科技类文章（如检测技术、犯罪侦查），tectonic 常用于地质类文章（如板块构造）。",
+      "relatedNotes": [],
+      "tips": [
+        "detect 与 detract 拼写相近但词源不同：tect 覆盖（protect），tract 拉拽（attract）。",
+        "注意前缀 de- 在 detect 中表示'去掉'，在 detract 中表示'向下/离开'。"
+      ],
+      "insight": "detect 与 detract 拼写相近但词源完全不同：tect 与覆盖相关（如 protect），tract 与拉拽相关（如 attract）。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "petitioned": {
+      "gloss": "请愿；正式请求",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "pet- (拉丁 petere '寻求，请求'，PIE *pet- '飞，冲向')",
+      "suffixLine": "-ition 名词后缀 + -ed 过去分词",
+      "evolution": "petition 本义为'寻求'，加 -ed 表示被请求的动作已完成",
+      "parts": [],
+      "pieSummary": "PIE *pet- '飞，冲向'，引申为'急切寻求'",
+      "family": [
+        {
+          "word": "petition",
+          "pos": "n",
+          "zh": "请愿",
+          "morphBreakdown": "pet + -ition"
+        },
+        {
+          "word": "petty",
+          "pos": "adj",
+          "zh": "琐碎的",
+          "morphBreakdown": "pet + -y"
+        },
+        {
+          "word": "impetus",
+          "pos": "n",
+          "zh": "动力",
+          "morphBreakdown": "im- + pet + -us"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "petition",
+          "pos": "n",
+          "zh": "请愿",
+          "morphBreakdown": "pet + -ition"
+        },
+        {
+          "word": "petitioner",
+          "pos": "n",
+          "zh": "请愿人",
+          "morphBreakdown": "petition + -er"
+        },
+        {
+          "word": "impetus",
+          "pos": "n",
+          "zh": "动力",
+          "morphBreakdown": "im- + pet + -us"
+        },
+        {
+          "word": "impetuous",
+          "pos": "adj",
+          "zh": "冲动的",
+          "morphBreakdown": "im- + pet + -uous"
+        },
+        {
+          "word": "compete",
+          "pos": "v",
+          "zh": "竞争",
+          "morphBreakdown": "com- + pet + -e"
+        },
+        {
+          "word": "competition",
+          "pos": "n",
+          "zh": "竞争",
+          "morphBreakdown": "compete + -ition"
+        },
+        {
+          "word": "competitive",
+          "pos": "adj",
+          "zh": "竞争的",
+          "morphBreakdown": "compete + -itive"
+        },
+        {
+          "word": "competent",
+          "pos": "adj",
+          "zh": "有能力的",
+          "morphBreakdown": "com- + pet + -ent"
+        },
+        {
+          "word": "perpetual",
+          "pos": "adj",
+          "zh": "永久的",
+          "morphBreakdown": "per- + pet + -ual"
+        },
+        {
+          "word": "appetite",
+          "pos": "n",
+          "zh": "食欲",
+          "morphBreakdown": "ap- + pet + -ite"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "petition",
+          "pos": "n",
+          "zh": "请愿"
+        },
+        {
+          "word": "signature",
+          "pos": "n",
+          "zh": "签名"
+        },
+        {
+          "word": "campaign",
+          "pos": "n",
+          "zh": "运动"
+        },
+        {
+          "word": "protest",
+          "pos": "n",
+          "zh": "抗议"
+        },
+        {
+          "word": "demonstration",
+          "pos": "n",
+          "zh": "示威"
+        },
+        {
+          "word": "advocate",
+          "pos": "v",
+          "zh": "提倡"
+        },
+        {
+          "word": "lobby",
+          "pos": "v",
+          "zh": "游说"
+        },
+        {
+          "word": "legislation",
+          "pos": "n",
+          "zh": "立法"
+        },
+        {
+          "word": "rights",
+          "pos": "n",
+          "zh": "权利"
+        },
+        {
+          "word": "activism",
+          "pos": "n",
+          "zh": "行动主义"
+        },
+        {
+          "word": "referendum",
+          "pos": "n",
+          "zh": "公投"
+        },
+        {
+          "word": "petitioner",
+          "pos": "n",
+          "zh": "请愿人"
+        }
+      ],
+      "themeTopic": "政治·社会运动",
+      "themeSummary": "petitioned 常出现在雅思阅读/写作中关于公民权利、社会抗议或法律程序的篇章，与请愿、签名、示威等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "petitioned 是 petition 的过去式，注意拼写双 t；与 petty (琐碎的) 词根相同但语义不同。"
+      ],
+      "insight": "petition 像'扑向'某人请求，pet- 与 compete (共同追求) 同源。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "petitioner": {
+      "gloss": "请愿人",
+      "morphKind": "classical",
+      "prefixLine": "pet-（拉丁语 petere “寻求，请求”）",
+      "rootLine": "pet-（拉丁语 petere “寻求，请求” < PIE *pet- “飞，急冲”）",
+      "suffixLine": "-itioner（-ition 名词后缀 + -er 施动者后缀）",
+      "evolution": "petition（请愿） + -er（人） → 提出请愿的人",
+      "parts": [],
+      "pieSummary": "PIE *pet- “飞，急冲”，引申为“寻求，请求”",
+      "family": [
+        {
+          "word": "petition",
+          "pos": "n",
+          "zh": "请愿",
+          "morphBreakdown": "petit- + -ion"
+        },
+        {
+          "word": "compete",
+          "pos": "v",
+          "zh": "竞争",
+          "morphBreakdown": "com- + pete"
+        },
+        {
+          "word": "competition",
+          "pos": "n",
+          "zh": "竞争",
+          "morphBreakdown": "compete + -ition"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "petition",
+          "pos": "n",
+          "zh": "请愿",
+          "morphBreakdown": "petit- + -ion"
+        },
+        {
+          "word": "petition",
+          "pos": "v",
+          "zh": "请愿",
+          "morphBreakdown": "petit- + -ion"
+        },
+        {
+          "word": "compete",
+          "pos": "v",
+          "zh": "竞争",
+          "morphBreakdown": "com- + pete"
+        },
+        {
+          "word": "competition",
+          "pos": "n",
+          "zh": "竞争",
+          "morphBreakdown": "compete + -ition"
+        },
+        {
+          "word": "competitive",
+          "pos": "adj",
+          "zh": "竞争的",
+          "morphBreakdown": "compete + -itive"
+        },
+        {
+          "word": "competitor",
+          "pos": "n",
+          "zh": "竞争者",
+          "morphBreakdown": "compete + -itor"
+        },
+        {
+          "word": "appetite",
+          "pos": "n",
+          "zh": "食欲；欲望",
+          "morphBreakdown": "ap- + petite"
+        },
+        {
+          "word": "perpetual",
+          "pos": "adj",
+          "zh": "永久的",
+          "morphBreakdown": "per- + petu- + -al"
+        },
+        {
+          "word": "impetus",
+          "pos": "n",
+          "zh": "动力；促进",
+          "morphBreakdown": "im- + petus"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "legal",
+          "pos": "adj",
+          "zh": "法律的"
+        },
+        {
+          "word": "right",
+          "pos": "n",
+          "zh": "权利"
+        },
+        {
+          "word": "appeal",
+          "pos": "adj",
+          "zh": "上诉；呼吁"
+        },
+        {
+          "word": "court",
+          "pos": "n",
+          "zh": "法庭"
+        },
+        {
+          "word": "judge",
+          "pos": "n",
+          "zh": "法官"
+        },
+        {
+          "word": "plaintiff",
+          "pos": "n",
+          "zh": "原告"
+        },
+        {
+          "word": "defendant",
+          "pos": "n",
+          "zh": "被告"
+        },
+        {
+          "word": "lawsuit",
+          "pos": "n",
+          "zh": "诉讼"
+        },
+        {
+          "word": "legislation",
+          "pos": "n",
+          "zh": "立法"
+        },
+        {
+          "word": "advocate",
+          "pos": "v",
+          "zh": "提倡；辩护"
+        }
+      ],
+      "themeTopic": "法律·权利",
+      "themeSummary": "petitioner 常出现在雅思阅读法律类文章或听力 Section 3 关于请愿、权利主张的场景，常与 legal, right, appeal, court 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 petitioner 与 plaintiff 区别：petitioner 是请愿者或申请人，plaintiff 是民事诉讼中的原告。"
+      ],
+      "insight": "petitioner 字面是“请求者”，与 compete（共同寻求→竞争）同源，记住“pet- = 寻求”即可。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "summed up": {
+      "gloss": "总结，概括（过去式/分词）",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "sum (拉丁 summa '总和'，来自 super '在上' 的阴性最高级，PIE *uper '在上')",
+      "suffixLine": "无（summed 为过去分词，up 为副词小品词）",
+      "evolution": "sum 原指'总和'，sum up 字面'把...加起来'，引申为'总结'。",
+      "parts": [],
+      "pieSummary": "PIE *uper '在上'，衍生拉丁 super '在上'，summa '最高点、总和'。",
+      "family": [
+        {
+          "word": "summary",
+          "pos": "n",
+          "zh": "摘要",
+          "morphBreakdown": "summ + -ary"
+        },
+        {
+          "word": "sum up",
+          "pos": "v",
+          "zh": "总结",
+          "morphBreakdown": "sum + up"
+        },
+        {
+          "word": "assume",
+          "pos": "v",
+          "zh": "假定",
+          "morphBreakdown": "ad- + sumere"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "summary",
+          "pos": "n",
+          "zh": "摘要",
+          "morphBreakdown": "summ + -ary"
+        },
+        {
+          "word": "summarize",
+          "pos": "v",
+          "zh": "总结",
+          "morphBreakdown": "summar(y) + -ize"
+        },
+        {
+          "word": "summation",
+          "pos": "n",
+          "zh": "总和",
+          "morphBreakdown": "summ + -ation"
+        },
+        {
+          "word": "assume",
+          "pos": "v",
+          "zh": "假定",
+          "morphBreakdown": "ad- + sumere"
+        },
+        {
+          "word": "assumption",
+          "pos": "n",
+          "zh": "假设",
+          "morphBreakdown": "ad- + sumpt + -ion"
+        },
+        {
+          "word": "consume",
+          "pos": "v",
+          "zh": "消费",
+          "morphBreakdown": "con- + sumere"
+        },
+        {
+          "word": "consumption",
+          "pos": "n",
+          "zh": "消费",
+          "morphBreakdown": "con- + sumpt + -ion"
+        },
+        {
+          "word": "presume",
+          "pos": "v",
+          "zh": "假定",
+          "morphBreakdown": "pre- + sumere"
+        },
+        {
+          "word": "presumable",
+          "pos": "adj",
+          "zh": "可假定的",
+          "morphBreakdown": "pre- + sum + -able"
+        },
+        {
+          "word": "assimilate",
+          "pos": "v",
+          "zh": "吸收",
+          "morphBreakdown": "ad- + simil + -ate"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "conclude",
+          "pos": "v",
+          "zh": "得出结论"
+        },
+        {
+          "word": "overall",
+          "pos": "adj",
+          "zh": "总体上"
+        },
+        {
+          "word": "in summary",
+          "pos": "adj",
+          "zh": "总之"
+        },
+        {
+          "word": "highlight",
+          "pos": "v",
+          "zh": "强调"
+        },
+        {
+          "word": "key point",
+          "pos": "other",
+          "zh": "关键点"
+        },
+        {
+          "word": "briefly",
+          "pos": "adv",
+          "zh": "简要地"
+        },
+        {
+          "word": "outline",
+          "pos": "other",
+          "zh": "概述"
+        },
+        {
+          "word": "recap",
+          "pos": "other",
+          "zh": "重述要点"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "该词常用于雅思写作Task 1图表描述或Task 2论证总结，与conclude, overall, in summary等共现。",
+      "relatedNotes": [],
+      "tips": [
+        "summed up 是动词短语 sum up 的过去式/分词形式；注意与名词 summary 区分。"
+      ],
+      "insight": "sum 是'总和'，up 是'向上'，把东西加起来向上看就是总结。",
       "strictEtymology": false,
       "source": "deepseek",
       "schemaVersion": 2
