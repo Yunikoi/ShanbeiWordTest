@@ -4,7 +4,7 @@
   "storageKey": "src:Yasi.md",
   "bookId": "import-1780133567508",
   "bookTitle": "",
-  "updatedAt": "2026-06-02T09:56:13.531Z",
+  "updatedAt": "2026-06-02T09:58:35.127Z",
   "words": {
     "provide insight into": {
       "gloss": "对……提供深入见解/洞察",
@@ -201649,6 +201649,2344 @@
         "summed up 是动词短语 sum up 的过去式/分词形式；注意与名词 summary 区分。"
       ],
       "insight": "sum 是'总和'，up 是'向上'，把东西加起来向上看就是总结。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "summary": {
+      "gloss": "摘要",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "sum-（拉丁语 sumere '取，拿'，来自 sub- '从下' + emere '拿'）→ PIE *em- '拿，分配'",
+      "suffixLine": "-ary（形容词/名词后缀，表示'与...有关的'或'...的东西'）",
+      "evolution": "sum-（取） + -ary（...的）→ 取出的要点 → 摘要",
+      "parts": [],
+      "pieSummary": "PIE *em- '拿，分配'",
+      "family": [
+        {
+          "word": "assume",
+          "pos": "v",
+          "zh": "假设",
+          "morphBreakdown": "as- (ad- '向') + sume (sumere '拿')"
+        },
+        {
+          "word": "consume",
+          "pos": "v",
+          "zh": "消费",
+          "morphBreakdown": "con- (com- '一起') + sume (sumere '拿')"
+        },
+        {
+          "word": "presume",
+          "pos": "v",
+          "zh": "假定",
+          "morphBreakdown": "pre- '之前' + sume (sumere '拿')"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "assume",
+          "pos": "v",
+          "zh": "假设",
+          "morphBreakdown": "as- + sume"
+        },
+        {
+          "word": "assumption",
+          "pos": "n",
+          "zh": "假设",
+          "morphBreakdown": "as- + sumpt- + -ion"
+        },
+        {
+          "word": "consume",
+          "pos": "v",
+          "zh": "消费",
+          "morphBreakdown": "con- + sume"
+        },
+        {
+          "word": "consumption",
+          "pos": "n",
+          "zh": "消费",
+          "morphBreakdown": "con- + sumpt- + -ion"
+        },
+        {
+          "word": "presume",
+          "pos": "v",
+          "zh": "假定",
+          "morphBreakdown": "pre- + sume"
+        },
+        {
+          "word": "presumption",
+          "pos": "n",
+          "zh": "假定",
+          "morphBreakdown": "pre- + sumpt- + -ion"
+        },
+        {
+          "word": "resume",
+          "pos": "v",
+          "zh": "重新开始",
+          "morphBreakdown": "re- '再次' + sume '拿'"
+        },
+        {
+          "word": "summarize",
+          "pos": "v",
+          "zh": "总结",
+          "morphBreakdown": "summary + -ize"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "abstract",
+          "pos": "n",
+          "zh": "摘要"
+        },
+        {
+          "word": "conclusion",
+          "pos": "n",
+          "zh": "结论"
+        },
+        {
+          "word": "overview",
+          "pos": "n",
+          "zh": "概述"
+        },
+        {
+          "word": "outline",
+          "pos": "n",
+          "zh": "大纲"
+        },
+        {
+          "word": "synopsis",
+          "pos": "n",
+          "zh": "概要"
+        },
+        {
+          "word": "gist",
+          "pos": "n",
+          "zh": "要点"
+        },
+        {
+          "word": "main point",
+          "pos": "n",
+          "zh": "主要观点"
+        },
+        {
+          "word": "key idea",
+          "pos": "n",
+          "zh": "关键想法"
+        },
+        {
+          "word": "sum up",
+          "pos": "v",
+          "zh": "总结"
+        },
+        {
+          "word": "brief",
+          "pos": "adj",
+          "zh": "简短的"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "summary 在雅思写作 Task 1 和阅读中常出现，要求概括图表或段落要点；同主题词包括 abstract、conclusion、overview 等。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 summary 与 sum（总和）同源，但 sum 来自拉丁 summa '顶部，总和'，与 sumere 不同源。"
+      ],
+      "insight": "summary 就是'把要点拿出来'，同根词 assume（拿过来→假设）、consume（全部拿→消费）都围绕'拿'的动作。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "in sum": {
+      "gloss": "总之",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "sum (拉丁语 summa '总和，顶部') < PIE *upo '在...之下' (通过 '在...之上' 的语义演变)",
+      "suffixLine": "无",
+      "evolution": "in sum 字面意为 '在总和上'，引申为 '总而言之'",
+      "parts": [],
+      "pieSummary": "PIE *upo '在...之下'，派生拉丁语 sub '在...之下'，summa '最高点，总和'",
+      "family": [
+        {
+          "word": "summary",
+          "pos": "n",
+          "zh": "摘要",
+          "morphBreakdown": "summ + -ary"
+        },
+        {
+          "word": "summit",
+          "pos": "n",
+          "zh": "顶点",
+          "morphBreakdown": "summ + -it"
+        },
+        {
+          "word": "sum",
+          "pos": "n",
+          "zh": "总和",
+          "morphBreakdown": "sum"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "summary",
+          "pos": "n",
+          "zh": "摘要",
+          "morphBreakdown": "summ + -ary"
+        },
+        {
+          "word": "summarize",
+          "pos": "v",
+          "zh": "总结",
+          "morphBreakdown": "summar(y) + -ize"
+        },
+        {
+          "word": "summation",
+          "pos": "n",
+          "zh": "总和，总结",
+          "morphBreakdown": "summ + -ation"
+        },
+        {
+          "word": "summit",
+          "pos": "n",
+          "zh": "顶点，峰会",
+          "morphBreakdown": "summ + -it"
+        },
+        {
+          "word": "consummate",
+          "pos": "adj",
+          "zh": "完美的，圆满的",
+          "morphBreakdown": "con- + summ + -ate"
+        },
+        {
+          "word": "consummation",
+          "pos": "n",
+          "zh": "完成，圆满",
+          "morphBreakdown": "con- + summ + -ation"
+        },
+        {
+          "word": "resume",
+          "pos": "v",
+          "zh": "重新开始，恢复",
+          "morphBreakdown": "re- + sume (变体 sum)"
+        },
+        {
+          "word": "resumption",
+          "pos": "n",
+          "zh": "恢复，重新开始",
+          "morphBreakdown": "re- + sumpt + -ion"
+        },
+        {
+          "word": "assume",
+          "pos": "v",
+          "zh": "假设，承担",
+          "morphBreakdown": "as- (ad-) + sume"
+        },
+        {
+          "word": "assumption",
+          "pos": "n",
+          "zh": "假设，承担",
+          "morphBreakdown": "as- + sumpt + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "conclusion",
+          "pos": "n",
+          "zh": "结论"
+        },
+        {
+          "word": "overall",
+          "pos": "adv",
+          "zh": "总体上"
+        },
+        {
+          "word": "therefore",
+          "pos": "adv",
+          "zh": "因此"
+        },
+        {
+          "word": "thus",
+          "pos": "adv",
+          "zh": "因此"
+        },
+        {
+          "word": "consequently",
+          "pos": "adv",
+          "zh": "因此"
+        },
+        {
+          "word": "in conclusion",
+          "pos": "n",
+          "zh": "总之"
+        },
+        {
+          "word": "to sum up",
+          "pos": "other",
+          "zh": "总结"
+        },
+        {
+          "word": "briefly",
+          "pos": "adv",
+          "zh": "简要地"
+        },
+        {
+          "word": "ultimately",
+          "pos": "adv",
+          "zh": "最终"
+        },
+        {
+          "word": "in a nutshell",
+          "pos": "other",
+          "zh": "简而言之"
+        }
+      ],
+      "themeTopic": "学术写作·总结与结论",
+      "themeSummary": "in sum 常用于雅思写作 Task 2 的结论段或口语 Part 3 的总结句，与表示总结、结论的词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "in sum 是正式书面语，常用于学术写作；口语中更常用 'in short' 或 'to sum up'。"
+      ],
+      "insight": "sum 作为词根表示 '总和'，in sum 即 '在总和上'，相当于 '总之'。同根词如 summary（摘要）、summit（顶点）都含有 '总括' 或 '最高' 的含义。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "opposition": {
+      "gloss": "反对",
+      "morphKind": "classical",
+      "prefixLine": "op- (ob- 的变体，意为“朝向，对抗”)",
+      "rootLine": "pos (拉丁语 ponere “放置”，PIE *tḱey- “定居，放置”)",
+      "suffixLine": "-ition (名词后缀，表行为或状态)",
+      "evolution": "op- (对抗) + posit (放置) + -ion → 放在对立面 → 反对",
+      "parts": [],
+      "pieSummary": "PIE *tḱey- “定居，放置”",
+      "family": [
+        {
+          "word": "opponent",
+          "pos": "n",
+          "zh": "对手",
+          "morphBreakdown": "op- + pon- + -ent"
+        },
+        {
+          "word": "impose",
+          "pos": "v",
+          "zh": "强加",
+          "morphBreakdown": "im- (in-) + pose"
+        },
+        {
+          "word": "expose",
+          "pos": "v",
+          "zh": "暴露",
+          "morphBreakdown": "ex- + pose"
+        },
+        {
+          "word": "composite",
+          "pos": "adj",
+          "zh": "合成的",
+          "morphBreakdown": "com- + pos- + -ite"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "opponent",
+          "pos": "n",
+          "zh": "对手",
+          "morphBreakdown": "op- + pon- + -ent"
+        },
+        {
+          "word": "impose",
+          "pos": "v",
+          "zh": "强加",
+          "morphBreakdown": "im- (in-) + pose"
+        },
+        {
+          "word": "imposition",
+          "pos": "n",
+          "zh": "强加；征收",
+          "morphBreakdown": "im- + pos- + -ition"
+        },
+        {
+          "word": "expose",
+          "pos": "v",
+          "zh": "暴露",
+          "morphBreakdown": "ex- + pose"
+        },
+        {
+          "word": "composite",
+          "pos": "adj",
+          "zh": "合成的",
+          "morphBreakdown": "com- + pos- + -ite"
+        },
+        {
+          "word": "synthesis",
+          "pos": "n",
+          "zh": "综合",
+          "morphBreakdown": "syn- + thesis (放置)"
+        },
+        {
+          "word": "synthetic",
+          "pos": "adj",
+          "zh": "合成的",
+          "morphBreakdown": "syn- + thet- + -ic"
+        },
+        {
+          "word": "hypothesis",
+          "pos": "n",
+          "zh": "假设",
+          "morphBreakdown": "hypo- + thesis"
+        },
+        {
+          "word": "photosynthesis",
+          "pos": "n",
+          "zh": "光合作用",
+          "morphBreakdown": "photo- + synthesis"
+        },
+        {
+          "word": "proficiency",
+          "pos": "n",
+          "zh": "熟练",
+          "morphBreakdown": "pro- + fic- (做) + -iency"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "argument",
+          "pos": "n",
+          "zh": "论点"
+        },
+        {
+          "word": "debate",
+          "pos": "n",
+          "zh": "辩论"
+        },
+        {
+          "word": "disagree",
+          "pos": "v",
+          "zh": "不同意"
+        },
+        {
+          "word": "conflict",
+          "pos": "n",
+          "zh": "冲突"
+        },
+        {
+          "word": "controversy",
+          "pos": "n",
+          "zh": "争议"
+        },
+        {
+          "word": "consensus",
+          "pos": "n",
+          "zh": "共识"
+        },
+        {
+          "word": "compromise",
+          "pos": "n",
+          "zh": "妥协"
+        },
+        {
+          "word": "stance",
+          "pos": "n",
+          "zh": "立场"
+        },
+        {
+          "word": "viewpoint",
+          "pos": "n",
+          "zh": "观点"
+        },
+        {
+          "word": "critic",
+          "pos": "n",
+          "zh": "批评者"
+        },
+        {
+          "word": "proponent",
+          "pos": "n",
+          "zh": "支持者"
+        },
+        {
+          "word": "objection",
+          "pos": "n",
+          "zh": "反对"
+        }
+      ],
+      "themeTopic": "政治·辩论",
+      "themeSummary": "在雅思写作Task 2或口语Part 3中，讨论观点对立、政策争议时常用。常与agree/disagree、argument、debate等共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意前缀 op- 是 ob- 的变体，在 p 前同化。"
+      ],
+      "insight": "想象两方“对着放”东西，就是对立、反对。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "become obsolete": {
+      "gloss": "被淘汰",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "become: be- (使成为) + come (来)；obsolete: 源自拉丁语 obsoletus (破旧的, 过时的), 来自 obsolescere (逐渐废弃), ob- (离开) + solere (习惯)",
+      "suffixLine": "obsolete: -ete 为过去分词后缀",
+      "evolution": "become obsolete 字面义为“变得过时”，引申为“被淘汰”",
+      "parts": [],
+      "pieSummary": "obsolete 的 PIE 根 *swel- (习惯), 与 solace (安慰) 同源",
+      "family": [
+        {
+          "word": "come across",
+          "pos": "v",
+          "zh": "偶然遇到",
+          "morphBreakdown": "come + across"
+        },
+        {
+          "word": "come to a halt",
+          "pos": "v",
+          "zh": "停下来",
+          "morphBreakdown": "come + to + a + halt"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "come across",
+          "pos": "v",
+          "zh": "偶然遇到",
+          "morphBreakdown": "come + across"
+        },
+        {
+          "word": "come to a halt",
+          "pos": "v",
+          "zh": "停下来",
+          "morphBreakdown": "come + to + a + halt"
+        },
+        {
+          "word": "outcome",
+          "pos": "n",
+          "zh": "结果",
+          "morphBreakdown": "out + come"
+        },
+        {
+          "word": "income",
+          "pos": "n",
+          "zh": "收入",
+          "morphBreakdown": "in + come"
+        },
+        {
+          "word": "overcome",
+          "pos": "v",
+          "zh": "克服",
+          "morphBreakdown": "over + come"
+        },
+        {
+          "word": "become",
+          "pos": "v",
+          "zh": "成为",
+          "morphBreakdown": "be + come"
+        },
+        {
+          "word": "obsolescence",
+          "pos": "n",
+          "zh": "过时",
+          "morphBreakdown": "obsolete + -scence"
+        },
+        {
+          "word": "obsoletely",
+          "pos": "adv",
+          "zh": "过时地",
+          "morphBreakdown": "obsolete + -ly"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "innovation",
+          "pos": "n",
+          "zh": "创新"
+        },
+        {
+          "word": "outdated",
+          "pos": "adj",
+          "zh": "过时的"
+        },
+        {
+          "word": "replace",
+          "pos": "v",
+          "zh": "取代"
+        },
+        {
+          "word": "upgrade",
+          "pos": "v",
+          "zh": "升级"
+        },
+        {
+          "word": "antique",
+          "pos": "adj",
+          "zh": "古老的"
+        },
+        {
+          "word": "modernize",
+          "pos": "v",
+          "zh": "现代化"
+        },
+        {
+          "word": "disuse",
+          "pos": "n",
+          "zh": "废弃"
+        },
+        {
+          "word": "redundant",
+          "pos": "adj",
+          "zh": "多余的"
+        },
+        {
+          "word": "phased out",
+          "pos": "v",
+          "zh": "逐步淘汰"
+        }
+      ],
+      "themeTopic": "科技·更新换代",
+      "themeSummary": "该词常用于雅思阅读或写作中讨论技术、设备或观念的淘汰，常与 innovation, outdated, replace 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "obsolete 常与 become, become, render 连用；注意拼写 obso-lete"
+      ],
+      "insight": "obsolete 中的 sol- 与 solace 同源，记住“习惯的东西过时了”",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "determination": {
+      "gloss": "决心",
+      "morphKind": "classical",
+      "prefixLine": "de-：向下，加强",
+      "rootLine": "termin：界限，终点（拉丁语 terminus；PIE *ter- 穿越，越过）",
+      "suffixLine": "-ation：名词后缀，表行为或结果",
+      "evolution": "de-（加强）+ termin（界限）+ -ation → 明确界限的行为 → 决定，决心",
+      "parts": [],
+      "pieSummary": "PIE *ter- 穿越，越过 → 拉丁语 terminus 界限，终点",
+      "family": [
+        {
+          "word": "determine",
+          "pos": "v",
+          "zh": "决定",
+          "morphBreakdown": "de- + termin + -e"
+        },
+        {
+          "word": "determined",
+          "pos": "adj",
+          "zh": "坚定的",
+          "morphBreakdown": "determine + -ed"
+        },
+        {
+          "word": "determinable",
+          "pos": "adj",
+          "zh": "可确定的",
+          "morphBreakdown": "determine + -able"
+        },
+        {
+          "word": "termite",
+          "pos": "n",
+          "zh": "白蚁",
+          "morphBreakdown": "termite（拉丁语 termes 蛀虫，与 termin 无关）"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "determine",
+          "pos": "v",
+          "zh": "决定",
+          "morphBreakdown": "de- + termin + -e"
+        },
+        {
+          "word": "determined",
+          "pos": "adj",
+          "zh": "坚定的",
+          "morphBreakdown": "determine + -ed"
+        },
+        {
+          "word": "determinable",
+          "pos": "adj",
+          "zh": "可确定的",
+          "morphBreakdown": "determine + -able"
+        },
+        {
+          "word": "determinant",
+          "pos": "n",
+          "zh": "决定因素",
+          "morphBreakdown": "determine + -ant"
+        },
+        {
+          "word": "determinism",
+          "pos": "n",
+          "zh": "决定论",
+          "morphBreakdown": "determine + -ism"
+        },
+        {
+          "word": "predetermine",
+          "pos": "v",
+          "zh": "预先决定",
+          "morphBreakdown": "pre- + determine"
+        },
+        {
+          "word": "indeterminate",
+          "pos": "adj",
+          "zh": "不确定的",
+          "morphBreakdown": "in- + determine + -ate"
+        },
+        {
+          "word": "terminate",
+          "pos": "v",
+          "zh": "终止",
+          "morphBreakdown": "termin + -ate"
+        },
+        {
+          "word": "terminal",
+          "pos": "adj",
+          "zh": "终端的",
+          "morphBreakdown": "termin + -al"
+        },
+        {
+          "word": "terminology",
+          "pos": "n",
+          "zh": "术语",
+          "morphBreakdown": "termin + -ology"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "perseverance",
+          "pos": "n",
+          "zh": "毅力"
+        },
+        {
+          "word": "motivation",
+          "pos": "n",
+          "zh": "动机"
+        },
+        {
+          "word": "commitment",
+          "pos": "n",
+          "zh": "承诺"
+        },
+        {
+          "word": "resilience",
+          "pos": "n",
+          "zh": "韧性"
+        },
+        {
+          "word": "ambition",
+          "pos": "n",
+          "zh": "抱负"
+        },
+        {
+          "word": "dedication",
+          "pos": "n",
+          "zh": "奉献"
+        },
+        {
+          "word": "discipline",
+          "pos": "n",
+          "zh": "纪律"
+        },
+        {
+          "word": "goal",
+          "pos": "n",
+          "zh": "目标"
+        },
+        {
+          "word": "achievement",
+          "pos": "n",
+          "zh": "成就"
+        },
+        {
+          "word": "obstacle",
+          "pos": "n",
+          "zh": "障碍"
+        },
+        {
+          "word": "overcome",
+          "pos": "v",
+          "zh": "克服"
+        },
+        {
+          "word": "success",
+          "pos": "n",
+          "zh": "成功"
+        }
+      ],
+      "themeTopic": "心理学·个人品质",
+      "themeSummary": "在雅思阅读或写作中，determination 常出现在讨论成功因素、毅力、目标设定的文章中，与 perseverance、motivation、commitment 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 termite（白蚁）与 termin 无关，不要混淆。",
+        "determination 的动词形式 determine 更常见，注意拼写。"
+      ],
+      "insight": "determine 就像画一条线（termin）定下来（de-），决心就是坚定地画下那条线。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "determinable": {
+      "gloss": "可确定的",
+      "morphKind": "classical",
+      "prefixLine": "de- 表示“向下，完全，加强”",
+      "rootLine": "termin- 来自拉丁语 terminus “界限，终点”，源自 PIE *ter- “穿过，越过”",
+      "suffixLine": "-able 形容词后缀，表示“能够…的”",
+      "evolution": "de-（加强）+ termin（界限）+ -able（能够）→ 能够确定界限的 → 可确定的",
+      "parts": [],
+      "pieSummary": "PIE *ter- “穿过，越过” → 拉丁语 terminus “界限”",
+      "family": [
+        {
+          "word": "determine",
+          "pos": "v",
+          "zh": "确定",
+          "morphBreakdown": "de- + termin + -e"
+        },
+        {
+          "word": "determination",
+          "pos": "n",
+          "zh": "决心；确定",
+          "morphBreakdown": "de- + termin + -ation"
+        },
+        {
+          "word": "determined",
+          "pos": "adj",
+          "zh": "坚定的",
+          "morphBreakdown": "de- + termin + -ed"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "determine",
+          "pos": "v",
+          "zh": "确定",
+          "morphBreakdown": "de- + termin + -e"
+        },
+        {
+          "word": "determination",
+          "pos": "n",
+          "zh": "决心；确定",
+          "morphBreakdown": "de- + termin + -ation"
+        },
+        {
+          "word": "determined",
+          "pos": "adj",
+          "zh": "坚定的",
+          "morphBreakdown": "de- + termin + -ed"
+        },
+        {
+          "word": "determinant",
+          "pos": "n",
+          "zh": "决定因素",
+          "morphBreakdown": "de- + termin + -ant"
+        },
+        {
+          "word": "determinism",
+          "pos": "n",
+          "zh": "决定论",
+          "morphBreakdown": "de- + termin + -ism"
+        },
+        {
+          "word": "predetermine",
+          "pos": "v",
+          "zh": "预先决定",
+          "morphBreakdown": "pre- + determine"
+        },
+        {
+          "word": "indeterminate",
+          "pos": "adj",
+          "zh": "不确定的",
+          "morphBreakdown": "in- + determin + -ate"
+        },
+        {
+          "word": "terminate",
+          "pos": "v",
+          "zh": "终止",
+          "morphBreakdown": "termin + -ate"
+        },
+        {
+          "word": "terminal",
+          "pos": "adj",
+          "zh": "终端的；末期的",
+          "morphBreakdown": "termin + -al"
+        },
+        {
+          "word": "terminology",
+          "pos": "n",
+          "zh": "术语",
+          "morphBreakdown": "termin + -ology"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "measurable",
+          "pos": "adj",
+          "zh": "可测量的"
+        },
+        {
+          "word": "identifiable",
+          "pos": "adj",
+          "zh": "可识别的"
+        },
+        {
+          "word": "predictable",
+          "pos": "adj",
+          "zh": "可预测的"
+        },
+        {
+          "word": "variable",
+          "pos": "n",
+          "zh": "变量"
+        },
+        {
+          "word": "parameter",
+          "pos": "n",
+          "zh": "参数"
+        },
+        {
+          "word": "quantify",
+          "pos": "v",
+          "zh": "量化"
+        },
+        {
+          "word": "empirical",
+          "pos": "adj",
+          "zh": "经验主义的"
+        },
+        {
+          "word": "hypothesis",
+          "pos": "n",
+          "zh": "假设"
+        },
+        {
+          "word": "validate",
+          "pos": "v",
+          "zh": "验证"
+        },
+        {
+          "word": "reliability",
+          "pos": "n",
+          "zh": "可靠性"
+        }
+      ],
+      "themeTopic": "科学·研究",
+      "themeSummary": "在雅思阅读中，determinable 常出现在讨论实验结果的可确定性、变量控制等学术语境中，与 measurable, identifiable, predictable 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 determinable 与 determined 的区别：前者是“可确定的”，后者是“坚定的”或“被决定的”。"
+      ],
+      "insight": "determinable 的核心是“界限”，能划清界限就能确定。同根词 terminate（终止）也是“到了界限”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "shun publicity": {
+      "gloss": "避风头",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "shun: 古英语 scunian, 意为“回避, 避开”; 无确凿PIE来源",
+      "suffixLine": "无",
+      "evolution": "shun 直接表示“回避”, publicity 为“公众注意”, 合为“回避公众注意”即“避风头”",
+      "parts": [],
+      "family": [
+        {
+          "word": "shun",
+          "pos": "v",
+          "zh": "回避",
+          "morphBreakdown": "shun"
+        },
+        {
+          "word": "shy",
+          "pos": "adj",
+          "zh": "害羞的",
+          "morphBreakdown": "shy"
+        },
+        {
+          "word": "shyness",
+          "pos": "n",
+          "zh": "羞怯",
+          "morphBreakdown": "shy + -ness"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "publicity",
+          "pos": "n",
+          "zh": "公众注意",
+          "morphBreakdown": "public + -ity"
+        },
+        {
+          "word": "publicize",
+          "pos": "v",
+          "zh": "宣传",
+          "morphBreakdown": "public + -ize"
+        },
+        {
+          "word": "public",
+          "pos": "adj",
+          "zh": "公众的",
+          "morphBreakdown": "public"
+        },
+        {
+          "word": "publicly",
+          "pos": "adv",
+          "zh": "公开地",
+          "morphBreakdown": "public + -ly"
+        },
+        {
+          "word": "publication",
+          "pos": "n",
+          "zh": "出版",
+          "morphBreakdown": "public + -ation"
+        },
+        {
+          "word": "republic",
+          "pos": "n",
+          "zh": "共和国",
+          "morphBreakdown": "re- + public"
+        },
+        {
+          "word": "republican",
+          "pos": "adj",
+          "zh": "共和的",
+          "morphBreakdown": "republic + -an"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "avoid",
+          "pos": "v",
+          "zh": "避免"
+        },
+        {
+          "word": "media",
+          "pos": "n",
+          "zh": "媒体"
+        },
+        {
+          "word": "attention",
+          "pos": "n",
+          "zh": "关注"
+        },
+        {
+          "word": "privacy",
+          "pos": "n",
+          "zh": "隐私"
+        },
+        {
+          "word": "celebrity",
+          "pos": "n",
+          "zh": "名人"
+        },
+        {
+          "word": "exposure",
+          "pos": "n",
+          "zh": "曝光"
+        },
+        {
+          "word": "controversy",
+          "pos": "n",
+          "zh": "争议"
+        },
+        {
+          "word": "spotlight",
+          "pos": "n",
+          "zh": "公众注意"
+        },
+        {
+          "word": "withdraw",
+          "pos": "v",
+          "zh": "退出"
+        },
+        {
+          "word": "reclusive",
+          "pos": "adj",
+          "zh": "隐居的"
+        }
+      ],
+      "themeTopic": "媒体·公众形象",
+      "themeSummary": "该词常用于雅思阅读或写作中讨论名人隐私、媒体曝光等话题，与avoid, media, attention等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "shun 是正式书面词, 比 avoid 更强烈; publicity 常与 seek 或 shun 搭配"
+      ],
+      "insight": "shun 与 shy 同源, 想象害羞的人回避公众场合",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "extra-curricular": {
+      "gloss": "课外的",
+      "morphKind": "compound",
+      "prefixLine": "extra-：意为“超出、在…之外”，源自拉丁语 extra（在外面）",
+      "rootLine": "curricul-：源自拉丁语 curriculum（奔跑、课程），来自 currere（跑），PIE *kers-（跑）",
+      "suffixLine": "-ar：形容词后缀，表示“与…有关的”",
+      "evolution": "extra-（超出）+ curricular（课程的）→ 超出课程范围的 → 课外的",
+      "parts": [],
+      "pieSummary": "PIE *kers-（跑）",
+      "family": [
+        {
+          "word": "curriculum",
+          "pos": "n",
+          "zh": "课程",
+          "morphBreakdown": "curr-（跑）+ -i- + -culum（工具后缀）→ 奔跑的轨道 → 课程"
+        },
+        {
+          "word": "curricular",
+          "pos": "adj",
+          "zh": "课程的",
+          "morphBreakdown": "curricul- + -ar（形容词后缀）"
+        },
+        {
+          "word": "current",
+          "pos": "adj",
+          "zh": "当前的；水流",
+          "morphBreakdown": "curr-（跑）+ -ent（形容词/名词后缀）→ 正在跑的 → 当前的"
+        },
+        {
+          "word": "currency",
+          "pos": "n",
+          "zh": "货币；流通",
+          "morphBreakdown": "curr-（跑）+ -ency（名词后缀）→ 流通的东西 → 货币"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "curriculum",
+          "pos": "n",
+          "zh": "课程",
+          "morphBreakdown": "curr- + -i- + -culum"
+        },
+        {
+          "word": "curricular",
+          "pos": "adj",
+          "zh": "课程的",
+          "morphBreakdown": "curricul- + -ar"
+        },
+        {
+          "word": "current",
+          "pos": "adj",
+          "zh": "当前的",
+          "morphBreakdown": "curr- + -ent"
+        },
+        {
+          "word": "currency",
+          "pos": "n",
+          "zh": "货币",
+          "morphBreakdown": "curr- + -ency"
+        },
+        {
+          "word": "curate",
+          "pos": "v",
+          "zh": "策展；管理",
+          "morphBreakdown": "cur-（care）+ -ate（动词后缀）→ 照看 → 策展（注意：curate 来自拉丁语 cura，与 currere 不同源，但常混淆）"
+        },
+        {
+          "word": "curator",
+          "pos": "n",
+          "zh": "馆长；策展人",
+          "morphBreakdown": "curat- + -or（人）"
+        },
+        {
+          "word": "course",
+          "pos": "n",
+          "zh": "课程；路线",
+          "morphBreakdown": "cours-（跑）+ -e → 奔跑的路径 → 课程"
+        },
+        {
+          "word": "occur",
+          "pos": "v",
+          "zh": "发生",
+          "morphBreakdown": "oc-（朝向）+ cur-（跑）→ 跑向 → 发生"
+        },
+        {
+          "word": "recur",
+          "pos": "v",
+          "zh": "再发生",
+          "morphBreakdown": "re-（再次）+ cur-（跑）→ 再次跑来 → 再发生"
+        },
+        {
+          "word": "concurrent",
+          "pos": "adj",
+          "zh": "同时发生的",
+          "morphBreakdown": "con-（一起）+ curr-（跑）+ -ent → 一起跑的 → 同时的"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "curriculum",
+          "pos": "n",
+          "zh": "课程"
+        },
+        {
+          "word": "syllabus",
+          "pos": "n",
+          "zh": "教学大纲"
+        },
+        {
+          "word": "timetable",
+          "pos": "n",
+          "zh": "时间表"
+        },
+        {
+          "word": "assignment",
+          "pos": "n",
+          "zh": "作业"
+        },
+        {
+          "word": "assessment",
+          "pos": "n",
+          "zh": "评估"
+        },
+        {
+          "word": "tutorial",
+          "pos": "n",
+          "zh": "辅导课"
+        },
+        {
+          "word": "seminar",
+          "pos": "n",
+          "zh": "研讨会"
+        },
+        {
+          "word": "lecture",
+          "pos": "n",
+          "zh": "讲座"
+        },
+        {
+          "word": "internship",
+          "pos": "n",
+          "zh": "实习"
+        },
+        {
+          "word": "volunteer",
+          "pos": "other",
+          "zh": "志愿者"
+        },
+        {
+          "word": "club",
+          "pos": "n",
+          "zh": "俱乐部"
+        },
+        {
+          "word": "activity",
+          "pos": "n",
+          "zh": "活动"
+        }
+      ],
+      "themeTopic": "教育·课程",
+      "themeSummary": "该词常出现在雅思教育类话题中，讨论课外活动、课程设置等，与 curriculum、extracurricular activity、cocurricular 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 extra-curricular 常写作 extracurricular（无连字符）",
+        "同根词 current 和 currency 很常见，但 curate 来自不同词根（cura），注意区分"
+      ],
+      "insight": "extra-像“额外”，curriculum是“课程”，合起来就是“课程之外的”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "revived": {
+      "gloss": "复兴的",
+      "morphKind": "classical",
+      "prefixLine": "re- 表示「再次、重新」",
+      "rootLine": "viv 源自拉丁语 vivere「活着」，PIE *gʷih₃w-「活着」",
+      "suffixLine": "-ed 形容词后缀，表示「被…的」",
+      "evolution": "re-（再次）+ viv（活着）+ -ed（被…的）→ 再次活过来的 → 复兴的",
+      "parts": [],
+      "pieSummary": "PIE *gʷih₃w-「活着」",
+      "family": [
+        {
+          "word": "revive",
+          "pos": "v",
+          "zh": "复兴；复苏",
+          "morphBreakdown": "re- + vive"
+        },
+        {
+          "word": "revival",
+          "pos": "n",
+          "zh": "复兴；复苏",
+          "morphBreakdown": "re- + viv + -al"
+        },
+        {
+          "word": "revivable",
+          "pos": "adj",
+          "zh": "可复兴的",
+          "morphBreakdown": "re- + viv + -able"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "revive",
+          "pos": "v",
+          "zh": "复兴；复苏",
+          "morphBreakdown": "re- + vive"
+        },
+        {
+          "word": "revival",
+          "pos": "n",
+          "zh": "复兴；复苏",
+          "morphBreakdown": "re- + viv + -al"
+        },
+        {
+          "word": "revivable",
+          "pos": "adj",
+          "zh": "可复兴的",
+          "morphBreakdown": "re- + viv + -able"
+        },
+        {
+          "word": "survive",
+          "pos": "v",
+          "zh": "幸存",
+          "morphBreakdown": "sur- + vive"
+        },
+        {
+          "word": "survival",
+          "pos": "n",
+          "zh": "幸存",
+          "morphBreakdown": "sur- + viv + -al"
+        },
+        {
+          "word": "vivid",
+          "pos": "adj",
+          "zh": "生动的",
+          "morphBreakdown": "viv + -id"
+        },
+        {
+          "word": "vivacious",
+          "pos": "adj",
+          "zh": "活泼的",
+          "morphBreakdown": "viv + -acious"
+        },
+        {
+          "word": "vital",
+          "pos": "adj",
+          "zh": "至关重要的",
+          "morphBreakdown": "vit（变体）+ -al"
+        },
+        {
+          "word": "vitality",
+          "pos": "n",
+          "zh": "活力",
+          "morphBreakdown": "vital + -ity"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "heritage",
+          "pos": "n",
+          "zh": "遗产"
+        },
+        {
+          "word": "tradition",
+          "pos": "n",
+          "zh": "传统"
+        },
+        {
+          "word": "renaissance",
+          "pos": "n",
+          "zh": "文艺复兴"
+        },
+        {
+          "word": "restoration",
+          "pos": "n",
+          "zh": "修复"
+        },
+        {
+          "word": "renewal",
+          "pos": "n",
+          "zh": "更新"
+        },
+        {
+          "word": "regeneration",
+          "pos": "n",
+          "zh": "再生"
+        },
+        {
+          "word": "preservation",
+          "pos": "n",
+          "zh": "保护"
+        },
+        {
+          "word": "cultural",
+          "pos": "adj",
+          "zh": "文化的"
+        },
+        {
+          "word": "historic",
+          "pos": "adj",
+          "zh": "历史的"
+        },
+        {
+          "word": "revitalize",
+          "pos": "v",
+          "zh": "使复兴"
+        },
+        {
+          "word": "flourish",
+          "pos": "v",
+          "zh": "繁荣"
+        },
+        {
+          "word": "decline",
+          "pos": "v",
+          "zh": "衰落"
+        }
+      ],
+      "themeTopic": "历史·文化复兴",
+      "themeSummary": "revived 常用于雅思阅读/写作中讨论文化、经济或传统的复兴，常与 heritage, tradition, renaissance 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 revive 和 survival 共享 viv 词根，但前缀不同；revived 是过去分词作形容词"
+      ],
+      "insight": "revived 就像「死而复生」，记住 viv（活）和 re（再次），就能联想到「复兴」",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "technic": {
+      "gloss": "技术",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "techn- (希腊语 tekhnē 技艺，PIE *teks- 编织、制造)",
+      "suffixLine": "-ic 形容词/名词后缀",
+      "evolution": "技艺的 → 技术的",
+      "parts": [],
+      "pieSummary": "PIE *teks- 编织、制造",
+      "family": [
+        {
+          "word": "technique",
+          "pos": "n",
+          "zh": "技术",
+          "morphBreakdown": "techn- + -ique"
+        },
+        {
+          "word": "technical",
+          "pos": "adj",
+          "zh": "技术的",
+          "morphBreakdown": "techn- + -ical"
+        },
+        {
+          "word": "technology",
+          "pos": "n",
+          "zh": "技术学",
+          "morphBreakdown": "techn- + -ology"
+        },
+        {
+          "word": "polytechnic",
+          "pos": "n",
+          "zh": "理工学院",
+          "morphBreakdown": "poly- + techn- + -ic"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "technique",
+          "pos": "n",
+          "zh": "技术",
+          "morphBreakdown": "techn- + -ique"
+        },
+        {
+          "word": "technical",
+          "pos": "adj",
+          "zh": "技术的",
+          "morphBreakdown": "techn- + -ical"
+        },
+        {
+          "word": "technology",
+          "pos": "n",
+          "zh": "技术学",
+          "morphBreakdown": "techn- + -ology"
+        },
+        {
+          "word": "technician",
+          "pos": "n",
+          "zh": "技术员",
+          "morphBreakdown": "techn- + -ician"
+        },
+        {
+          "word": "technological",
+          "pos": "adj",
+          "zh": "技术的",
+          "morphBreakdown": "technology + -ical"
+        },
+        {
+          "word": "technically",
+          "pos": "adv",
+          "zh": "技术上",
+          "morphBreakdown": "technical + -ly"
+        },
+        {
+          "word": "polytechnic",
+          "pos": "n",
+          "zh": "理工学院",
+          "morphBreakdown": "poly- + techn- + -ic"
+        },
+        {
+          "word": "technocracy",
+          "pos": "n",
+          "zh": "技术统治",
+          "morphBreakdown": "techn- + -ocracy"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "innovation",
+          "pos": "n",
+          "zh": "创新"
+        },
+        {
+          "word": "engineering",
+          "pos": "n",
+          "zh": "工程"
+        },
+        {
+          "word": "automation",
+          "pos": "n",
+          "zh": "自动化"
+        },
+        {
+          "word": "digital",
+          "pos": "adj",
+          "zh": "数字的"
+        },
+        {
+          "word": "artificial",
+          "pos": "adj",
+          "zh": "人工的"
+        },
+        {
+          "word": "intelligence",
+          "pos": "n",
+          "zh": "智能"
+        },
+        {
+          "word": "research",
+          "pos": "n",
+          "zh": "研究"
+        },
+        {
+          "word": "development",
+          "pos": "n",
+          "zh": "发展"
+        },
+        {
+          "word": "application",
+          "pos": "n",
+          "zh": "应用"
+        },
+        {
+          "word": "process",
+          "pos": "n",
+          "zh": "过程"
+        }
+      ],
+      "themeTopic": "科技·创新",
+      "themeSummary": "该词常出现在雅思阅读关于科技发展、创新或教育类文章中，与 innovation、engineering 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "technic 在现代英语中较少单独使用，常以 technical 或 technique 形式出现。",
+        "注意 technic 与 technique 的区别：technic 偏理论，technique 偏具体方法。"
+      ],
+      "insight": "technic 与 technology 同源，想象古代工匠的技艺（tekhnē）是现代技术的前身。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "robust economy": {
+      "gloss": "稳健经济",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "robust: 源自拉丁语 rōbustus (橡木般坚硬的)，来自 rōbur (橡木，力量)；economy: 源自希腊语 oikonomia (家政管理)，由 oikos (房屋) + nomos (管理) 组成",
+      "suffixLine": "无",
+      "evolution": "robust 字面义为“橡木般坚硬”，引申为“强健的、稳固的”；economy 字面义为“家政管理”，引申为“经济”；组合后指“稳固的经济状况”。",
+      "parts": [],
+      "pieSummary": "robust: PIE *reudh- (红色，引申为橡木的红色)；economy: PIE *weik- (氏族) + *nem- (分配)",
+      "family": [
+        {
+          "word": "robust",
+          "pos": "adj",
+          "zh": "强健的",
+          "morphBreakdown": "robust"
+        },
+        {
+          "word": "economy",
+          "pos": "n",
+          "zh": "经济",
+          "morphBreakdown": "eco + nomy"
+        },
+        {
+          "word": "robustness",
+          "pos": "n",
+          "zh": "稳健性",
+          "morphBreakdown": "robust + ness"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "robust",
+          "pos": "adj",
+          "zh": "强健的",
+          "morphBreakdown": "robust"
+        },
+        {
+          "word": "robustness",
+          "pos": "n",
+          "zh": "稳健性",
+          "morphBreakdown": "robust + ness"
+        },
+        {
+          "word": "economy",
+          "pos": "n",
+          "zh": "经济",
+          "morphBreakdown": "eco + nomy"
+        },
+        {
+          "word": "economic",
+          "pos": "adj",
+          "zh": "经济的",
+          "morphBreakdown": "econom(y) + ic"
+        },
+        {
+          "word": "economical",
+          "pos": "adj",
+          "zh": "节约的",
+          "morphBreakdown": "econom(y) + ical"
+        },
+        {
+          "word": "economically",
+          "pos": "adv",
+          "zh": "经济上",
+          "morphBreakdown": "economic + ally"
+        },
+        {
+          "word": "economics",
+          "pos": "n",
+          "zh": "经济学",
+          "morphBreakdown": "econom(y) + ics"
+        },
+        {
+          "word": "economist",
+          "pos": "n",
+          "zh": "经济学家",
+          "morphBreakdown": "econom(y) + ist"
+        },
+        {
+          "word": "macroeconomic",
+          "pos": "adj",
+          "zh": "宏观经济的",
+          "morphBreakdown": "macro + economic"
+        },
+        {
+          "word": "microeconomic",
+          "pos": "adj",
+          "zh": "微观经济的",
+          "morphBreakdown": "micro + economic"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "sustainable",
+          "pos": "adj",
+          "zh": "可持续的"
+        },
+        {
+          "word": "growth",
+          "pos": "n",
+          "zh": "增长"
+        },
+        {
+          "word": "inflation",
+          "pos": "n",
+          "zh": "通货膨胀"
+        },
+        {
+          "word": "recession",
+          "pos": "n",
+          "zh": "衰退"
+        },
+        {
+          "word": "GDP",
+          "pos": "n",
+          "zh": "国内生产总值"
+        },
+        {
+          "word": "fiscal",
+          "pos": "adj",
+          "zh": "财政的"
+        },
+        {
+          "word": "monetary",
+          "pos": "adj",
+          "zh": "货币的"
+        },
+        {
+          "word": "stability",
+          "pos": "n",
+          "zh": "稳定"
+        },
+        {
+          "word": "investment",
+          "pos": "n",
+          "zh": "投资"
+        },
+        {
+          "word": "trade",
+          "pos": "n",
+          "zh": "贸易"
+        },
+        {
+          "word": "policy",
+          "pos": "n",
+          "zh": "政策"
+        },
+        {
+          "word": "development",
+          "pos": "n",
+          "zh": "发展"
+        }
+      ],
+      "themeTopic": "经济·发展",
+      "themeSummary": "该短语常用于雅思写作Task 2讨论经济政策或阅读中描述国家经济状况，常与增长、稳定、可持续等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "robust 常与 economy, growth, system 搭配；economy 注意与 economic 区分。"
+      ],
+      "insight": "想象一棵橡树(robust)支撑着整个房子(economy)，象征经济稳健。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "orient": {
+      "gloss": "使面向，确定方向",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "词根 ori-（拉丁语 oriri “升起，出现”）源自 PIE *er- “移动，升起”",
+      "suffixLine": "无",
+      "evolution": "字面义“使朝向东方（太阳升起的方向）”，引申为“确定方向”",
+      "parts": [],
+      "pieSummary": "PIE *er- “移动，升起”",
+      "family": [
+        {
+          "word": "orientation",
+          "pos": "n",
+          "zh": "方向，定向",
+          "morphBreakdown": "orient + -ation"
+        },
+        {
+          "word": "oriental",
+          "pos": "adj",
+          "zh": "东方的",
+          "morphBreakdown": "orient + -al"
+        },
+        {
+          "word": "disorient",
+          "pos": "v",
+          "zh": "使迷失方向",
+          "morphBreakdown": "dis- + orient"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "orientation",
+          "pos": "n",
+          "zh": "方向，定向",
+          "morphBreakdown": "orient + -ation"
+        },
+        {
+          "word": "oriental",
+          "pos": "adj",
+          "zh": "东方的",
+          "morphBreakdown": "orient + -al"
+        },
+        {
+          "word": "disorient",
+          "pos": "v",
+          "zh": "使迷失方向",
+          "morphBreakdown": "dis- + orient"
+        },
+        {
+          "word": "reorient",
+          "pos": "v",
+          "zh": "重新调整方向",
+          "morphBreakdown": "re- + orient"
+        },
+        {
+          "word": "export-oriented",
+          "pos": "adj",
+          "zh": "出口导向的",
+          "morphBreakdown": "export + oriented"
+        },
+        {
+          "word": "oriented",
+          "pos": "adj",
+          "zh": "以…为导向的",
+          "morphBreakdown": "orient + -ed"
+        },
+        {
+          "word": "orientate",
+          "pos": "v",
+          "zh": "定向（英式）",
+          "morphBreakdown": "orient + -ate"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "direction",
+          "pos": "n",
+          "zh": "方向"
+        },
+        {
+          "word": "location",
+          "pos": "n",
+          "zh": "位置"
+        },
+        {
+          "word": "navigation",
+          "pos": "n",
+          "zh": "导航"
+        },
+        {
+          "word": "compass",
+          "pos": "n",
+          "zh": "指南针"
+        },
+        {
+          "word": "east",
+          "pos": "n",
+          "zh": "东方"
+        },
+        {
+          "word": "west",
+          "pos": "n",
+          "zh": "西方"
+        },
+        {
+          "word": "map",
+          "pos": "n",
+          "zh": "地图"
+        },
+        {
+          "word": "position",
+          "pos": "n",
+          "zh": "位置"
+        },
+        {
+          "word": "route",
+          "pos": "n",
+          "zh": "路线"
+        },
+        {
+          "word": "bearing",
+          "pos": "n",
+          "zh": "方位"
+        }
+      ],
+      "themeTopic": "地理·方向·定位",
+      "themeSummary": "该词常出现在雅思阅读关于地图、导航、文化方向（如东西方对比）的篇章中，与方位、定位相关词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 orient 与 orientate 同义，orientate 更常见于英式英语。"
+      ],
+      "insight": "想象太阳从东方升起，orient 就是“面向东方”确定方向",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "orientation": {
+      "gloss": "方向",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "来自拉丁语 oriens（升起，东方），源自 PIE *h₂er-（升起）",
+      "suffixLine": "-ation 为名词后缀，表示行为、过程或结果",
+      "evolution": "orient（使朝向东方）→ orientation（朝向、定位的过程）→ 引申为方向、定位",
+      "parts": [],
+      "pieSummary": "PIE *h₂er- 意为“升起”，引申出“东方”（太阳升起的方向）",
+      "family": [
+        {
+          "word": "orient",
+          "pos": "adj",
+          "zh": "东方；定向",
+          "morphBreakdown": "ori-（升起）+ -ent（名词/动词后缀）"
+        },
+        {
+          "word": "oriental",
+          "pos": "adj",
+          "zh": "东方的",
+          "morphBreakdown": "orient + -al（形容词后缀）"
+        },
+        {
+          "word": "disorient",
+          "pos": "v",
+          "zh": "使迷失方向",
+          "morphBreakdown": "dis-（否定）+ orient"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "orient",
+          "pos": "v",
+          "zh": "定向；使适应",
+          "morphBreakdown": "ori-（升起）+ -ent"
+        },
+        {
+          "word": "oriental",
+          "pos": "adj",
+          "zh": "东方的",
+          "morphBreakdown": "orient + -al"
+        },
+        {
+          "word": "disorient",
+          "pos": "v",
+          "zh": "使迷失方向",
+          "morphBreakdown": "dis-（否定）+ orient"
+        },
+        {
+          "word": "reorient",
+          "pos": "v",
+          "zh": "重新定位",
+          "morphBreakdown": "re-（再次）+ orient"
+        },
+        {
+          "word": "oriented",
+          "pos": "adj",
+          "zh": "以…为导向的",
+          "morphBreakdown": "orient + -ed"
+        },
+        {
+          "word": "orientation",
+          "pos": "n",
+          "zh": "方向；定位",
+          "morphBreakdown": "orient + -ation"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "introduction",
+          "pos": "n",
+          "zh": "介绍"
+        },
+        {
+          "word": "session",
+          "pos": "n",
+          "zh": "会议；学期"
+        },
+        {
+          "word": "program",
+          "pos": "n",
+          "zh": "项目；课程"
+        },
+        {
+          "word": "guide",
+          "pos": "other",
+          "zh": "指南；引导"
+        },
+        {
+          "word": "familiarize",
+          "pos": "v",
+          "zh": "使熟悉"
+        },
+        {
+          "word": "induction",
+          "pos": "n",
+          "zh": "入职；入门"
+        },
+        {
+          "word": "workshop",
+          "pos": "n",
+          "zh": "研讨会"
+        },
+        {
+          "word": "handbook",
+          "pos": "n",
+          "zh": "手册"
+        },
+        {
+          "word": "campus",
+          "pos": "n",
+          "zh": "校园"
+        },
+        {
+          "word": "faculty",
+          "pos": "n",
+          "zh": "教职员工"
+        },
+        {
+          "word": "curriculum",
+          "pos": "n",
+          "zh": "课程"
+        },
+        {
+          "word": "enrollment",
+          "pos": "n",
+          "zh": "注册"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "orientation 常用于雅思听力或阅读中关于新生入学指导、课程介绍或公司入职培训的场景，常与 introduction, session, program 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 orientation 的动词形式 orient 和形容词 oriented 的用法。",
+        "在雅思写作中，export-oriented 是常见复合词，表示“出口导向的”。"
+      ],
+      "insight": "想象太阳从东方升起（orient），orientation 就是确定方向的过程。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "tighter controls": {
+      "gloss": "更严管控",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "tight < 古英语 *þight* '紧的'，源自原始日耳曼语 *þinhtaz*；control < 古法语 *contre-rolle* '对照账册'，源自拉丁语 *contra* '相对' + *rotulus* '小轮'",
+      "suffixLine": "-er 是比较级后缀；-s 是名词复数",
+      "evolution": "tighter 是 tight 的比较级，表示更紧；controls 是 control 的复数，表示管控措施；合起来字面义为‘更紧的管控措施’",
+      "parts": [],
+      "family": [
+        {
+          "word": "tight",
+          "pos": "adj",
+          "zh": "紧的",
+          "morphBreakdown": "tight"
+        },
+        {
+          "word": "tighten",
+          "pos": "v",
+          "zh": "收紧",
+          "morphBreakdown": "tight + -en"
+        },
+        {
+          "word": "control",
+          "pos": "other",
+          "zh": "控制",
+          "morphBreakdown": "control"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "tighten",
+          "pos": "v",
+          "zh": "收紧",
+          "morphBreakdown": "tight + -en"
+        },
+        {
+          "word": "tightly",
+          "pos": "adv",
+          "zh": "紧紧地",
+          "morphBreakdown": "tight + -ly"
+        },
+        {
+          "word": "control",
+          "pos": "n",
+          "zh": "控制",
+          "morphBreakdown": "control"
+        },
+        {
+          "word": "controllable",
+          "pos": "adj",
+          "zh": "可控制的",
+          "morphBreakdown": "control + -lable"
+        },
+        {
+          "word": "controller",
+          "pos": "n",
+          "zh": "控制器",
+          "morphBreakdown": "control + -ler"
+        },
+        {
+          "word": "uncontrolled",
+          "pos": "adj",
+          "zh": "不受控制的",
+          "morphBreakdown": "un- + control + -ed"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "regulation",
+          "pos": "n",
+          "zh": "法规"
+        },
+        {
+          "word": "restriction",
+          "pos": "n",
+          "zh": "限制"
+        },
+        {
+          "word": "enforcement",
+          "pos": "n",
+          "zh": "执行"
+        },
+        {
+          "word": "compliance",
+          "pos": "n",
+          "zh": "合规"
+        },
+        {
+          "word": "sanction",
+          "pos": "n",
+          "zh": "制裁"
+        },
+        {
+          "word": "oversight",
+          "pos": "n",
+          "zh": "监督"
+        },
+        {
+          "word": "legislation",
+          "pos": "n",
+          "zh": "立法"
+        },
+        {
+          "word": "authority",
+          "pos": "n",
+          "zh": "当局"
+        },
+        {
+          "word": "measure",
+          "pos": "n",
+          "zh": "措施"
+        },
+        {
+          "word": "policy",
+          "pos": "n",
+          "zh": "政策"
+        }
+      ],
+      "themeTopic": "政府·政策·监管",
+      "themeSummary": "该词常出现在雅思阅读或写作中讨论政府加强监管、环境政策、经济调控等话题，常与 regulation, restriction, enforcement 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "tighter controls 是名词短语，常用于新闻和学术写作；注意 control 作名词时常用复数表示多项管控措施。"
+      ],
+      "insight": "tight 与 control 组合，形象地比喻管控像绳子一样勒得更紧。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "tight budget": {
+      "gloss": "紧预算",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "tight (adj) 来自古英语 þight '坚固的'；budget (n) 来自古法语 bougette '小皮包'，后指财政预算",
+      "suffixLine": "无",
+      "evolution": "tight 本义'紧的'，budget 本义'小包'，后引申为'预算'，组合为'紧张的预算'",
+      "parts": [],
+      "pieSummary": "tight 源自 PIE *tenk- '使坚固'；budget 源自 PIE *bʰew- '膨胀'（通过拉丁语 bulga '皮袋'）",
+      "family": [
+        {
+          "word": "tighten",
+          "pos": "v",
+          "zh": "收紧",
+          "morphBreakdown": "tight + -en"
+        },
+        {
+          "word": "tightly",
+          "pos": "adv",
+          "zh": "紧紧地",
+          "morphBreakdown": "tight + -ly"
+        },
+        {
+          "word": "budgetary",
+          "pos": "adj",
+          "zh": "预算的",
+          "morphBreakdown": "budget + -ary"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "tighten",
+          "pos": "v",
+          "zh": "收紧",
+          "morphBreakdown": "tight + -en"
+        },
+        {
+          "word": "tightly",
+          "pos": "adv",
+          "zh": "紧紧地",
+          "morphBreakdown": "tight + -ly"
+        },
+        {
+          "word": "tightness",
+          "pos": "n",
+          "zh": "紧度",
+          "morphBreakdown": "tight + -ness"
+        },
+        {
+          "word": "budgetary",
+          "pos": "adj",
+          "zh": "预算的",
+          "morphBreakdown": "budget + -ary"
+        },
+        {
+          "word": "budgeting",
+          "pos": "n",
+          "zh": "预算编制",
+          "morphBreakdown": "budget + -ing"
+        },
+        {
+          "word": "budgeter",
+          "pos": "n",
+          "zh": "预算编制者",
+          "morphBreakdown": "budget + -er"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "deficit",
+          "pos": "n",
+          "zh": "赤字"
+        },
+        {
+          "word": "austerity",
+          "pos": "n",
+          "zh": "紧缩"
+        },
+        {
+          "word": "expenditure",
+          "pos": "n",
+          "zh": "支出"
+        },
+        {
+          "word": "revenue",
+          "pos": "n",
+          "zh": "收入"
+        },
+        {
+          "word": "cutback",
+          "pos": "n",
+          "zh": "削减"
+        },
+        {
+          "word": "fiscal",
+          "pos": "adj",
+          "zh": "财政的"
+        },
+        {
+          "word": "funding",
+          "pos": "n",
+          "zh": "资金"
+        },
+        {
+          "word": "allocate",
+          "pos": "v",
+          "zh": "分配"
+        },
+        {
+          "word": "budget",
+          "pos": "n",
+          "zh": "预算"
+        },
+        {
+          "word": "cost-effective",
+          "pos": "adj",
+          "zh": "成本效益高的"
+        }
+      ],
+      "themeTopic": "经济·财政",
+      "themeSummary": "该词组常出现在雅思阅读或写作中关于政府财政、企业成本控制、个人理财等话题，与'削减开支'、'财政赤字'等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "tight budget 是固定搭配，常用于描述资金紧张的情况。"
+      ],
+      "insight": "想象钱包（budget）被勒得很紧（tight），钱不够用。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "bark": {
+      "gloss": "树皮",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "来自古诺尔斯语 bǫrkr '树皮'，可能源自PIE *bher- '切割'（与 birch '桦树'同源）",
+      "suffixLine": "无",
+      "evolution": "树皮是树木的外层覆盖物，原始含义与剥落或切割有关",
+      "parts": [],
+      "pieSummary": "PIE *bher- '切割'",
+      "family": [
+        {
+          "word": "bark",
+          "pos": "n",
+          "zh": "树皮",
+          "morphBreakdown": "bark"
+        },
+        {
+          "word": "birch",
+          "pos": "n",
+          "zh": "桦树",
+          "morphBreakdown": "birch"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "bark",
+          "pos": "n",
+          "zh": "树皮",
+          "morphBreakdown": "bark"
+        },
+        {
+          "word": "bark",
+          "pos": "v",
+          "zh": "吠叫",
+          "morphBreakdown": "bark（不同源，但同形）"
+        },
+        {
+          "word": "embark",
+          "pos": "v",
+          "zh": "上船；开始",
+          "morphBreakdown": "em- (in) + bark (船体)"
+        },
+        {
+          "word": "embark on/upon sth",
+          "pos": "v",
+          "zh": "开始（新事物）",
+          "morphBreakdown": "embark + on/upon"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "trunk",
+          "pos": "n",
+          "zh": "树干"
+        },
+        {
+          "word": "branch",
+          "pos": "n",
+          "zh": "树枝"
+        },
+        {
+          "word": "leaf",
+          "pos": "n",
+          "zh": "叶子"
+        },
+        {
+          "word": "root",
+          "pos": "n",
+          "zh": "根"
+        },
+        {
+          "word": "wood",
+          "pos": "n",
+          "zh": "木材"
+        },
+        {
+          "word": "forest",
+          "pos": "n",
+          "zh": "森林"
+        },
+        {
+          "word": "tree",
+          "pos": "n",
+          "zh": "树"
+        },
+        {
+          "word": "bark beetle",
+          "pos": "n",
+          "zh": "树皮甲虫"
+        }
+      ],
+      "themeTopic": "植物·树木",
+      "themeSummary": "在雅思阅读中，bark 常出现在描述树木结构、森林生态或植物学文章中，与 trunk、branch、leaf 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 bark 有两个常见含义：树皮（名词）和狗叫（动词），词源不同，但拼写相同。",
+        "embark 中的 bark 来自拉丁语 barca '小船'，与树皮无关，但同形。"
+      ],
+      "insight": "bark 作为树皮，与 birch（桦树）同源，桦树皮常被剥取使用。",
       "strictEtymology": false,
       "source": "deepseek",
       "schemaVersion": 2

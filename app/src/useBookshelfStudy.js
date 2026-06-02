@@ -27,6 +27,7 @@ import { applySrsV2, migrateWordProg } from './srsCurve.js'
 import { enrichEntriesWithIpa } from './ipaLookup.js'
 import { computeBookDashboard } from './bookDashboard.js'
 import { appendStudySession, loadStudyHistory } from './studyHistory.js'
+import { isBookRootAnalysisEnabled, setBookRootAnalysisEnabled as persistBookRootAnalysisEnabled } from './bookPreferences.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
 /** @typedef {{ pos?: string, zh: string, example: string, exampleZh?: string }} SenseEx */
@@ -206,8 +207,15 @@ export function useBookshelfStudy() {
   /** @type {import('react').MutableRefObject<import('./studyHistory.js').StudySession | null>} */
   const sessionLogRef = useRef(null)
   const rootEnrichGenRef = useRef(0)
+  const [bookRootAnalysisEnabled, setBookRootAnalysisEnabledState] = useState(true)
 
-  const startBookRootEnrichment = useCallback((bookId, bookEntries) => {
+  const startBookRootEnrichment = useCallback((bookId, bookEntries, opts = {}) => {
+    const force = opts.force === true
+    if (!force && !isBookRootAnalysisEnabled(bookId)) {
+      setRootEnrich({ running: false, done: 0, total: 0, analyzed: 0, failed: 0 })
+      return
+    }
+
     const rootCfg = getRootLlmSettings()
     if (!rootCfg.enabled || !rootCfg.apiKey.trim() || !bookId || !bookEntries.length) {
       setRootEnrich({ running: false, done: 0, total: 0, analyzed: 0, failed: 0 })
@@ -263,13 +271,39 @@ export function useBookshelfStudy() {
     })
   }, [])
 
+  const setBookRootAnalysisEnabled = useCallback(
+    (enabled) => {
+      if (!activeBookId) return
+      persistBookRootAnalysisEnabled(activeBookId, enabled)
+      setBookRootAnalysisEnabledState(enabled)
+      if (!enabled) {
+        rootEnrichGenRef.current += 1
+        setRootEnrich({ running: false, done: 0, total: 0, analyzed: 0, failed: 0 })
+        return
+      }
+      if (entries.length) startBookRootEnrichment(activeBookId, entries)
+    },
+    [activeBookId, entries, startBookRootEnrichment],
+  )
+
+  const triggerBookRootEnrichment = useCallback(() => {
+    if (!activeBookId || !entries.length) return
+    startBookRootEnrichment(activeBookId, entries, { force: true })
+  }, [activeBookId, entries, startBookRootEnrichment])
+
   const refreshBookRootAnalysis = useCallback(() => {
     if (!activeBookId || !entries.length) return
     rootEnrichGenRef.current += 1
     clearBookRootAnalysisCache(activeBookId)
     clearRootAnalysisCache()
-    startBookRootEnrichment(activeBookId, entries)
+    startBookRootEnrichment(activeBookId, entries, { force: true })
   }, [activeBookId, entries, startBookRootEnrichment])
+
+  useEffect(() => {
+    if (activeBookId) {
+      setBookRootAnalysisEnabledState(isBookRootAnalysisEnabled(activeBookId))
+    }
+  }, [activeBookId])
 
   const books = useMemo(() => {
     const imp = importMeta.map((b) => ({
@@ -692,6 +726,9 @@ export function useBookshelfStudy() {
     prepareStatus,
     rootEnrich,
     refreshBookRootAnalysis,
+    bookRootAnalysisEnabled,
+    setBookRootAnalysisEnabled,
+    triggerBookRootEnrichment,
     backToShelf,
     backToBook,
     clearActiveBook,

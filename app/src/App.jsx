@@ -82,6 +82,9 @@ export default function App() {
     prepareStatus,
     rootEnrich,
     refreshBookRootAnalysis,
+    bookRootAnalysisEnabled,
+    setBookRootAnalysisEnabled,
+    triggerBookRootEnrichment,
     backToShelf,
     backToBook,
     sessionPosition,
@@ -574,7 +577,34 @@ export default function App() {
 
           {rootLlm.enabled && rootLlm.apiKey.trim() ? (
             <div className="mt-4 rounded-2xl border border-violet-200 bg-violet-50 px-4 py-3">
-              {rootEnrich.running ? (
+              <label className="flex cursor-pointer items-center gap-2.5 text-sm font-medium text-violet-900">
+                <input
+                  type="checkbox"
+                  checked={bookRootAnalysisEnabled}
+                  onChange={(e) => setBookRootAnalysisEnabled(e.target.checked)}
+                  className="h-4 w-4 rounded accent-violet-600"
+                />
+                本书自动分析词根（DeepSeek）
+              </label>
+
+              {!bookRootAnalysisEnabled ? (
+                <>
+                  <p className="mt-2 text-xs text-violet-700">
+                    已关闭：打开本书不会调用 API；已保存的词根仍可查看。
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => triggerBookRootEnrichment()}
+                    disabled={rootEnrich.running}
+                    className="mt-2 rounded-lg border border-violet-300 bg-white px-3 py-1.5 text-xs font-semibold text-violet-900 hover:bg-violet-100 disabled:opacity-50"
+                  >
+                    {rootEnrich.running ? '分析中…' : '手动分析缺失词'}
+                  </button>
+                  <p className="mt-2 text-xs text-violet-600">
+                    已保存 <span className="font-semibold">{rootCachedCount}</span> / {total} 词
+                  </p>
+                </>
+              ) : rootEnrich.running ? (
                 <>
                   <p className="text-sm font-medium text-violet-900">
                     DeepSeek 补全词根 {rootEnrich.done}/{rootEnrich.total}
