@@ -4,7 +4,7 @@
   "storageKey": "src:Yasi.md",
   "bookId": "import-1780133567508",
   "bookTitle": "",
-  "updatedAt": "2026-06-02T09:36:40.355Z",
+  "updatedAt": "2026-06-02T09:51:58.766Z",
   "words": {
     "provide insight into": {
       "gloss": "对……提供深入见解/洞察",
@@ -195548,6 +195548,3953 @@
         "注意拼写：opportunity 有两个 p 和两个 t；词根 port 意为“携带”，前缀 op- 表示“朝向”。"
       ],
       "insight": "想象船只在港口等待顺风（ob portum），就是好机会。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "volcanic eruption": {
+      "gloss": "火山喷发",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "volcan-（来自拉丁语 Vulcanus，火神）",
+      "suffixLine": "-ic（形容词后缀，…的）；eruption 来自 erupt（e-出 + rupt-断裂 + -ion名词后缀）",
+      "evolution": "火山（volcanic）的喷发（eruption）",
+      "parts": [],
+      "pieSummary": "无明确PIE来源；volcan-源自拉丁语Vulcanus；erupt源自PIE *rup-（打破）",
+      "family": [
+        {
+          "word": "volcano",
+          "pos": "n",
+          "zh": "火山",
+          "morphBreakdown": "volcan- + -o"
+        },
+        {
+          "word": "volatile",
+          "pos": "adj",
+          "zh": "易挥发的；不稳定的",
+          "morphBreakdown": "volat-（飞）+ -ile（形容词后缀）"
+        },
+        {
+          "word": "involve",
+          "pos": "v",
+          "zh": "涉及；包含",
+          "morphBreakdown": "in-（进入）+ volv-（卷）+ -e"
+        },
+        {
+          "word": "revulsion",
+          "pos": "n",
+          "zh": "厌恶；反感",
+          "morphBreakdown": "re-（回）+ vuls-（拉）+ -ion"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "volcano",
+          "pos": "n",
+          "zh": "火山",
+          "morphBreakdown": "volcan- + -o"
+        },
+        {
+          "word": "volatile",
+          "pos": "adj",
+          "zh": "易挥发的；不稳定的",
+          "morphBreakdown": "volat- + -ile"
+        },
+        {
+          "word": "volatility",
+          "pos": "n",
+          "zh": "挥发性；易变",
+          "morphBreakdown": "volatile + -ity"
+        },
+        {
+          "word": "involve",
+          "pos": "v",
+          "zh": "涉及；包含",
+          "morphBreakdown": "in- + volv- + -e"
+        },
+        {
+          "word": "involvement",
+          "pos": "n",
+          "zh": "参与；牵连",
+          "morphBreakdown": "involve + -ment"
+        },
+        {
+          "word": "evolve",
+          "pos": "v",
+          "zh": "进化；发展",
+          "morphBreakdown": "e-（出）+ volv-（卷）+ -e"
+        },
+        {
+          "word": "evolution",
+          "pos": "n",
+          "zh": "进化；演变",
+          "morphBreakdown": "evolve + -tion"
+        },
+        {
+          "word": "revolve",
+          "pos": "v",
+          "zh": "旋转；围绕",
+          "morphBreakdown": "re-（再）+ volv-（卷）+ -e"
+        },
+        {
+          "word": "revolution",
+          "pos": "n",
+          "zh": "革命；旋转",
+          "morphBreakdown": "revolve + -tion"
+        },
+        {
+          "word": "erupt",
+          "pos": "v",
+          "zh": "喷发；爆发",
+          "morphBreakdown": "e-（出）+ rupt-（断裂）"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "earthquake",
+          "pos": "n",
+          "zh": "地震"
+        },
+        {
+          "word": "tsunami",
+          "pos": "n",
+          "zh": "海啸"
+        },
+        {
+          "word": "magma",
+          "pos": "n",
+          "zh": "岩浆"
+        },
+        {
+          "word": "lava",
+          "pos": "n",
+          "zh": "熔岩"
+        },
+        {
+          "word": "ash",
+          "pos": "n",
+          "zh": "灰烬"
+        },
+        {
+          "word": "crater",
+          "pos": "n",
+          "zh": "火山口"
+        },
+        {
+          "word": "tectonic",
+          "pos": "adj",
+          "zh": "地壳构造的"
+        },
+        {
+          "word": "seismic",
+          "pos": "adj",
+          "zh": "地震的"
+        },
+        {
+          "word": "disaster",
+          "pos": "n",
+          "zh": "灾难"
+        },
+        {
+          "word": "evacuation",
+          "pos": "n",
+          "zh": "疏散"
+        },
+        {
+          "word": "hazard",
+          "pos": "n",
+          "zh": "危害"
+        },
+        {
+          "word": "mitigation",
+          "pos": "n",
+          "zh": "缓解"
+        }
+      ],
+      "themeTopic": "自然灾害·地质",
+      "themeSummary": "volcanic eruption 在雅思阅读/听力中常出现在地质、自然灾害主题，与地震、海啸、火山灰等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 volcanic 与 volcano 拼写区别；eruption 常与 volcanic 搭配。",
+        "volatile 虽与 volcanic 形似但词根不同（volat-飞 vs volcan-火山），但可联想火山喷发导致 volatile 环境。"
+      ],
+      "insight": "volcanic 与 volcano 同源，eruption 与 rupture（破裂）同根，想象火山破裂喷发。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "set up": {
+      "gloss": "建立",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "set（古英语 settan，意为“放置”，源自原始日耳曼语 *satjaną，源自 PIE *sod- “坐”）",
+      "suffixLine": "up 为小品词，非后缀",
+      "evolution": "字面义为“放置向上”，引申为“建立、设立”",
+      "parts": [],
+      "pieSummary": "PIE *sod- “坐”",
+      "family": [
+        {
+          "word": "set",
+          "pos": "other",
+          "zh": "放置；集合",
+          "morphBreakdown": "set"
+        },
+        {
+          "word": "set up shop",
+          "pos": "other",
+          "zh": "开店；开业",
+          "morphBreakdown": "set + up + shop"
+        },
+        {
+          "word": "set in",
+          "pos": "other",
+          "zh": "开始；到来",
+          "morphBreakdown": "set + in"
+        },
+        {
+          "word": "onset",
+          "pos": "n",
+          "zh": "开始；发作",
+          "morphBreakdown": "on + set"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "set",
+          "pos": "v",
+          "zh": "放置；设定",
+          "morphBreakdown": "set"
+        },
+        {
+          "word": "set",
+          "pos": "n",
+          "zh": "集合；一套",
+          "morphBreakdown": "set"
+        },
+        {
+          "word": "set up shop",
+          "pos": "other",
+          "zh": "开店；开业",
+          "morphBreakdown": "set + up + shop"
+        },
+        {
+          "word": "set in",
+          "pos": "other",
+          "zh": "开始；到来",
+          "morphBreakdown": "set + in"
+        },
+        {
+          "word": "onset",
+          "pos": "n",
+          "zh": "开始；发作",
+          "morphBreakdown": "on + set"
+        },
+        {
+          "word": "upset",
+          "pos": "v",
+          "zh": "打乱；使心烦",
+          "morphBreakdown": "up + set"
+        },
+        {
+          "word": "reset",
+          "pos": "v",
+          "zh": "重置",
+          "morphBreakdown": "re- + set"
+        },
+        {
+          "word": "subset",
+          "pos": "n",
+          "zh": "子集",
+          "morphBreakdown": "sub- + set"
+        },
+        {
+          "word": "settle",
+          "pos": "v",
+          "zh": "解决；定居",
+          "morphBreakdown": "set + -le（反复）"
+        },
+        {
+          "word": "settlement",
+          "pos": "n",
+          "zh": "定居点；解决",
+          "morphBreakdown": "settle + -ment"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "establish",
+          "pos": "v",
+          "zh": "建立"
+        },
+        {
+          "word": "found",
+          "pos": "v",
+          "zh": "创立"
+        },
+        {
+          "word": "launch",
+          "pos": "v",
+          "zh": "推出；发起"
+        },
+        {
+          "word": "start-up",
+          "pos": "n",
+          "zh": "初创公司"
+        },
+        {
+          "word": "enterprise",
+          "pos": "n",
+          "zh": "企业"
+        },
+        {
+          "word": "venture",
+          "pos": "n",
+          "zh": "风险项目"
+        },
+        {
+          "word": "organization",
+          "pos": "n",
+          "zh": "组织"
+        },
+        {
+          "word": "infrastructure",
+          "pos": "n",
+          "zh": "基础设施"
+        },
+        {
+          "word": "system",
+          "pos": "n",
+          "zh": "系统"
+        },
+        {
+          "word": "operation",
+          "pos": "n",
+          "zh": "运营"
+        },
+        {
+          "word": "manage",
+          "pos": "v",
+          "zh": "管理"
+        },
+        {
+          "word": "develop",
+          "pos": "v",
+          "zh": "发展"
+        }
+      ],
+      "themeTopic": "商业·创业",
+      "themeSummary": "该词常用于雅思写作或口语中描述创业、建立公司或系统，常与 business、company、system 等共现。",
+      "relatedNotes": [],
+      "tips": [
+        "set up 是短语动词，up 为副词，宾语为名词时可放中间或后面，代词必须放中间。"
+      ],
+      "insight": "想象把东西“放上去”就建立了",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "shop": {
+      "gloss": "店铺",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "古英语 scoppa '店铺'，源自原始日耳曼语 *skopp- '小棚屋'，可能与古英语 sceoppa '小室' 同源；PIE 来源不确定，可能为 *skep- '切割、覆盖'",
+      "suffixLine": "无",
+      "evolution": "原始日耳曼语 '小棚屋' → 古英语 '店铺' → 现代英语 '商店'",
+      "parts": [],
+      "pieSummary": "PIE *skep- '切割、覆盖'（不确定）",
+      "family": [
+        {
+          "word": "shopping",
+          "pos": "n",
+          "zh": "购物",
+          "morphBreakdown": "shop + -ing"
+        },
+        {
+          "word": "shopper",
+          "pos": "n",
+          "zh": "购物者",
+          "morphBreakdown": "shop + -er"
+        },
+        {
+          "word": "shopaholic",
+          "pos": "n",
+          "zh": "购物狂",
+          "morphBreakdown": "shop + -aholic"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "shop",
+          "pos": "n",
+          "zh": "店铺",
+          "morphBreakdown": "shop"
+        },
+        {
+          "word": "shop",
+          "pos": "v",
+          "zh": "购物",
+          "morphBreakdown": "shop"
+        },
+        {
+          "word": "shopping",
+          "pos": "n",
+          "zh": "购物",
+          "morphBreakdown": "shop + -ing"
+        },
+        {
+          "word": "shopper",
+          "pos": "n",
+          "zh": "购物者",
+          "morphBreakdown": "shop + -er"
+        },
+        {
+          "word": "shopaholic",
+          "pos": "n",
+          "zh": "购物狂",
+          "morphBreakdown": "shop + -aholic"
+        },
+        {
+          "word": "workshop",
+          "pos": "n",
+          "zh": "工坊；研讨会",
+          "morphBreakdown": "work + shop"
+        },
+        {
+          "word": "shopkeeper",
+          "pos": "n",
+          "zh": "店主",
+          "morphBreakdown": "shop + keeper"
+        },
+        {
+          "word": "shopfront",
+          "pos": "n",
+          "zh": "店面",
+          "morphBreakdown": "shop + front"
+        },
+        {
+          "word": "shopfloor",
+          "pos": "n",
+          "zh": "车间",
+          "morphBreakdown": "shop + floor"
+        },
+        {
+          "word": "shopwindow",
+          "pos": "n",
+          "zh": "橱窗",
+          "morphBreakdown": "shop + window"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "retail",
+          "pos": "n",
+          "zh": "零售"
+        },
+        {
+          "word": "customer",
+          "pos": "n",
+          "zh": "顾客"
+        },
+        {
+          "word": "purchase",
+          "pos": "v",
+          "zh": "购买"
+        },
+        {
+          "word": "discount",
+          "pos": "n",
+          "zh": "折扣"
+        },
+        {
+          "word": "bargain",
+          "pos": "n",
+          "zh": "便宜货"
+        },
+        {
+          "word": "mall",
+          "pos": "n",
+          "zh": "购物中心"
+        },
+        {
+          "word": "brand",
+          "pos": "n",
+          "zh": "品牌"
+        },
+        {
+          "word": "advertisement",
+          "pos": "n",
+          "zh": "广告"
+        },
+        {
+          "word": "consumer",
+          "pos": "n",
+          "zh": "消费者"
+        },
+        {
+          "word": "transaction",
+          "pos": "n",
+          "zh": "交易"
+        },
+        {
+          "word": "receipt",
+          "pos": "n",
+          "zh": "收据"
+        },
+        {
+          "word": "loyalty",
+          "pos": "n",
+          "zh": "忠诚度"
+        }
+      ],
+      "themeTopic": "商业·消费",
+      "themeSummary": "该词常出现在雅思听力Section 1（购物场景）、阅读关于零售业的文章，以及写作Task 1描述商业图表。同主题词包括零售、顾客、促销等。",
+      "relatedNotes": [],
+      "tips": [
+        "shop 作为动词时过去式为 shopped，现在分词 shopping。"
+      ],
+      "insight": "想象一个用木板搭成的小棚屋，就是最早的店铺。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "scour the area": {
+      "gloss": "搜查某地",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "scour < 拉丁语 excurare (ex- 'out' + curare 'to care for') < PIE *kʷes- 'to care, to heed'",
+      "suffixLine": "无",
+      "evolution": "原义为‘彻底清理、擦洗’，引申为‘仔细搜索、搜查’",
+      "parts": [],
+      "pieSummary": "PIE *kʷes- 'to care, to heed'",
+      "family": [
+        {
+          "word": "cure",
+          "pos": "v",
+          "zh": "治愈",
+          "morphBreakdown": "cure"
+        },
+        {
+          "word": "curious",
+          "pos": "adj",
+          "zh": "好奇的",
+          "morphBreakdown": "curi + -ous"
+        },
+        {
+          "word": "accurate",
+          "pos": "adj",
+          "zh": "准确的",
+          "morphBreakdown": "ac- + cur + -ate"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "scour",
+          "pos": "v",
+          "zh": "擦洗；搜索",
+          "morphBreakdown": "scour"
+        },
+        {
+          "word": "scourer",
+          "pos": "n",
+          "zh": "擦洗者；搜索者",
+          "morphBreakdown": "scour + -er"
+        },
+        {
+          "word": "cure",
+          "pos": "v",
+          "zh": "治愈",
+          "morphBreakdown": "cure"
+        },
+        {
+          "word": "curative",
+          "pos": "adj",
+          "zh": "治疗的",
+          "morphBreakdown": "cur + -ative"
+        },
+        {
+          "word": "curiosity",
+          "pos": "n",
+          "zh": "好奇心",
+          "morphBreakdown": "curi + -osity"
+        },
+        {
+          "word": "accurate",
+          "pos": "adj",
+          "zh": "准确的",
+          "morphBreakdown": "ac- + cur + -ate"
+        },
+        {
+          "word": "accuracy",
+          "pos": "n",
+          "zh": "准确性",
+          "morphBreakdown": "ac- + cur + -acy"
+        },
+        {
+          "word": "inaccurate",
+          "pos": "adj",
+          "zh": "不准确的",
+          "morphBreakdown": "in- + accurate"
+        },
+        {
+          "word": "procure",
+          "pos": "v",
+          "zh": "获得",
+          "morphBreakdown": "pro- + cure"
+        },
+        {
+          "word": "procurement",
+          "pos": "n",
+          "zh": "采购",
+          "morphBreakdown": "procure + -ment"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "crime",
+          "pos": "n",
+          "zh": "犯罪"
+        },
+        {
+          "word": "investigation",
+          "pos": "n",
+          "zh": "调查"
+        },
+        {
+          "word": "evidence",
+          "pos": "n",
+          "zh": "证据"
+        },
+        {
+          "word": "suspect",
+          "pos": "n",
+          "zh": "嫌疑犯"
+        },
+        {
+          "word": "witness",
+          "pos": "n",
+          "zh": "目击者"
+        },
+        {
+          "word": "search",
+          "pos": "v",
+          "zh": "搜索"
+        },
+        {
+          "word": "detective",
+          "pos": "n",
+          "zh": "侦探"
+        },
+        {
+          "word": "forensic",
+          "pos": "adj",
+          "zh": "法医的"
+        },
+        {
+          "word": "scene",
+          "pos": "n",
+          "zh": "现场"
+        },
+        {
+          "word": "clue",
+          "pos": "n",
+          "zh": "线索"
+        },
+        {
+          "word": "arrest",
+          "pos": "v",
+          "zh": "逮捕"
+        },
+        {
+          "word": "patrol",
+          "pos": "v",
+          "zh": "巡逻"
+        }
+      ],
+      "themeTopic": "犯罪·调查",
+      "themeSummary": "该词常用于雅思阅读或听力中描述警方或调查人员对区域进行彻底搜查的场景，常与 crime, investigation, evidence 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "scour 作‘搜索’时通常搭配 area, room, building 等表示地点的名词。",
+        "注意区分 scour (搜索) 与 score (得分)。"
+      ],
+      "insight": "scour 与 cure（治愈、照料）同源，想象‘像医生仔细检查一样搜索’",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "paradise lost": {
+      "gloss": "失乐园（专名）",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "paradise: 来自希腊语 paradeisos 'enclosed park, garden'，源自伊朗语 pairi-daeza 'walled garden'；lost: 来自古英语 losian 'perish, lose'，源自原始日耳曼语 *lausaz 'loose'",
+      "suffixLine": "无",
+      "evolution": "字面义为 'walled garden lost'，指人类失去伊甸园的乐园状态",
+      "parts": [],
+      "pieSummary": "paradise: 伊朗语 *pairi-daeza- 'walled garden'；lost: 原始印欧语 *leu- 'to loosen, divide'",
+      "family": [
+        {
+          "word": "paradise",
+          "pos": "n",
+          "zh": "天堂，乐园",
+          "morphBreakdown": "paradeisos"
+        },
+        {
+          "word": "lose",
+          "pos": "v",
+          "zh": "失去，丢失",
+          "morphBreakdown": "losian"
+        },
+        {
+          "word": "loss",
+          "pos": "n",
+          "zh": "损失，丧失",
+          "morphBreakdown": "los + -s"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "paradise",
+          "pos": "n",
+          "zh": "天堂，乐园",
+          "morphBreakdown": "希腊语 paradeisos"
+        },
+        {
+          "word": "paradisiacal",
+          "pos": "adj",
+          "zh": "天堂般的，极乐的",
+          "morphBreakdown": "paradise + -iacal"
+        },
+        {
+          "word": "lose",
+          "pos": "v",
+          "zh": "失去，丢失",
+          "morphBreakdown": "古英语 losian"
+        },
+        {
+          "word": "loss",
+          "pos": "n",
+          "zh": "损失，丧失",
+          "morphBreakdown": "lose 的名词形式"
+        },
+        {
+          "word": "lost",
+          "pos": "adj",
+          "zh": "丢失的，迷失的",
+          "morphBreakdown": "lose 的过去分词"
+        },
+        {
+          "word": "loser",
+          "pos": "n",
+          "zh": "失败者，输家",
+          "morphBreakdown": "lose + -er"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "epic",
+          "pos": "n",
+          "zh": "史诗"
+        },
+        {
+          "word": "fall",
+          "pos": "n",
+          "zh": "堕落"
+        },
+        {
+          "word": "redemption",
+          "pos": "n",
+          "zh": "救赎"
+        },
+        {
+          "word": "sin",
+          "pos": "n",
+          "zh": "罪"
+        },
+        {
+          "word": "temptation",
+          "pos": "n",
+          "zh": "诱惑"
+        },
+        {
+          "word": "expulsion",
+          "pos": "n",
+          "zh": "驱逐"
+        },
+        {
+          "word": "innocence",
+          "pos": "n",
+          "zh": "天真，无辜"
+        },
+        {
+          "word": "knowledge",
+          "pos": "n",
+          "zh": "知识"
+        },
+        {
+          "word": "tree of life",
+          "pos": "n",
+          "zh": "生命树"
+        },
+        {
+          "word": "serpent",
+          "pos": "n",
+          "zh": "蛇"
+        }
+      ],
+      "themeTopic": "文学·宗教·神话",
+      "themeSummary": "该词常出现在雅思阅读关于文学经典、宗教史诗或神话主题的文章中，与堕落、救赎、原罪等概念共现。",
+      "relatedNotes": [],
+      "tips": [
+        "Paradise Lost 是弥尔顿的史诗，专有名词，首字母大写；注意 paradise 与 lost 各自词源不同，但组合后成为固定短语。"
+      ],
+      "insight": "paradise 原指波斯式围墙花园，后引申为天堂；lost 强调失去、迷失，与乐园的完美形成对比",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "a spike in … …": {
+      "gloss": "的激增",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "spike < 古诺斯语 spík (钉子) < 原始日耳曼语 *spīkō (尖刺) < PIE *spei- (尖的)",
+      "suffixLine": "无",
+      "evolution": "原指尖头物体，引申为急剧上升的尖峰，再转为名词表示激增",
+      "parts": [],
+      "pieSummary": "PIE *spei- (尖的)",
+      "family": [
+        {
+          "word": "spike",
+          "pos": "n",
+          "zh": "尖刺",
+          "morphBreakdown": "spike"
+        },
+        {
+          "word": "spiky",
+          "pos": "adj",
+          "zh": "尖的",
+          "morphBreakdown": "spike + -y"
+        },
+        {
+          "word": "spikelet",
+          "pos": "n",
+          "zh": "小穗",
+          "morphBreakdown": "spike + -let"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "spike",
+          "pos": "n",
+          "zh": "尖峰；激增",
+          "morphBreakdown": "spike"
+        },
+        {
+          "word": "spike",
+          "pos": "v",
+          "zh": "急剧上升",
+          "morphBreakdown": "spike"
+        },
+        {
+          "word": "spiked",
+          "pos": "adj",
+          "zh": "有尖刺的；激增的",
+          "morphBreakdown": "spike + -ed"
+        },
+        {
+          "word": "spiking",
+          "pos": "n",
+          "zh": "激增",
+          "morphBreakdown": "spike + -ing"
+        },
+        {
+          "word": "spiky",
+          "pos": "adj",
+          "zh": "尖的；易怒的",
+          "morphBreakdown": "spike + -y"
+        },
+        {
+          "word": "spikelet",
+          "pos": "n",
+          "zh": "小穗",
+          "morphBreakdown": "spike + -let"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "surge",
+          "pos": "other",
+          "zh": "激增"
+        },
+        {
+          "word": "soar",
+          "pos": "v",
+          "zh": "飙升"
+        },
+        {
+          "word": "plummet",
+          "pos": "v",
+          "zh": "暴跌"
+        },
+        {
+          "word": "fluctuate",
+          "pos": "v",
+          "zh": "波动"
+        },
+        {
+          "word": "peak",
+          "pos": "other",
+          "zh": "峰值"
+        },
+        {
+          "word": "dip",
+          "pos": "other",
+          "zh": "下降"
+        },
+        {
+          "word": "rise",
+          "pos": "v",
+          "zh": "上升"
+        },
+        {
+          "word": "decline",
+          "pos": "other",
+          "zh": "下降"
+        },
+        {
+          "word": "steady",
+          "pos": "adj",
+          "zh": "稳定的"
+        },
+        {
+          "word": "sharp",
+          "pos": "adj",
+          "zh": "急剧的"
+        },
+        {
+          "word": "significant",
+          "pos": "adj",
+          "zh": "显著的"
+        },
+        {
+          "word": "dramatic",
+          "pos": "adj",
+          "zh": "戏剧性的"
+        }
+      ],
+      "themeTopic": "数据变化·趋势",
+      "themeSummary": "该词常用于雅思写作Task1描述图表中的急剧上升，与surge、soar、plummet等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 spike 作动词时是不及物动词，常与 in 连用表示在某方面的激增。"
+      ],
+      "insight": "想象图表上像钉子一样突然上升的曲线，就是 spike。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "knock sb. out": {
+      "gloss": "击昏某人",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "knock 来自古英语 cnocian，拟声词，模拟敲击声；无印欧语词根",
+      "suffixLine": "无",
+      "evolution": "knock 原指敲击，out 表示“出、失去”，组合字面义“敲出去”，引申为“击倒至昏迷”",
+      "parts": [],
+      "family": [
+        {
+          "word": "knock",
+          "pos": "v",
+          "zh": "敲击",
+          "morphBreakdown": "knock"
+        },
+        {
+          "word": "knockdown",
+          "pos": "n",
+          "zh": "击倒",
+          "morphBreakdown": "knock + down"
+        },
+        {
+          "word": "knockout",
+          "pos": "n",
+          "zh": "击倒（拳击）",
+          "morphBreakdown": "knock + out"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "knock",
+          "pos": "v",
+          "zh": "敲，击",
+          "morphBreakdown": "knock"
+        },
+        {
+          "word": "knocker",
+          "pos": "n",
+          "zh": "门环",
+          "morphBreakdown": "knock + -er"
+        },
+        {
+          "word": "knockout",
+          "pos": "n",
+          "zh": "击倒；淘汰赛",
+          "morphBreakdown": "knock + out"
+        },
+        {
+          "word": "knockdown",
+          "pos": "adj",
+          "zh": "可拆卸的；击倒的",
+          "morphBreakdown": "knock + down"
+        },
+        {
+          "word": "knock-on",
+          "pos": "adj",
+          "zh": "连锁的",
+          "morphBreakdown": "knock + on"
+        },
+        {
+          "word": "knockoff",
+          "pos": "n",
+          "zh": "仿冒品",
+          "morphBreakdown": "knock + off"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "boxing",
+          "pos": "n",
+          "zh": "拳击"
+        },
+        {
+          "word": "punch",
+          "pos": "v",
+          "zh": "用拳猛击"
+        },
+        {
+          "word": "opponent",
+          "pos": "n",
+          "zh": "对手"
+        },
+        {
+          "word": "referee",
+          "pos": "n",
+          "zh": "裁判"
+        },
+        {
+          "word": "round",
+          "pos": "n",
+          "zh": "回合"
+        },
+        {
+          "word": "knockdown",
+          "pos": "n",
+          "zh": "击倒"
+        },
+        {
+          "word": "unconscious",
+          "pos": "adj",
+          "zh": "失去知觉的"
+        },
+        {
+          "word": "injury",
+          "pos": "n",
+          "zh": "受伤"
+        },
+        {
+          "word": "competition",
+          "pos": "n",
+          "zh": "比赛"
+        },
+        {
+          "word": "athlete",
+          "pos": "n",
+          "zh": "运动员"
+        }
+      ],
+      "themeTopic": "体育·竞技",
+      "themeSummary": "该词常用于雅思听力或阅读中关于拳击、体育比赛或意外事故的场景，描述选手被击倒或失去意识。",
+      "relatedNotes": [],
+      "tips": [
+        "knock sb. out 是动词短语，out 为副词；注意与 knockout（名词）区分。"
+      ],
+      "insight": "knock 是拟声词，想象敲门声“咚咚”，out 表示“出局”，组合即“敲出局”",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "cannot be overlooked": {
+      "gloss": "不可忽视",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "overlook 由 over-（在…之上）+ look（看）构成；cannot be overlooked 为短语，非单一词",
+      "suffixLine": "无",
+      "evolution": "字面义为“不能被忽视”，由“看过去”引申为“忽略”",
+      "parts": [],
+      "family": [
+        {
+          "word": "overlook",
+          "pos": "v",
+          "zh": "忽视",
+          "morphBreakdown": "over- + look"
+        },
+        {
+          "word": "lookout",
+          "pos": "n",
+          "zh": "瞭望台",
+          "morphBreakdown": "look + out"
+        },
+        {
+          "word": "lookalike",
+          "pos": "n",
+          "zh": "极相似的人或物",
+          "morphBreakdown": "look + alike"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "neglect",
+          "pos": "v",
+          "zh": "忽视",
+          "morphBreakdown": "neg-（不）+ lect（收集）"
+        },
+        {
+          "word": "negligence",
+          "pos": "n",
+          "zh": "疏忽",
+          "morphBreakdown": "neg- + lig（选择）+ -ence"
+        },
+        {
+          "word": "negligible",
+          "pos": "adj",
+          "zh": "可忽略的",
+          "morphBreakdown": "neg- + lig + -ible"
+        },
+        {
+          "word": "ignore",
+          "pos": "v",
+          "zh": "忽视",
+          "morphBreakdown": "ig-（不）+ gnore（知道）"
+        },
+        {
+          "word": "ignorance",
+          "pos": "n",
+          "zh": "无知",
+          "morphBreakdown": "ig- + gnore + -ance"
+        },
+        {
+          "word": "ignorant",
+          "pos": "adj",
+          "zh": "无知的",
+          "morphBreakdown": "ig- + gnore + -ant"
+        },
+        {
+          "word": "overlook",
+          "pos": "v",
+          "zh": "忽视",
+          "morphBreakdown": "over- + look"
+        },
+        {
+          "word": "oversight",
+          "pos": "n",
+          "zh": "疏忽",
+          "morphBreakdown": "over- + sight"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "address",
+          "pos": "v",
+          "zh": "解决"
+        },
+        {
+          "word": "tackle",
+          "pos": "v",
+          "zh": "处理"
+        },
+        {
+          "word": "crucial",
+          "pos": "adj",
+          "zh": "关键的"
+        },
+        {
+          "word": "significant",
+          "pos": "adj",
+          "zh": "重要的"
+        },
+        {
+          "word": "issue",
+          "pos": "n",
+          "zh": "问题"
+        },
+        {
+          "word": "factor",
+          "pos": "n",
+          "zh": "因素"
+        },
+        {
+          "word": "impact",
+          "pos": "n",
+          "zh": "影响"
+        },
+        {
+          "word": "consequence",
+          "pos": "n",
+          "zh": "后果"
+        },
+        {
+          "word": "awareness",
+          "pos": "n",
+          "zh": "意识"
+        },
+        {
+          "word": "priority",
+          "pos": "n",
+          "zh": "优先事项"
+        }
+      ],
+      "themeTopic": "社会·问题与对策",
+      "themeSummary": "该短语常用于雅思写作Task2讨论社会问题时，强调某因素的重要性不可忽视，常与address, tackle, crucial等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "cannot be overlooked 是固定短语，常用于强调语气；注意与 cannot be ignored 同义。"
+      ],
+      "insight": "overlook 字面“从上面看”，容易漏掉细节；否定式强调重要性",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "impact crater": {
+      "gloss": "撞击坑",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "impact: im- (向内) + pact (来自拉丁语 pangere '固定，打击'，PIE *pag- '固定')；crater: 来自拉丁语 crater '碗，火山口'，源自希腊语 krater '混合碗'，PIE *kere- '混合'",
+      "suffixLine": "无",
+      "evolution": "impact crater 字面意为 '打击形成的碗状凹陷'，即天体撞击行星表面形成的坑。",
+      "parts": [],
+      "pieSummary": "impact: PIE *pag- '固定'；crater: PIE *kere- '混合'",
+      "family": [
+        {
+          "word": "impact",
+          "pos": "other",
+          "zh": "冲击，影响",
+          "morphBreakdown": "im- + pact"
+        },
+        {
+          "word": "crater",
+          "pos": "n",
+          "zh": "火山口，坑",
+          "morphBreakdown": "crater"
+        },
+        {
+          "word": "compact",
+          "pos": "adj",
+          "zh": "紧凑的，压紧",
+          "morphBreakdown": "com- + pact"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "impact",
+          "pos": "other",
+          "zh": "冲击，影响",
+          "morphBreakdown": "im- + pact"
+        },
+        {
+          "word": "impaction",
+          "pos": "n",
+          "zh": "嵌塞，撞击",
+          "morphBreakdown": "impact + -ion"
+        },
+        {
+          "word": "impactful",
+          "pos": "adj",
+          "zh": "有影响力的",
+          "morphBreakdown": "impact + -ful"
+        },
+        {
+          "word": "compact",
+          "pos": "adj",
+          "zh": "紧凑的，压紧",
+          "morphBreakdown": "com- + pact"
+        },
+        {
+          "word": "compaction",
+          "pos": "n",
+          "zh": "压实，压缩",
+          "morphBreakdown": "compact + -ion"
+        },
+        {
+          "word": "pact",
+          "pos": "n",
+          "zh": "协定，公约",
+          "morphBreakdown": "pact"
+        },
+        {
+          "word": "crater",
+          "pos": "n",
+          "zh": "火山口，坑",
+          "morphBreakdown": "crater"
+        },
+        {
+          "word": "cratered",
+          "pos": "adj",
+          "zh": "有坑的",
+          "morphBreakdown": "crater + -ed"
+        },
+        {
+          "word": "cratering",
+          "pos": "n",
+          "zh": "形成坑",
+          "morphBreakdown": "crater + -ing"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "meteorite",
+          "pos": "n",
+          "zh": "陨石"
+        },
+        {
+          "word": "asteroid",
+          "pos": "n",
+          "zh": "小行星"
+        },
+        {
+          "word": "comet",
+          "pos": "n",
+          "zh": "彗星"
+        },
+        {
+          "word": "crater",
+          "pos": "n",
+          "zh": "坑"
+        },
+        {
+          "word": "surface",
+          "pos": "n",
+          "zh": "表面"
+        },
+        {
+          "word": "geology",
+          "pos": "n",
+          "zh": "地质学"
+        },
+        {
+          "word": "terrestrial",
+          "pos": "adj",
+          "zh": "地球的"
+        },
+        {
+          "word": "lunar",
+          "pos": "adj",
+          "zh": "月球的"
+        },
+        {
+          "word": "impact",
+          "pos": "other",
+          "zh": "撞击"
+        },
+        {
+          "word": "debris",
+          "pos": "n",
+          "zh": "碎片"
+        },
+        {
+          "word": "erosion",
+          "pos": "n",
+          "zh": "侵蚀"
+        },
+        {
+          "word": "formation",
+          "pos": "n",
+          "zh": "形成"
+        }
+      ],
+      "themeTopic": "天文学·行星地质",
+      "themeSummary": "该词常出现在雅思阅读关于太阳系形成、月球表面特征或陨石撞击的学术文章中，常与meteorite、asteroid、surface、geology等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "impact crater 是复合名词，两个词分别有独立词源；注意 impact 作动词时重音在第二音节。"
+      ],
+      "insight": "想象一颗陨石以巨大冲击力（impact）撞击地面，留下一个碗状（crater）的坑。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "eroded": {
+      "gloss": "被侵蚀的",
+      "morphKind": "classical",
+      "prefixLine": "e- (ex- 变体) 表示「出，向外」",
+      "rootLine": "rod (拉丁语 rodere '咬'，PIE *red- '咬，啃')",
+      "suffixLine": "-ed 形容词后缀，表示「被…的」",
+      "evolution": "e- (向外) + rod (咬) + -ed (被) → 被咬掉的 → 被侵蚀的",
+      "parts": [],
+      "pieSummary": "PIE *red- '咬，啃'",
+      "family": [
+        {
+          "word": "erode",
+          "pos": "v",
+          "zh": "侵蚀",
+          "morphBreakdown": "e- + rode"
+        },
+        {
+          "word": "erosion",
+          "pos": "n",
+          "zh": "侵蚀",
+          "morphBreakdown": "e- + ros + -ion"
+        },
+        {
+          "word": "corrode",
+          "pos": "v",
+          "zh": "腐蚀",
+          "morphBreakdown": "cor- + rode"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "erode",
+          "pos": "v",
+          "zh": "侵蚀",
+          "morphBreakdown": "e- + rode"
+        },
+        {
+          "word": "erosion",
+          "pos": "n",
+          "zh": "侵蚀",
+          "morphBreakdown": "e- + ros + -ion"
+        },
+        {
+          "word": "erosive",
+          "pos": "adj",
+          "zh": "侵蚀性的",
+          "morphBreakdown": "e- + ros + -ive"
+        },
+        {
+          "word": "corrode",
+          "pos": "v",
+          "zh": "腐蚀",
+          "morphBreakdown": "cor- + rode"
+        },
+        {
+          "word": "corrosion",
+          "pos": "n",
+          "zh": "腐蚀",
+          "morphBreakdown": "cor- + ros + -ion"
+        },
+        {
+          "word": "corrosive",
+          "pos": "adj",
+          "zh": "腐蚀性的",
+          "morphBreakdown": "cor- + ros + -ive"
+        },
+        {
+          "word": "rodent",
+          "pos": "n",
+          "zh": "啮齿动物",
+          "morphBreakdown": "rod + -ent"
+        },
+        {
+          "word": "abrade",
+          "pos": "v",
+          "zh": "磨损",
+          "morphBreakdown": "ab- + rade (rod变体)"
+        },
+        {
+          "word": "abrasion",
+          "pos": "n",
+          "zh": "磨损",
+          "morphBreakdown": "ab- + ras + -ion"
+        },
+        {
+          "word": "abrasive",
+          "pos": "adj",
+          "zh": "磨损的",
+          "morphBreakdown": "ab- + ras + -ive"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "weathering",
+          "pos": "n",
+          "zh": "风化"
+        },
+        {
+          "word": "sediment",
+          "pos": "n",
+          "zh": "沉积物"
+        },
+        {
+          "word": "deposition",
+          "pos": "n",
+          "zh": "沉积"
+        },
+        {
+          "word": "landslide",
+          "pos": "n",
+          "zh": "山体滑坡"
+        },
+        {
+          "word": "deforestation",
+          "pos": "n",
+          "zh": "森林砍伐"
+        },
+        {
+          "word": "desertification",
+          "pos": "n",
+          "zh": "荒漠化"
+        },
+        {
+          "word": "glacier",
+          "pos": "n",
+          "zh": "冰川"
+        },
+        {
+          "word": "coastal",
+          "pos": "adj",
+          "zh": "沿海的"
+        },
+        {
+          "word": "topsoil",
+          "pos": "n",
+          "zh": "表土"
+        },
+        {
+          "word": "runoff",
+          "pos": "n",
+          "zh": "径流"
+        }
+      ],
+      "themeTopic": "环境·地质",
+      "themeSummary": "该词常见于雅思阅读中关于地质变迁、海岸线变化、土壤流失等话题，常与 weathering, sediment, deposition 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 eroded 是形容词，动词原形 erode；名词 erosion 更常见于学术写作。"
+      ],
+      "insight": "想象岩石被水「咬」掉一块，就是侵蚀。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "on the other hand": {
+      "gloss": "另一方面",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "无（短语由多个独立词构成）",
+      "suffixLine": "无",
+      "evolution": "无（短语整体表示对比或转折）",
+      "parts": [],
+      "family": [],
+      "derivatives": [],
+      "themeWords": [
+        {
+          "word": "however",
+          "pos": "adv",
+          "zh": "然而"
+        },
+        {
+          "word": "nevertheless",
+          "pos": "adv",
+          "zh": "尽管如此"
+        },
+        {
+          "word": "nonetheless",
+          "pos": "adv",
+          "zh": "尽管如此"
+        },
+        {
+          "word": "conversely",
+          "pos": "adv",
+          "zh": "相反地"
+        },
+        {
+          "word": "in contrast",
+          "pos": "other",
+          "zh": "相比之下"
+        },
+        {
+          "word": "on the contrary",
+          "pos": "adj",
+          "zh": "正相反"
+        },
+        {
+          "word": "alternatively",
+          "pos": "adv",
+          "zh": "或者"
+        },
+        {
+          "word": "whereas",
+          "pos": "other",
+          "zh": "然而"
+        },
+        {
+          "word": "while",
+          "pos": "other",
+          "zh": "虽然"
+        },
+        {
+          "word": "although",
+          "pos": "other",
+          "zh": "尽管"
+        },
+        {
+          "word": "despite",
+          "pos": "other",
+          "zh": "尽管"
+        },
+        {
+          "word": "in spite of",
+          "pos": "other",
+          "zh": "尽管"
+        }
+      ],
+      "themeTopic": "议论文·对比转折",
+      "themeSummary": "该短语常用于雅思写作Task 2中引出相反观点或补充论证，常与表示对比、让步、补充的词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "该短语为固定搭配，不可拆分理解。"
+      ],
+      "insight": "记住这个短语用于引出对立观点或补充说明，在议论文写作中很常用。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "tectonic shift": {
+      "gloss": "结构性巨变（比喻）",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "tecton- (希腊语 tekton '建造者'，PIE *teks- '编织'，引申为'建造')",
+      "suffixLine": "-ic (形容词后缀，'...的')；shift 为独立词，不拆解",
+      "evolution": "tectonic 原指'建造的'，地质学中引申为'地壳构造的'；tectonic shift 字面为'地壳板块移动'，比喻为'根本性变革'。",
+      "parts": [],
+      "pieSummary": "PIE *teks- '编织'，引申为'建造'；同源词包括 text, context, texture, architect, technology 等。",
+      "family": [
+        {
+          "word": "tectonic",
+          "pos": "adj",
+          "zh": "地壳构造的；巨大的",
+          "morphBreakdown": "tecton- + -ic"
+        },
+        {
+          "word": "tectonics",
+          "pos": "n",
+          "zh": "构造地质学",
+          "morphBreakdown": "tecton- + -ics"
+        },
+        {
+          "word": "architect",
+          "pos": "n",
+          "zh": "建筑师",
+          "morphBreakdown": "archi- (首要) + tecton- (建造者)"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "tectonic",
+          "pos": "adj",
+          "zh": "地壳构造的；巨大的",
+          "morphBreakdown": "tecton- + -ic"
+        },
+        {
+          "word": "tectonics",
+          "pos": "n",
+          "zh": "构造地质学",
+          "morphBreakdown": "tecton- + -ics"
+        },
+        {
+          "word": "architect",
+          "pos": "n",
+          "zh": "建筑师",
+          "morphBreakdown": "archi- + tecton-"
+        },
+        {
+          "word": "architecture",
+          "pos": "n",
+          "zh": "建筑学；结构",
+          "morphBreakdown": "archi- + tecton- + -ure"
+        },
+        {
+          "word": "text",
+          "pos": "n",
+          "zh": "文本",
+          "morphBreakdown": "text- (编织的产物)"
+        },
+        {
+          "word": "context",
+          "pos": "n",
+          "zh": "上下文；背景",
+          "morphBreakdown": "con- + text"
+        },
+        {
+          "word": "texture",
+          "pos": "n",
+          "zh": "质地；纹理",
+          "morphBreakdown": "text- + -ure"
+        },
+        {
+          "word": "technology",
+          "pos": "n",
+          "zh": "技术",
+          "morphBreakdown": "techno- (技艺) + -logy"
+        },
+        {
+          "word": "technical",
+          "pos": "adj",
+          "zh": "技术的",
+          "morphBreakdown": "techn- + -ical"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "tectonic plates",
+          "pos": "n",
+          "zh": "地壳板块"
+        },
+        {
+          "word": "earthquake",
+          "pos": "n",
+          "zh": "地震"
+        },
+        {
+          "word": "volcanic",
+          "pos": "adj",
+          "zh": "火山的"
+        },
+        {
+          "word": "erosion",
+          "pos": "n",
+          "zh": "侵蚀"
+        },
+        {
+          "word": "continental drift",
+          "pos": "n",
+          "zh": "大陆漂移"
+        },
+        {
+          "word": "seismic",
+          "pos": "adj",
+          "zh": "地震的"
+        },
+        {
+          "word": "fault line",
+          "pos": "n",
+          "zh": "断层线"
+        },
+        {
+          "word": "subduction",
+          "pos": "n",
+          "zh": "俯冲"
+        },
+        {
+          "word": "magnitude",
+          "pos": "n",
+          "zh": "震级；巨大"
+        },
+        {
+          "word": "transform",
+          "pos": "v",
+          "zh": "转变"
+        },
+        {
+          "word": "cataclysmic",
+          "pos": "adj",
+          "zh": "灾难性的"
+        },
+        {
+          "word": "upheaval",
+          "pos": "n",
+          "zh": "剧变"
+        }
+      ],
+      "themeTopic": "地质·环境变化",
+      "themeSummary": "该词常用于雅思阅读中讨论地质活动（如板块构造、地震）或比喻社会/经济/科技的剧烈变革。常与 tectonic plates, earthquake, volcanic, shift, transformation 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "tectonic 与 text 同源，都来自 PIE *teks- '编织'，可联想'编织'→'建造'→'构造'。",
+        "tectonic shift 在雅思写作中可用于描述社会变革（如 technological tectonic shift）。"
+      ],
+      "insight": "想象地壳板块（tectonic plates）移动造成地震，比喻社会或思想的巨大变革。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "mis-": {
+      "gloss": "错误…",
+      "morphKind": "classical",
+      "prefixLine": "mis-：来自古英语 mis-（错误地，坏地），与古高地德语 missa-、哥特语 missa- 同源，源自原始日耳曼语 *missa-（改变，偏离），最终源自 PIE *mit-to-（交换，改变）。",
+      "rootLine": "无独立词根，mis- 本身为前缀。",
+      "suffixLine": "无",
+      "evolution": "mis- 原义为“改变、偏离”，引申为“错误地、坏地”，作为前缀加于动词或名词前表示否定或错误。",
+      "parts": [],
+      "pieSummary": "PIE *mit-to-（交换，改变）",
+      "family": [
+        {
+          "word": "mislead",
+          "pos": "v",
+          "zh": "误导",
+          "morphBreakdown": "mis- + lead"
+        },
+        {
+          "word": "misunderstand",
+          "pos": "v",
+          "zh": "误解",
+          "morphBreakdown": "mis- + understand"
+        },
+        {
+          "word": "misuse",
+          "pos": "v",
+          "zh": "误用",
+          "morphBreakdown": "mis- + use"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "misinterpret",
+          "pos": "v",
+          "zh": "曲解",
+          "morphBreakdown": "mis- + interpret"
+        },
+        {
+          "word": "misconception",
+          "pos": "n",
+          "zh": "误解",
+          "morphBreakdown": "mis- + conception"
+        },
+        {
+          "word": "miscalculate",
+          "pos": "v",
+          "zh": "误算",
+          "morphBreakdown": "mis- + calculate"
+        },
+        {
+          "word": "misconduct",
+          "pos": "n",
+          "zh": "不当行为",
+          "morphBreakdown": "mis- + conduct"
+        },
+        {
+          "word": "misdiagnose",
+          "pos": "v",
+          "zh": "误诊",
+          "morphBreakdown": "mis- + diagnose"
+        },
+        {
+          "word": "misfortune",
+          "pos": "n",
+          "zh": "不幸",
+          "morphBreakdown": "mis- + fortune"
+        },
+        {
+          "word": "misguided",
+          "pos": "adj",
+          "zh": "被误导的",
+          "morphBreakdown": "mis- + guided"
+        },
+        {
+          "word": "misleading",
+          "pos": "adj",
+          "zh": "误导性的",
+          "morphBreakdown": "mis- + leading"
+        },
+        {
+          "word": "misplace",
+          "pos": "v",
+          "zh": "放错地方",
+          "morphBreakdown": "mis- + place"
+        },
+        {
+          "word": "misprint",
+          "pos": "n",
+          "zh": "印刷错误",
+          "morphBreakdown": "mis- + print"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "error",
+          "pos": "n",
+          "zh": "错误"
+        },
+        {
+          "word": "fault",
+          "pos": "n",
+          "zh": "过错"
+        },
+        {
+          "word": "flaw",
+          "pos": "n",
+          "zh": "缺陷"
+        },
+        {
+          "word": "inaccuracy",
+          "pos": "n",
+          "zh": "不准确"
+        },
+        {
+          "word": "mistake",
+          "pos": "n",
+          "zh": "错误"
+        },
+        {
+          "word": "misunderstanding",
+          "pos": "n",
+          "zh": "误解"
+        },
+        {
+          "word": "misinterpretation",
+          "pos": "n",
+          "zh": "曲解"
+        },
+        {
+          "word": "misconception",
+          "pos": "n",
+          "zh": "错误观念"
+        },
+        {
+          "word": "misjudge",
+          "pos": "v",
+          "zh": "误判"
+        },
+        {
+          "word": "mislead",
+          "pos": "v",
+          "zh": "误导"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "mis- 前缀常出现在雅思阅读和写作中，用于描述错误、误解或不当行为，常见于学术讨论、研究报告或社会问题分析。",
+      "relatedNotes": [],
+      "tips": [
+        "mis- 是常见否定前缀，与 un-、dis- 不同，mis- 强调“错误地”而非“相反”。"
+      ],
+      "insight": "mis- 像“迷思”，让你偏离正确方向。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "date": {
+      "gloss": "标注日期",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "拉丁语 dare \"给\" → PIE *deh₃- \"给\"",
+      "suffixLine": "无",
+      "evolution": "拉丁语 data (被给予的) 指信件写下的日期，后泛指日期",
+      "parts": [],
+      "pieSummary": "PIE *deh₃- \"给\"",
+      "family": [
+        {
+          "word": "data",
+          "pos": "n",
+          "zh": "数据",
+          "morphBreakdown": "dat + -a (复数)"
+        },
+        {
+          "word": "datum",
+          "pos": "n",
+          "zh": "数据点",
+          "morphBreakdown": "dat + -um (单数)"
+        },
+        {
+          "word": "mandate",
+          "pos": "v",
+          "zh": "授权",
+          "morphBreakdown": "man- (手) + date"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "date",
+          "pos": "n",
+          "zh": "日期",
+          "morphBreakdown": "date"
+        },
+        {
+          "word": "date",
+          "pos": "v",
+          "zh": "标注日期",
+          "morphBreakdown": "date"
+        },
+        {
+          "word": "dated",
+          "pos": "adj",
+          "zh": "过时的",
+          "morphBreakdown": "date + -ed"
+        },
+        {
+          "word": "dating",
+          "pos": "n",
+          "zh": "约会；测年",
+          "morphBreakdown": "date + -ing"
+        },
+        {
+          "word": "predate",
+          "pos": "v",
+          "zh": "早于",
+          "morphBreakdown": "pre- (前) + date"
+        },
+        {
+          "word": "postdate",
+          "pos": "v",
+          "zh": "填迟日期",
+          "morphBreakdown": "post- (后) + date"
+        },
+        {
+          "word": "update",
+          "pos": "v",
+          "zh": "更新",
+          "morphBreakdown": "up- (向上) + date"
+        },
+        {
+          "word": "outdate",
+          "pos": "v",
+          "zh": "使过时",
+          "morphBreakdown": "out- (超出) + date"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "timeline",
+          "pos": "n",
+          "zh": "时间线"
+        },
+        {
+          "word": "period",
+          "pos": "n",
+          "zh": "时期"
+        },
+        {
+          "word": "era",
+          "pos": "n",
+          "zh": "时代"
+        },
+        {
+          "word": "century",
+          "pos": "n",
+          "zh": "世纪"
+        },
+        {
+          "word": "decade",
+          "pos": "n",
+          "zh": "十年"
+        },
+        {
+          "word": "chronology",
+          "pos": "n",
+          "zh": "年代学"
+        },
+        {
+          "word": "ancient",
+          "pos": "adj",
+          "zh": "古代的"
+        },
+        {
+          "word": "contemporary",
+          "pos": "adj",
+          "zh": "当代的"
+        },
+        {
+          "word": "subsequent",
+          "pos": "adj",
+          "zh": "随后的"
+        },
+        {
+          "word": "precede",
+          "pos": "v",
+          "zh": "先于"
+        },
+        {
+          "word": "succeed",
+          "pos": "v",
+          "zh": "继任"
+        },
+        {
+          "word": "duration",
+          "pos": "n",
+          "zh": "持续时间"
+        }
+      ],
+      "themeTopic": "时间·历史",
+      "themeSummary": "date 在雅思中常出现在时间描述、历史事件、考古学等场景，常与 timeline, period, era 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 date 作动词时\"标注日期\"与\"约会\"含义不同，但词源相同。"
+      ],
+      "insight": "date 本义是\"被给予的\"，即信件上写下的日期，联想\"给予时间\"",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "dating": {
+      "gloss": "年代测定",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "dat-（拉丁语 dare '给'，PIE *deh₃- '给'）",
+      "suffixLine": "-ing（动名词后缀）",
+      "evolution": "date（日期/年代）+ -ing → 测定年代的行为",
+      "parts": [],
+      "pieSummary": "PIE *deh₃- '给'",
+      "family": [
+        {
+          "word": "date",
+          "pos": "n",
+          "zh": "日期；约会",
+          "morphBreakdown": "dat + -e"
+        },
+        {
+          "word": "data",
+          "pos": "n",
+          "zh": "数据",
+          "morphBreakdown": "dat + -a（复数）"
+        },
+        {
+          "word": "datum",
+          "pos": "n",
+          "zh": "数据点",
+          "morphBreakdown": "dat + -um"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "date",
+          "pos": "n",
+          "zh": "日期；年代",
+          "morphBreakdown": "dat + -e"
+        },
+        {
+          "word": "data",
+          "pos": "n",
+          "zh": "数据",
+          "morphBreakdown": "dat + -a"
+        },
+        {
+          "word": "datum",
+          "pos": "n",
+          "zh": "数据点",
+          "morphBreakdown": "dat + -um"
+        },
+        {
+          "word": "update",
+          "pos": "v",
+          "zh": "更新",
+          "morphBreakdown": "up + date"
+        },
+        {
+          "word": "antedate",
+          "pos": "v",
+          "zh": "先于",
+          "morphBreakdown": "ante- + date"
+        },
+        {
+          "word": "postdate",
+          "pos": "v",
+          "zh": "后于",
+          "morphBreakdown": "post- + date"
+        },
+        {
+          "word": "outdate",
+          "pos": "v",
+          "zh": "使过时",
+          "morphBreakdown": "out- + date"
+        },
+        {
+          "word": "dated",
+          "pos": "adj",
+          "zh": "过时的",
+          "morphBreakdown": "date + -ed"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "carbon",
+          "pos": "n",
+          "zh": "碳"
+        },
+        {
+          "word": "isotope",
+          "pos": "n",
+          "zh": "同位素"
+        },
+        {
+          "word": "radiocarbon",
+          "pos": "n",
+          "zh": "放射性碳"
+        },
+        {
+          "word": "fossil",
+          "pos": "n",
+          "zh": "化石"
+        },
+        {
+          "word": "sediment",
+          "pos": "n",
+          "zh": "沉积物"
+        },
+        {
+          "word": "stratum",
+          "pos": "n",
+          "zh": "地层"
+        },
+        {
+          "word": "excavation",
+          "pos": "n",
+          "zh": "挖掘"
+        },
+        {
+          "word": "artifact",
+          "pos": "n",
+          "zh": "人工制品"
+        },
+        {
+          "word": "chronology",
+          "pos": "n",
+          "zh": "年代学"
+        },
+        {
+          "word": "paleontology",
+          "pos": "n",
+          "zh": "古生物学"
+        },
+        {
+          "word": "geological",
+          "pos": "adj",
+          "zh": "地质的"
+        },
+        {
+          "word": "specimen",
+          "pos": "n",
+          "zh": "样本"
+        }
+      ],
+      "themeTopic": "考古·年代测定",
+      "themeSummary": "该词常用于雅思阅读考古类文章，涉及碳-14测年、地层学等，与化石、遗址等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 dating 作'年代测定'时不可数，常与 radiocarbon 搭配。"
+      ],
+      "insight": "date 本义是'给'的日期，dating 即'给年代'的过程。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "disintegrated": {
+      "gloss": "瓦解的",
+      "morphKind": "classical",
+      "prefixLine": "dis- 表示「分离、否定」",
+      "rootLine": "integr- 来自拉丁语 integrare「使完整」；PIE *tag-「接触、处理」",
+      "suffixLine": "-ed 形容词后缀，表示「被…的」",
+      "evolution": "dis-（分离）+ integr-（完整）+ -ed（的）→ 被分离完整的 → 瓦解的",
+      "parts": [],
+      "pieSummary": "PIE *tag-「接触、处理」；拉丁语 integer「完整的」",
+      "family": [
+        {
+          "word": "integrity",
+          "pos": "n",
+          "zh": "完整；正直",
+          "morphBreakdown": "integr- + -ity"
+        },
+        {
+          "word": "disintegrate",
+          "pos": "v",
+          "zh": "瓦解",
+          "morphBreakdown": "dis- + integr- + -ate"
+        },
+        {
+          "word": "integrate",
+          "pos": "v",
+          "zh": "整合",
+          "morphBreakdown": "in- + teg- + -ate"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "disintegrate",
+          "pos": "v",
+          "zh": "瓦解",
+          "morphBreakdown": "dis- + integr- + -ate"
+        },
+        {
+          "word": "disintegration",
+          "pos": "n",
+          "zh": "瓦解",
+          "morphBreakdown": "dis- + integr- + -ation"
+        },
+        {
+          "word": "integrate",
+          "pos": "v",
+          "zh": "整合",
+          "morphBreakdown": "in- + teg- + -ate"
+        },
+        {
+          "word": "integration",
+          "pos": "n",
+          "zh": "整合",
+          "morphBreakdown": "in- + teg- + -ation"
+        },
+        {
+          "word": "integrity",
+          "pos": "n",
+          "zh": "完整；正直",
+          "morphBreakdown": "integr- + -ity"
+        },
+        {
+          "word": "integer",
+          "pos": "n",
+          "zh": "整数",
+          "morphBreakdown": "in- + teg- + -er"
+        },
+        {
+          "word": "integral",
+          "pos": "adj",
+          "zh": "必需的；完整的",
+          "morphBreakdown": "in- + teg- + -al"
+        },
+        {
+          "word": "integument",
+          "pos": "n",
+          "zh": "覆盖物",
+          "morphBreakdown": "in- + teg- + -ment"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "erosion",
+          "pos": "n",
+          "zh": "侵蚀"
+        },
+        {
+          "word": "collapse",
+          "pos": "other",
+          "zh": "崩塌"
+        },
+        {
+          "word": "fragmentation",
+          "pos": "n",
+          "zh": "破碎"
+        },
+        {
+          "word": "degradation",
+          "pos": "n",
+          "zh": "退化"
+        },
+        {
+          "word": "ecosystem",
+          "pos": "n",
+          "zh": "生态系统"
+        },
+        {
+          "word": "habitat",
+          "pos": "n",
+          "zh": "栖息地"
+        },
+        {
+          "word": "conservation",
+          "pos": "n",
+          "zh": "保护"
+        },
+        {
+          "word": "sustainable",
+          "pos": "adj",
+          "zh": "可持续的"
+        },
+        {
+          "word": "catastrophe",
+          "pos": "n",
+          "zh": "灾难"
+        },
+        {
+          "word": "landslide",
+          "pos": "n",
+          "zh": "山体滑坡"
+        }
+      ],
+      "themeTopic": "环境·灾害",
+      "themeSummary": "该词常用于描述生态系统瓦解、冰川崩塌等环境灾难场景，常与 erosion、collapse 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 disintegrated 是形容词，其动词形式 disintegrate 更常见。"
+      ],
+      "insight": "disintegrate 就像把「完整」(integer) 拆开 (dis-)，想象一个完整的盘子摔成碎片。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "Halley's Comet": {
+      "gloss": "哈雷彗星",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "Halley（姓氏，源自古英语 heall \"hall\" + lēah \"wood/clearing\"）+ Comet（拉丁语 comēta，源自希腊语 komētēs \"long-haired star\"，PIE *gʰom- \"to cover\"）",
+      "suffixLine": "无",
+      "evolution": "以天文学家埃德蒙·哈雷命名的彗星，因其轨道周期约76年可被预测",
+      "parts": [],
+      "pieSummary": "PIE *gʰom- \"to cover\"（通过希腊语 komē \"hair\" 引申为 \"长发的\"，形容彗星拖尾）",
+      "family": [
+        {
+          "word": "comet",
+          "pos": "n",
+          "zh": "彗星",
+          "morphBreakdown": "comet"
+        },
+        {
+          "word": "cometary",
+          "pos": "adj",
+          "zh": "彗星的",
+          "morphBreakdown": "comet + -ary"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "comet",
+          "pos": "n",
+          "zh": "彗星",
+          "morphBreakdown": "comet"
+        },
+        {
+          "word": "cometary",
+          "pos": "adj",
+          "zh": "彗星的",
+          "morphBreakdown": "comet + -ary"
+        },
+        {
+          "word": "cometlike",
+          "pos": "adj",
+          "zh": "像彗星的",
+          "morphBreakdown": "comet + like"
+        },
+        {
+          "word": "cometology",
+          "pos": "n",
+          "zh": "彗星学",
+          "morphBreakdown": "comet + -ology"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "orbit",
+          "pos": "other",
+          "zh": "轨道"
+        },
+        {
+          "word": "asteroid",
+          "pos": "n",
+          "zh": "小行星"
+        },
+        {
+          "word": "celestial",
+          "pos": "adj",
+          "zh": "天体的"
+        },
+        {
+          "word": "meteor",
+          "pos": "n",
+          "zh": "流星"
+        },
+        {
+          "word": "meteorite",
+          "pos": "n",
+          "zh": "陨石"
+        },
+        {
+          "word": "telescope",
+          "pos": "n",
+          "zh": "望远镜"
+        },
+        {
+          "word": "astronomy",
+          "pos": "n",
+          "zh": "天文学"
+        },
+        {
+          "word": "astronomer",
+          "pos": "n",
+          "zh": "天文学家"
+        },
+        {
+          "word": "solar system",
+          "pos": "n",
+          "zh": "太阳系"
+        },
+        {
+          "word": "periodic",
+          "pos": "adj",
+          "zh": "周期的"
+        },
+        {
+          "word": "tail",
+          "pos": "n",
+          "zh": "彗尾"
+        },
+        {
+          "word": "nucleus",
+          "pos": "n",
+          "zh": "彗核"
+        }
+      ],
+      "themeTopic": "天文·太空探索",
+      "themeSummary": "该词出现在雅思阅读天文类文章（如彗星、小行星、太阳系），常与 orbit、asteroid、celestial 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "Halley's Comet 是专有名词，注意首字母大写；comet 可作普通名词。"
+      ],
+      "insight": "Halley 是姓氏，Comet 本义是“长发的星”，想象彗星像头发一样拖尾",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "perception": {
+      "gloss": "知觉",
+      "morphKind": "classical",
+      "prefixLine": "per-：通过，完全",
+      "rootLine": "cept：来自拉丁语 capere（抓住，拿取），PIE *kap-（抓住）",
+      "suffixLine": "-ion：名词后缀，表示行为或结果",
+      "evolution": "per-（通过）+ cept（抓住）+ -ion → 通过感官抓住信息 → 知觉",
+      "parts": [],
+      "pieSummary": "PIE *kap-（抓住）",
+      "family": [
+        {
+          "word": "concept",
+          "pos": "n",
+          "zh": "概念",
+          "morphBreakdown": "con- + cept"
+        },
+        {
+          "word": "reception",
+          "pos": "n",
+          "zh": "接收",
+          "morphBreakdown": "re- + cept + -ion"
+        },
+        {
+          "word": "perceptive",
+          "pos": "adj",
+          "zh": "有洞察力的",
+          "morphBreakdown": "per- + cept + -ive"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "perceive",
+          "pos": "v",
+          "zh": "察觉，理解",
+          "morphBreakdown": "per- + ceive"
+        },
+        {
+          "word": "perceptible",
+          "pos": "adj",
+          "zh": "可感知的",
+          "morphBreakdown": "per- + cept + -ible"
+        },
+        {
+          "word": "perception",
+          "pos": "n",
+          "zh": "知觉，看法",
+          "morphBreakdown": "per- + cept + -ion"
+        },
+        {
+          "word": "perceptive",
+          "pos": "adj",
+          "zh": "有洞察力的",
+          "morphBreakdown": "per- + cept + -ive"
+        },
+        {
+          "word": "conceive",
+          "pos": "v",
+          "zh": "构想，怀孕",
+          "morphBreakdown": "con- + ceive"
+        },
+        {
+          "word": "concept",
+          "pos": "n",
+          "zh": "概念",
+          "morphBreakdown": "con- + cept"
+        },
+        {
+          "word": "receive",
+          "pos": "v",
+          "zh": "接收",
+          "morphBreakdown": "re- + ceive"
+        },
+        {
+          "word": "reception",
+          "pos": "n",
+          "zh": "接待，接收",
+          "morphBreakdown": "re- + cept + -ion"
+        },
+        {
+          "word": "deceive",
+          "pos": "v",
+          "zh": "欺骗",
+          "morphBreakdown": "de- + ceive"
+        },
+        {
+          "word": "deception",
+          "pos": "n",
+          "zh": "欺骗",
+          "morphBreakdown": "de- + cept + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "sensation",
+          "pos": "n",
+          "zh": "感觉"
+        },
+        {
+          "word": "cognition",
+          "pos": "n",
+          "zh": "认知"
+        },
+        {
+          "word": "illusion",
+          "pos": "n",
+          "zh": "错觉"
+        },
+        {
+          "word": "stimulus",
+          "pos": "n",
+          "zh": "刺激"
+        },
+        {
+          "word": "sensory",
+          "pos": "adj",
+          "zh": "感官的"
+        },
+        {
+          "word": "interpretation",
+          "pos": "n",
+          "zh": "解释，解读"
+        },
+        {
+          "word": "awareness",
+          "pos": "n",
+          "zh": "意识"
+        },
+        {
+          "word": "attention",
+          "pos": "n",
+          "zh": "注意力"
+        },
+        {
+          "word": "memory",
+          "pos": "n",
+          "zh": "记忆"
+        },
+        {
+          "word": "bias",
+          "pos": "n",
+          "zh": "偏见"
+        }
+      ],
+      "themeTopic": "心理学·认知",
+      "themeSummary": "perception 在雅思阅读中常出现在心理学或认知科学类文章，讨论感官、认知偏差等；常与 sensation, cognition, illusion 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 perceive 和 perception 的拼写差异：-ceive 变 -cept。",
+        "同根词中 -ceive 是动词形式，-cept 是名词形式。"
+      ],
+      "insight": "perception 就像大脑用感官“抓住”外界信息，同根词 concept（概念）也是“抓住”想法。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "imperceptible": {
+      "gloss": "难以察觉的",
+      "morphKind": "classical",
+      "prefixLine": "in-（不，非）",
+      "rootLine": "percept（来自拉丁语 percipere，per-“通过”+ capere“拿，抓”；PIE *kap-“抓取”）",
+      "suffixLine": "-ible（能…的）",
+      "evolution": "in-（不）+ percept（察觉）+ -ible（能…的）→ 不能察觉的 → 难以察觉的",
+      "parts": [],
+      "pieSummary": "*kap-“抓取”",
+      "family": [
+        {
+          "word": "perceptible",
+          "pos": "adj",
+          "zh": "可察觉的",
+          "morphBreakdown": "percept + -ible"
+        },
+        {
+          "word": "perceive",
+          "pos": "v",
+          "zh": "察觉，感知",
+          "morphBreakdown": "per- + ceive"
+        },
+        {
+          "word": "capable",
+          "pos": "adj",
+          "zh": "有能力的",
+          "morphBreakdown": "cap + -able"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "perceptible",
+          "pos": "adj",
+          "zh": "可察觉的",
+          "morphBreakdown": "percept + -ible"
+        },
+        {
+          "word": "perceive",
+          "pos": "v",
+          "zh": "察觉，感知",
+          "morphBreakdown": "per- + ceive"
+        },
+        {
+          "word": "perception",
+          "pos": "n",
+          "zh": "感知，认识",
+          "morphBreakdown": "percept + -ion"
+        },
+        {
+          "word": "perceptive",
+          "pos": "adj",
+          "zh": "感知敏锐的",
+          "morphBreakdown": "percept + -ive"
+        },
+        {
+          "word": "capable",
+          "pos": "adj",
+          "zh": "有能力的",
+          "morphBreakdown": "cap + -able"
+        },
+        {
+          "word": "capability",
+          "pos": "n",
+          "zh": "能力",
+          "morphBreakdown": "capable + -ity"
+        },
+        {
+          "word": "incapable",
+          "pos": "adj",
+          "zh": "无能力的",
+          "morphBreakdown": "in- + capable"
+        },
+        {
+          "word": "incapability",
+          "pos": "n",
+          "zh": "无能",
+          "morphBreakdown": "in- + capability"
+        },
+        {
+          "word": "receive",
+          "pos": "v",
+          "zh": "接收",
+          "morphBreakdown": "re- + ceive"
+        },
+        {
+          "word": "accept",
+          "pos": "v",
+          "zh": "接受",
+          "morphBreakdown": "ac- + cept"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "subtle",
+          "pos": "adj",
+          "zh": "微妙的"
+        },
+        {
+          "word": "gradual",
+          "pos": "adj",
+          "zh": "逐渐的"
+        },
+        {
+          "word": "detect",
+          "pos": "v",
+          "zh": "检测"
+        },
+        {
+          "word": "slight",
+          "pos": "adj",
+          "zh": "轻微的"
+        },
+        {
+          "word": "negligible",
+          "pos": "adj",
+          "zh": "可忽略的"
+        },
+        {
+          "word": "invisible",
+          "pos": "adj",
+          "zh": "看不见的"
+        },
+        {
+          "word": "unnoticeable",
+          "pos": "adj",
+          "zh": "不引人注意的"
+        },
+        {
+          "word": "barely",
+          "pos": "adv",
+          "zh": "几乎不"
+        },
+        {
+          "word": "sensor",
+          "pos": "n",
+          "zh": "传感器"
+        },
+        {
+          "word": "threshold",
+          "pos": "n",
+          "zh": "阈值"
+        }
+      ],
+      "themeTopic": "环境·感知",
+      "themeSummary": "该词常用于雅思阅读中描述环境变化或科学现象中细微、不易察觉的影响，常与 subtle、gradual、detect 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意前缀 in- 在 p 前不变化；词根 ceive/cept/cap 同源，均来自拉丁语 capere“拿”"
+      ],
+      "insight": "percept 是“感知”的词根，加上否定前缀 in- 和形容词后缀 -ible，就是“无法被感知的”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "practical": {
+      "gloss": "实用的",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "pract- 源自希腊语 praktikos '实际的'，源自 prassein '做，行动'；PIE *per- '穿过，尝试'",
+      "suffixLine": "-ical 形容词后缀，表示'...的'",
+      "evolution": "pract- (做) + -ical (的) → 与做有关的 → 实用的",
+      "parts": [],
+      "pieSummary": "PIE *per- '穿过，尝试'",
+      "family": [
+        {
+          "word": "practice",
+          "pos": "n",
+          "zh": "实践",
+          "morphBreakdown": "pract- + -ice"
+        },
+        {
+          "word": "practitioner",
+          "pos": "n",
+          "zh": "从业者",
+          "morphBreakdown": "pract- + -itioner"
+        },
+        {
+          "word": "practicable",
+          "pos": "adj",
+          "zh": "可行的",
+          "morphBreakdown": "pract- + -icable"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "practice",
+          "pos": "n",
+          "zh": "实践",
+          "morphBreakdown": "pract- + -ice"
+        },
+        {
+          "word": "practitioner",
+          "pos": "n",
+          "zh": "从业者",
+          "morphBreakdown": "pract- + -itioner"
+        },
+        {
+          "word": "practicable",
+          "pos": "adj",
+          "zh": "可行的",
+          "morphBreakdown": "pract- + -icable"
+        },
+        {
+          "word": "impractical",
+          "pos": "adj",
+          "zh": "不切实际的",
+          "morphBreakdown": "im- + practical"
+        },
+        {
+          "word": "practically",
+          "pos": "adv",
+          "zh": "实际上；几乎",
+          "morphBreakdown": "practical + -ly"
+        },
+        {
+          "word": "pragmatic",
+          "pos": "adj",
+          "zh": "务实的",
+          "morphBreakdown": "prag- (变体) + -matic"
+        },
+        {
+          "word": "pragmatism",
+          "pos": "n",
+          "zh": "实用主义",
+          "morphBreakdown": "pragmatic + -ism"
+        },
+        {
+          "word": "pragmatist",
+          "pos": "n",
+          "zh": "实用主义者",
+          "morphBreakdown": "pragmatic + -ist"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "theoretical",
+          "pos": "adj",
+          "zh": "理论的"
+        },
+        {
+          "word": "hands-on",
+          "pos": "adj",
+          "zh": "亲身实践的"
+        },
+        {
+          "word": "skill",
+          "pos": "n",
+          "zh": "技能"
+        },
+        {
+          "word": "training",
+          "pos": "n",
+          "zh": "培训"
+        },
+        {
+          "word": "application",
+          "pos": "n",
+          "zh": "应用"
+        },
+        {
+          "word": "experience",
+          "pos": "n",
+          "zh": "经验"
+        },
+        {
+          "word": "knowledge",
+          "pos": "n",
+          "zh": "知识"
+        },
+        {
+          "word": "workshop",
+          "pos": "n",
+          "zh": "研讨会"
+        },
+        {
+          "word": "internship",
+          "pos": "n",
+          "zh": "实习"
+        },
+        {
+          "word": "curriculum",
+          "pos": "n",
+          "zh": "课程"
+        }
+      ],
+      "themeTopic": "教育·学习",
+      "themeSummary": "practical 在雅思中常出现在教育、技能培训、职场场景，强调理论 vs 实践，与 hands-on, theoretical, skill 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 practical 与 practicable 的区别：practical 强调'实用的'，practicable 强调'可行的'。"
+      ],
+      "insight": "practical 强调'可操作、能落地'，与 theoretical 相对；同根词 practice 是'实践'。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "in practice": {
+      "gloss": "实际上",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "in (在…中) + practice (实践)，源自拉丁语 practicus，来自希腊语 praktikos (实践的)，PIE *kwer- (做)",
+      "suffixLine": "无",
+      "evolution": "字面义为“在实践中”，引申为“实际上”",
+      "parts": [],
+      "pieSummary": "PIE *kwer- (做)",
+      "family": [
+        {
+          "word": "practical",
+          "pos": "adj",
+          "zh": "实际的",
+          "morphBreakdown": "practic + -al"
+        },
+        {
+          "word": "practically",
+          "pos": "adv",
+          "zh": "几乎；实际地",
+          "morphBreakdown": "practical + -ly"
+        },
+        {
+          "word": "practitioner",
+          "pos": "n",
+          "zh": "从业者",
+          "morphBreakdown": "practic + -tioner"
+        },
+        {
+          "word": "pragmatic",
+          "pos": "adj",
+          "zh": "务实的",
+          "morphBreakdown": "pragmat + -ic"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "practice",
+          "pos": "n",
+          "zh": "实践；练习",
+          "morphBreakdown": "practic + -e"
+        },
+        {
+          "word": "practical",
+          "pos": "adj",
+          "zh": "实际的；实用的",
+          "morphBreakdown": "practic + -al"
+        },
+        {
+          "word": "practically",
+          "pos": "adv",
+          "zh": "几乎；实际地",
+          "morphBreakdown": "practical + -ly"
+        },
+        {
+          "word": "practitioner",
+          "pos": "n",
+          "zh": "从业者；执业者",
+          "morphBreakdown": "practic + -tioner"
+        },
+        {
+          "word": "pragmatic",
+          "pos": "adj",
+          "zh": "务实的；实用的",
+          "morphBreakdown": "pragmat + -ic"
+        },
+        {
+          "word": "pragmatism",
+          "pos": "n",
+          "zh": "实用主义",
+          "morphBreakdown": "pragmat + -ism"
+        },
+        {
+          "word": "impracticable",
+          "pos": "adj",
+          "zh": "不可行的",
+          "morphBreakdown": "im- + practic + -able"
+        },
+        {
+          "word": "impractical",
+          "pos": "adj",
+          "zh": "不切实际的",
+          "morphBreakdown": "im- + practical"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "theory",
+          "pos": "n",
+          "zh": "理论"
+        },
+        {
+          "word": "theoretical",
+          "pos": "adj",
+          "zh": "理论的"
+        },
+        {
+          "word": "application",
+          "pos": "n",
+          "zh": "应用"
+        },
+        {
+          "word": "implement",
+          "pos": "v",
+          "zh": "实施"
+        },
+        {
+          "word": "empirical",
+          "pos": "adj",
+          "zh": "经验的"
+        },
+        {
+          "word": "pragmatic",
+          "pos": "adj",
+          "zh": "务实的"
+        },
+        {
+          "word": "feasible",
+          "pos": "adj",
+          "zh": "可行的"
+        },
+        {
+          "word": "viable",
+          "pos": "adj",
+          "zh": "可行的"
+        },
+        {
+          "word": "approach",
+          "pos": "n",
+          "zh": "方法"
+        },
+        {
+          "word": "methodology",
+          "pos": "n",
+          "zh": "方法论"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "该词在雅思阅读中常出现在讨论理论与实际差距的段落，写作Task 2可用于对比观点，与theory, application, implementation等共现。",
+      "relatedNotes": [],
+      "tips": [
+        "in practice 常与 in theory 对比使用，注意介词搭配"
+      ],
+      "insight": "in practice 强调理论 vs 实际，常与 in theory 对比记忆",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "pharmaceutical": {
+      "gloss": "制药的",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "pharmac- (希腊语 pharmakon '药物')",
+      "suffixLine": "-ceutical (希腊语 -keutikos '与...有关的')",
+      "evolution": "pharmakon (药物) + -keutikos (与...有关的) → 与制药相关的",
+      "parts": [],
+      "family": [
+        {
+          "word": "pharmacy",
+          "pos": "n",
+          "zh": "药房; 药剂学",
+          "morphBreakdown": "pharmac- + -y"
+        },
+        {
+          "word": "pharmacist",
+          "pos": "n",
+          "zh": "药剂师",
+          "morphBreakdown": "pharmac- + -ist"
+        },
+        {
+          "word": "pharmacology",
+          "pos": "n",
+          "zh": "药理学",
+          "morphBreakdown": "pharmaco- + -logy"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "pharmacy",
+          "pos": "n",
+          "zh": "药房; 药剂学",
+          "morphBreakdown": "pharmac- + -y"
+        },
+        {
+          "word": "pharmacist",
+          "pos": "n",
+          "zh": "药剂师",
+          "morphBreakdown": "pharmac- + -ist"
+        },
+        {
+          "word": "pharmacology",
+          "pos": "n",
+          "zh": "药理学",
+          "morphBreakdown": "pharmaco- + -logy"
+        },
+        {
+          "word": "pharmacological",
+          "pos": "adj",
+          "zh": "药理学的",
+          "morphBreakdown": "pharmaco- + -logical"
+        },
+        {
+          "word": "pharmaceutics",
+          "pos": "n",
+          "zh": "药剂学",
+          "morphBreakdown": "pharmaceutic + -s"
+        },
+        {
+          "word": "pharmacopeia",
+          "pos": "n",
+          "zh": "药典",
+          "morphBreakdown": "pharmaco- + -peia"
+        },
+        {
+          "word": "pharmacotherapy",
+          "pos": "n",
+          "zh": "药物治疗",
+          "morphBreakdown": "pharmaco- + therapy"
+        },
+        {
+          "word": "pharmacogenomics",
+          "pos": "n",
+          "zh": "药物基因组学",
+          "morphBreakdown": "pharmaco- + genomics"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "prescription",
+          "pos": "n",
+          "zh": "处方"
+        },
+        {
+          "word": "dosage",
+          "pos": "n",
+          "zh": "剂量"
+        },
+        {
+          "word": "clinical trial",
+          "pos": "n",
+          "zh": "临床试验"
+        },
+        {
+          "word": "side effect",
+          "pos": "n",
+          "zh": "副作用"
+        },
+        {
+          "word": "vaccine",
+          "pos": "n",
+          "zh": "疫苗"
+        },
+        {
+          "word": "antibiotic",
+          "pos": "n",
+          "zh": "抗生素"
+        },
+        {
+          "word": "diagnosis",
+          "pos": "n",
+          "zh": "诊断"
+        },
+        {
+          "word": "therapy",
+          "pos": "n",
+          "zh": "治疗"
+        },
+        {
+          "word": "symptom",
+          "pos": "n",
+          "zh": "症状"
+        },
+        {
+          "word": "chronic",
+          "pos": "adj",
+          "zh": "慢性的"
+        },
+        {
+          "word": "acute",
+          "pos": "adj",
+          "zh": "急性的"
+        }
+      ],
+      "themeTopic": "健康·医疗",
+      "themeSummary": "该词常见于雅思阅读关于药物研发、医疗保健的篇章，常与 prescription, dosage, clinical trial 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "pharmaceutical 常作形容词，如 pharmaceutical company (制药公司)。",
+        "注意与 pharmacy (药房) 区分，pharmaceutical 更侧重产业或科学。"
+      ],
+      "insight": "pharmac- 是 '药物' 的词根，同源词 pharmacy (药房) 和 pharmacist (药剂师) 都围绕此义。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "herbal": {
+      "gloss": "草本的",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "herb- (拉丁语 herba '草')",
+      "suffixLine": "-al (形容词后缀，'与...有关的')",
+      "evolution": "herb (草) + -al → 与草有关的 → 草本的",
+      "parts": [],
+      "pieSummary": "PIE *gʰreH₁- '生长' (不确定)",
+      "family": [
+        {
+          "word": "herb",
+          "pos": "n",
+          "zh": "草本植物",
+          "morphBreakdown": "herb"
+        },
+        {
+          "word": "herbicide",
+          "pos": "n",
+          "zh": "除草剂",
+          "morphBreakdown": "herb + -i- + cide (杀)"
+        },
+        {
+          "word": "herbivore",
+          "pos": "n",
+          "zh": "食草动物",
+          "morphBreakdown": "herb + -i- + vore (吃)"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "herb",
+          "pos": "n",
+          "zh": "草本植物",
+          "morphBreakdown": "herb"
+        },
+        {
+          "word": "herbalist",
+          "pos": "n",
+          "zh": "草药医生",
+          "morphBreakdown": "herbal + -ist"
+        },
+        {
+          "word": "herbicide",
+          "pos": "n",
+          "zh": "除草剂",
+          "morphBreakdown": "herb + -i- + cide"
+        },
+        {
+          "word": "herbivore",
+          "pos": "n",
+          "zh": "食草动物",
+          "morphBreakdown": "herb + -i- + vore"
+        },
+        {
+          "word": "herbivorous",
+          "pos": "adj",
+          "zh": "食草的",
+          "morphBreakdown": "herbivore + -ous"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "medicinal",
+          "pos": "adj",
+          "zh": "药用的"
+        },
+        {
+          "word": "remedy",
+          "pos": "n",
+          "zh": "疗法"
+        },
+        {
+          "word": "plant-based",
+          "pos": "adj",
+          "zh": "植物性的"
+        },
+        {
+          "word": "organic",
+          "pos": "adj",
+          "zh": "有机的"
+        },
+        {
+          "word": "extract",
+          "pos": "n",
+          "zh": "提取物"
+        },
+        {
+          "word": "tincture",
+          "pos": "n",
+          "zh": "酊剂"
+        },
+        {
+          "word": "botanical",
+          "pos": "adj",
+          "zh": "植物的"
+        },
+        {
+          "word": "traditional",
+          "pos": "adj",
+          "zh": "传统的"
+        },
+        {
+          "word": "alternative",
+          "pos": "adj",
+          "zh": "替代的"
+        },
+        {
+          "word": "therapy",
+          "pos": "n",
+          "zh": "治疗"
+        },
+        {
+          "word": "holistic",
+          "pos": "adj",
+          "zh": "整体的"
+        },
+        {
+          "word": "natural",
+          "pos": "adj",
+          "zh": "自然的"
+        }
+      ],
+      "themeTopic": "健康·医疗·自然",
+      "themeSummary": "herbal 常用于雅思阅读中关于传统医学、草药治疗或自然疗法的文章，常与 medicinal, remedy, plant-based 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 herb 中的 h 不发音，读作 /ɜːrb/。"
+      ],
+      "insight": "herb 是'草'，加上 -al 变成形容词，记住 herb 就能记住 herbal。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "herbal medicine": {
+      "gloss": "草药 / 中医",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "herb- 源自拉丁语 herba '草'；medic- 源自拉丁语 medicus '医生'，词根 med- '治疗'，PIE *med- '测量，采取适当措施'",
+      "suffixLine": "-al 形容词后缀；无",
+      "evolution": "herbal medicine 字面意为 '草的医学'，即使用草药进行治疗的医学体系。",
+      "parts": [],
+      "pieSummary": "PIE *med- '测量，采取适当措施' → 拉丁语 mederi '治疗' → medicus '医生'",
+      "family": [
+        {
+          "word": "herb",
+          "pos": "n",
+          "zh": "草本植物",
+          "morphBreakdown": "herb"
+        },
+        {
+          "word": "herbal",
+          "pos": "adj",
+          "zh": "草药的",
+          "morphBreakdown": "herb + -al"
+        },
+        {
+          "word": "medicine",
+          "pos": "n",
+          "zh": "医学；药物",
+          "morphBreakdown": "medic + -ine"
+        },
+        {
+          "word": "medicinal",
+          "pos": "adj",
+          "zh": "药用的",
+          "morphBreakdown": "medic + -in + -al"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "herb",
+          "pos": "n",
+          "zh": "草本植物",
+          "morphBreakdown": "herb"
+        },
+        {
+          "word": "herbalist",
+          "pos": "n",
+          "zh": "草药医生",
+          "morphBreakdown": "herb + -al + -ist"
+        },
+        {
+          "word": "herbicide",
+          "pos": "n",
+          "zh": "除草剂",
+          "morphBreakdown": "herb + -i- + -cide"
+        },
+        {
+          "word": "herbivore",
+          "pos": "n",
+          "zh": "食草动物",
+          "morphBreakdown": "herb + -i- + -vore"
+        },
+        {
+          "word": "medicine",
+          "pos": "n",
+          "zh": "医学；药物",
+          "morphBreakdown": "medic + -ine"
+        },
+        {
+          "word": "medical",
+          "pos": "adj",
+          "zh": "医学的",
+          "morphBreakdown": "medic + -al"
+        },
+        {
+          "word": "medicate",
+          "pos": "v",
+          "zh": "用药治疗",
+          "morphBreakdown": "medic + -ate"
+        },
+        {
+          "word": "medication",
+          "pos": "n",
+          "zh": "药物",
+          "morphBreakdown": "medic + -ation"
+        },
+        {
+          "word": "remedy",
+          "pos": "n",
+          "zh": "疗法；补救",
+          "morphBreakdown": "re- + med + -y"
+        },
+        {
+          "word": "remedial",
+          "pos": "adj",
+          "zh": "治疗的；补救的",
+          "morphBreakdown": "re- + med + -ial"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "acupuncture",
+          "pos": "n",
+          "zh": "针灸"
+        },
+        {
+          "word": "alternative medicine",
+          "pos": "n",
+          "zh": "替代医学"
+        },
+        {
+          "word": "conventional",
+          "pos": "adj",
+          "zh": "传统的；常规的"
+        },
+        {
+          "word": "therapy",
+          "pos": "n",
+          "zh": "疗法"
+        },
+        {
+          "word": "prescription",
+          "pos": "n",
+          "zh": "处方"
+        },
+        {
+          "word": "symptom",
+          "pos": "n",
+          "zh": "症状"
+        },
+        {
+          "word": "diagnosis",
+          "pos": "n",
+          "zh": "诊断"
+        },
+        {
+          "word": "holistic",
+          "pos": "adj",
+          "zh": "整体的"
+        },
+        {
+          "word": "natural",
+          "pos": "adj",
+          "zh": "自然的"
+        },
+        {
+          "word": "remedy",
+          "pos": "n",
+          "zh": "疗法"
+        },
+        {
+          "word": "pharmaceutical",
+          "pos": "adj",
+          "zh": "制药的"
+        },
+        {
+          "word": "placebo",
+          "pos": "n",
+          "zh": "安慰剂"
+        }
+      ],
+      "themeTopic": "健康·医疗",
+      "themeSummary": "该词在雅思阅读中常出现在关于替代医学、传统医学或草药治疗的篇章中，与西医、自然疗法等概念共现。",
+      "relatedNotes": [],
+      "tips": [
+        "herbal medicine 常与 traditional Chinese medicine (TCM) 关联，但不仅限于中医。",
+        "注意 herb 的 h 不发音，读作 /ɜːrb/。"
+      ],
+      "insight": "herb 与 medicine 组合，herb 指植物，medicine 指治疗，合起来就是草药疗法。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "bruising": {
+      "gloss": "激烈的；挫伤的",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "bruis- 来自古法语 bruisier '打破'，源自日耳曼语 *brusk- '打破'；PIE 不确定",
+      "suffixLine": "-ing 形容词后缀",
+      "evolution": "bruise（挫伤）→ bruising（造成挫伤的）→ 引申为'激烈的'（如造成伤害的竞争）",
+      "parts": [],
+      "family": [
+        {
+          "word": "bruise",
+          "pos": "v",
+          "zh": "挫伤；青肿",
+          "morphBreakdown": "bruise"
+        },
+        {
+          "word": "bruiser",
+          "pos": "n",
+          "zh": "彪形大汉",
+          "morphBreakdown": "bruise + -er"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "bruise",
+          "pos": "v",
+          "zh": "挫伤；使青肿",
+          "morphBreakdown": "bruise"
+        },
+        {
+          "word": "bruiser",
+          "pos": "n",
+          "zh": "彪形大汉；好斗者",
+          "morphBreakdown": "bruise + -er"
+        },
+        {
+          "word": "bruisingly",
+          "pos": "adv",
+          "zh": "激烈地",
+          "morphBreakdown": "bruising + -ly"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "competition",
+          "pos": "n",
+          "zh": "竞争"
+        },
+        {
+          "word": "contest",
+          "pos": "n",
+          "zh": "比赛"
+        },
+        {
+          "word": "opponent",
+          "pos": "n",
+          "zh": "对手"
+        },
+        {
+          "word": "rival",
+          "pos": "n",
+          "zh": "竞争者"
+        },
+        {
+          "word": "intense",
+          "pos": "adj",
+          "zh": "激烈的"
+        },
+        {
+          "word": "fierce",
+          "pos": "adj",
+          "zh": "凶猛的"
+        },
+        {
+          "word": "physical",
+          "pos": "adj",
+          "zh": "身体的"
+        },
+        {
+          "word": "injury",
+          "pos": "n",
+          "zh": "受伤"
+        },
+        {
+          "word": "tackle",
+          "pos": "v",
+          "zh": "抢断"
+        },
+        {
+          "word": "match",
+          "pos": "n",
+          "zh": "比赛"
+        }
+      ],
+      "themeTopic": "体育·竞争",
+      "themeSummary": "该词常用于描述体育比赛或商业竞争中的激烈对抗，常与 competition, contest, fight 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "bruising 作为形容词时多用于抽象意义，如 a bruising encounter（激烈交锋）。"
+      ],
+      "insight": "想象拳击比赛中 bruising 的对抗，既指身体挫伤也指激烈程度。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "incapability": {
+      "gloss": "无能力",
+      "morphKind": "classical",
+      "prefixLine": "in-（不，无）",
+      "rootLine": "cap（来自拉丁语 capere“拿，取”，PIE *kap-“抓取”）",
+      "suffixLine": "-ability（名词后缀，表能力）",
+      "evolution": "in-（不）+ cap（拿）+ -ability（能力）→ 不能拿取的能力 → 无能力",
+      "parts": [],
+      "pieSummary": "PIE *kap-“抓取”，衍生拉丁语 capere“拿，取”",
+      "family": [
+        {
+          "word": "capability",
+          "pos": "n",
+          "zh": "能力",
+          "morphBreakdown": "cap + -ability"
+        },
+        {
+          "word": "capable",
+          "pos": "adj",
+          "zh": "有能力的",
+          "morphBreakdown": "cap + -able"
+        },
+        {
+          "word": "perceive",
+          "pos": "v",
+          "zh": "感知",
+          "morphBreakdown": "per- + ceive"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "capability",
+          "pos": "n",
+          "zh": "能力",
+          "morphBreakdown": "cap + -ability"
+        },
+        {
+          "word": "capable",
+          "pos": "adj",
+          "zh": "有能力的",
+          "morphBreakdown": "cap + -able"
+        },
+        {
+          "word": "incapable",
+          "pos": "adj",
+          "zh": "无能力的",
+          "morphBreakdown": "in- + capable"
+        },
+        {
+          "word": "perceive",
+          "pos": "v",
+          "zh": "感知",
+          "morphBreakdown": "per- + ceive"
+        },
+        {
+          "word": "perceptible",
+          "pos": "adj",
+          "zh": "可感知的",
+          "morphBreakdown": "per- + cept + -ible"
+        },
+        {
+          "word": "imperceptible",
+          "pos": "adj",
+          "zh": "不可感知的",
+          "morphBreakdown": "im- + perceptible"
+        },
+        {
+          "word": "receive",
+          "pos": "v",
+          "zh": "接收",
+          "morphBreakdown": "re- + ceive"
+        },
+        {
+          "word": "accept",
+          "pos": "v",
+          "zh": "接受",
+          "morphBreakdown": "ac- + cept"
+        },
+        {
+          "word": "concept",
+          "pos": "n",
+          "zh": "概念",
+          "morphBreakdown": "con- + cept"
+        },
+        {
+          "word": "intercept",
+          "pos": "v",
+          "zh": "拦截",
+          "morphBreakdown": "inter- + cept"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "ability",
+          "pos": "n",
+          "zh": "能力"
+        },
+        {
+          "word": "skill",
+          "pos": "n",
+          "zh": "技能"
+        },
+        {
+          "word": "potential",
+          "pos": "n",
+          "zh": "潜力"
+        },
+        {
+          "word": "talent",
+          "pos": "n",
+          "zh": "才能"
+        },
+        {
+          "word": "competence",
+          "pos": "n",
+          "zh": "胜任能力"
+        },
+        {
+          "word": "deficiency",
+          "pos": "n",
+          "zh": "缺陷"
+        },
+        {
+          "word": "limitation",
+          "pos": "n",
+          "zh": "限制"
+        },
+        {
+          "word": "weakness",
+          "pos": "n",
+          "zh": "弱点"
+        },
+        {
+          "word": "strength",
+          "pos": "n",
+          "zh": "优势"
+        },
+        {
+          "word": "improve",
+          "pos": "v",
+          "zh": "提高"
+        },
+        {
+          "word": "develop",
+          "pos": "v",
+          "zh": "发展"
+        },
+        {
+          "word": "training",
+          "pos": "n",
+          "zh": "培训"
+        }
+      ],
+      "themeTopic": "教育·能力",
+      "themeSummary": "该词常用于雅思写作或口语讨论个人能力、教育体系中的不足，常与ability、skill、potential等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意cap-词根变体：ceive/cept/cip（如receive, concept, anticipate）"
+      ],
+      "insight": "in-否定 + capability（能力）→ 无能力；cap 像手抓取，能力就是能抓住机会",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "alpine plants": {
+      "gloss": "高山植物",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "alp- (拉丁语 Alpes \"阿尔卑斯山\") → 可能源自 PIE *albʰo- \"白色\" (指山顶积雪)",
+      "suffixLine": "-ine (形容词后缀，表示\"属于...的\")",
+      "evolution": "Alpine 原指\"阿尔卑斯山的\"，后泛指\"高山的\"；plants 为\"植物\"，组合即\"高山植物\"。",
+      "parts": [],
+      "pieSummary": "PIE *albʰo- \"白色\" → 拉丁语 Alpes \"阿尔卑斯山\" (因山顶积雪得名) → 英语 alpine",
+      "family": [
+        {
+          "word": "Alps",
+          "pos": "n",
+          "zh": "阿尔卑斯山",
+          "morphBreakdown": "Alp + s"
+        },
+        {
+          "word": "alpinist",
+          "pos": "n",
+          "zh": "登山家",
+          "morphBreakdown": "alpine + -ist"
+        },
+        {
+          "word": "subalpine",
+          "pos": "adj",
+          "zh": "亚高山的",
+          "morphBreakdown": "sub- + alpine"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "alpine",
+          "pos": "adj",
+          "zh": "高山的；阿尔卑斯山的",
+          "morphBreakdown": "alp + -ine"
+        },
+        {
+          "word": "alpinism",
+          "pos": "n",
+          "zh": "登山运动",
+          "morphBreakdown": "alpine + -ism"
+        },
+        {
+          "word": "alpinist",
+          "pos": "n",
+          "zh": "登山家",
+          "morphBreakdown": "alpine + -ist"
+        },
+        {
+          "word": "subalpine",
+          "pos": "adj",
+          "zh": "亚高山的",
+          "morphBreakdown": "sub- + alpine"
+        },
+        {
+          "word": "transalpine",
+          "pos": "adj",
+          "zh": "阿尔卑斯山另一侧的",
+          "morphBreakdown": "trans- + alpine"
+        },
+        {
+          "word": "cisalpine",
+          "pos": "adj",
+          "zh": "阿尔卑斯山这一侧的",
+          "morphBreakdown": "cis- + alpine"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "altitude",
+          "pos": "n",
+          "zh": "海拔"
+        },
+        {
+          "word": "vegetation",
+          "pos": "n",
+          "zh": "植被"
+        },
+        {
+          "word": "ecosystem",
+          "pos": "n",
+          "zh": "生态系统"
+        },
+        {
+          "word": "biodiversity",
+          "pos": "n",
+          "zh": "生物多样性"
+        },
+        {
+          "word": "glacier",
+          "pos": "n",
+          "zh": "冰川"
+        },
+        {
+          "word": "treeline",
+          "pos": "n",
+          "zh": "树线"
+        },
+        {
+          "word": "tundra",
+          "pos": "n",
+          "zh": "苔原"
+        },
+        {
+          "word": "permafrost",
+          "pos": "n",
+          "zh": "永久冻土"
+        },
+        {
+          "word": "endemic",
+          "pos": "adj",
+          "zh": "地方性的"
+        },
+        {
+          "word": "adaptation",
+          "pos": "n",
+          "zh": "适应"
+        },
+        {
+          "word": "habitat",
+          "pos": "n",
+          "zh": "栖息地"
+        },
+        {
+          "word": "climate change",
+          "pos": "n",
+          "zh": "气候变化"
+        }
+      ],
+      "themeTopic": "环境·地理·生态",
+      "themeSummary": "该词常出现在雅思阅读关于高山生态系统、气候变化对植被影响、或旅游地理类文章中，与海拔、植被带、生物多样性等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "Alpine 首字母大写时特指阿尔卑斯山的，小写时泛指高山的。",
+        "Alpine plants 常见于雅思阅读关于高山植物适应性的文章。"
+      ],
+      "insight": "Alpine 与 album (相册，原指白色石板) 同源，都来自\"白色\"概念。想象阿尔卑斯山白雪皑皑的山顶，记住 alpine 即\"高山的\"。",
       "strictEtymology": false,
       "source": "deepseek",
       "schemaVersion": 2
