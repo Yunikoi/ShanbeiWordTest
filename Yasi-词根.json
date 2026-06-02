@@ -4,7 +4,7 @@
   "storageKey": "src:Yasi.md",
   "bookId": "import-1780133567508",
   "bookTitle": "",
-  "updatedAt": "2026-06-02T09:59:09.164Z",
+  "updatedAt": "2026-06-02T10:01:06.356Z",
   "words": {
     "provide insight into": {
       "gloss": "对……提供深入见解/洞察",
@@ -204297,6 +204297,2627 @@
         "注意 prohibit 后接 from doing，如 prohibit sb from doing sth。"
       ],
       "insight": "想象警察向前伸手（pro-）拦住你拿东西（hibit），就是禁止。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "provocative": {
+      "gloss": "挑衅的",
+      "morphKind": "classical",
+      "prefixLine": "pro-：向前，在前",
+      "rootLine": "voc：呼叫，声音（来自拉丁语 vocare，PIE *wekʷ- 说）",
+      "suffixLine": "-ative：形容词后缀，表示有…性质的",
+      "evolution": "pro-（向前）+ voc（呼叫）+ -ative（有…性质的）→ 向前呼叫的 → 挑衅的",
+      "parts": [],
+      "pieSummary": "PIE *wekʷ- 意为“说”，衍生出拉丁语 vocare（呼叫），英语 voice, vocal, provoke 等。",
+      "family": [
+        {
+          "word": "provocation",
+          "pos": "n",
+          "zh": "挑衅",
+          "morphBreakdown": "pro- + voc + -ation"
+        },
+        {
+          "word": "provoke",
+          "pos": "v",
+          "zh": "挑衅",
+          "morphBreakdown": "pro- + voke"
+        },
+        {
+          "word": "vocal",
+          "pos": "adj",
+          "zh": "声音的",
+          "morphBreakdown": "voc + -al"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "provoke",
+          "pos": "v",
+          "zh": "挑衅",
+          "morphBreakdown": "pro- + voke"
+        },
+        {
+          "word": "provocation",
+          "pos": "n",
+          "zh": "挑衅",
+          "morphBreakdown": "pro- + voc + -ation"
+        },
+        {
+          "word": "provocative",
+          "pos": "adj",
+          "zh": "挑衅的",
+          "morphBreakdown": "pro- + voc + -ative"
+        },
+        {
+          "word": "vocal",
+          "pos": "adj",
+          "zh": "声音的",
+          "morphBreakdown": "voc + -al"
+        },
+        {
+          "word": "vocalize",
+          "pos": "v",
+          "zh": "发声",
+          "morphBreakdown": "voc + -al + -ize"
+        },
+        {
+          "word": "vocation",
+          "pos": "n",
+          "zh": "职业",
+          "morphBreakdown": "voc + -ation"
+        },
+        {
+          "word": "advocate",
+          "pos": "v",
+          "zh": "提倡；提倡者",
+          "morphBreakdown": "ad- + voc + -ate"
+        },
+        {
+          "word": "convoke",
+          "pos": "v",
+          "zh": "召集",
+          "morphBreakdown": "con- + voke"
+        },
+        {
+          "word": "revoke",
+          "pos": "v",
+          "zh": "撤销",
+          "morphBreakdown": "re- + voke"
+        },
+        {
+          "word": "evoke",
+          "pos": "v",
+          "zh": "唤起",
+          "morphBreakdown": "e- + voke"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "controversy",
+          "pos": "n",
+          "zh": "争议"
+        },
+        {
+          "word": "offend",
+          "pos": "v",
+          "zh": "冒犯"
+        },
+        {
+          "word": "protest",
+          "pos": "other",
+          "zh": "抗议"
+        },
+        {
+          "word": "debate",
+          "pos": "v",
+          "zh": "辩论"
+        },
+        {
+          "word": "conflict",
+          "pos": "n",
+          "zh": "冲突"
+        },
+        {
+          "word": "aggressive",
+          "pos": "adj",
+          "zh": "侵略性的"
+        },
+        {
+          "word": "inflammatory",
+          "pos": "adj",
+          "zh": "煽动性的"
+        },
+        {
+          "word": "incite",
+          "pos": "v",
+          "zh": "煽动"
+        },
+        {
+          "word": "provoke",
+          "pos": "v",
+          "zh": "挑衅"
+        },
+        {
+          "word": "outrage",
+          "pos": "n",
+          "zh": "愤怒"
+        }
+      ],
+      "themeTopic": "社会·冲突",
+      "themeSummary": "该词常用于雅思阅读或写作中描述言论、行为或艺术具有挑衅性，引发争议或冲突。常与 debate, controversy, offend, protest 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意区分 provoke（动词）和 provocative（形容词）的拼写。",
+        "pro- 前缀常表示“向前”，如 proceed, promote。"
+      ],
+      "insight": "pro-（向前）像伸出脖子喊话，容易引发冲突，所以是“挑衅的”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "provoking": {
+      "gloss": "气人的",
+      "morphKind": "classical",
+      "prefixLine": "pro-：向前，出",
+      "rootLine": "voc/vok：喊叫，声音；来自拉丁语vocare，PIE *wekʷ-（说话）",
+      "suffixLine": "-ing：形容词后缀，表示“令人…的”",
+      "evolution": "pro-（向前）+ vok（喊叫）+ -ing → 向前喊叫的 → 激怒的，气人的",
+      "parts": [],
+      "pieSummary": "PIE *wekʷ- (to speak)",
+      "family": [
+        {
+          "word": "provoke",
+          "pos": "v",
+          "zh": "激怒",
+          "morphBreakdown": "pro- + voke"
+        },
+        {
+          "word": "provocative",
+          "pos": "adj",
+          "zh": "挑衅的",
+          "morphBreakdown": "pro- + voc + -ative"
+        },
+        {
+          "word": "vocal",
+          "pos": "adj",
+          "zh": "声音的",
+          "morphBreakdown": "voc + -al"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "provoke",
+          "pos": "v",
+          "zh": "激怒",
+          "morphBreakdown": "pro- + voke"
+        },
+        {
+          "word": "provocation",
+          "pos": "n",
+          "zh": "挑衅",
+          "morphBreakdown": "pro- + voc + -ation"
+        },
+        {
+          "word": "provocative",
+          "pos": "adj",
+          "zh": "挑衅的",
+          "morphBreakdown": "pro- + voc + -ative"
+        },
+        {
+          "word": "vocal",
+          "pos": "adj",
+          "zh": "声音的",
+          "morphBreakdown": "voc + -al"
+        },
+        {
+          "word": "vocalize",
+          "pos": "v",
+          "zh": "发声",
+          "morphBreakdown": "voc + -al + -ize"
+        },
+        {
+          "word": "vocation",
+          "pos": "n",
+          "zh": "职业",
+          "morphBreakdown": "voc + -ation"
+        },
+        {
+          "word": "avocation",
+          "pos": "n",
+          "zh": "业余爱好",
+          "morphBreakdown": "a- + vocation"
+        },
+        {
+          "word": "advocate",
+          "pos": "v",
+          "zh": "提倡；拥护者",
+          "morphBreakdown": "ad- + voc + -ate"
+        },
+        {
+          "word": "equivocate",
+          "pos": "v",
+          "zh": "含糊其辞",
+          "morphBreakdown": "equi- + voc + -ate"
+        },
+        {
+          "word": "revoke",
+          "pos": "v",
+          "zh": "撤销",
+          "morphBreakdown": "re- + voke"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "irritate",
+          "pos": "v",
+          "zh": "激怒"
+        },
+        {
+          "word": "annoy",
+          "pos": "v",
+          "zh": "使烦恼"
+        },
+        {
+          "word": "frustrate",
+          "pos": "v",
+          "zh": "使沮丧"
+        },
+        {
+          "word": "anger",
+          "pos": "n",
+          "zh": "愤怒"
+        },
+        {
+          "word": "conflict",
+          "pos": "n",
+          "zh": "冲突"
+        },
+        {
+          "word": "debate",
+          "pos": "n",
+          "zh": "辩论"
+        },
+        {
+          "word": "controversy",
+          "pos": "n",
+          "zh": "争议"
+        },
+        {
+          "word": "offend",
+          "pos": "v",
+          "zh": "冒犯"
+        },
+        {
+          "word": "outrage",
+          "pos": "n",
+          "zh": "愤怒"
+        },
+        {
+          "word": "reaction",
+          "pos": "n",
+          "zh": "反应"
+        },
+        {
+          "word": "response",
+          "pos": "n",
+          "zh": "回应"
+        },
+        {
+          "word": "trigger",
+          "pos": "v",
+          "zh": "触发"
+        }
+      ],
+      "themeTopic": "情绪·行为",
+      "themeSummary": "该词常用于雅思阅读中描述人物行为或社会现象引发的情绪反应，如“provoking debate”或“provoking anger”；同主题词包括表示情绪、反应、冲突的词汇。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 provoke 的派生词 provocation 和 provocative 在雅思写作中可用于描述争议性话题。"
+      ],
+      "insight": "provoke 字面是“向前喊”，想象对着别人大喊大叫，自然就“激怒”了对方。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "female": {
+      "gloss": "雌性的；女性的；雌性动物；女性",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "拉丁语 femina（女人）← PIE *dʰeh₁-（吮吸；哺乳）",
+      "suffixLine": "无",
+      "evolution": "拉丁语 femina（女人）→ 古法语 femelle（女性）→ 中古英语 female，后受 male 影响拼写变为 female",
+      "parts": [],
+      "pieSummary": "PIE *dʰeh₁-（吮吸；哺乳）→ 拉丁语 femina（哺乳者，女人）",
+      "family": [
+        {
+          "word": "feminine",
+          "pos": "adj",
+          "zh": "女性的；阴性的",
+          "morphBreakdown": "femin- + -ine"
+        },
+        {
+          "word": "feminism",
+          "pos": "n",
+          "zh": "女权主义",
+          "morphBreakdown": "femin- + -ism"
+        },
+        {
+          "word": "feminist",
+          "pos": "n",
+          "zh": "女权主义者",
+          "morphBreakdown": "femin- + -ist"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "feminine",
+          "pos": "adj",
+          "zh": "女性的；阴性的",
+          "morphBreakdown": "femin- + -ine"
+        },
+        {
+          "word": "femininity",
+          "pos": "n",
+          "zh": "女性特质",
+          "morphBreakdown": "feminine + -ity"
+        },
+        {
+          "word": "feminism",
+          "pos": "n",
+          "zh": "女权主义",
+          "morphBreakdown": "femin- + -ism"
+        },
+        {
+          "word": "feminist",
+          "pos": "n",
+          "zh": "女权主义者",
+          "morphBreakdown": "femin- + -ist"
+        },
+        {
+          "word": "effeminate",
+          "pos": "adj",
+          "zh": "柔弱的；女人气的",
+          "morphBreakdown": "ex- + femin- + -ate"
+        },
+        {
+          "word": "feminize",
+          "pos": "v",
+          "zh": "使女性化",
+          "morphBreakdown": "femin- + -ize"
+        },
+        {
+          "word": "feminization",
+          "pos": "n",
+          "zh": "女性化",
+          "morphBreakdown": "feminize + -ation"
+        },
+        {
+          "word": "female",
+          "pos": "n",
+          "zh": "雌性动物；女性",
+          "morphBreakdown": "fem- + -ale（源自拉丁语 -alis）"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "gender",
+          "pos": "n",
+          "zh": "性别"
+        },
+        {
+          "word": "equality",
+          "pos": "n",
+          "zh": "平等"
+        },
+        {
+          "word": "discrimination",
+          "pos": "n",
+          "zh": "歧视"
+        },
+        {
+          "word": "sexism",
+          "pos": "n",
+          "zh": "性别歧视"
+        },
+        {
+          "word": "patriarchy",
+          "pos": "n",
+          "zh": "父权制"
+        },
+        {
+          "word": "empowerment",
+          "pos": "n",
+          "zh": "赋权"
+        },
+        {
+          "word": "stereotype",
+          "pos": "n",
+          "zh": "刻板印象"
+        },
+        {
+          "word": "bias",
+          "pos": "n",
+          "zh": "偏见"
+        },
+        {
+          "word": "workforce",
+          "pos": "n",
+          "zh": "劳动力"
+        },
+        {
+          "word": "representation",
+          "pos": "n",
+          "zh": "代表性"
+        },
+        {
+          "word": "glass ceiling",
+          "pos": "n",
+          "zh": "玻璃天花板"
+        }
+      ],
+      "themeTopic": "社会·性别平等",
+      "themeSummary": "该词常出现在雅思阅读关于性别平等、女性职场、社会角色的文章中，与 gender, equality, discrimination 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 female 与 male 拼写相似但词源不同，female 来自拉丁语 femina，male 来自拉丁语 masculus。",
+        "feminine 是形容词，femininity 是名词，feminism 是主义。"
+      ],
+      "insight": "female 与 male 拼写相近但词源不同，female 源自“哺乳者”，male 源自“男性”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "male": {
+      "gloss": "雄性",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "拉丁语 masculus（雄性），源自 PIE *mas-（男性）",
+      "suffixLine": "无",
+      "evolution": "拉丁语 masculus 缩略为 male，直接表示雄性",
+      "parts": [],
+      "pieSummary": "PIE *mas-（男性）",
+      "family": [
+        {
+          "word": "masculine",
+          "pos": "adj",
+          "zh": "男性的",
+          "morphBreakdown": "masculin(e)"
+        },
+        {
+          "word": "masculinity",
+          "pos": "n",
+          "zh": "男性气概",
+          "morphBreakdown": "masculin(e) + -ity"
+        },
+        {
+          "word": "emasculate",
+          "pos": "v",
+          "zh": "使柔弱",
+          "morphBreakdown": "e- + mascul(e) + -ate"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "male",
+          "pos": "adj",
+          "zh": "雄性的",
+          "morphBreakdown": "male"
+        },
+        {
+          "word": "male",
+          "pos": "n",
+          "zh": "雄性",
+          "morphBreakdown": "male"
+        },
+        {
+          "word": "masculine",
+          "pos": "adj",
+          "zh": "男性的",
+          "morphBreakdown": "masculin(e)"
+        },
+        {
+          "word": "masculinity",
+          "pos": "n",
+          "zh": "男性气概",
+          "morphBreakdown": "masculin(e) + -ity"
+        },
+        {
+          "word": "emasculate",
+          "pos": "v",
+          "zh": "使柔弱",
+          "morphBreakdown": "e- + mascul(e) + -ate"
+        },
+        {
+          "word": "emasculation",
+          "pos": "n",
+          "zh": "柔弱化",
+          "morphBreakdown": "e- + mascul(e) + -ation"
+        },
+        {
+          "word": "masculinist",
+          "pos": "n",
+          "zh": "男权主义者",
+          "morphBreakdown": "masculin(e) + -ist"
+        },
+        {
+          "word": "masculinize",
+          "pos": "v",
+          "zh": "使男性化",
+          "morphBreakdown": "masculin(e) + -ize"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "female",
+          "pos": "adj",
+          "zh": "雌性的"
+        },
+        {
+          "word": "gender",
+          "pos": "n",
+          "zh": "性别"
+        },
+        {
+          "word": "equality",
+          "pos": "n",
+          "zh": "平等"
+        },
+        {
+          "word": "stereotype",
+          "pos": "n",
+          "zh": "刻板印象"
+        },
+        {
+          "word": "discrimination",
+          "pos": "n",
+          "zh": "歧视"
+        },
+        {
+          "word": "feminism",
+          "pos": "n",
+          "zh": "女权主义"
+        },
+        {
+          "word": "patriarchy",
+          "pos": "n",
+          "zh": "父权制"
+        },
+        {
+          "word": "sexism",
+          "pos": "n",
+          "zh": "性别歧视"
+        },
+        {
+          "word": "biological",
+          "pos": "adj",
+          "zh": "生物的"
+        },
+        {
+          "word": "hormone",
+          "pos": "n",
+          "zh": "激素"
+        }
+      ],
+      "themeTopic": "性别·社会",
+      "themeSummary": "该词常出现在雅思阅读或写作关于性别平等、社会角色的文章中，与 female, gender, equality 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "male 与 female 拼写易混淆，注意首字母不同；male 源自拉丁语 masculus，female 源自拉丁语 femella（女性），并非由 male 加 fe- 构成。"
+      ],
+      "insight": "male 与 female 相对，词根 *mas- 与 man 同源",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "femininity": {
+      "gloss": "女性气质",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "femin- (拉丁语 femina '女人') < PIE *dʰeh₁- 'to suck, suckle'",
+      "suffixLine": "-ity 抽象名词后缀",
+      "evolution": "femin- (女人) + -ity (性质) → 女性特质",
+      "parts": [],
+      "pieSummary": "PIE *dʰeh₁- 'to suck, suckle' → 拉丁语 femina '女人' (原义'哺乳者')",
+      "family": [
+        {
+          "word": "feminine",
+          "pos": "adj",
+          "zh": "女性的",
+          "morphBreakdown": "femin- + -ine"
+        },
+        {
+          "word": "feminism",
+          "pos": "n",
+          "zh": "女权主义",
+          "morphBreakdown": "femin- + -ism"
+        },
+        {
+          "word": "feminist",
+          "pos": "n",
+          "zh": "女权主义者",
+          "morphBreakdown": "femin- + -ist"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "feminine",
+          "pos": "adj",
+          "zh": "女性的",
+          "morphBreakdown": "femin- + -ine"
+        },
+        {
+          "word": "femininity",
+          "pos": "n",
+          "zh": "女性气质",
+          "morphBreakdown": "femin- + -ity"
+        },
+        {
+          "word": "feminism",
+          "pos": "n",
+          "zh": "女权主义",
+          "morphBreakdown": "femin- + -ism"
+        },
+        {
+          "word": "feminist",
+          "pos": "n",
+          "zh": "女权主义者",
+          "morphBreakdown": "femin- + -ist"
+        },
+        {
+          "word": "female",
+          "pos": "adj",
+          "zh": "女性的",
+          "morphBreakdown": "fem- (变体) + -ale"
+        },
+        {
+          "word": "effeminate",
+          "pos": "adj",
+          "zh": "柔弱的",
+          "morphBreakdown": "ex- (出) + femin- + -ate"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "gender",
+          "pos": "n",
+          "zh": "性别"
+        },
+        {
+          "word": "equality",
+          "pos": "n",
+          "zh": "平等"
+        },
+        {
+          "word": "stereotype",
+          "pos": "n",
+          "zh": "刻板印象"
+        },
+        {
+          "word": "discrimination",
+          "pos": "n",
+          "zh": "歧视"
+        },
+        {
+          "word": "patriarchy",
+          "pos": "n",
+          "zh": "父权制"
+        },
+        {
+          "word": "masculinity",
+          "pos": "n",
+          "zh": "男性气质"
+        },
+        {
+          "word": "role",
+          "pos": "n",
+          "zh": "角色"
+        },
+        {
+          "word": "bias",
+          "pos": "n",
+          "zh": "偏见"
+        },
+        {
+          "word": "empowerment",
+          "pos": "n",
+          "zh": "赋权"
+        },
+        {
+          "word": "sexism",
+          "pos": "n",
+          "zh": "性别歧视"
+        }
+      ],
+      "themeTopic": "性别·社会平等",
+      "themeSummary": "该词常用于雅思写作/阅读中讨论性别角色、女性地位、社会平等话题，常与 gender, equality, stereotype 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 femininity 与 masculinity 对应；-ity 后缀表示抽象性质"
+      ],
+      "insight": "femin- 与 female 同源，联想 '女性哺乳' 记住词根",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "calf": {
+      "gloss": "小牛；小腿肚",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "来自古英语 cealf，源自原始日耳曼语 *kalbaz（小牛），可能源自 PIE *gelbʰ-（卷曲、团块），指小牛圆胖的身体",
+      "suffixLine": "无",
+      "evolution": "原始含义为“小牛”，后引申出解剖学上的“小腿肚”，因其形状类似小牛圆鼓鼓的肚子",
+      "parts": [],
+      "pieSummary": "PIE *gelbʰ-（卷曲、团块）",
+      "family": [
+        {
+          "word": "calve",
+          "pos": "v",
+          "zh": "产犊",
+          "morphBreakdown": "calf + -e（动词后缀）"
+        },
+        {
+          "word": "calfskin",
+          "pos": "n",
+          "zh": "小牛皮",
+          "morphBreakdown": "calf + skin"
+        },
+        {
+          "word": "calfless",
+          "pos": "adj",
+          "zh": "无小牛的",
+          "morphBreakdown": "calf + -less"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "calve",
+          "pos": "v",
+          "zh": "产犊",
+          "morphBreakdown": "calf + -e"
+        },
+        {
+          "word": "calfskin",
+          "pos": "n",
+          "zh": "小牛皮",
+          "morphBreakdown": "calf + skin"
+        },
+        {
+          "word": "calfless",
+          "pos": "adj",
+          "zh": "无小牛的",
+          "morphBreakdown": "calf + -less"
+        },
+        {
+          "word": "calving",
+          "pos": "n",
+          "zh": "产犊期",
+          "morphBreakdown": "calv(e) + -ing"
+        },
+        {
+          "word": "calf-length",
+          "pos": "adj",
+          "zh": "及小腿肚长度的",
+          "morphBreakdown": "calf + length"
+        },
+        {
+          "word": "calf-deep",
+          "pos": "adj",
+          "zh": "齐小腿肚深的",
+          "morphBreakdown": "calf + deep"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "cattle",
+          "pos": "n",
+          "zh": "牛"
+        },
+        {
+          "word": "livestock",
+          "pos": "n",
+          "zh": "家畜"
+        },
+        {
+          "word": "dairy",
+          "pos": "adj",
+          "zh": "乳制品；乳品的"
+        },
+        {
+          "word": "herd",
+          "pos": "n",
+          "zh": "兽群"
+        },
+        {
+          "word": "pasture",
+          "pos": "n",
+          "zh": "牧场"
+        },
+        {
+          "word": "ranch",
+          "pos": "n",
+          "zh": "大牧场"
+        },
+        {
+          "word": "beef",
+          "pos": "n",
+          "zh": "牛肉"
+        },
+        {
+          "word": "veal",
+          "pos": "n",
+          "zh": "小牛肉"
+        },
+        {
+          "word": "milk",
+          "pos": "other",
+          "zh": "牛奶；挤奶"
+        },
+        {
+          "word": "breed",
+          "pos": "other",
+          "zh": "繁殖；品种"
+        },
+        {
+          "word": "veterinary",
+          "pos": "adj",
+          "zh": "兽医的"
+        },
+        {
+          "word": "agriculture",
+          "pos": "n",
+          "zh": "农业"
+        }
+      ],
+      "themeTopic": "动物·农业",
+      "themeSummary": "calf 在雅思中常出现在关于畜牧业、动物生理或农业经济的阅读或听力中，与 cattle, livestock, dairy 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "calf 的复数 calves 也是常见考点；注意 calf 作为小腿肚时，与 muscle 搭配出现。"
+      ],
+      "insight": "calf 的两个意思都源于“圆鼓鼓”的形象：小牛圆胖，小腿肚也圆鼓鼓。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "calve": {
+      "gloss": "产犊",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "calf（小牛） + -ve（动词后缀，来自古英语 -ian）",
+      "suffixLine": "无",
+      "evolution": "calf（小牛）通过动词后缀 -ve 变为“生小牛”",
+      "parts": [],
+      "pieSummary": "PIE *gelbʰ-（子宫，幼崽）",
+      "family": [
+        {
+          "word": "calf",
+          "pos": "n",
+          "zh": "小牛",
+          "morphBreakdown": "calf"
+        },
+        {
+          "word": "calving",
+          "pos": "n",
+          "zh": "产犊",
+          "morphBreakdown": "calv(e) + -ing"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "calf",
+          "pos": "n",
+          "zh": "小牛",
+          "morphBreakdown": "calf"
+        },
+        {
+          "word": "calving",
+          "pos": "n",
+          "zh": "产犊",
+          "morphBreakdown": "calv(e) + -ing"
+        },
+        {
+          "word": "calved",
+          "pos": "v",
+          "zh": "产犊（过去式）",
+          "morphBreakdown": "calv(e) + -ed"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "livestock",
+          "pos": "n",
+          "zh": "牲畜"
+        },
+        {
+          "word": "breeding",
+          "pos": "n",
+          "zh": "繁殖"
+        },
+        {
+          "word": "herd",
+          "pos": "n",
+          "zh": "兽群"
+        },
+        {
+          "word": "pasture",
+          "pos": "n",
+          "zh": "牧场"
+        },
+        {
+          "word": "dairy",
+          "pos": "n",
+          "zh": "乳制品"
+        },
+        {
+          "word": "veterinary",
+          "pos": "adj",
+          "zh": "兽医的"
+        },
+        {
+          "word": "gestation",
+          "pos": "n",
+          "zh": "妊娠期"
+        },
+        {
+          "word": "wean",
+          "pos": "v",
+          "zh": "断奶"
+        },
+        {
+          "word": "ruminant",
+          "pos": "n",
+          "zh": "反刍动物"
+        },
+        {
+          "word": "husbandry",
+          "pos": "n",
+          "zh": "畜牧业"
+        }
+      ],
+      "themeTopic": "农业·畜牧业",
+      "themeSummary": "该词常用于雅思阅读或听力中关于畜牧业、动物繁殖或冰川学（冰山崩解）的场景。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 calve 也用于冰川学，指冰山崩解（ice calving）。"
+      ],
+      "insight": "calf 是“小牛”，calve 就是“生小牛”，类似 child → childing（古语）",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "calf muscle": {
+      "gloss": "小腿肌",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "calf（小牛）来自古英语 cealf，PIE *gelbʰ-（卷曲、球状）；muscle 来自拉丁语 musculus（小老鼠），PIE *muh₂s-（老鼠）",
+      "suffixLine": "无",
+      "evolution": "calf muscle 字面意为“小牛肌肉”，因小腿肌形状似小牛腹部而得名",
+      "parts": [],
+      "pieSummary": "calf: PIE *gelbʰ- (to curl, ball); muscle: PIE *muh₂s- (mouse)",
+      "family": [
+        {
+          "word": "calf",
+          "pos": "n",
+          "zh": "小牛；小腿",
+          "morphBreakdown": "calf"
+        },
+        {
+          "word": "muscle",
+          "pos": "n",
+          "zh": "肌肉",
+          "morphBreakdown": "muscle"
+        },
+        {
+          "word": "muscular",
+          "pos": "adj",
+          "zh": "肌肉发达的",
+          "morphBreakdown": "muscle + -ar"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "muscle",
+          "pos": "n",
+          "zh": "肌肉",
+          "morphBreakdown": "muscle"
+        },
+        {
+          "word": "muscular",
+          "pos": "adj",
+          "zh": "肌肉的；强壮的",
+          "morphBreakdown": "muscle + -ar"
+        },
+        {
+          "word": "musculature",
+          "pos": "n",
+          "zh": "肌肉系统",
+          "morphBreakdown": "muscle + -ature"
+        },
+        {
+          "word": "intramuscular",
+          "pos": "adj",
+          "zh": "肌肉内的",
+          "morphBreakdown": "intra- + muscular"
+        },
+        {
+          "word": "neuromuscular",
+          "pos": "adj",
+          "zh": "神经肌肉的",
+          "morphBreakdown": "neuro- + muscular"
+        },
+        {
+          "word": "muscle-bound",
+          "pos": "adj",
+          "zh": "肌肉僵硬的",
+          "morphBreakdown": "muscle + bound"
+        },
+        {
+          "word": "muscleman",
+          "pos": "n",
+          "zh": "肌肉男；打手",
+          "morphBreakdown": "muscle + man"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "tendon",
+          "pos": "n",
+          "zh": "肌腱"
+        },
+        {
+          "word": "ligament",
+          "pos": "n",
+          "zh": "韧带"
+        },
+        {
+          "word": "strain",
+          "pos": "other",
+          "zh": "拉伤；过度使用"
+        },
+        {
+          "word": "sprain",
+          "pos": "other",
+          "zh": "扭伤"
+        },
+        {
+          "word": "exercise",
+          "pos": "v",
+          "zh": "锻炼"
+        },
+        {
+          "word": "workout",
+          "pos": "n",
+          "zh": "锻炼"
+        },
+        {
+          "word": "flexibility",
+          "pos": "n",
+          "zh": "柔韧性"
+        },
+        {
+          "word": "strength",
+          "pos": "n",
+          "zh": "力量"
+        },
+        {
+          "word": "rehabilitation",
+          "pos": "n",
+          "zh": "康复"
+        },
+        {
+          "word": "injury",
+          "pos": "n",
+          "zh": "损伤"
+        },
+        {
+          "word": "physiotherapy",
+          "pos": "n",
+          "zh": "物理治疗"
+        },
+        {
+          "word": "anatomy",
+          "pos": "n",
+          "zh": "解剖学"
+        }
+      ],
+      "themeTopic": "健康·运动·人体",
+      "themeSummary": "该词常见于雅思听力Section 4（健康/解剖学讲座）或阅读中关于运动损伤、肌肉锻炼的文章。常与exercise, strain, tendon, ligament等同现。",
+      "relatedNotes": [],
+      "tips": [
+        "calf muscle 是复合词，注意 calf 的复数 calves；muscle 发音 /ˈmʌsl/，不发音的 c。"
+      ],
+      "insight": "想象小腿肌像小牛犊的肚子，鼓鼓的；muscle 本义是小老鼠，因为肌肉收缩时像老鼠在皮下跑动。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "refuse": {
+      "gloss": "拒绝；废物，垃圾",
+      "morphKind": "classical",
+      "prefixLine": "re-：回，向后，再次",
+      "rootLine": "fus-：倒，流；源自拉丁语 fundere（倒，流），PIE *gheu-（倒，浇注）",
+      "suffixLine": "无",
+      "evolution": "re-（回）+ fus-（倒）→ 倒回，拒绝接受 → 拒绝；作为名词，指被倒掉的东西 → 废物，垃圾",
+      "parts": [],
+      "pieSummary": "PIE *gheu- 意为“倒，浇注”，衍生出拉丁语 fundere（倒，流）及英语词根 fus-。",
+      "family": [
+        {
+          "word": "refusal",
+          "pos": "n",
+          "zh": "拒绝",
+          "morphBreakdown": "refuse + -al（名词后缀）"
+        },
+        {
+          "word": "confuse",
+          "pos": "v",
+          "zh": "使困惑",
+          "morphBreakdown": "con-（一起）+ fus-（倒）→ 混在一起 → 混淆"
+        },
+        {
+          "word": "diffuse",
+          "pos": "v",
+          "zh": "扩散，散布",
+          "morphBreakdown": "dis-（分开）+ fus-（倒）→ 到处倒 → 扩散"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "refuse",
+          "pos": "v",
+          "zh": "拒绝",
+          "morphBreakdown": "re- + fus- + -e"
+        },
+        {
+          "word": "refusal",
+          "pos": "n",
+          "zh": "拒绝",
+          "morphBreakdown": "refuse + -al"
+        },
+        {
+          "word": "confuse",
+          "pos": "v",
+          "zh": "使困惑",
+          "morphBreakdown": "con- + fus- + -e"
+        },
+        {
+          "word": "confusion",
+          "pos": "n",
+          "zh": "困惑，混淆",
+          "morphBreakdown": "confuse + -ion"
+        },
+        {
+          "word": "diffuse",
+          "pos": "v",
+          "zh": "扩散，散布",
+          "morphBreakdown": "dis- + fus- + -e"
+        },
+        {
+          "word": "diffusion",
+          "pos": "n",
+          "zh": "扩散，传播",
+          "morphBreakdown": "diffuse + -ion"
+        },
+        {
+          "word": "infuse",
+          "pos": "v",
+          "zh": "注入，灌输",
+          "morphBreakdown": "in- + fus- + -e"
+        },
+        {
+          "word": "infusion",
+          "pos": "n",
+          "zh": "注入，灌输",
+          "morphBreakdown": "infuse + -ion"
+        },
+        {
+          "word": "transfuse",
+          "pos": "v",
+          "zh": "输血，灌输",
+          "morphBreakdown": "trans- + fus- + -e"
+        },
+        {
+          "word": "transfusion",
+          "pos": "n",
+          "zh": "输血，灌输",
+          "morphBreakdown": "transfuse + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "waste",
+          "pos": "n",
+          "zh": "废物，浪费"
+        },
+        {
+          "word": "garbage",
+          "pos": "n",
+          "zh": "垃圾"
+        },
+        {
+          "word": "recycle",
+          "pos": "v",
+          "zh": "回收利用"
+        },
+        {
+          "word": "landfill",
+          "pos": "n",
+          "zh": "垃圾填埋场"
+        },
+        {
+          "word": "incineration",
+          "pos": "n",
+          "zh": "焚烧"
+        },
+        {
+          "word": "pollution",
+          "pos": "n",
+          "zh": "污染"
+        },
+        {
+          "word": "reject",
+          "pos": "v",
+          "zh": "拒绝"
+        },
+        {
+          "word": "decline",
+          "pos": "v",
+          "zh": "拒绝，下降"
+        },
+        {
+          "word": "deny",
+          "pos": "v",
+          "zh": "否认，拒绝"
+        },
+        {
+          "word": "oppose",
+          "pos": "v",
+          "zh": "反对"
+        }
+      ],
+      "themeTopic": "环境·污染 / 社会·决策",
+      "themeSummary": "refuse 作为名词意为“垃圾”，常出现在雅思环境类阅读或听力中，讨论废物处理、回收等；作为动词“拒绝”则常见于社会决策、个人选择等话题。",
+      "relatedNotes": [],
+      "tips": [
+        "refuse 作名词时读作 /ˈrefjuːs/，作动词时读作 /rɪˈfjuːz/，注意重音不同。",
+        "同根词 confuse, diffuse, infuse, transfuse 均含“流、倒”之意，可联想记忆。"
+      ],
+      "insight": "re-（回）+ fus-（倒）= 倒回去，即拒绝；废物就是被倒掉的东西。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "refusal": {
+      "gloss": "拒绝",
+      "morphKind": "classical",
+      "prefixLine": "re- 表示'回，向后，再次'",
+      "rootLine": "fus- 来自拉丁语 fundere '倒，流'，PIE *gheu- '倒，浇注'",
+      "suffixLine": "-al 形容词后缀，转为名词",
+      "evolution": "re-（回）+ fus-（倒）+ -al → 倒回去 → 拒绝接受",
+      "parts": [],
+      "pieSummary": "PIE *gheu- '倒，浇注'",
+      "family": [
+        {
+          "word": "refuse",
+          "pos": "v",
+          "zh": "拒绝",
+          "morphBreakdown": "re- + fuse"
+        },
+        {
+          "word": "confuse",
+          "pos": "v",
+          "zh": "使困惑",
+          "morphBreakdown": "con- + fuse"
+        },
+        {
+          "word": "diffuse",
+          "pos": "v",
+          "zh": "扩散",
+          "morphBreakdown": "dis- + fuse"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "refuse",
+          "pos": "v",
+          "zh": "拒绝",
+          "morphBreakdown": "re- + fuse"
+        },
+        {
+          "word": "refusal",
+          "pos": "n",
+          "zh": "拒绝",
+          "morphBreakdown": "refuse + -al"
+        },
+        {
+          "word": "confuse",
+          "pos": "v",
+          "zh": "使困惑",
+          "morphBreakdown": "con- + fuse"
+        },
+        {
+          "word": "confusion",
+          "pos": "n",
+          "zh": "困惑",
+          "morphBreakdown": "confuse + -ion"
+        },
+        {
+          "word": "diffuse",
+          "pos": "v",
+          "zh": "扩散",
+          "morphBreakdown": "dis- + fuse"
+        },
+        {
+          "word": "diffusion",
+          "pos": "n",
+          "zh": "扩散",
+          "morphBreakdown": "diffuse + -ion"
+        },
+        {
+          "word": "infuse",
+          "pos": "v",
+          "zh": "注入",
+          "morphBreakdown": "in- + fuse"
+        },
+        {
+          "word": "infusion",
+          "pos": "n",
+          "zh": "注入",
+          "morphBreakdown": "infuse + -ion"
+        },
+        {
+          "word": "transfuse",
+          "pos": "v",
+          "zh": "输血",
+          "morphBreakdown": "trans- + fuse"
+        },
+        {
+          "word": "transfusion",
+          "pos": "n",
+          "zh": "输血",
+          "morphBreakdown": "transfuse + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "right",
+          "pos": "n",
+          "zh": "权利"
+        },
+        {
+          "word": "deny",
+          "pos": "v",
+          "zh": "否认，拒绝"
+        },
+        {
+          "word": "reject",
+          "pos": "v",
+          "zh": "拒绝"
+        },
+        {
+          "word": "permission",
+          "pos": "n",
+          "zh": "许可"
+        },
+        {
+          "word": "consent",
+          "pos": "n",
+          "zh": "同意"
+        },
+        {
+          "word": "protest",
+          "pos": "other",
+          "zh": "抗议"
+        },
+        {
+          "word": "objection",
+          "pos": "n",
+          "zh": "反对"
+        },
+        {
+          "word": "veto",
+          "pos": "other",
+          "zh": "否决"
+        },
+        {
+          "word": "comply",
+          "pos": "v",
+          "zh": "遵守"
+        },
+        {
+          "word": "obey",
+          "pos": "v",
+          "zh": "服从"
+        }
+      ],
+      "themeTopic": "社会·权利·法律",
+      "themeSummary": "refusal 常出现在雅思阅读/写作中讨论公民权利、法律判决、抗议等场景，常与 right, deny, reject, permission 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 refusal 后接 to do，如 refusal to cooperate。"
+      ],
+      "insight": "refuse 是'倒回去'，拒绝就是'把提议倒掉'",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "refuse to do": {
+      "gloss": "拒绝做…",
+      "morphKind": "classical",
+      "prefixLine": "re-（拉丁语：向后，反对）",
+      "rootLine": "fus（拉丁语 fundere 的过去分词 fusus，意为“倾倒，流出”；源自 PIE *gheu- “倾倒”）",
+      "suffixLine": "无",
+      "evolution": "字面义“向后倾倒” → “拒绝接受” → “拒绝做某事”",
+      "parts": [],
+      "pieSummary": "PIE *gheu- “倾倒，浇注”",
+      "family": [
+        {
+          "word": "refusal",
+          "pos": "n",
+          "zh": "拒绝",
+          "morphBreakdown": "refus(e) + -al"
+        },
+        {
+          "word": "confuse",
+          "pos": "v",
+          "zh": "使困惑",
+          "morphBreakdown": "con- + fuse"
+        },
+        {
+          "word": "diffuse",
+          "pos": "v",
+          "zh": "扩散，散布",
+          "morphBreakdown": "dis- + fuse"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "refuse",
+          "pos": "v",
+          "zh": "拒绝",
+          "morphBreakdown": "re- + fuse"
+        },
+        {
+          "word": "refusal",
+          "pos": "n",
+          "zh": "拒绝",
+          "morphBreakdown": "refus(e) + -al"
+        },
+        {
+          "word": "confuse",
+          "pos": "v",
+          "zh": "使困惑",
+          "morphBreakdown": "con- + fuse"
+        },
+        {
+          "word": "confusion",
+          "pos": "n",
+          "zh": "困惑",
+          "morphBreakdown": "confus(e) + -ion"
+        },
+        {
+          "word": "diffuse",
+          "pos": "v",
+          "zh": "扩散，散布",
+          "morphBreakdown": "dis- + fuse"
+        },
+        {
+          "word": "diffusion",
+          "pos": "n",
+          "zh": "扩散，传播",
+          "morphBreakdown": "diffus(e) + -ion"
+        },
+        {
+          "word": "infuse",
+          "pos": "v",
+          "zh": "注入，灌输",
+          "morphBreakdown": "in- + fuse"
+        },
+        {
+          "word": "infusion",
+          "pos": "n",
+          "zh": "注入，灌输",
+          "morphBreakdown": "infus(e) + -ion"
+        },
+        {
+          "word": "transfuse",
+          "pos": "v",
+          "zh": "输血，灌输",
+          "morphBreakdown": "trans- + fuse"
+        },
+        {
+          "word": "transfusion",
+          "pos": "n",
+          "zh": "输血，灌输",
+          "morphBreakdown": "transfus(e) + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "reject",
+          "pos": "v",
+          "zh": "拒绝，驳回"
+        },
+        {
+          "word": "decline",
+          "pos": "v",
+          "zh": "下降；婉拒"
+        },
+        {
+          "word": "oppose",
+          "pos": "v",
+          "zh": "反对"
+        },
+        {
+          "word": "prohibit",
+          "pos": "v",
+          "zh": "禁止"
+        },
+        {
+          "word": "ban",
+          "pos": "v",
+          "zh": "禁止"
+        },
+        {
+          "word": "restrict",
+          "pos": "v",
+          "zh": "限制"
+        },
+        {
+          "word": "forbid",
+          "pos": "v",
+          "zh": "禁止"
+        },
+        {
+          "word": "deny",
+          "pos": "v",
+          "zh": "否认；拒绝"
+        },
+        {
+          "word": "withhold",
+          "pos": "v",
+          "zh": "拒绝给予"
+        },
+        {
+          "word": "abstain",
+          "pos": "v",
+          "zh": "弃权；戒除"
+        }
+      ],
+      "themeTopic": "社会·政策·态度",
+      "themeSummary": "refuse 常用于雅思写作 Task 2 讨论政府/个人拒绝某项政策或行为，以及阅读中描述反对意见。同主题词常涉及“反对”、“禁止”、“限制”等。",
+      "relatedNotes": [],
+      "tips": [
+        "refuse 后接不定式 to do，不接动名词；名词形式 refusal 后接 of 或 to do。"
+      ],
+      "insight": "refuse = 把提议“倒回去”，所以是拒绝。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "valiant": {
+      "gloss": "勇敢的；英勇的",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "源自拉丁语 valere（强壮、有价值），PIE *wal-（强壮）",
+      "suffixLine": "-ant 形容词后缀，表示“具有…性质的”",
+      "evolution": "valere（强壮）→ valiant（具有强壮性质的→勇敢的）",
+      "parts": [],
+      "pieSummary": "PIE *wal- 意为“强壮”，衍生出拉丁语 valere（强壮、有价值）",
+      "family": [
+        {
+          "word": "valour",
+          "pos": "n",
+          "zh": "英勇",
+          "morphBreakdown": "val- + -our"
+        },
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val- + -ue"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- + val- + -ent"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "valour",
+          "pos": "n",
+          "zh": "英勇",
+          "morphBreakdown": "val- + -our"
+        },
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val- + -ue"
+        },
+        {
+          "word": "valuable",
+          "pos": "adj",
+          "zh": "有价值的",
+          "morphBreakdown": "value + -able"
+        },
+        {
+          "word": "invaluable",
+          "pos": "adj",
+          "zh": "无价的",
+          "morphBreakdown": "in- + valuable"
+        },
+        {
+          "word": "valuation",
+          "pos": "n",
+          "zh": "估价",
+          "morphBreakdown": "value + -ation"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- + val- + -ent"
+        },
+        {
+          "word": "prevalence",
+          "pos": "n",
+          "zh": "流行",
+          "morphBreakdown": "pre- + val- + -ence"
+        },
+        {
+          "word": "equivalent",
+          "pos": "adj",
+          "zh": "等价的",
+          "morphBreakdown": "equi- + val- + -ent"
+        },
+        {
+          "word": "evaluate",
+          "pos": "v",
+          "zh": "评估",
+          "morphBreakdown": "e- + value + -ate"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "bravery",
+          "pos": "n",
+          "zh": "勇敢"
+        },
+        {
+          "word": "courage",
+          "pos": "n",
+          "zh": "勇气"
+        },
+        {
+          "word": "heroic",
+          "pos": "adj",
+          "zh": "英雄的"
+        },
+        {
+          "word": "gallant",
+          "pos": "adj",
+          "zh": "英勇的"
+        },
+        {
+          "word": "fearless",
+          "pos": "adj",
+          "zh": "无畏的"
+        },
+        {
+          "word": "daring",
+          "pos": "adj",
+          "zh": "大胆的"
+        },
+        {
+          "word": "bold",
+          "pos": "adj",
+          "zh": "勇敢的"
+        },
+        {
+          "word": "intrepid",
+          "pos": "adj",
+          "zh": "无畏的"
+        },
+        {
+          "word": "valor",
+          "pos": "n",
+          "zh": "英勇"
+        },
+        {
+          "word": "chivalry",
+          "pos": "n",
+          "zh": "骑士精神"
+        }
+      ],
+      "themeTopic": "人物·品质",
+      "themeSummary": "valiant 常用于雅思阅读中描述历史人物或文学角色的勇敢品质，或写作中讨论英雄主义。同主题词包括 bravery, courage, heroic 等。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 valiant 与 valour 同根，valour 是名词；value 系列词也同根，但语义已分化。"
+      ],
+      "insight": "valiant 的核心是“强壮”，勇敢源于内心的力量；同根词 value（价值）也源于此，勇敢的人有价值。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "valiantly": {
+      "gloss": "勇敢地",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "val- (拉丁语 valere 'be strong, be worthy') < PIE *wal- 'be strong'",
+      "suffixLine": "-iant (形容词后缀) + -ly (副词后缀)",
+      "evolution": "valiant (勇敢的) + -ly → 以勇敢的方式",
+      "parts": [],
+      "pieSummary": "PIE *wal- 'be strong'",
+      "family": [
+        {
+          "word": "valiant",
+          "pos": "adj",
+          "zh": "勇敢的",
+          "morphBreakdown": "val- + -iant"
+        },
+        {
+          "word": "valor",
+          "pos": "n",
+          "zh": "英勇",
+          "morphBreakdown": "val- + -or"
+        },
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val- + -ue"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "valiant",
+          "pos": "adj",
+          "zh": "勇敢的",
+          "morphBreakdown": "val- + -iant"
+        },
+        {
+          "word": "valor",
+          "pos": "n",
+          "zh": "英勇",
+          "morphBreakdown": "val- + -or"
+        },
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val- + -ue"
+        },
+        {
+          "word": "evaluate",
+          "pos": "v",
+          "zh": "评估",
+          "morphBreakdown": "e- + val- + -uate"
+        },
+        {
+          "word": "equivalent",
+          "pos": "adj",
+          "zh": "等价的",
+          "morphBreakdown": "equi- + val- + -ent"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- + val- + -ent"
+        },
+        {
+          "word": "invalid",
+          "pos": "adj",
+          "zh": "无效的",
+          "morphBreakdown": "in- + val- + -id"
+        },
+        {
+          "word": "valid",
+          "pos": "adj",
+          "zh": "有效的",
+          "morphBreakdown": "val- + -id"
+        },
+        {
+          "word": "valence",
+          "pos": "n",
+          "zh": "化合价",
+          "morphBreakdown": "val- + -ence"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "courage",
+          "pos": "n",
+          "zh": "勇气"
+        },
+        {
+          "word": "bravery",
+          "pos": "n",
+          "zh": "勇敢"
+        },
+        {
+          "word": "determination",
+          "pos": "n",
+          "zh": "决心"
+        },
+        {
+          "word": "perseverance",
+          "pos": "n",
+          "zh": "毅力"
+        },
+        {
+          "word": "resilience",
+          "pos": "n",
+          "zh": "韧性"
+        },
+        {
+          "word": "heroism",
+          "pos": "n",
+          "zh": "英雄主义"
+        },
+        {
+          "word": "fearless",
+          "pos": "adj",
+          "zh": "无畏的"
+        },
+        {
+          "word": "bold",
+          "pos": "adj",
+          "zh": "大胆的"
+        },
+        {
+          "word": "daring",
+          "pos": "adj",
+          "zh": "勇敢的"
+        },
+        {
+          "word": "gallant",
+          "pos": "adj",
+          "zh": "英勇的"
+        }
+      ],
+      "themeTopic": "人物·品质",
+      "themeSummary": "该词常用于雅思写作或口语中描述人物勇敢行为，与 courage, bravery, determination 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 valiantly 与 valley 无关，valley 来自拉丁语 vallis '山谷'。"
+      ],
+      "insight": "valiant 与 value 同源，勇敢的人有价值。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "valour": {
+      "gloss": "勇气（尤指战斗中的英勇）",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "val- (拉丁语 valēre 'be strong, be worthy') < PIE *wal- 'be strong'",
+      "suffixLine": "-our (名词后缀，表性质/状态，对应拉丁 -or)",
+      "evolution": "拉丁语 valēre '强壮' → 古法语 valor '勇气，价值' → 中古英语 valour '英勇'",
+      "parts": [],
+      "pieSummary": "PIE *wal- 'be strong'，同源词包括 wield '挥舞'、wall '城墙'（原义'坚固'）",
+      "family": [
+        {
+          "word": "valiant",
+          "pos": "adj",
+          "zh": "英勇的",
+          "morphBreakdown": "val- + -iant (形容词后缀)"
+        },
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val- + -ue (名词后缀)"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- (前) + val- + -ent (形容词后缀)"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "valour",
+          "pos": "n",
+          "zh": "勇气",
+          "morphBreakdown": "val- + -our"
+        },
+        {
+          "word": "valiant",
+          "pos": "adj",
+          "zh": "英勇的",
+          "morphBreakdown": "val- + -iant"
+        },
+        {
+          "word": "value",
+          "pos": "n",
+          "zh": "价值",
+          "morphBreakdown": "val- + -ue"
+        },
+        {
+          "word": "valuable",
+          "pos": "adj",
+          "zh": "有价值的",
+          "morphBreakdown": "value + -able"
+        },
+        {
+          "word": "invaluable",
+          "pos": "adj",
+          "zh": "无价的",
+          "morphBreakdown": "in- (不) + valuable"
+        },
+        {
+          "word": "valuation",
+          "pos": "n",
+          "zh": "估价",
+          "morphBreakdown": "value + -ation"
+        },
+        {
+          "word": "prevalent",
+          "pos": "adj",
+          "zh": "流行的",
+          "morphBreakdown": "pre- + val- + -ent"
+        },
+        {
+          "word": "prevalence",
+          "pos": "n",
+          "zh": "流行",
+          "morphBreakdown": "pre- + val- + -ence"
+        },
+        {
+          "word": "equivalent",
+          "pos": "adj",
+          "zh": "等价的",
+          "morphBreakdown": "equi- (相等) + val- + -ent"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "bravery",
+          "pos": "n",
+          "zh": "勇敢"
+        },
+        {
+          "word": "courage",
+          "pos": "n",
+          "zh": "勇气"
+        },
+        {
+          "word": "heroism",
+          "pos": "n",
+          "zh": "英雄主义"
+        },
+        {
+          "word": "gallantry",
+          "pos": "n",
+          "zh": "英勇"
+        },
+        {
+          "word": "fortitude",
+          "pos": "n",
+          "zh": "坚韧"
+        },
+        {
+          "word": "resolve",
+          "pos": "n",
+          "zh": "决心"
+        },
+        {
+          "word": "battle",
+          "pos": "n",
+          "zh": "战斗"
+        },
+        {
+          "word": "warrior",
+          "pos": "n",
+          "zh": "战士"
+        },
+        {
+          "word": "medal",
+          "pos": "n",
+          "zh": "奖章"
+        },
+        {
+          "word": "honour",
+          "pos": "n",
+          "zh": "荣誉"
+        }
+      ],
+      "themeTopic": "历史·战争·英雄主义",
+      "themeSummary": "该词常出现在雅思阅读关于历史人物、战争叙事或英雄主题的文章中，与 bravery, courage, heroism 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "美式拼写为 valor，英式拼写 valour。",
+        "注意与 value 同源，但 valour 专指精神上的勇气。"
+      ],
+      "insight": "valour 的核心是'强'，与 value '价值'同源——有价值的东西往往需要勇气去争取。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "bull": {
+      "gloss": "公牛；看涨者；胡说",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "bull-（古英语 bula，原始日耳曼语 *bullon-，拟声词根，模仿公牛吼叫）",
+      "suffixLine": "无",
+      "evolution": "原始拟声词根模仿公牛吼叫，引申为公牛，再引申为股市看涨者（比喻力量）和胡说（bullshit 的简略）",
+      "parts": [],
+      "pieSummary": "拟声词根，无明确PIE来源",
+      "family": [
+        {
+          "word": "bullish",
+          "pos": "adj",
+          "zh": "看涨的；公牛般的",
+          "morphBreakdown": "bull + -ish"
+        },
+        {
+          "word": "bullock",
+          "pos": "n",
+          "zh": "小公牛",
+          "morphBreakdown": "bull + -ock（小称）"
+        },
+        {
+          "word": "bully",
+          "pos": "adv",
+          "zh": "欺凌者；欺负",
+          "morphBreakdown": "bull + -y（名词后缀）"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "bullish",
+          "pos": "adj",
+          "zh": "看涨的；公牛般的",
+          "morphBreakdown": "bull + -ish"
+        },
+        {
+          "word": "bullock",
+          "pos": "n",
+          "zh": "小公牛",
+          "morphBreakdown": "bull + -ock"
+        },
+        {
+          "word": "bully",
+          "pos": "adv",
+          "zh": "欺凌者；欺负",
+          "morphBreakdown": "bull + -y"
+        },
+        {
+          "word": "bullfight",
+          "pos": "n",
+          "zh": "斗牛",
+          "morphBreakdown": "bull + fight"
+        },
+        {
+          "word": "bullring",
+          "pos": "n",
+          "zh": "斗牛场",
+          "morphBreakdown": "bull + ring"
+        },
+        {
+          "word": "bullshit",
+          "pos": "other",
+          "zh": "胡说；欺骗",
+          "morphBreakdown": "bull + shit"
+        },
+        {
+          "word": "bullseye",
+          "pos": "n",
+          "zh": "靶心；正中目标",
+          "morphBreakdown": "bull + eye"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "bear",
+          "pos": "n",
+          "zh": "熊；看跌者"
+        },
+        {
+          "word": "market",
+          "pos": "n",
+          "zh": "市场"
+        },
+        {
+          "word": "investor",
+          "pos": "n",
+          "zh": "投资者"
+        },
+        {
+          "word": "stock",
+          "pos": "n",
+          "zh": "股票"
+        },
+        {
+          "word": "rally",
+          "pos": "adv",
+          "zh": "反弹；回升"
+        },
+        {
+          "word": "volatility",
+          "pos": "n",
+          "zh": "波动性"
+        },
+        {
+          "word": "downturn",
+          "pos": "n",
+          "zh": "低迷；下降"
+        },
+        {
+          "word": "speculation",
+          "pos": "n",
+          "zh": "投机"
+        },
+        {
+          "word": "portfolio",
+          "pos": "n",
+          "zh": "投资组合"
+        },
+        {
+          "word": "dividend",
+          "pos": "n",
+          "zh": "股息"
+        }
+      ],
+      "themeTopic": "经济·金融",
+      "themeSummary": "bull 常出现在雅思阅读/听力关于股市、投资、经济趋势的篇章中，与 bear（熊市）、market（市场）、investor（投资者）等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "bull 作为动物名词时复数 bulls；作为股市术语时不可数；bullshit 为粗俗语，雅思慎用"
+      ],
+      "insight": "公牛冲撞有力，股市看涨者如公牛向上冲；bullshit 即公牛粪便，引申为胡说",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "bullish": {
+      "gloss": "看涨的",
+      "morphKind": "germanic",
+      "prefixLine": "无",
+      "rootLine": "bull（拉丁语 bulla '气泡'，后指公牛；PIE *bʰel- '膨胀'）",
+      "suffixLine": "-ish（形容词后缀，表示'有…特性的'）",
+      "evolution": "bull（公牛）→ 公牛般强壮的 → 股市中上涨的",
+      "parts": [],
+      "pieSummary": "PIE *bʰel- '膨胀'",
+      "family": [
+        {
+          "word": "bull",
+          "pos": "n",
+          "zh": "公牛；多头",
+          "morphBreakdown": "bull"
+        },
+        {
+          "word": "bullishness",
+          "pos": "n",
+          "zh": "看涨情绪",
+          "morphBreakdown": "bullish + -ness"
+        },
+        {
+          "word": "bullock",
+          "pos": "n",
+          "zh": "阉牛",
+          "morphBreakdown": "bull + -ock"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "bull",
+          "pos": "n",
+          "zh": "公牛；多头",
+          "morphBreakdown": "bull"
+        },
+        {
+          "word": "bullish",
+          "pos": "adj",
+          "zh": "看涨的",
+          "morphBreakdown": "bull + -ish"
+        },
+        {
+          "word": "bullishly",
+          "pos": "adv",
+          "zh": "看涨地",
+          "morphBreakdown": "bullish + -ly"
+        },
+        {
+          "word": "bullishness",
+          "pos": "n",
+          "zh": "看涨情绪",
+          "morphBreakdown": "bullish + -ness"
+        },
+        {
+          "word": "bull market",
+          "pos": "n",
+          "zh": "牛市",
+          "morphBreakdown": "bull + market"
+        },
+        {
+          "word": "bull run",
+          "pos": "n",
+          "zh": "上涨行情",
+          "morphBreakdown": "bull + run"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "bearish",
+          "pos": "adj",
+          "zh": "看跌的"
+        },
+        {
+          "word": "market",
+          "pos": "n",
+          "zh": "市场"
+        },
+        {
+          "word": "investor",
+          "pos": "n",
+          "zh": "投资者"
+        },
+        {
+          "word": "volatility",
+          "pos": "n",
+          "zh": "波动性"
+        },
+        {
+          "word": "stock",
+          "pos": "n",
+          "zh": "股票"
+        },
+        {
+          "word": "index",
+          "pos": "n",
+          "zh": "指数"
+        },
+        {
+          "word": "rally",
+          "pos": "n",
+          "zh": "反弹"
+        },
+        {
+          "word": "correction",
+          "pos": "n",
+          "zh": "回调"
+        },
+        {
+          "word": "speculation",
+          "pos": "n",
+          "zh": "投机"
+        },
+        {
+          "word": "portfolio",
+          "pos": "n",
+          "zh": "投资组合"
+        },
+        {
+          "word": "dividend",
+          "pos": "n",
+          "zh": "股息"
+        },
+        {
+          "word": "equity",
+          "pos": "n",
+          "zh": "股权"
+        }
+      ],
+      "themeTopic": "经济·金融",
+      "themeSummary": "该词常见于雅思阅读或听力中关于股市、投资、经济趋势的篇章，常与 bearish, market, investor, volatility 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 bull 与 bear 的对立记忆；bullish 常用于描述市场情绪。"
+      ],
+      "insight": "公牛向上顶，所以看涨；熊向下拍，所以看跌。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "bull market": {
+      "gloss": "牛市",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "bull（拉丁语 bulla '气泡'，后指公牛）；market（拉丁语 mercatus '市场'）",
+      "suffixLine": "无",
+      "evolution": "公牛象征力量与上升，bull market 字面为'公牛市场'，喻指股价持续上涨的市场。",
+      "parts": [],
+      "pieSummary": "bull 源自 PIE *bhel-（膨胀，鼓起）；market 源自 PIE *merk-（贸易）",
+      "family": [
+        {
+          "word": "bullish",
+          "pos": "adj",
+          "zh": "看涨的",
+          "morphBreakdown": "bull + -ish"
+        },
+        {
+          "word": "market",
+          "pos": "n",
+          "zh": "市场",
+          "morphBreakdown": "market"
+        },
+        {
+          "word": "bullion",
+          "pos": "n",
+          "zh": "金条",
+          "morphBreakdown": "bull + -ion"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "bullish",
+          "pos": "adj",
+          "zh": "看涨的",
+          "morphBreakdown": "bull + -ish"
+        },
+        {
+          "word": "bullion",
+          "pos": "n",
+          "zh": "金条",
+          "morphBreakdown": "bull + -ion"
+        },
+        {
+          "word": "market",
+          "pos": "n",
+          "zh": "市场",
+          "morphBreakdown": "market"
+        },
+        {
+          "word": "marketing",
+          "pos": "n",
+          "zh": "市场营销",
+          "morphBreakdown": "market + -ing"
+        },
+        {
+          "word": "marketable",
+          "pos": "adj",
+          "zh": "适销的",
+          "morphBreakdown": "market + -able"
+        },
+        {
+          "word": "marketer",
+          "pos": "n",
+          "zh": "市场营销人员",
+          "morphBreakdown": "market + -er"
+        },
+        {
+          "word": "supermarket",
+          "pos": "n",
+          "zh": "超市",
+          "morphBreakdown": "super- + market"
+        },
+        {
+          "word": "bull",
+          "pos": "n",
+          "zh": "公牛",
+          "morphBreakdown": "bull"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "bear market",
+          "pos": "n",
+          "zh": "熊市"
+        },
+        {
+          "word": "stock exchange",
+          "pos": "n",
+          "zh": "证券交易所"
+        },
+        {
+          "word": "investment",
+          "pos": "n",
+          "zh": "投资"
+        },
+        {
+          "word": "portfolio",
+          "pos": "n",
+          "zh": "投资组合"
+        },
+        {
+          "word": "dividend",
+          "pos": "n",
+          "zh": "股息"
+        },
+        {
+          "word": "equity",
+          "pos": "n",
+          "zh": "股权"
+        },
+        {
+          "word": "volatility",
+          "pos": "n",
+          "zh": "波动性"
+        },
+        {
+          "word": "speculation",
+          "pos": "n",
+          "zh": "投机"
+        },
+        {
+          "word": "index",
+          "pos": "n",
+          "zh": "指数"
+        },
+        {
+          "word": "rally",
+          "pos": "n",
+          "zh": "反弹"
+        },
+        {
+          "word": "correction",
+          "pos": "n",
+          "zh": "回调"
+        },
+        {
+          "word": "bubble",
+          "pos": "n",
+          "zh": "泡沫"
+        }
+      ],
+      "themeTopic": "经济·金融",
+      "themeSummary": "bull market 常出现在雅思阅读或听力关于股市、投资、经济周期的篇章中，与 bear market、stock exchange、investment 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "bull market 是固定搭配，不可直译为'公牛市场'；注意与 bear market 对比记忆。"
+      ],
+      "insight": "公牛向上顶角，对应牛市上涨；熊向下拍击，对应熊市下跌。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "posture": {
+      "gloss": "姿势；姿态；立场",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "词根：pos-（放置，来自拉丁语 pōnere \"to place\"，PIE *apo- \"off, away\" + *dhe- \"to put\"）",
+      "suffixLine": "后缀：-ture（名词后缀，表示行为、结果或状态）",
+      "evolution": "字面义为“放置的方式”，引申为身体的姿势或抽象的立场。",
+      "parts": [],
+      "pieSummary": "PIE *apo- \"off, away\" + *dhe- \"to put\" → 拉丁语 pōnere \"to place\" → 词根 pos-",
+      "family": [
+        {
+          "word": "position",
+          "pos": "n",
+          "zh": "位置；职位",
+          "morphBreakdown": "pos + -ition"
+        },
+        {
+          "word": "pose",
+          "pos": "v",
+          "zh": "摆姿势；造成",
+          "morphBreakdown": "pos + -e"
+        },
+        {
+          "word": "positive",
+          "pos": "adj",
+          "zh": "积极的；肯定的",
+          "morphBreakdown": "pos + -itive"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "position",
+          "pos": "n",
+          "zh": "位置；职位",
+          "morphBreakdown": "pos + -ition"
+        },
+        {
+          "word": "pose",
+          "pos": "v",
+          "zh": "摆姿势；造成",
+          "morphBreakdown": "pos + -e"
+        },
+        {
+          "word": "positive",
+          "pos": "adj",
+          "zh": "积极的；肯定的",
+          "morphBreakdown": "pos + -itive"
+        },
+        {
+          "word": "compose",
+          "pos": "v",
+          "zh": "组成；创作",
+          "morphBreakdown": "com- + pose"
+        },
+        {
+          "word": "composition",
+          "pos": "n",
+          "zh": "组成；作文",
+          "morphBreakdown": "com- + pos + -ition"
+        },
+        {
+          "word": "dispose",
+          "pos": "v",
+          "zh": "处理；布置",
+          "morphBreakdown": "dis- + pose"
+        },
+        {
+          "word": "disposal",
+          "pos": "n",
+          "zh": "处理；处置",
+          "morphBreakdown": "dis- + pos + -al"
+        },
+        {
+          "word": "expose",
+          "pos": "v",
+          "zh": "暴露；揭露",
+          "morphBreakdown": "ex- + pose"
+        },
+        {
+          "word": "exposure",
+          "pos": "n",
+          "zh": "暴露；曝光",
+          "morphBreakdown": "ex- + pos + -ure"
+        },
+        {
+          "word": "impose",
+          "pos": "v",
+          "zh": "强加；征税",
+          "morphBreakdown": "im- + pose"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "ergonomics",
+          "pos": "n",
+          "zh": "人体工程学"
+        },
+        {
+          "word": "back pain",
+          "pos": "n",
+          "zh": "背痛"
+        },
+        {
+          "word": "sitting",
+          "pos": "n",
+          "zh": "坐姿"
+        },
+        {
+          "word": "standing",
+          "pos": "n",
+          "zh": "站立"
+        },
+        {
+          "word": "alignment",
+          "pos": "n",
+          "zh": "对齐；校正"
+        },
+        {
+          "word": "muscle",
+          "pos": "n",
+          "zh": "肌肉"
+        },
+        {
+          "word": "spine",
+          "pos": "n",
+          "zh": "脊柱"
+        },
+        {
+          "word": "postural",
+          "pos": "adj",
+          "zh": "姿势的"
+        },
+        {
+          "word": "habit",
+          "pos": "n",
+          "zh": "习惯"
+        },
+        {
+          "word": "health",
+          "pos": "n",
+          "zh": "健康"
+        }
+      ],
+      "themeTopic": "健康·身体",
+      "themeSummary": "该词常出现在雅思健康类话题中，讨论正确姿势对身体健康的影响，常与 ergonomics（人体工程学）、back pain（背痛）等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 posture 与 pose 的区别：posture 更强调习惯性姿势，pose 指短暂摆出的姿势。"
+      ],
+      "insight": "想象一个人被“放置”在某个位置，形成特定的姿势或立场。",
       "strictEtymology": false,
       "source": "deepseek",
       "schemaVersion": 2
