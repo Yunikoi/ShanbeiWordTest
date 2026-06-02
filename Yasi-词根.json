@@ -4,7 +4,7 @@
   "storageKey": "src:Yasi.md",
   "bookId": "import-1780133567508",
   "bookTitle": "",
-  "updatedAt": "2026-06-02T09:58:35.127Z",
+  "updatedAt": "2026-06-02T09:59:09.164Z",
   "words": {
     "provide insight into": {
       "gloss": "对……提供深入见解/洞察",
@@ -203987,6 +203987,316 @@
         "embark 中的 bark 来自拉丁语 barca '小船'，与树皮无关，但同形。"
       ],
       "insight": "bark 作为树皮，与 birch（桦树）同源，桦树皮常被剥取使用。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "prohibitively expensive": {
+      "gloss": "贵得买不起",
+      "morphKind": "classical",
+      "prefixLine": "pro-：向前，在……之前",
+      "rootLine": "hibit：来自拉丁语 habere（持有，拥有）的过去分词 habitus，PIE *gʰabʰ-（给予，接收）",
+      "suffixLine": "-ive：形容词后缀，表示倾向或性质；-ly：副词后缀",
+      "evolution": "prohibit（禁止，阻止）→ prohibitively（以禁止的方式）→ prohibitively expensive（贵到阻止购买的程度）",
+      "parts": [],
+      "pieSummary": "PIE *gʰabʰ- 'to give, to receive'",
+      "family": [
+        {
+          "word": "prohibit",
+          "pos": "v",
+          "zh": "禁止",
+          "morphBreakdown": "pro- + hibit"
+        },
+        {
+          "word": "prohibition",
+          "pos": "n",
+          "zh": "禁令",
+          "morphBreakdown": "prohibit + -ion"
+        },
+        {
+          "word": "prohibitive",
+          "pos": "adj",
+          "zh": "禁止的；贵得离谱的",
+          "morphBreakdown": "prohibit + -ive"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "exhibit",
+          "pos": "v",
+          "zh": "展览；展示",
+          "morphBreakdown": "ex- + hibit"
+        },
+        {
+          "word": "exhibition",
+          "pos": "n",
+          "zh": "展览会",
+          "morphBreakdown": "exhibit + -ion"
+        },
+        {
+          "word": "inhibit",
+          "pos": "v",
+          "zh": "抑制；约束",
+          "morphBreakdown": "in- + hibit"
+        },
+        {
+          "word": "inhibition",
+          "pos": "n",
+          "zh": "抑制；顾虑",
+          "morphBreakdown": "inhibit + -ion"
+        },
+        {
+          "word": "uninhibited",
+          "pos": "adj",
+          "zh": "无拘无束的",
+          "morphBreakdown": "un- + inhibit + -ed"
+        },
+        {
+          "word": "habit",
+          "pos": "n",
+          "zh": "习惯",
+          "morphBreakdown": "habit (源自 habere)"
+        },
+        {
+          "word": "habitat",
+          "pos": "n",
+          "zh": "栖息地",
+          "morphBreakdown": "habit + -at (拉丁语过去分词)"
+        },
+        {
+          "word": "cohabit",
+          "pos": "v",
+          "zh": "同居",
+          "morphBreakdown": "co- + habit"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "affordable",
+          "pos": "adj",
+          "zh": "负担得起的"
+        },
+        {
+          "word": "exorbitant",
+          "pos": "adj",
+          "zh": "过高的"
+        },
+        {
+          "word": "skyrocket",
+          "pos": "v",
+          "zh": "猛涨"
+        },
+        {
+          "word": "inflation",
+          "pos": "n",
+          "zh": "通货膨胀"
+        },
+        {
+          "word": "cost of living",
+          "pos": "n",
+          "zh": "生活成本"
+        },
+        {
+          "word": "disposable income",
+          "pos": "n",
+          "zh": "可支配收入"
+        },
+        {
+          "word": "purchase",
+          "pos": "v",
+          "zh": "购买"
+        },
+        {
+          "word": "budget",
+          "pos": "n",
+          "zh": "预算"
+        },
+        {
+          "word": "expenditure",
+          "pos": "n",
+          "zh": "支出"
+        },
+        {
+          "word": "price hike",
+          "pos": "n",
+          "zh": "价格上涨"
+        },
+        {
+          "word": "financial burden",
+          "pos": "n",
+          "zh": "经济负担"
+        },
+        {
+          "word": "accessibility",
+          "pos": "n",
+          "zh": "可及性"
+        }
+      ],
+      "themeTopic": "经济·价格·消费",
+      "themeSummary": "该词常用于雅思写作Task 2讨论高房价、生活成本等话题，或阅读中描述商品/服务价格过高。",
+      "relatedNotes": [],
+      "tips": [
+        "prohibitively expensive 是副词+形容词结构，修饰名词时常用作定语，如 prohibitively expensive housing。"
+      ],
+      "insight": "prohibit 字面是“向前持有”，即“拦住”；加上 expensive，形象地表示“价格像路障一样拦住你”",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "prohibit": {
+      "gloss": "禁止",
+      "morphKind": "classical",
+      "prefixLine": "pro-：向前，在前面",
+      "rootLine": "hibit（来自拉丁语 habēre ‘持有，拥有’）",
+      "suffixLine": "无",
+      "evolution": "pro-（向前）+ hibit（持有）→ 向前拦住持有 → 阻止，禁止",
+      "parts": [],
+      "pieSummary": "PIE *gʰabʰ- ‘抓住，持有’",
+      "family": [
+        {
+          "word": "prohibit",
+          "pos": "v",
+          "zh": "禁止",
+          "morphBreakdown": "pro- + hibit"
+        },
+        {
+          "word": "prohibition",
+          "pos": "n",
+          "zh": "禁令",
+          "morphBreakdown": "prohibit + -ion"
+        },
+        {
+          "word": "prohibitive",
+          "pos": "adj",
+          "zh": "禁止的；价格过高的",
+          "morphBreakdown": "prohibit + -ive"
+        },
+        {
+          "word": "prohibitory",
+          "pos": "adj",
+          "zh": "禁止性的",
+          "morphBreakdown": "prohibit + -ory"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "exhibit",
+          "pos": "v",
+          "zh": "展览；展示",
+          "morphBreakdown": "ex-（向外）+ hibit（持有）"
+        },
+        {
+          "word": "exhibition",
+          "pos": "n",
+          "zh": "展览；表现",
+          "morphBreakdown": "exhibit + -ion"
+        },
+        {
+          "word": "inhibit",
+          "pos": "v",
+          "zh": "抑制；约束",
+          "morphBreakdown": "in-（向内）+ hibit（持有）"
+        },
+        {
+          "word": "inhibition",
+          "pos": "n",
+          "zh": "抑制；顾虑",
+          "morphBreakdown": "inhibit + -ion"
+        },
+        {
+          "word": "uninhibited",
+          "pos": "adj",
+          "zh": "不受抑制的；无拘无束的",
+          "morphBreakdown": "un-（不）+ inhibit + -ed"
+        },
+        {
+          "word": "habitat",
+          "pos": "n",
+          "zh": "栖息地",
+          "morphBreakdown": "habit（来自 habēre ‘居住’）+ -at"
+        },
+        {
+          "word": "habit",
+          "pos": "n",
+          "zh": "习惯",
+          "morphBreakdown": "来自拉丁语 habitus ‘状态，衣着’"
+        },
+        {
+          "word": "cohabit",
+          "pos": "v",
+          "zh": "同居",
+          "morphBreakdown": "co-（共同）+ habit（居住）"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "ban",
+          "pos": "other",
+          "zh": "禁止"
+        },
+        {
+          "word": "restrict",
+          "pos": "v",
+          "zh": "限制"
+        },
+        {
+          "word": "regulation",
+          "pos": "n",
+          "zh": "规定"
+        },
+        {
+          "word": "legislation",
+          "pos": "n",
+          "zh": "立法"
+        },
+        {
+          "word": "enforce",
+          "pos": "v",
+          "zh": "执行"
+        },
+        {
+          "word": "penalty",
+          "pos": "n",
+          "zh": "处罚"
+        },
+        {
+          "word": "compliance",
+          "pos": "n",
+          "zh": "遵守"
+        },
+        {
+          "word": "violation",
+          "pos": "n",
+          "zh": "违反"
+        },
+        {
+          "word": "sanction",
+          "pos": "n",
+          "zh": "制裁"
+        },
+        {
+          "word": "authority",
+          "pos": "n",
+          "zh": "权威；当局"
+        },
+        {
+          "word": "legal",
+          "pos": "adj",
+          "zh": "合法的"
+        },
+        {
+          "word": "illegal",
+          "pos": "adj",
+          "zh": "非法的"
+        }
+      ],
+      "themeTopic": "法律·法规",
+      "themeSummary": "该词常出现在雅思阅读中关于法律、政策、社会规范的篇章，与‘ban’, ‘restrict’, ‘regulation’等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 prohibit 后接 from doing，如 prohibit sb from doing sth。"
+      ],
+      "insight": "想象警察向前伸手（pro-）拦住你拿东西（hibit），就是禁止。",
       "strictEtymology": false,
       "source": "deepseek",
       "schemaVersion": 2
