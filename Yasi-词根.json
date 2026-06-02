@@ -4,7 +4,7 @@
   "storageKey": "src:Yasi.md",
   "bookId": "import-1780133567508",
   "bookTitle": "",
-  "updatedAt": "2026-06-02T06:43:34.593Z",
+  "updatedAt": "2026-06-02T06:47:42.463Z",
   "words": {
     "provide insight into": {
       "gloss": "对……提供深入见解/洞察",
@@ -161447,6 +161447,444 @@
         "注意 unfulfilling 是形容词，常修饰 job、life、experience 等名词。"
       ],
       "insight": "unfulfilling 的核心是“不满”，想象一个杯子永远装不满，让人空虚。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "paralyse": {
+      "gloss": "使瘫痪，使麻痹",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "希腊语 para- (在旁边) + lyein (松开) → 字面“从一侧松开”",
+      "suffixLine": "无",
+      "evolution": "希腊语 paralyein (使松弛、使无力) → 拉丁语 paralysis → 英语 paralyse",
+      "parts": [],
+      "pieSummary": "PIE *leu- (松开、分开) → 希腊语 lyein",
+      "family": [
+        {
+          "word": "paralysis",
+          "pos": "n",
+          "zh": "瘫痪",
+          "morphBreakdown": "paralys- + -sis"
+        },
+        {
+          "word": "paralytic",
+          "pos": "adj",
+          "zh": "瘫痪的",
+          "morphBreakdown": "paralyt- + -ic"
+        },
+        {
+          "word": "paralysed",
+          "pos": "adj",
+          "zh": "瘫痪的",
+          "morphBreakdown": "paralys- + -ed"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "paralysis",
+          "pos": "n",
+          "zh": "瘫痪",
+          "morphBreakdown": "paralys- + -sis"
+        },
+        {
+          "word": "paralytic",
+          "pos": "adj",
+          "zh": "瘫痪的",
+          "morphBreakdown": "paralyt- + -ic"
+        },
+        {
+          "word": "paralysed",
+          "pos": "adj",
+          "zh": "瘫痪的",
+          "morphBreakdown": "paralys- + -ed"
+        },
+        {
+          "word": "paralysing",
+          "pos": "adj",
+          "zh": "令人瘫痪的",
+          "morphBreakdown": "paralys- + -ing"
+        },
+        {
+          "word": "paralysingly",
+          "pos": "adv",
+          "zh": "瘫痪地",
+          "morphBreakdown": "paralysing + -ly"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "symptom",
+          "pos": "n",
+          "zh": "症状"
+        },
+        {
+          "word": "disorder",
+          "pos": "n",
+          "zh": "紊乱"
+        },
+        {
+          "word": "neurological",
+          "pos": "adj",
+          "zh": "神经的"
+        },
+        {
+          "word": "disability",
+          "pos": "n",
+          "zh": "残疾"
+        },
+        {
+          "word": "epidemic",
+          "pos": "n",
+          "zh": "流行病"
+        },
+        {
+          "word": "paralysis",
+          "pos": "n",
+          "zh": "瘫痪"
+        },
+        {
+          "word": "rehabilitation",
+          "pos": "n",
+          "zh": "康复"
+        },
+        {
+          "word": "therapy",
+          "pos": "n",
+          "zh": "治疗"
+        },
+        {
+          "word": "chronic",
+          "pos": "adj",
+          "zh": "慢性的"
+        },
+        {
+          "word": "impairment",
+          "pos": "n",
+          "zh": "损伤"
+        }
+      ],
+      "themeTopic": "健康·疾病",
+      "themeSummary": "该词常用于雅思阅读关于神经系统疾病、流行病影响或经济瘫痪的篇章，与症状、治疗、影响类词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意英式拼写为paralyse，美式拼写为paralyze；词根lyse来自希腊语lyein（松开）"
+      ],
+      "insight": "para- (旁边) + -lyse (松开) → 身体一侧被“松开”即瘫痪",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "rigid": {
+      "gloss": "严格的；死板的；坚硬的；固执的",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "词根 rig-（拉丁语 rigere '僵硬'，rigidus '僵硬的'），源自 PIE *reig- '绑，固定'",
+      "suffixLine": "后缀 -id（形容词后缀，表示'具有…性质的'）",
+      "evolution": "拉丁语 rigidus（僵硬的）→ 英语 rigid，字面义为'像被绑住一样无法弯曲'，引申为'严格的、固执的'",
+      "parts": [],
+      "pieSummary": "PIE *reig- '绑，固定'，同源词包括英语 right（正确，原义'直的'）、regulate（调节）、correct（纠正）等",
+      "family": [
+        {
+          "word": "correct",
+          "pos": "adj",
+          "zh": "正确的；纠正",
+          "morphBreakdown": "cor- (强调) + rect (直，来自 reg-)"
+        },
+        {
+          "word": "right",
+          "pos": "adj",
+          "zh": "正确的；右边",
+          "morphBreakdown": "来自古英语 riht，与拉丁语 rectus 同源"
+        },
+        {
+          "word": "indirect",
+          "pos": "adj",
+          "zh": "间接的",
+          "morphBreakdown": "in- (不) + direct (直的，来自 reg-)"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "rigidity",
+          "pos": "n",
+          "zh": "刚性；僵化",
+          "morphBreakdown": "rigid + -ity (名词后缀)"
+        },
+        {
+          "word": "rigidly",
+          "pos": "adv",
+          "zh": "严格地；坚硬地",
+          "morphBreakdown": "rigid + -ly (副词后缀)"
+        },
+        {
+          "word": "rigidness",
+          "pos": "n",
+          "zh": "僵硬；严格",
+          "morphBreakdown": "rigid + -ness (名词后缀)"
+        },
+        {
+          "word": "correct",
+          "pos": "other",
+          "zh": "纠正；正确的",
+          "morphBreakdown": "cor- (强调) + rect (直)"
+        },
+        {
+          "word": "direct",
+          "pos": "adj",
+          "zh": "直接的；指导",
+          "morphBreakdown": "di- (分开) + rect (直)"
+        },
+        {
+          "word": "erect",
+          "pos": "adj",
+          "zh": "直立的；建造",
+          "morphBreakdown": "e- (出) + rect (直)"
+        },
+        {
+          "word": "rectangle",
+          "pos": "n",
+          "zh": "矩形",
+          "morphBreakdown": "rect (直) + angle (角)"
+        },
+        {
+          "word": "regulate",
+          "pos": "v",
+          "zh": "调节；管理",
+          "morphBreakdown": "reg (直，规则) + -ulate (动词后缀)"
+        },
+        {
+          "word": "regime",
+          "pos": "n",
+          "zh": "政权；体制",
+          "morphBreakdown": "reg (统治) + -ime (名词后缀)"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "flexible",
+          "pos": "adj",
+          "zh": "灵活的"
+        },
+        {
+          "word": "adaptable",
+          "pos": "adj",
+          "zh": "可适应的"
+        },
+        {
+          "word": "strict",
+          "pos": "adj",
+          "zh": "严格的"
+        },
+        {
+          "word": "inflexible",
+          "pos": "adj",
+          "zh": "不灵活的"
+        },
+        {
+          "word": "bureaucratic",
+          "pos": "adj",
+          "zh": "官僚的"
+        },
+        {
+          "word": "regulation",
+          "pos": "n",
+          "zh": "规则；法规"
+        },
+        {
+          "word": "conformity",
+          "pos": "n",
+          "zh": "遵从"
+        },
+        {
+          "word": "rigidity",
+          "pos": "n",
+          "zh": "刚性；僵化"
+        },
+        {
+          "word": "hierarchy",
+          "pos": "n",
+          "zh": "等级制度"
+        },
+        {
+          "word": "dogma",
+          "pos": "n",
+          "zh": "教条"
+        },
+        {
+          "word": "orthodox",
+          "pos": "adj",
+          "zh": "正统的"
+        },
+        {
+          "word": "conservative",
+          "pos": "adj",
+          "zh": "保守的"
+        }
+      ],
+      "themeTopic": "社会·制度·规则",
+      "themeSummary": "rigid 常用于雅思阅读/写作中讨论社会制度、教育体系、公司管理等的僵化或严格性，常与 flexible、adaptable 等词对比出现。",
+      "relatedNotes": [],
+      "tips": [
+        "rigid 的反义词是 flexible，常成对出现在对比类写作中。",
+        "词根 rect/reg 表示'直、正'，与 right 同源，注意 correct 中的 rect 也是此意。"
+      ],
+      "insight": "想象一根被绑住的钢筋（rigid bar），无法弯曲，既指物理上的坚硬，也指态度上的死板。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "photosynthesis": {
+      "gloss": "光合作用",
+      "morphKind": "classical",
+      "prefixLine": "photo- 来自希腊语 phōs（光）",
+      "rootLine": "synthesis 来自希腊语 synthesis（组合），由 syn-（一起）+ thesis（放置）构成，PIE *dhe-（放置）",
+      "suffixLine": "-sis 为希腊语抽象名词后缀，表示过程",
+      "evolution": "光 + 合成 → 利用光能合成有机物的过程",
+      "parts": [],
+      "pieSummary": "PIE *bha-（照耀）→ 希腊语 phōs（光）；PIE *dhe-（放置）→ 希腊语 thesis（放置）",
+      "family": [
+        {
+          "word": "synthesis",
+          "pos": "n",
+          "zh": "合成",
+          "morphBreakdown": "syn- + thesis"
+        },
+        {
+          "word": "synthetic",
+          "pos": "adj",
+          "zh": "合成的",
+          "morphBreakdown": "syn- + thet- + -ic"
+        },
+        {
+          "word": "hypothesis",
+          "pos": "n",
+          "zh": "假说",
+          "morphBreakdown": "hypo- + thesis"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "synthesis",
+          "pos": "n",
+          "zh": "合成",
+          "morphBreakdown": "syn- + thesis"
+        },
+        {
+          "word": "synthesise",
+          "pos": "v",
+          "zh": "合成",
+          "morphBreakdown": "syn- + thes- + -ise"
+        },
+        {
+          "word": "synthetic",
+          "pos": "adj",
+          "zh": "合成的",
+          "morphBreakdown": "syn- + thet- + -ic"
+        },
+        {
+          "word": "hypothesis",
+          "pos": "n",
+          "zh": "假说",
+          "morphBreakdown": "hypo- + thesis"
+        },
+        {
+          "word": "impose",
+          "pos": "v",
+          "zh": "强加",
+          "morphBreakdown": "im- + pose"
+        },
+        {
+          "word": "expose",
+          "pos": "v",
+          "zh": "暴露",
+          "morphBreakdown": "ex- + pose"
+        },
+        {
+          "word": "oppose",
+          "pos": "v",
+          "zh": "反对",
+          "morphBreakdown": "op- + pose"
+        },
+        {
+          "word": "composite",
+          "pos": "adj",
+          "zh": "复合的",
+          "morphBreakdown": "com- + pos- + -ite"
+        },
+        {
+          "word": "imposition",
+          "pos": "n",
+          "zh": "强加",
+          "morphBreakdown": "im- + pos- + -ition"
+        },
+        {
+          "word": "opponent",
+          "pos": "n",
+          "zh": "对手",
+          "morphBreakdown": "op- + pon- + -ent"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "chlorophyll",
+          "pos": "n",
+          "zh": "叶绿素"
+        },
+        {
+          "word": "carbon dioxide",
+          "pos": "n",
+          "zh": "二氧化碳"
+        },
+        {
+          "word": "glucose",
+          "pos": "n",
+          "zh": "葡萄糖"
+        },
+        {
+          "word": "oxygen",
+          "pos": "n",
+          "zh": "氧气"
+        },
+        {
+          "word": "respiration",
+          "pos": "n",
+          "zh": "呼吸作用"
+        },
+        {
+          "word": "ecosystem",
+          "pos": "n",
+          "zh": "生态系统"
+        },
+        {
+          "word": "biomass",
+          "pos": "n",
+          "zh": "生物量"
+        },
+        {
+          "word": "solar energy",
+          "pos": "n",
+          "zh": "太阳能"
+        },
+        {
+          "word": "carbon cycle",
+          "pos": "n",
+          "zh": "碳循环"
+        },
+        {
+          "word": "climate change",
+          "pos": "n",
+          "zh": "气候变化"
+        }
+      ],
+      "themeTopic": "环境·生态",
+      "themeSummary": "光合作用是雅思阅读生物/环境类文章的核心概念，常与碳循环、气候变化、植物生理等主题共现。",
+      "relatedNotes": [],
+      "tips": [
+        "photo- 与 photography（摄影）同源，都来自光。",
+        "synthesis 与 thesis（论文）同根，都源于‘放置’。"
+      ],
+      "insight": "photo-（光）+ synthesis（合成）= 光合作用，记住光能驱动合成。",
       "strictEtymology": false,
       "source": "deepseek",
       "schemaVersion": 2
