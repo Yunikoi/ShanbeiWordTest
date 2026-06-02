@@ -14,8 +14,12 @@ export function isRootAnalysisStale(analysis) {
   return false
 }
 
+/** @type {Map<string, Record<string, import('./rootAnalysis.js').RootAnalysis>>} */
+const bookMapMem = new Map()
+
 /** @param {string} bookId */
 export function clearBookRootAnalysisCache(bookId) {
+  bookMapMem.delete(storageKey(bookId))
   localStorage.removeItem(storageKey(bookId))
 }
 
@@ -40,18 +44,26 @@ function storageKey(bookId) {
 
 /** @param {string} bookId @returns {Record<string, import('./rootAnalysis.js').RootAnalysis>} */
 function loadBookRootMap(bookId) {
+  const key = storageKey(bookId)
+  const hit = bookMapMem.get(key)
+  if (hit) return hit
   try {
-    const raw = localStorage.getItem(storageKey(bookId))
+    const raw = localStorage.getItem(key)
     const data = raw ? JSON.parse(raw) : {}
-    return data && typeof data === 'object' ? data : {}
+    const map = data && typeof data === 'object' ? data : {}
+    bookMapMem.set(key, map)
+    return map
   } catch {
-    return {}
+    bookMapMem.set(key, /** @type {Record<string, import('./rootAnalysis.js').RootAnalysis>} */ ({}))
+    return bookMapMem.get(key)
   }
 }
 
 /** @param {string} bookId @param {Record<string, import('./rootAnalysis.js').RootAnalysis>} map */
 function saveBookRootMap(bookId, map) {
-  localStorage.setItem(storageKey(bookId), JSON.stringify(map))
+  const key = storageKey(bookId)
+  bookMapMem.set(key, map)
+  localStorage.setItem(key, JSON.stringify(map))
   scheduleRootFileSync(bookId, map)
 }
 
@@ -71,10 +83,11 @@ export function importBookRootMap(bookId, wordsMap) {
   let n = 0
   for (const [word, raw] of Object.entries(wordsMap)) {
     const norm = normalizeStored(raw)
-    if (norm) {
-      map[word] = norm
-      n += 1
-    }
+    if (!norm) continue
+    const prev = normalizeStored(map[word] ?? map[word.toLowerCase()])
+    if (prev?.rootLine === norm.rootLine && prev?.gloss === norm.gloss) continue
+    map[word] = norm
+    n += 1
   }
   if (n) saveBookRootMap(bookId, map)
   return n
@@ -123,6 +136,7 @@ export function pruneRootAnalysisCache(bookId, keepWords) {
 
 /** @param {string} bookId */
 export function removeRootAnalysisCache(bookId) {
+  bookMapMem.delete(storageKey(bookId))
   localStorage.removeItem(storageKey(bookId))
 }
 
@@ -133,6 +147,18 @@ export function countCachedRootAnalysis(bookId, words) {
   let n = 0
   for (const w of words) {
     if (normalizeStored(map[w] ?? map[w.toLowerCase()])) n += 1
+  }
+  return n
+}
+
+/** @param {string} bookId @param {string[]} words */
+export function countPendingRootAnalysis(bookId, words) {
+  if (!bookId || !words.length) return 0
+  const map = loadBookRootMap(bookId)
+  let n = 0
+  for (const w of words) {
+    const stored = normalizeStored(map[w] ?? map[w.toLowerCase()])
+    if (!stored || isRootAnalysisStale(stored)) n += 1
   }
   return n
 }

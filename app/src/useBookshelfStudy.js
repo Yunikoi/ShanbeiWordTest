@@ -12,7 +12,12 @@ import {
 import { enrichQueueWithLLM } from './llmExamples.js'
 import { getLlmSettings, getRootLlmSettings } from './llmSettings.js'
 import { enrichBookEntriesWithRootLlm, getCachedRootAnalysisLlm, clearRootAnalysisCache } from './llmRootAnalysis.js'
-import { clearBookRootAnalysisCache, countCachedRootAnalysis, isRootAnalysisStale, importBookRootMap } from './rootAnalysisCache.js'
+import {
+  clearBookRootAnalysisCache,
+  countCachedRootAnalysis,
+  countPendingRootAnalysis,
+  importBookRootMap,
+} from './rootAnalysisCache.js'
 import { hasJapaneseText } from './japaneseSentence.js'
 import { loadRootsFromBoundFile, setRootFileBookTitle } from './rootFileStorage.js'
 import { attachExamples } from './ieltsSentence.js'
@@ -33,12 +38,16 @@ import { appendStudySession, loadStudyHistory } from './studyHistory.js'
  * @returns {CardEntry[]}
  */
 function mapEntriesForStudy(raw, salt) {
-  const base = raw.map((e) => ({
-    word: e.word,
-    senses: e.senses,
-    ...(e.ipa ? { ipa: e.ipa } : {}),
-  }))
-  return base.map((e) => attachExamples(attachRootAnalysis(e, base), salt))
+  return raw.map((e) =>
+    attachExamples(
+      {
+        word: e.word,
+        senses: e.senses,
+        ...(e.ipa ? { ipa: e.ipa } : {}),
+      },
+      salt,
+    ),
+  )
 }
 
 /**
@@ -207,14 +216,9 @@ export function useBookshelfStudy() {
 
     const total = bookEntries.length
     const englishEntries = bookEntries.filter((e) => !hasJapaneseText(e.word))
-    const cachedCount = countCachedRootAnalysis(
-      bookId,
-      englishEntries.map((e) => e.word),
-    )
-    const pendingCount = englishEntries.filter((e) => {
-      const stored = getCachedRootAnalysisLlm(bookId, e.word)
-      return !stored || isRootAnalysisStale(stored)
-    }).length
+    const wordList = englishEntries.map((e) => e.word)
+    const cachedCount = countCachedRootAnalysis(bookId, wordList)
+    const pendingCount = countPendingRootAnalysis(bookId, wordList)
 
     if (pendingCount === 0) {
       setRootEnrich({ running: false, done: total, total, analyzed: 0, failed: 0 })
@@ -306,13 +310,15 @@ export function useBookshelfStudy() {
     }
   }, [])
 
-  const hydrateRootsFromFile = useCallback(async (bookId) => {
-    try {
-      const fromFile = await loadRootsFromBoundFile(bookId)
-      if (fromFile) importBookRootMap(bookId, fromFile)
-    } catch {
-      /* ignore */
-    }
+  const hydrateRootsFromFile = useCallback((bookId) => {
+    void (async () => {
+      try {
+        const fromFile = await loadRootsFromBoundFile(bookId)
+        if (fromFile) importBookRootMap(bookId, fromFile)
+      } catch {
+        /* ignore */
+      }
+    })()
   }, [])
 
   const loadBook = useCallback(async (book) => {
@@ -330,16 +336,18 @@ export function useBookshelfStudy() {
       const salt = Date.now()
       const withEx = mapEntriesForStudy(raw, salt)
       setEntries(withEx)
-      enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
+      setView('book')
+      setRootFileBookTitle(book.id, book.title)
       const today = localTodayYMD()
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
       saveProgress(book.id, progMap)
       setStudyHistory(loadStudyHistory(book.id))
-      setView('book')
-      setRootFileBookTitle(book.id, book.title)
-      await hydrateRootsFromFile(book.id)
+      hydrateRootsFromFile(book.id)
       startBookRootEnrichment(book.id, withEx)
+      window.setTimeout(() => {
+        enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
+      }, 0)
       return { ok: true }
     }
 
@@ -361,16 +369,18 @@ export function useBookshelfStudy() {
       const salt = Date.now()
       const withEx = mapEntriesForStudy(parsed, salt)
       setEntries(withEx)
-      enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
+      setView('book')
+      setRootFileBookTitle(book.id, book.title)
       const today = localTodayYMD()
       const progMap = normalizeProgressMap(loadProgress(book.id), today)
       setProgress(progMap)
       saveProgress(book.id, progMap)
       setStudyHistory(loadStudyHistory(book.id))
-      setView('book')
-      setRootFileBookTitle(book.id, book.title)
-      await hydrateRootsFromFile(book.id)
+      hydrateRootsFromFile(book.id)
       startBookRootEnrichment(book.id, withEx)
+      window.setTimeout(() => {
+        enrichEntriesWithIpa(withEx).then((enriched) => setEntries(enriched))
+      }, 0)
       return { ok: true }
     } catch (e) {
       setBookLoadError(e.message ?? String(e))

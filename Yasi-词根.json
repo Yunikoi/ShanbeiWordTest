@@ -4,7 +4,7 @@
   "storageKey": "src:Yasi.md",
   "bookId": "import-1780133567508",
   "bookTitle": "",
-  "updatedAt": "2026-06-01T04:19:48.439Z",
+  "updatedAt": "2026-06-02T06:43:34.593Z",
   "words": {
     "provide insight into": {
       "gloss": "对……提供深入见解/洞察",
@@ -158397,6 +158397,3056 @@
         "ringbark 是园艺/林业术语，雅思阅读可能出现。"
       ],
       "insight": "想象用刀在树干上切一个环，剥掉一圈树皮，树木就会枯死。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "practice": {
+      "gloss": "实践；练习；惯例；执业（医生/律师）",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "pract- 源自希腊语 praktikos '实践的'，来自 prassein '做，行动'，PIE *per- (3) '生产，带来'",
+      "suffixLine": "-ice 名词后缀，表示行为或状态",
+      "evolution": "希腊语 praktikos '实践的' → 拉丁语 practica → 古法语 practique → 中古英语 practise → 现代英语 practice",
+      "parts": [],
+      "pieSummary": "PIE *per- (3) '生产，带来'，衍生出希腊语 prassein '做'，拉丁语 practicus '实践的'",
+      "family": [
+        {
+          "word": "practical",
+          "pos": "adj",
+          "zh": "实际的",
+          "morphBreakdown": "pract + -ical"
+        },
+        {
+          "word": "practitioner",
+          "pos": "n",
+          "zh": "从业者",
+          "morphBreakdown": "pract + -itioner"
+        },
+        {
+          "word": "practicable",
+          "pos": "adj",
+          "zh": "可行的",
+          "morphBreakdown": "pract + -icable"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "practical",
+          "pos": "adj",
+          "zh": "实际的",
+          "morphBreakdown": "pract + -ical"
+        },
+        {
+          "word": "practically",
+          "pos": "adv",
+          "zh": "实际上",
+          "morphBreakdown": "practical + -ly"
+        },
+        {
+          "word": "practitioner",
+          "pos": "n",
+          "zh": "从业者",
+          "morphBreakdown": "pract + -itioner"
+        },
+        {
+          "word": "practicable",
+          "pos": "adj",
+          "zh": "可行的",
+          "morphBreakdown": "pract + -icable"
+        },
+        {
+          "word": "impractical",
+          "pos": "adj",
+          "zh": "不切实际的",
+          "morphBreakdown": "im- + practical"
+        },
+        {
+          "word": "unpractical",
+          "pos": "adj",
+          "zh": "不实用的",
+          "morphBreakdown": "un- + practical"
+        },
+        {
+          "word": "practicum",
+          "pos": "n",
+          "zh": "实习课程",
+          "morphBreakdown": "pract + -icum"
+        },
+        {
+          "word": "malpractice",
+          "pos": "n",
+          "zh": "渎职",
+          "morphBreakdown": "mal- + practice"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "theory",
+          "pos": "n",
+          "zh": "理论"
+        },
+        {
+          "word": "skill",
+          "pos": "n",
+          "zh": "技能"
+        },
+        {
+          "word": "experience",
+          "pos": "n",
+          "zh": "经验"
+        },
+        {
+          "word": "training",
+          "pos": "n",
+          "zh": "训练"
+        },
+        {
+          "word": "exercise",
+          "pos": "n",
+          "zh": "练习"
+        },
+        {
+          "word": "application",
+          "pos": "n",
+          "zh": "应用"
+        },
+        {
+          "word": "knowledge",
+          "pos": "n",
+          "zh": "知识"
+        },
+        {
+          "word": "competence",
+          "pos": "n",
+          "zh": "能力"
+        },
+        {
+          "word": "profession",
+          "pos": "n",
+          "zh": "职业"
+        },
+        {
+          "word": "internship",
+          "pos": "n",
+          "zh": "实习"
+        }
+      ],
+      "themeTopic": "教育·学习",
+      "themeSummary": "practice 在雅思中常出现在教育、培训、职业场景，与 theory（理论）、skill（技能）、experience（经验）等词共现，强调实践与理论对比。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 practice 是名词/动词同形，英式英语中动词用 practise，名词用 practice；美式英语统一用 practice。",
+        "常见搭配：put into practice（付诸实践），practice makes perfect（熟能生巧）。"
+      ],
+      "insight": "practice 的核心是'做'，与 practical（实际的）同源，记住'实践出真知'即可",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "robustly": {
+      "gloss": "强有力地",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "robust (拉丁语 rōbustus '橡木的，强壮的' ← rōbur '橡木，力量'，源自 PIE *h₁reh₁- '生长' 或 *h₁rēp- '支撑'，不确定)",
+      "suffixLine": "-ly (副词后缀，来自古英语 -līce)",
+      "evolution": "robust '强壮的' + -ly → 以强壮的方式 → 强有力地",
+      "parts": [],
+      "pieSummary": "PIE *h₁reh₁- '生长' 或 *h₁rēp- '支撑'，不确定",
+      "family": [
+        {
+          "word": "robust",
+          "pos": "adj",
+          "zh": "强壮的，稳健的",
+          "morphBreakdown": "robust"
+        },
+        {
+          "word": "robustness",
+          "pos": "n",
+          "zh": "强壮，稳健",
+          "morphBreakdown": "robust + -ness"
+        },
+        {
+          "word": "corroborate",
+          "pos": "v",
+          "zh": "证实，支持",
+          "morphBreakdown": "cor- + robor + -ate"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "robust",
+          "pos": "adj",
+          "zh": "强壮的，稳健的",
+          "morphBreakdown": "robust"
+        },
+        {
+          "word": "robustness",
+          "pos": "n",
+          "zh": "强壮，稳健",
+          "morphBreakdown": "robust + -ness"
+        },
+        {
+          "word": "corroborate",
+          "pos": "v",
+          "zh": "证实，支持",
+          "morphBreakdown": "cor- + robor + -ate"
+        },
+        {
+          "word": "corroboration",
+          "pos": "n",
+          "zh": "证实，证据",
+          "morphBreakdown": "corroborate + -ion"
+        },
+        {
+          "word": "corroborative",
+          "pos": "adj",
+          "zh": "证实的，支持的",
+          "morphBreakdown": "corroborate + -ive"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "economy",
+          "pos": "n",
+          "zh": "经济"
+        },
+        {
+          "word": "growth",
+          "pos": "n",
+          "zh": "增长"
+        },
+        {
+          "word": "performance",
+          "pos": "n",
+          "zh": "表现"
+        },
+        {
+          "word": "stable",
+          "pos": "adj",
+          "zh": "稳定的"
+        },
+        {
+          "word": "sustainable",
+          "pos": "adj",
+          "zh": "可持续的"
+        },
+        {
+          "word": "expansion",
+          "pos": "n",
+          "zh": "扩张"
+        },
+        {
+          "word": "recession",
+          "pos": "n",
+          "zh": "衰退"
+        },
+        {
+          "word": "inflation",
+          "pos": "n",
+          "zh": "通货膨胀"
+        },
+        {
+          "word": "GDP",
+          "pos": "n",
+          "zh": "国内生产总值"
+        },
+        {
+          "word": "investment",
+          "pos": "n",
+          "zh": "投资"
+        },
+        {
+          "word": "trade",
+          "pos": "n",
+          "zh": "贸易"
+        },
+        {
+          "word": "market",
+          "pos": "n",
+          "zh": "市场"
+        }
+      ],
+      "themeTopic": "经济·发展",
+      "themeSummary": "robustly 常用于雅思写作和阅读中描述经济增长、市场表现等，常与 economy, growth, performance 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "robustly 是副词，修饰动词，如 grow robustly；注意与 strongly 同义但更正式。"
+      ],
+      "insight": "robust 原指橡木般坚硬，-ly 加副词，想象橡木的坚韧支撑起稳健的经济。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "sum up": {
+      "gloss": "总结；概括",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "sum (拉丁语 summa '总和'，源自 super '在上面'，PIE *uper '在上')",
+      "suffixLine": "无",
+      "evolution": "sum 本义为'总和'，up 加强语气，字面'把总数加起来'，引申为'总结'",
+      "parts": [],
+      "pieSummary": "PIE *uper '在上'，衍生拉丁语 super '在上面'，进而 summa '总和'",
+      "family": [
+        {
+          "word": "summary",
+          "pos": "n",
+          "zh": "总结；摘要",
+          "morphBreakdown": "summ + -ary"
+        },
+        {
+          "word": "assume",
+          "pos": "v",
+          "zh": "假设；承担",
+          "morphBreakdown": "ad- + sume"
+        },
+        {
+          "word": "assimilate",
+          "pos": "v",
+          "zh": "吸收；同化",
+          "morphBreakdown": "ad- + simil + -ate"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "sum",
+          "pos": "n",
+          "zh": "总数；金额",
+          "morphBreakdown": "sum"
+        },
+        {
+          "word": "summary",
+          "pos": "n",
+          "zh": "总结；摘要",
+          "morphBreakdown": "summ + -ary"
+        },
+        {
+          "word": "summarize",
+          "pos": "v",
+          "zh": "总结；概述",
+          "morphBreakdown": "summary + -ize"
+        },
+        {
+          "word": "summation",
+          "pos": "n",
+          "zh": "总和；总结",
+          "morphBreakdown": "summ + -ation"
+        },
+        {
+          "word": "assume",
+          "pos": "v",
+          "zh": "假设；承担",
+          "morphBreakdown": "ad- + sume"
+        },
+        {
+          "word": "assumption",
+          "pos": "n",
+          "zh": "假设；承担",
+          "morphBreakdown": "ad- + sumpt + -ion"
+        },
+        {
+          "word": "consume",
+          "pos": "v",
+          "zh": "消耗；消费",
+          "morphBreakdown": "con- + sume"
+        },
+        {
+          "word": "consumption",
+          "pos": "n",
+          "zh": "消费；消耗",
+          "morphBreakdown": "con- + sumpt + -ion"
+        },
+        {
+          "word": "resume",
+          "pos": "v",
+          "zh": "重新开始；恢复",
+          "morphBreakdown": "re- + sume"
+        },
+        {
+          "word": "presume",
+          "pos": "v",
+          "zh": "假定；推测",
+          "morphBreakdown": "pre- + sume"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "conclude",
+          "pos": "v",
+          "zh": "得出结论"
+        },
+        {
+          "word": "overall",
+          "pos": "adj",
+          "zh": "总体的；总体上"
+        },
+        {
+          "word": "in summary",
+          "pos": "adj",
+          "zh": "总之"
+        },
+        {
+          "word": "trend",
+          "pos": "n",
+          "zh": "趋势"
+        },
+        {
+          "word": "significant",
+          "pos": "adj",
+          "zh": "显著的"
+        },
+        {
+          "word": "data",
+          "pos": "n",
+          "zh": "数据"
+        },
+        {
+          "word": "analysis",
+          "pos": "n",
+          "zh": "分析"
+        },
+        {
+          "word": "comparison",
+          "pos": "n",
+          "zh": "比较"
+        },
+        {
+          "word": "illustrate",
+          "pos": "v",
+          "zh": "说明"
+        },
+        {
+          "word": "demonstrate",
+          "pos": "v",
+          "zh": "展示"
+        },
+        {
+          "word": "highlight",
+          "pos": "v",
+          "zh": "强调"
+        },
+        {
+          "word": "key point",
+          "pos": "other",
+          "zh": "关键点"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "在雅思写作Task 1中常用来描述图表数据的总结，Task 2中用于概括论点。常与conclude, overall, in summary等共现。",
+      "relatedNotes": [],
+      "tips": [
+        "sum up 是短语动词，常用于口语和写作；名词形式为 summary。"
+      ],
+      "insight": "想象把一堆数字加起来得到总和，就是总结。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "correct": {
+      "gloss": "正确的；对的；纠正；改正",
+      "morphKind": "classical",
+      "prefixLine": "cor- (com- 变体) 表示「一起，完全」",
+      "rootLine": "rect (拉丁 regere 的过去分词 rectus) 意为「直，正，统治」；源自 PIE *reg- 「直，统治」",
+      "suffixLine": "无",
+      "evolution": "cor- + rect → 完全弄直 → 使正确，纠正",
+      "parts": [],
+      "pieSummary": "PIE *reg- 「直，统治」，衍生出拉丁 regere (统治，引导) 及 rectus (直的，正确的)。",
+      "family": [
+        {
+          "word": "right",
+          "pos": "adj",
+          "zh": "正确的；右边",
+          "morphBreakdown": "PIE *reg- → 日耳曼 *rehtaz → right"
+        },
+        {
+          "word": "direct",
+          "pos": "adj",
+          "zh": "直接的；指导",
+          "morphBreakdown": "di- (分开) + rect → 分开引导 → 指导"
+        },
+        {
+          "word": "indirect",
+          "pos": "adj",
+          "zh": "间接的",
+          "morphBreakdown": "in- (不) + direct → 不直接的"
+        },
+        {
+          "word": "rigid",
+          "pos": "adj",
+          "zh": "僵硬的；严格的",
+          "morphBreakdown": "拉丁 rigidus (僵硬的) ← rigēre (僵硬) ← PIE *reg-"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "correction",
+          "pos": "n",
+          "zh": "改正；纠正",
+          "morphBreakdown": "correct + -ion"
+        },
+        {
+          "word": "corrective",
+          "pos": "adj",
+          "zh": "纠正的；矫正的",
+          "morphBreakdown": "correct + -ive"
+        },
+        {
+          "word": "correctly",
+          "pos": "adv",
+          "zh": "正确地",
+          "morphBreakdown": "correct + -ly"
+        },
+        {
+          "word": "incorrect",
+          "pos": "adj",
+          "zh": "不正确的",
+          "morphBreakdown": "in- (不) + correct"
+        },
+        {
+          "word": "rectify",
+          "pos": "v",
+          "zh": "纠正；改正",
+          "morphBreakdown": "rect + -ify (使成为)"
+        },
+        {
+          "word": "rectangle",
+          "pos": "n",
+          "zh": "矩形",
+          "morphBreakdown": "rect + angle (角) → 直角图形"
+        },
+        {
+          "word": "director",
+          "pos": "n",
+          "zh": "导演；主管",
+          "morphBreakdown": "direct + -or (人)"
+        },
+        {
+          "word": "direction",
+          "pos": "n",
+          "zh": "方向；指导",
+          "morphBreakdown": "direct + -ion"
+        },
+        {
+          "word": "erect",
+          "pos": "other",
+          "zh": "竖立；直立的",
+          "morphBreakdown": "e- (出) + rect → 使直起来"
+        },
+        {
+          "word": "regulate",
+          "pos": "v",
+          "zh": "调节；管理",
+          "morphBreakdown": "拉丁 regulare ← regula (规则) ← regere"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "error",
+          "pos": "n",
+          "zh": "错误"
+        },
+        {
+          "word": "accuracy",
+          "pos": "n",
+          "zh": "准确性"
+        },
+        {
+          "word": "revise",
+          "pos": "v",
+          "zh": "修订"
+        },
+        {
+          "word": "modify",
+          "pos": "v",
+          "zh": "修改"
+        },
+        {
+          "word": "adjust",
+          "pos": "v",
+          "zh": "调整"
+        },
+        {
+          "word": "improve",
+          "pos": "v",
+          "zh": "改善"
+        },
+        {
+          "word": "flaw",
+          "pos": "n",
+          "zh": "缺陷"
+        },
+        {
+          "word": "precise",
+          "pos": "adj",
+          "zh": "精确的"
+        },
+        {
+          "word": "valid",
+          "pos": "adj",
+          "zh": "有效的"
+        },
+        {
+          "word": "verify",
+          "pos": "v",
+          "zh": "验证"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "correct 在雅思阅读和写作中常出现在「纠错」「正确性」相关语境，如学术论文修改、数据分析准确性。同主题词包括 error, accuracy, revise, modify 等。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 correct 的动词用法：correct a mistake (纠正错误)；形容词：correct answer (正确答案)。",
+        "同根词 right 与 correct 同源，但 right 更口语化。",
+        "rectify 是更正式的「纠正」，常用于学术或法律语境。"
+      ],
+      "insight": "cor- + rect = 一起拉直 → 纠正错误；同根词 right 也是「直」→「正确」。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "intellectual": {
+      "gloss": "智力的；知识的；知识分子",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "词根：lect-（选择，收集），源自拉丁语 legere（选择，阅读），PIE *leg-（收集）",
+      "suffixLine": "后缀：-ual（形容词后缀，表示“…的”），-ual 来自拉丁语 -alis 的变体",
+      "evolution": "intellect（智力）+ -ual → 与智力相关的",
+      "parts": [],
+      "pieSummary": "PIE *leg-（收集），派生拉丁语 legere（选择，阅读），再派生出 intellectus（理解力）",
+      "family": [
+        {
+          "word": "intellect",
+          "pos": "n",
+          "zh": "智力",
+          "morphBreakdown": "intel- + lect"
+        },
+        {
+          "word": "intelligence",
+          "pos": "n",
+          "zh": "智力；情报",
+          "morphBreakdown": "intel- + lig- + -ence"
+        },
+        {
+          "word": "intelligent",
+          "pos": "adj",
+          "zh": "聪明的",
+          "morphBreakdown": "intel- + lig- + -ent"
+        },
+        {
+          "word": "intelligible",
+          "pos": "adj",
+          "zh": "可理解的",
+          "morphBreakdown": "intel- + lig- + -ible"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "intellect",
+          "pos": "n",
+          "zh": "智力",
+          "morphBreakdown": "intel- + lect"
+        },
+        {
+          "word": "intellectualism",
+          "pos": "n",
+          "zh": "理智主义",
+          "morphBreakdown": "intellectual + -ism"
+        },
+        {
+          "word": "intellectually",
+          "pos": "adv",
+          "zh": "智力上",
+          "morphBreakdown": "intellectual + -ly"
+        },
+        {
+          "word": "intelligence",
+          "pos": "n",
+          "zh": "智力；情报",
+          "morphBreakdown": "intel- + lig- + -ence"
+        },
+        {
+          "word": "intelligent",
+          "pos": "adj",
+          "zh": "聪明的",
+          "morphBreakdown": "intel- + lig- + -ent"
+        },
+        {
+          "word": "intelligentsia",
+          "pos": "n",
+          "zh": "知识阶层",
+          "morphBreakdown": "intelligent + -sia"
+        },
+        {
+          "word": "intelligible",
+          "pos": "adj",
+          "zh": "可理解的",
+          "morphBreakdown": "intel- + lig- + -ible"
+        },
+        {
+          "word": "unintelligible",
+          "pos": "adj",
+          "zh": "难以理解的",
+          "morphBreakdown": "un- + intelligible"
+        },
+        {
+          "word": "elect",
+          "pos": "v",
+          "zh": "选举",
+          "morphBreakdown": "e- + lect"
+        },
+        {
+          "word": "select",
+          "pos": "v",
+          "zh": "选择",
+          "morphBreakdown": "se- + lect"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "cognition",
+          "pos": "n",
+          "zh": "认知"
+        },
+        {
+          "word": "knowledge",
+          "pos": "n",
+          "zh": "知识"
+        },
+        {
+          "word": "academic",
+          "pos": "adj",
+          "zh": "学术的"
+        },
+        {
+          "word": "scholar",
+          "pos": "n",
+          "zh": "学者"
+        },
+        {
+          "word": "curriculum",
+          "pos": "n",
+          "zh": "课程"
+        },
+        {
+          "word": "pedagogy",
+          "pos": "n",
+          "zh": "教学法"
+        },
+        {
+          "word": "reasoning",
+          "pos": "n",
+          "zh": "推理"
+        },
+        {
+          "word": "comprehension",
+          "pos": "n",
+          "zh": "理解"
+        },
+        {
+          "word": "analysis",
+          "pos": "n",
+          "zh": "分析"
+        },
+        {
+          "word": "critical thinking",
+          "pos": "n",
+          "zh": "批判性思维"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "该词常出现在雅思阅读关于教育、智力发展、学术讨论的文章中，与认知、学习、知识等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 intellectual 作名词时指“知识分子”，常与 academic, scholar 同现；派生词 intellect 强调智力本身，intelligence 更常用。"
+      ],
+      "insight": "intellectual 的核心是“选择、阅读”能力，即智力；记住“lect”是“选/读”，智力就是能筛选信息。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "adornment": {
+      "gloss": "装饰品",
+      "morphKind": "classical",
+      "prefixLine": "ad-（朝向，加强）",
+      "rootLine": "orn（装饰），源自拉丁语 ornare（装饰），PIE *ar-（装配，适合）",
+      "suffixLine": "-ment（名词后缀，表示行为结果或物）",
+      "evolution": "adorn（装饰）+ -ment → 装饰的行为或装饰品",
+      "parts": [],
+      "pieSummary": "PIE *ar-（装配，适合）",
+      "family": [
+        {
+          "word": "adorn",
+          "pos": "v",
+          "zh": "装饰",
+          "morphBreakdown": "ad- + orn"
+        },
+        {
+          "word": "ornamental",
+          "pos": "adj",
+          "zh": "装饰性的",
+          "morphBreakdown": "ornament + -al"
+        },
+        {
+          "word": "ornament",
+          "pos": "n",
+          "zh": "装饰物",
+          "morphBreakdown": "orn + -ament"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "adorn",
+          "pos": "v",
+          "zh": "装饰",
+          "morphBreakdown": "ad- + orn"
+        },
+        {
+          "word": "ornament",
+          "pos": "n",
+          "zh": "装饰物",
+          "morphBreakdown": "orn + -ament"
+        },
+        {
+          "word": "ornamental",
+          "pos": "adj",
+          "zh": "装饰性的",
+          "morphBreakdown": "ornament + -al"
+        },
+        {
+          "word": "ornamentation",
+          "pos": "n",
+          "zh": "装饰，装饰品",
+          "morphBreakdown": "ornament + -ation"
+        },
+        {
+          "word": "ornate",
+          "pos": "adj",
+          "zh": "华丽的",
+          "morphBreakdown": "orn + -ate"
+        },
+        {
+          "word": "suborn",
+          "pos": "v",
+          "zh": "唆使，收买",
+          "morphBreakdown": "sub- + orn"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "aesthetic",
+          "pos": "adj",
+          "zh": "审美的"
+        },
+        {
+          "word": "craftsmanship",
+          "pos": "n",
+          "zh": "工艺"
+        },
+        {
+          "word": "embellish",
+          "pos": "v",
+          "zh": "美化"
+        },
+        {
+          "word": "intricate",
+          "pos": "adj",
+          "zh": "复杂的"
+        },
+        {
+          "word": "motif",
+          "pos": "n",
+          "zh": "图案，主题"
+        },
+        {
+          "word": "ornamentation",
+          "pos": "n",
+          "zh": "装饰"
+        },
+        {
+          "word": "pattern",
+          "pos": "n",
+          "zh": "图案"
+        },
+        {
+          "word": "symmetry",
+          "pos": "n",
+          "zh": "对称"
+        },
+        {
+          "word": "texture",
+          "pos": "n",
+          "zh": "质地"
+        },
+        {
+          "word": "visual",
+          "pos": "adj",
+          "zh": "视觉的"
+        }
+      ],
+      "themeTopic": "艺术·装饰",
+      "themeSummary": "该词常出现在雅思阅读中关于建筑、艺术、手工艺等话题，描述物品或空间的装饰特征。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 adornment 和 ornament 的区别：adornment 更强调装饰的行为或结果，ornament 多指具体的装饰物。"
+      ],
+      "insight": "adorn 是“装饰”，-ment 是“结果/物”，合起来就是“装饰品”。同根词 ornamental 也是“装饰性的”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "plague": {
+      "gloss": "瘟疫",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "来自拉丁语 plaga（打击，伤口），源自 PIE *plāk-（打击）",
+      "suffixLine": "无",
+      "evolution": "字面义为“打击”，引申为“瘟疫”这种灾难性打击",
+      "parts": [],
+      "pieSummary": "PIE *plāk- 意为“打击”",
+      "family": [
+        {
+          "word": "plague",
+          "pos": "n",
+          "zh": "瘟疫",
+          "morphBreakdown": "plag- + -ue"
+        },
+        {
+          "word": "plagiarism",
+          "pos": "n",
+          "zh": "剽窃",
+          "morphBreakdown": "plagi- + -arism"
+        },
+        {
+          "word": "plagiarize",
+          "pos": "v",
+          "zh": "剽窃",
+          "morphBreakdown": "plagi- + -arize"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "plague",
+          "pos": "n",
+          "zh": "瘟疫",
+          "morphBreakdown": "plag- + -ue"
+        },
+        {
+          "word": "plague",
+          "pos": "v",
+          "zh": "折磨，使苦恼",
+          "morphBreakdown": "plag- + -ue"
+        },
+        {
+          "word": "plagiarize",
+          "pos": "v",
+          "zh": "剽窃",
+          "morphBreakdown": "plagi- + -arize"
+        },
+        {
+          "word": "plagiarism",
+          "pos": "n",
+          "zh": "剽窃行为",
+          "morphBreakdown": "plagi- + -arism"
+        },
+        {
+          "word": "plagiarist",
+          "pos": "n",
+          "zh": "剽窃者",
+          "morphBreakdown": "plagi- + -arist"
+        },
+        {
+          "word": "plagiaristic",
+          "pos": "adj",
+          "zh": "剽窃的",
+          "morphBreakdown": "plagi- + -aristic"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "epidemic",
+          "pos": "n",
+          "zh": "流行病"
+        },
+        {
+          "word": "pandemic",
+          "pos": "n",
+          "zh": "大流行病"
+        },
+        {
+          "word": "outbreak",
+          "pos": "n",
+          "zh": "爆发"
+        },
+        {
+          "word": "infection",
+          "pos": "n",
+          "zh": "感染"
+        },
+        {
+          "word": "contagious",
+          "pos": "adj",
+          "zh": "传染性的"
+        },
+        {
+          "word": "quarantine",
+          "pos": "n",
+          "zh": "隔离"
+        },
+        {
+          "word": "vaccine",
+          "pos": "n",
+          "zh": "疫苗"
+        },
+        {
+          "word": "mortality",
+          "pos": "n",
+          "zh": "死亡率"
+        },
+        {
+          "word": "symptom",
+          "pos": "n",
+          "zh": "症状"
+        },
+        {
+          "word": "transmit",
+          "pos": "v",
+          "zh": "传播"
+        },
+        {
+          "word": "virus",
+          "pos": "n",
+          "zh": "病毒"
+        },
+        {
+          "word": "bacteria",
+          "pos": "n",
+          "zh": "细菌"
+        }
+      ],
+      "themeTopic": "健康·疾病",
+      "themeSummary": "该词常用于雅思阅读或听力中关于流行病、历史瘟疫（如黑死病）或现代传染病（如COVID-19）的篇章，常与 outbreak, epidemic, pandemic, infection 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 plague 作动词时意为“折磨”，如 be plagued by problems。",
+        "同根词 plagiarize 源自“打击”引申为“抄袭”，因为抄袭是对原创的打击。"
+      ],
+      "insight": "想象瘟疫像一记重拳打击人类社会。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "crossbreed": {
+      "gloss": "杂交",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "cross（交叉）+ breed（繁殖）",
+      "suffixLine": "无",
+      "evolution": "cross（交叉）+ breed（繁殖）→ 不同品种交叉繁殖",
+      "parts": [],
+      "family": [
+        {
+          "word": "crossbreed",
+          "pos": "other",
+          "zh": "杂交",
+          "morphBreakdown": "cross + breed"
+        },
+        {
+          "word": "interbreed",
+          "pos": "v",
+          "zh": "杂交繁殖",
+          "morphBreakdown": "inter- + breed"
+        },
+        {
+          "word": "cross-pollinate",
+          "pos": "v",
+          "zh": "异花传粉",
+          "morphBreakdown": "cross + pollinate"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "crossbreed",
+          "pos": "n",
+          "zh": "杂交品种",
+          "morphBreakdown": "cross + breed"
+        },
+        {
+          "word": "crossbreed",
+          "pos": "v",
+          "zh": "使杂交",
+          "morphBreakdown": "cross + breed"
+        },
+        {
+          "word": "breed",
+          "pos": "v",
+          "zh": "繁殖",
+          "morphBreakdown": "breed"
+        },
+        {
+          "word": "breeder",
+          "pos": "n",
+          "zh": "饲养员",
+          "morphBreakdown": "breed + -er"
+        },
+        {
+          "word": "breeding",
+          "pos": "n",
+          "zh": "繁殖",
+          "morphBreakdown": "breed + -ing"
+        },
+        {
+          "word": "cross",
+          "pos": "n",
+          "zh": "交叉",
+          "morphBreakdown": "cross"
+        },
+        {
+          "word": "crossing",
+          "pos": "n",
+          "zh": "杂交",
+          "morphBreakdown": "cross + -ing"
+        },
+        {
+          "word": "cross-fertilization",
+          "pos": "n",
+          "zh": "异花受精",
+          "morphBreakdown": "cross + fertilization"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "gene",
+          "pos": "n",
+          "zh": "基因"
+        },
+        {
+          "word": "genetic",
+          "pos": "adj",
+          "zh": "遗传的"
+        },
+        {
+          "word": "hybrid",
+          "pos": "n",
+          "zh": "杂种"
+        },
+        {
+          "word": "variety",
+          "pos": "n",
+          "zh": "品种"
+        },
+        {
+          "word": "trait",
+          "pos": "n",
+          "zh": "性状"
+        },
+        {
+          "word": "offspring",
+          "pos": "n",
+          "zh": "后代"
+        },
+        {
+          "word": "selective breeding",
+          "pos": "n",
+          "zh": "选择育种"
+        },
+        {
+          "word": "mutation",
+          "pos": "n",
+          "zh": "突变"
+        },
+        {
+          "word": "chromosome",
+          "pos": "n",
+          "zh": "染色体"
+        },
+        {
+          "word": "DNA",
+          "pos": "n",
+          "zh": "DNA"
+        }
+      ],
+      "themeTopic": "生物·遗传",
+      "themeSummary": "该词常见于雅思阅读中关于遗传学、农业或生物技术的文章，常与基因、品种等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "crossbreed 是动词也是名词，注意词性。"
+      ],
+      "insight": "cross 像十字交叉，breed 是繁殖，合起来就是杂交。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "coincidental": {
+      "gloss": "巧合的；同时发生的",
+      "morphKind": "classical",
+      "prefixLine": "co-：共同，一起（来自拉丁语 cum）",
+      "rootLine": "cid-：落下，发生（来自拉丁语 cadere，PIE *kad-）",
+      "suffixLine": "-al：形容词后缀，表示“…的”；-ent 为形容词后缀（incident 中的 -ent），此处 coincidental 由 coincidence + -al 构成",
+      "evolution": "co-（一起）+ incidere（落下，发生）+ -al → 一起落下的 → 同时发生的 → 巧合的",
+      "parts": [],
+      "pieSummary": "PIE *kad- 意为“落下”",
+      "family": [
+        {
+          "word": "coincide",
+          "pos": "v",
+          "zh": "同时发生；巧合",
+          "morphBreakdown": "co- + -incide (来自 incidere)"
+        },
+        {
+          "word": "coincidence",
+          "pos": "n",
+          "zh": "巧合",
+          "morphBreakdown": "co- + incidence"
+        },
+        {
+          "word": "incident",
+          "pos": "n",
+          "zh": "事件；事故",
+          "morphBreakdown": "in- (进入) + cid- (落下) + -ent"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "coincide",
+          "pos": "v",
+          "zh": "同时发生；巧合",
+          "morphBreakdown": "co- + -incide (来自 incidere)"
+        },
+        {
+          "word": "coincidence",
+          "pos": "n",
+          "zh": "巧合",
+          "morphBreakdown": "co- + incidence"
+        },
+        {
+          "word": "incident",
+          "pos": "n",
+          "zh": "事件；事故",
+          "morphBreakdown": "in- + cid- + -ent"
+        },
+        {
+          "word": "incidence",
+          "pos": "n",
+          "zh": "发生率；影响范围",
+          "morphBreakdown": "in- + cid- + -ence"
+        },
+        {
+          "word": "incidental",
+          "pos": "adj",
+          "zh": "附带的；偶然的",
+          "morphBreakdown": "incident + -al"
+        },
+        {
+          "word": "accident",
+          "pos": "n",
+          "zh": "事故；意外",
+          "morphBreakdown": "ac- (ad- 变体) + cid- + -ent"
+        },
+        {
+          "word": "accidental",
+          "pos": "adj",
+          "zh": "意外的；偶然的",
+          "morphBreakdown": "accident + -al"
+        },
+        {
+          "word": "deciduous",
+          "pos": "adj",
+          "zh": "落叶的",
+          "morphBreakdown": "de- (向下) + cid- + -uous (形容词后缀)"
+        },
+        {
+          "word": "casual",
+          "pos": "adj",
+          "zh": "偶然的；随便的",
+          "morphBreakdown": "cas- (cadere 的过去分词) + -ual"
+        },
+        {
+          "word": "occasion",
+          "pos": "n",
+          "zh": "场合；时机",
+          "morphBreakdown": "oc- (ob- 变体) + cas- + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "coincidence",
+          "pos": "n",
+          "zh": "巧合"
+        },
+        {
+          "word": "chance",
+          "pos": "n",
+          "zh": "机会；偶然"
+        },
+        {
+          "word": "unexpected",
+          "pos": "adj",
+          "zh": "意外的"
+        },
+        {
+          "word": "random",
+          "pos": "adj",
+          "zh": "随机的"
+        },
+        {
+          "word": "serendipity",
+          "pos": "n",
+          "zh": "意外发现的好运"
+        },
+        {
+          "word": "fluke",
+          "pos": "n",
+          "zh": "侥幸"
+        },
+        {
+          "word": "inevitable",
+          "pos": "adj",
+          "zh": "不可避免的"
+        },
+        {
+          "word": "predictable",
+          "pos": "adj",
+          "zh": "可预测的"
+        },
+        {
+          "word": "occurrence",
+          "pos": "n",
+          "zh": "发生；事件"
+        },
+        {
+          "word": "phenomenon",
+          "pos": "n",
+          "zh": "现象"
+        },
+        {
+          "word": "accidental",
+          "pos": "adj",
+          "zh": "偶然的"
+        },
+        {
+          "word": "incidental",
+          "pos": "adj",
+          "zh": "附带的"
+        }
+      ],
+      "themeTopic": "社会·文化·事件",
+      "themeSummary": "该词常用于雅思阅读或写作中讨论偶然事件、巧合或意外发现，常与 chance, unexpected, random 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意区分 coincidental（巧合的）和 accidental（意外的）：前者强调同时发生，后者强调非故意。",
+        "同根词 incident 常指“事件”，incidence 指“发生率”，在学术写作中常见。"
+      ],
+      "insight": "coincidental 的核心是“两件事同时落下（发生）”，记住“co-共同 + incident事件 + -al”即可。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "be made up of +": {
+      "gloss": "由……组成",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "make（古英语 macian，源自 PIE *mag- '揉捏，制作'）",
+      "suffixLine": "无",
+      "evolution": "make（制作）+ up（向上/完成）+ of（表示材料/组成）→ 由各部分制作而成",
+      "parts": [],
+      "pieSummary": "PIE *mag- '揉捏，制作'",
+      "family": [
+        {
+          "word": "be made of",
+          "pos": "v",
+          "zh": "由……制成（看得出材料）",
+          "morphBreakdown": "make + of"
+        },
+        {
+          "word": "be made out of",
+          "pos": "v",
+          "zh": "由……制成（强调原材料转变）",
+          "morphBreakdown": "make + out + of"
+        },
+        {
+          "word": "be intended to",
+          "pos": "v",
+          "zh": "旨在，打算",
+          "morphBreakdown": "in- + tend + -ed + to"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "make",
+          "pos": "v",
+          "zh": "制作",
+          "morphBreakdown": "make"
+        },
+        {
+          "word": "maker",
+          "pos": "n",
+          "zh": "制造者",
+          "morphBreakdown": "make + -er"
+        },
+        {
+          "word": "making",
+          "pos": "n",
+          "zh": "制造",
+          "morphBreakdown": "make + -ing"
+        },
+        {
+          "word": "remake",
+          "pos": "v",
+          "zh": "重做",
+          "morphBreakdown": "re- + make"
+        },
+        {
+          "word": "unmade",
+          "pos": "adj",
+          "zh": "未做的",
+          "morphBreakdown": "un- + make + -ed"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "comprise",
+          "pos": "v",
+          "zh": "包含，由……组成"
+        },
+        {
+          "word": "consist of",
+          "pos": "v",
+          "zh": "由……组成"
+        },
+        {
+          "word": "constitute",
+          "pos": "v",
+          "zh": "构成"
+        },
+        {
+          "word": "component",
+          "pos": "n",
+          "zh": "成分，组件"
+        },
+        {
+          "word": "element",
+          "pos": "n",
+          "zh": "元素"
+        },
+        {
+          "word": "ingredient",
+          "pos": "n",
+          "zh": "成分，原料"
+        },
+        {
+          "word": "composition",
+          "pos": "n",
+          "zh": "组成，成分"
+        },
+        {
+          "word": "structure",
+          "pos": "n",
+          "zh": "结构"
+        },
+        {
+          "word": "material",
+          "pos": "n",
+          "zh": "材料"
+        },
+        {
+          "word": "substance",
+          "pos": "n",
+          "zh": "物质"
+        }
+      ],
+      "themeTopic": "材料·构成",
+      "themeSummary": "在雅思阅读中常出现在描述物品组成、材料特性的段落，如科技产品、建筑材料的构成。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 be made up of 强调整体由部分构成，而 be made of 强调材料可见，be made from 强调材料不可见。"
+      ],
+      "insight": "想象一个整体由各个部分'制作'（make）'向上'（up）堆叠而成，'of'引出组成部分。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "intimate": {
+      "gloss": "亲密的；密切的；私人的；知己；密友",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "拉丁 intimus (最内部的) < intus (内部) < PIE *en (在…里面)",
+      "suffixLine": "-ate 形容词/名词后缀",
+      "evolution": "拉丁 intimus 原义“最内部的”，引申为“亲密的、私人的”，再转为名词“知己”。",
+      "parts": [],
+      "pieSummary": "PIE *en (在…里面) → 拉丁 intus (内部) → intimus (最内部的) → intimate",
+      "family": [
+        {
+          "word": "intimacy",
+          "pos": "n",
+          "zh": "亲密；密切",
+          "morphBreakdown": "intim + -acy"
+        },
+        {
+          "word": "intimately",
+          "pos": "adv",
+          "zh": "亲密地；密切地",
+          "morphBreakdown": "intimate + -ly"
+        },
+        {
+          "word": "intimate",
+          "pos": "v",
+          "zh": "暗示；透露",
+          "morphBreakdown": "intim + -ate (动词)"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "intimate",
+          "pos": "adj",
+          "zh": "亲密的",
+          "morphBreakdown": "intim + -ate"
+        },
+        {
+          "word": "intimate",
+          "pos": "n",
+          "zh": "知己",
+          "morphBreakdown": "intim + -ate"
+        },
+        {
+          "word": "intimate",
+          "pos": "v",
+          "zh": "暗示",
+          "morphBreakdown": "intim + -ate"
+        },
+        {
+          "word": "intimacy",
+          "pos": "n",
+          "zh": "亲密",
+          "morphBreakdown": "intim + -acy"
+        },
+        {
+          "word": "intimately",
+          "pos": "adv",
+          "zh": "亲密地",
+          "morphBreakdown": "intimate + -ly"
+        },
+        {
+          "word": "intimation",
+          "pos": "n",
+          "zh": "暗示；告知",
+          "morphBreakdown": "intimat(e) + -ion"
+        },
+        {
+          "word": "intimist",
+          "pos": "n",
+          "zh": "描绘内心情感的画家或作家",
+          "morphBreakdown": "intim + -ist"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "close",
+          "pos": "adj",
+          "zh": "亲密的"
+        },
+        {
+          "word": "bond",
+          "pos": "n",
+          "zh": "纽带"
+        },
+        {
+          "word": "trust",
+          "pos": "other",
+          "zh": "信任"
+        },
+        {
+          "word": "confide",
+          "pos": "v",
+          "zh": "倾诉"
+        },
+        {
+          "word": "privacy",
+          "pos": "n",
+          "zh": "隐私"
+        },
+        {
+          "word": "relationship",
+          "pos": "n",
+          "zh": "关系"
+        },
+        {
+          "word": "attachment",
+          "pos": "n",
+          "zh": "依恋"
+        },
+        {
+          "word": "affection",
+          "pos": "n",
+          "zh": "喜爱"
+        },
+        {
+          "word": "companion",
+          "pos": "n",
+          "zh": "伴侣"
+        },
+        {
+          "word": "soulmate",
+          "pos": "n",
+          "zh": "灵魂伴侣"
+        }
+      ],
+      "themeTopic": "人际关系·情感",
+      "themeSummary": "该词常用于雅思口语Part 1/2描述朋友或家人关系，以及阅读中关于亲密关系、隐私的讨论。",
+      "relatedNotes": [],
+      "tips": [
+        "intimate 作动词时发音不同：/ˈɪntɪmeɪt/，意为“暗示”。",
+        "intimate 的名词形式 intimacy 常考。"
+      ],
+      "insight": "intimate 的核心是“内部”，最内部的关系就是“亲密”，最内部的信息就是“私密”。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "corrupt": {
+      "gloss": "腐败的；贪污受贿的；被损坏的；被篡改的；出故障的",
+      "morphKind": "classical",
+      "prefixLine": "cor- < 拉丁语 com- \"一起，共同\"",
+      "rootLine": "rupt < 拉丁语 rumpere \"打破，断裂\" < PIE *Hrewp- \"打破，撕开\"",
+      "suffixLine": "无",
+      "evolution": "cor-（一起）+ rupt（打破）→ 一起打破 → 破坏整体 → 腐败、损坏",
+      "parts": [],
+      "pieSummary": "PIE *Hrewp- \"打破，撕开\"",
+      "family": [
+        {
+          "word": "abrupt",
+          "pos": "adj",
+          "zh": "突然的；唐突的",
+          "morphBreakdown": "ab-（离开）+ rupt（打破）"
+        },
+        {
+          "word": "disrupt",
+          "pos": "v",
+          "zh": "扰乱；中断",
+          "morphBreakdown": "dis-（分开）+ rupt（打破）"
+        },
+        {
+          "word": "erupt",
+          "pos": "v",
+          "zh": "爆发；喷发",
+          "morphBreakdown": "e-（向外）+ rupt（打破）"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "corruption",
+          "pos": "n",
+          "zh": "腐败；贪污",
+          "morphBreakdown": "corrupt + -ion"
+        },
+        {
+          "word": "corruptible",
+          "pos": "adj",
+          "zh": "易腐败的；可收买的",
+          "morphBreakdown": "corrupt + -ible"
+        },
+        {
+          "word": "incorruptible",
+          "pos": "adj",
+          "zh": "廉洁的；不受腐蚀的",
+          "morphBreakdown": "in-（不）+ corruptible"
+        },
+        {
+          "word": "corruptly",
+          "pos": "adv",
+          "zh": "腐败地",
+          "morphBreakdown": "corrupt + -ly"
+        },
+        {
+          "word": "abrupt",
+          "pos": "adj",
+          "zh": "突然的",
+          "morphBreakdown": "ab- + rupt"
+        },
+        {
+          "word": "abruptly",
+          "pos": "adv",
+          "zh": "突然地",
+          "morphBreakdown": "abrupt + -ly"
+        },
+        {
+          "word": "abruptness",
+          "pos": "n",
+          "zh": "突然；唐突",
+          "morphBreakdown": "abrupt + -ness"
+        },
+        {
+          "word": "disrupt",
+          "pos": "v",
+          "zh": "扰乱",
+          "morphBreakdown": "dis- + rupt"
+        },
+        {
+          "word": "disruption",
+          "pos": "n",
+          "zh": "中断；扰乱",
+          "morphBreakdown": "disrupt + -ion"
+        },
+        {
+          "word": "disruptive",
+          "pos": "adj",
+          "zh": "破坏性的",
+          "morphBreakdown": "disrupt + -ive"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "bribery",
+          "pos": "n",
+          "zh": "贿赂"
+        },
+        {
+          "word": "scandal",
+          "pos": "n",
+          "zh": "丑闻"
+        },
+        {
+          "word": "integrity",
+          "pos": "n",
+          "zh": "正直；诚信"
+        },
+        {
+          "word": "transparency",
+          "pos": "n",
+          "zh": "透明"
+        },
+        {
+          "word": "accountability",
+          "pos": "n",
+          "zh": "问责制"
+        },
+        {
+          "word": "embezzlement",
+          "pos": "n",
+          "zh": "挪用公款"
+        },
+        {
+          "word": "fraud",
+          "pos": "n",
+          "zh": "欺诈"
+        },
+        {
+          "word": "unethical",
+          "pos": "adj",
+          "zh": "不道德的"
+        },
+        {
+          "word": "misconduct",
+          "pos": "n",
+          "zh": "不当行为"
+        },
+        {
+          "word": "whistleblower",
+          "pos": "n",
+          "zh": "举报人"
+        }
+      ],
+      "themeTopic": "政府·腐败·社会问题",
+      "themeSummary": "该词常出现在雅思阅读/写作中关于政府腐败、商业道德、数据安全等话题，与bribery, scandal, integrity等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "corrupt 作动词时意为‘使腐败；损坏（数据）’；注意与 abrupt, disrupt, erupt 同根记忆。"
+      ],
+      "insight": "记住 rupt = 破，corrupt = 一起破 → 腐败；同根词 abrupt 突然破 → 突然的",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "brief": {
+      "gloss": "简短的；短暂的；简报；概要；向…简要说明",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "来自拉丁语 brevis（短的），源自 PIE *mregh-u-（短的）",
+      "suffixLine": "无",
+      "evolution": "拉丁语 brevis（短的）→ 古法语 brief → 英语 brief",
+      "parts": [],
+      "pieSummary": "PIE *mregh-u-（短的）",
+      "family": [
+        {
+          "word": "brevity",
+          "pos": "n",
+          "zh": "简洁；短暂",
+          "morphBreakdown": "brev + -ity"
+        },
+        {
+          "word": "abbreviate",
+          "pos": "v",
+          "zh": "缩写；缩短",
+          "morphBreakdown": "ab- + brev + -iate"
+        },
+        {
+          "word": "abbreviation",
+          "pos": "n",
+          "zh": "缩写",
+          "morphBreakdown": "abbreviate + -ion"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "briefly",
+          "pos": "adv",
+          "zh": "简短地",
+          "morphBreakdown": "brief + -ly"
+        },
+        {
+          "word": "brevity",
+          "pos": "n",
+          "zh": "简洁；短暂",
+          "morphBreakdown": "brev + -ity"
+        },
+        {
+          "word": "abbreviate",
+          "pos": "v",
+          "zh": "缩写；缩短",
+          "morphBreakdown": "ab- + brev + -iate"
+        },
+        {
+          "word": "abbreviation",
+          "pos": "n",
+          "zh": "缩写",
+          "morphBreakdown": "abbreviate + -ion"
+        },
+        {
+          "word": "debrief",
+          "pos": "v",
+          "zh": "听取汇报；询问执行情况",
+          "morphBreakdown": "de- + brief"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "abstract",
+          "pos": "n",
+          "zh": "摘要"
+        },
+        {
+          "word": "summary",
+          "pos": "n",
+          "zh": "总结"
+        },
+        {
+          "word": "outline",
+          "pos": "n",
+          "zh": "大纲"
+        },
+        {
+          "word": "concise",
+          "pos": "adj",
+          "zh": "简洁的"
+        },
+        {
+          "word": "overview",
+          "pos": "n",
+          "zh": "概述"
+        },
+        {
+          "word": "synopsis",
+          "pos": "n",
+          "zh": "概要"
+        },
+        {
+          "word": "precis",
+          "pos": "n",
+          "zh": "摘要"
+        },
+        {
+          "word": "condense",
+          "pos": "v",
+          "zh": "压缩"
+        },
+        {
+          "word": "elaborate",
+          "pos": "v",
+          "zh": "详细阐述"
+        },
+        {
+          "word": "extensive",
+          "pos": "adj",
+          "zh": "广泛的"
+        }
+      ],
+      "themeTopic": "教育·学术",
+      "themeSummary": "brief 在雅思中常出现在学术写作或听力场景，如“brief summary”（简要总结）、“brief introduction”（简要介绍）。同主题词汇包括 abstract, summary, outline, concise 等。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 brief 作动词时意为“向…简要说明”，常见于商务场景。"
+      ],
+      "insight": "brief 与 breve（乐谱中的短音符）同源，记住“短”的核心义。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "in a similar way to +": {
+      "gloss": "以与…相似的方式；类似于…",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "simil-（拉丁语 similis '相似的'，源自 PIE *sem- '一，一起'）",
+      "suffixLine": "无",
+      "evolution": "in a similar way to 是短语，字面义为 '以与…相似的方式'，核心词 similar 来自拉丁语 similis。",
+      "parts": [],
+      "pieSummary": "PIE *sem- '一，一起' → 拉丁语 similis '相似的' → 英语 similar。",
+      "family": [
+        {
+          "word": "similar",
+          "pos": "adj",
+          "zh": "相似的",
+          "morphBreakdown": "simil + -ar"
+        },
+        {
+          "word": "simile",
+          "pos": "n",
+          "zh": "明喻",
+          "morphBreakdown": "simil + -e"
+        },
+        {
+          "word": "simulate",
+          "pos": "v",
+          "zh": "模拟",
+          "morphBreakdown": "simul + -ate"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "similar",
+          "pos": "adj",
+          "zh": "相似的",
+          "morphBreakdown": "simil + -ar"
+        },
+        {
+          "word": "similarly",
+          "pos": "adv",
+          "zh": "相似地",
+          "morphBreakdown": "similar + -ly"
+        },
+        {
+          "word": "similarity",
+          "pos": "n",
+          "zh": "相似性",
+          "morphBreakdown": "similar + -ity"
+        },
+        {
+          "word": "simile",
+          "pos": "n",
+          "zh": "明喻",
+          "morphBreakdown": "simil + -e"
+        },
+        {
+          "word": "simulate",
+          "pos": "v",
+          "zh": "模拟",
+          "morphBreakdown": "simul + -ate"
+        },
+        {
+          "word": "simulation",
+          "pos": "n",
+          "zh": "模拟",
+          "morphBreakdown": "simul + -ation"
+        },
+        {
+          "word": "simultaneous",
+          "pos": "adj",
+          "zh": "同时的",
+          "morphBreakdown": "simul + taneous"
+        },
+        {
+          "word": "simultaneously",
+          "pos": "adv",
+          "zh": "同时地",
+          "morphBreakdown": "simultaneous + -ly"
+        },
+        {
+          "word": "assimilate",
+          "pos": "v",
+          "zh": "同化",
+          "morphBreakdown": "ad- + simil + -ate"
+        },
+        {
+          "word": "assimilation",
+          "pos": "n",
+          "zh": "同化",
+          "morphBreakdown": "ad- + simil + -ation"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "likewise",
+          "pos": "adv",
+          "zh": "同样地"
+        },
+        {
+          "word": "similarly",
+          "pos": "adv",
+          "zh": "相似地"
+        },
+        {
+          "word": "by contrast",
+          "pos": "other",
+          "zh": "相比之下"
+        },
+        {
+          "word": "in contrast",
+          "pos": "other",
+          "zh": "相反"
+        },
+        {
+          "word": "whereas",
+          "pos": "other",
+          "zh": "然而"
+        },
+        {
+          "word": "while",
+          "pos": "other",
+          "zh": "而"
+        },
+        {
+          "word": "on the other hand",
+          "pos": "other",
+          "zh": "另一方面"
+        },
+        {
+          "word": "correspondingly",
+          "pos": "adv",
+          "zh": "相应地"
+        },
+        {
+          "word": "analogous",
+          "pos": "adj",
+          "zh": "类似的"
+        },
+        {
+          "word": "parallel",
+          "pos": "adj",
+          "zh": "平行的；类似的"
+        },
+        {
+          "word": "comparable",
+          "pos": "adj",
+          "zh": "可比较的"
+        },
+        {
+          "word": "resemble",
+          "pos": "v",
+          "zh": "类似"
+        }
+      ],
+      "themeTopic": "比较与对比·学术写作",
+      "themeSummary": "该短语常用于雅思写作Task 1描述图表趋势对比，或Task 2论述观点类比。常与表示相似或差异的词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意短语介词 to 后接名词或动名词，如 'in a similar way to the previous study'。"
+      ],
+      "insight": "similar 与 same、simple 同源，都含有 '一' 的概念，记住 '相似即同一类'。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "diagonal": {
+      "gloss": "对角的；斜向的；对角线",
+      "morphKind": "classical",
+      "prefixLine": "dia-：来自希腊语，意为“通过，横跨”",
+      "rootLine": "gon：来自希腊语 gōnia（角），源自 PIE *genu-（膝盖；角）",
+      "suffixLine": "-al：形容词后缀，表示“与…有关的”",
+      "evolution": "dia-（横跨）+ gon（角）+ -al → 横跨角的 → 对角线的",
+      "parts": [],
+      "pieSummary": "PIE *genu-（膝盖；角）",
+      "family": [
+        {
+          "word": "polygon",
+          "pos": "n",
+          "zh": "多边形",
+          "morphBreakdown": "poly-（多）+ gon（角）"
+        },
+        {
+          "word": "hexagon",
+          "pos": "n",
+          "zh": "六边形",
+          "morphBreakdown": "hexa-（六）+ gon（角）"
+        },
+        {
+          "word": "trigon",
+          "pos": "n",
+          "zh": "三角形",
+          "morphBreakdown": "tri-（三）+ gon（角）"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "diagonally",
+          "pos": "adv",
+          "zh": "对角地",
+          "morphBreakdown": "diagonal + -ly"
+        },
+        {
+          "word": "diagonalize",
+          "pos": "v",
+          "zh": "使对角化",
+          "morphBreakdown": "diagonal + -ize"
+        },
+        {
+          "word": "diagonalization",
+          "pos": "n",
+          "zh": "对角化",
+          "morphBreakdown": "diagonalize + -ation"
+        },
+        {
+          "word": "diagonalizable",
+          "pos": "adj",
+          "zh": "可对角化的",
+          "morphBreakdown": "diagonalize + -able"
+        },
+        {
+          "word": "diagonal matrix",
+          "pos": "n",
+          "zh": "对角矩阵",
+          "morphBreakdown": "diagonal + matrix"
+        },
+        {
+          "word": "diagonal line",
+          "pos": "n",
+          "zh": "对角线",
+          "morphBreakdown": "diagonal + line"
+        },
+        {
+          "word": "diagonal cut",
+          "pos": "n",
+          "zh": "斜切",
+          "morphBreakdown": "diagonal + cut"
+        },
+        {
+          "word": "diagonal movement",
+          "pos": "n",
+          "zh": "斜向运动",
+          "morphBreakdown": "diagonal + movement"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "angle",
+          "pos": "n",
+          "zh": "角"
+        },
+        {
+          "word": "perpendicular",
+          "pos": "adj",
+          "zh": "垂直的"
+        },
+        {
+          "word": "parallel",
+          "pos": "adj",
+          "zh": "平行的"
+        },
+        {
+          "word": "intersect",
+          "pos": "v",
+          "zh": "相交"
+        },
+        {
+          "word": "vertex",
+          "pos": "n",
+          "zh": "顶点"
+        },
+        {
+          "word": "symmetry",
+          "pos": "n",
+          "zh": "对称"
+        },
+        {
+          "word": "rectangle",
+          "pos": "n",
+          "zh": "矩形"
+        },
+        {
+          "word": "triangle",
+          "pos": "n",
+          "zh": "三角形"
+        },
+        {
+          "word": "quadrilateral",
+          "pos": "n",
+          "zh": "四边形"
+        },
+        {
+          "word": "geometry",
+          "pos": "n",
+          "zh": "几何学"
+        },
+        {
+          "word": "dimension",
+          "pos": "n",
+          "zh": "维度"
+        },
+        {
+          "word": "coordinate",
+          "pos": "n",
+          "zh": "坐标"
+        }
+      ],
+      "themeTopic": "数学·几何",
+      "themeSummary": "该词常出现在雅思阅读中关于几何、图形、数学概念的篇章中，与角度、形状等词汇共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意前缀dia-不要与di-（二）混淆；词根gon与膝盖无关，但PIE同源。"
+      ],
+      "insight": "想象一条线从一角横跨到对角，dia-“穿过”+gon“角”=“对角”",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "parallel": {
+      "gloss": "平行的；类似的；平行线；相似处；纬线",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "来自拉丁语 parallelus，源自希腊语 parallēlos，由 para-（在旁边）+ allēlōn（彼此）组成，最终源自 PIE *h₂el-（其他）",
+      "suffixLine": "无",
+      "evolution": "字面义为“彼此旁边”，引申为“平行的”，再引申为“类似的”",
+      "parts": [],
+      "pieSummary": "PIE *h₂el-（其他）",
+      "family": [
+        {
+          "word": "allele",
+          "pos": "n",
+          "zh": "等位基因",
+          "morphBreakdown": "allel- + -e"
+        },
+        {
+          "word": "parallelism",
+          "pos": "n",
+          "zh": "平行；类似",
+          "morphBreakdown": "parallel + -ism"
+        },
+        {
+          "word": "unparalleled",
+          "pos": "adj",
+          "zh": "无比的",
+          "morphBreakdown": "un- + parallel + -ed"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "parallelism",
+          "pos": "n",
+          "zh": "平行；类似",
+          "morphBreakdown": "parallel + -ism"
+        },
+        {
+          "word": "unparalleled",
+          "pos": "adj",
+          "zh": "无比的",
+          "morphBreakdown": "un- + parallel + -ed"
+        },
+        {
+          "word": "parallelize",
+          "pos": "v",
+          "zh": "使平行",
+          "morphBreakdown": "parallel + -ize"
+        },
+        {
+          "word": "nonparallel",
+          "pos": "adj",
+          "zh": "不平行的",
+          "morphBreakdown": "non- + parallel"
+        },
+        {
+          "word": "parallelogram",
+          "pos": "n",
+          "zh": "平行四边形",
+          "morphBreakdown": "parallel + -o- + gram"
+        },
+        {
+          "word": "parallax",
+          "pos": "n",
+          "zh": "视差",
+          "morphBreakdown": "para- + allax（变化）"
+        },
+        {
+          "word": "allelomorph",
+          "pos": "n",
+          "zh": "等位基因（旧称）",
+          "morphBreakdown": "allel- + -o- + morph"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "perpendicular",
+          "pos": "adj",
+          "zh": "垂直的"
+        },
+        {
+          "word": "intersect",
+          "pos": "v",
+          "zh": "相交"
+        },
+        {
+          "word": "analogous",
+          "pos": "adj",
+          "zh": "类似的"
+        },
+        {
+          "word": "corresponding",
+          "pos": "adj",
+          "zh": "相应的"
+        },
+        {
+          "word": "symmetry",
+          "pos": "n",
+          "zh": "对称"
+        },
+        {
+          "word": "converge",
+          "pos": "v",
+          "zh": "收敛"
+        },
+        {
+          "word": "diverge",
+          "pos": "v",
+          "zh": "发散"
+        },
+        {
+          "word": "axis",
+          "pos": "n",
+          "zh": "轴"
+        },
+        {
+          "word": "coordinate",
+          "pos": "n",
+          "zh": "坐标"
+        },
+        {
+          "word": "vector",
+          "pos": "n",
+          "zh": "向量"
+        },
+        {
+          "word": "parallel processing",
+          "pos": "n",
+          "zh": "并行处理"
+        },
+        {
+          "word": "comparison",
+          "pos": "n",
+          "zh": "比较"
+        }
+      ],
+      "themeTopic": "科学·技术·数学",
+      "themeSummary": "在雅思阅读中常出现在描述几何、物理或计算机科学（并行处理）的篇章中，与“对比”、“类比”等概念共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 parallel 作名词时常用复数 parallels 表示“相似之处”；在计算机领域常指“并行”。"
+      ],
+      "insight": "para-（旁边）+ allel-（彼此）→ 彼此在旁边 → 平行；同根词 allele（等位基因）也源自“彼此”",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "coincidence": {
+      "gloss": "巧合",
+      "morphKind": "classical",
+      "prefixLine": "co-：共同，一起（来自拉丁语 cum）",
+      "rootLine": "cid：落下，发生（来自拉丁语 cadere，PIE *kad- 落下）",
+      "suffixLine": "-ence：名词后缀，表示状态或性质",
+      "evolution": "co-（一起）+ cid（落下）+ -ence（状态）→ 两件事一起落下 → 同时发生 → 巧合",
+      "parts": [],
+      "pieSummary": "PIE *kad- 意为“落下”，拉丁语 cadere 由此而来。",
+      "family": [
+        {
+          "word": "coincide",
+          "pos": "v",
+          "zh": "同时发生；一致",
+          "morphBreakdown": "co- + in- + cid + -e"
+        },
+        {
+          "word": "incident",
+          "pos": "n",
+          "zh": "事件；事故",
+          "morphBreakdown": "in- + cid + -ent"
+        },
+        {
+          "word": "accident",
+          "pos": "n",
+          "zh": "事故；意外",
+          "morphBreakdown": "ac- + cid + -ent"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "coincide",
+          "pos": "v",
+          "zh": "同时发生；一致",
+          "morphBreakdown": "co- + in- + cid + -e"
+        },
+        {
+          "word": "coincident",
+          "pos": "adj",
+          "zh": "同时发生的；一致的",
+          "morphBreakdown": "co- + in- + cid + -ent"
+        },
+        {
+          "word": "coincidental",
+          "pos": "adj",
+          "zh": "巧合的",
+          "morphBreakdown": "co- + in- + cid + -ent + -al"
+        },
+        {
+          "word": "coincidentally",
+          "pos": "adv",
+          "zh": "巧合地",
+          "morphBreakdown": "co- + in- + cid + -ent + -al + -ly"
+        },
+        {
+          "word": "incident",
+          "pos": "n",
+          "zh": "事件；事故",
+          "morphBreakdown": "in- + cid + -ent"
+        },
+        {
+          "word": "incidence",
+          "pos": "n",
+          "zh": "发生率；影响范围",
+          "morphBreakdown": "in- + cid + -ence"
+        },
+        {
+          "word": "accident",
+          "pos": "n",
+          "zh": "事故；意外",
+          "morphBreakdown": "ac- + cid + -ent"
+        },
+        {
+          "word": "accidental",
+          "pos": "adj",
+          "zh": "意外的；偶然的",
+          "morphBreakdown": "ac- + cid + -ent + -al"
+        },
+        {
+          "word": "deciduous",
+          "pos": "adj",
+          "zh": "落叶的",
+          "morphBreakdown": "de- + cid + -uous"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "chance",
+          "pos": "n",
+          "zh": "机会；偶然"
+        },
+        {
+          "word": "probability",
+          "pos": "n",
+          "zh": "概率"
+        },
+        {
+          "word": "random",
+          "pos": "adj",
+          "zh": "随机的"
+        },
+        {
+          "word": "statistics",
+          "pos": "n",
+          "zh": "统计学"
+        },
+        {
+          "word": "correlation",
+          "pos": "n",
+          "zh": "相关性"
+        },
+        {
+          "word": "causation",
+          "pos": "n",
+          "zh": "因果关系"
+        },
+        {
+          "word": "likelihood",
+          "pos": "n",
+          "zh": "可能性"
+        },
+        {
+          "word": "occurrence",
+          "pos": "n",
+          "zh": "发生；事件"
+        },
+        {
+          "word": "unexpected",
+          "pos": "adj",
+          "zh": "意外的"
+        },
+        {
+          "word": "serendipity",
+          "pos": "n",
+          "zh": "意外发现的好运"
+        }
+      ],
+      "themeTopic": "科技·巧合与概率",
+      "themeSummary": "在雅思阅读或听力中，coincidence 常出现在讨论概率、统计或科学发现的篇章中，与 chance、probability、random 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意区分 coincidence（巧合）与 accident（事故），前者强调同时发生，后者强调意外。",
+        "coincide 是动词，coincidence 是名词，coincidental 是形容词。"
+      ],
+      "insight": "想象两颗骰子同时落下，数字相同就是巧合。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "be made in +": {
+      "gloss": "产自某地",
+      "morphKind": "compound",
+      "prefixLine": "无",
+      "rootLine": "make 来自古英语 macian，源自西日耳曼语 *makōną，最终源自 PIE *mag-（揉捏，制作）",
+      "suffixLine": "无",
+      "evolution": "be made in 字面意为“被制作在…（地点）”，引申为“产自某地”",
+      "parts": [],
+      "pieSummary": "PIE *mag-（揉捏，制作）",
+      "family": [
+        {
+          "word": "be made of",
+          "pos": "v",
+          "zh": "由…制成",
+          "morphBreakdown": "be + made + of"
+        },
+        {
+          "word": "be made out of",
+          "pos": "v",
+          "zh": "由…制成（强调材料）",
+          "morphBreakdown": "be + made + out of"
+        },
+        {
+          "word": "be intended to",
+          "pos": "v",
+          "zh": "旨在",
+          "morphBreakdown": "be + intended + to"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "make",
+          "pos": "v",
+          "zh": "制作",
+          "morphBreakdown": "make"
+        },
+        {
+          "word": "maker",
+          "pos": "n",
+          "zh": "制造者",
+          "morphBreakdown": "make + -er"
+        },
+        {
+          "word": "making",
+          "pos": "n",
+          "zh": "制造",
+          "morphBreakdown": "make + -ing"
+        },
+        {
+          "word": "remake",
+          "pos": "v",
+          "zh": "重制",
+          "morphBreakdown": "re- + make"
+        },
+        {
+          "word": "unmade",
+          "pos": "adj",
+          "zh": "未制作的",
+          "morphBreakdown": "un- + made"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "manufacture",
+          "pos": "v",
+          "zh": "制造"
+        },
+        {
+          "word": "produce",
+          "pos": "v",
+          "zh": "生产"
+        },
+        {
+          "word": "export",
+          "pos": "v",
+          "zh": "出口"
+        },
+        {
+          "word": "import",
+          "pos": "v",
+          "zh": "进口"
+        },
+        {
+          "word": "product",
+          "pos": "n",
+          "zh": "产品"
+        },
+        {
+          "word": "origin",
+          "pos": "n",
+          "zh": "原产地"
+        },
+        {
+          "word": "brand",
+          "pos": "n",
+          "zh": "品牌"
+        },
+        {
+          "word": "assembly",
+          "pos": "n",
+          "zh": "组装"
+        },
+        {
+          "word": "factory",
+          "pos": "n",
+          "zh": "工厂"
+        },
+        {
+          "word": "supply chain",
+          "pos": "n",
+          "zh": "供应链"
+        }
+      ],
+      "themeTopic": "商业·生产",
+      "themeSummary": "该词常用于雅思阅读或听力中描述产品产地、制造过程，常与 manufacture、produce、export 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 be made in 后接地点，be made of 后接材料，be made from 后接原材料（不可见）"
+      ],
+      "insight": "make 是日耳曼语核心词，与拉丁语同源词（如 machine）不同源；记住“制作”到“产地”的被动结构。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "v.": {
+      "gloss": "使沉溺",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "词根 addict- 来自拉丁语 addicere（“判决，使服从”），由 ad-（“向”）+ dicere（“说，宣称”）构成；dicere 源自 PIE *deik-（“展示，指出”）",
+      "suffixLine": "无",
+      "evolution": "拉丁语 addicere 原指“判决给某人”，后引申为“使服从于某种习惯或物质”，即“使沉溺”",
+      "parts": [],
+      "pieSummary": "PIE *deik- “展示，指出”",
+      "family": [
+        {
+          "word": "addiction",
+          "pos": "n",
+          "zh": "成瘾",
+          "morphBreakdown": "addict + -ion"
+        },
+        {
+          "word": "addictive",
+          "pos": "adj",
+          "zh": "使人上瘾的",
+          "morphBreakdown": "addict + -ive"
+        },
+        {
+          "word": "addicted",
+          "pos": "adj",
+          "zh": "上瘾的",
+          "morphBreakdown": "addict + -ed"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "addiction",
+          "pos": "n",
+          "zh": "成瘾",
+          "morphBreakdown": "addict + -ion"
+        },
+        {
+          "word": "addictive",
+          "pos": "adj",
+          "zh": "使人上瘾的",
+          "morphBreakdown": "addict + -ive"
+        },
+        {
+          "word": "addicted",
+          "pos": "adj",
+          "zh": "上瘾的",
+          "morphBreakdown": "addict + -ed"
+        },
+        {
+          "word": "dictate",
+          "pos": "v",
+          "zh": "口述；命令",
+          "morphBreakdown": "dict- + -ate"
+        },
+        {
+          "word": "dictation",
+          "pos": "n",
+          "zh": "听写；命令",
+          "morphBreakdown": "dict- + -ation"
+        },
+        {
+          "word": "dictator",
+          "pos": "n",
+          "zh": "独裁者",
+          "morphBreakdown": "dict- + -ator"
+        },
+        {
+          "word": "diction",
+          "pos": "n",
+          "zh": "措辞；发音",
+          "morphBreakdown": "dict- + -ion"
+        },
+        {
+          "word": "dictionary",
+          "pos": "n",
+          "zh": "词典",
+          "morphBreakdown": "dict- + -ion + -ary"
+        },
+        {
+          "word": "predict",
+          "pos": "v",
+          "zh": "预测",
+          "morphBreakdown": "pre- + dict"
+        },
+        {
+          "word": "prediction",
+          "pos": "n",
+          "zh": "预测",
+          "morphBreakdown": "pre- + dict- + -ion"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "addiction",
+          "pos": "n",
+          "zh": "成瘾"
+        },
+        {
+          "word": "substance",
+          "pos": "n",
+          "zh": "物质"
+        },
+        {
+          "word": "abuse",
+          "pos": "other",
+          "zh": "滥用"
+        },
+        {
+          "word": "withdrawal",
+          "pos": "n",
+          "zh": "戒断"
+        },
+        {
+          "word": "dependence",
+          "pos": "n",
+          "zh": "依赖"
+        },
+        {
+          "word": "craving",
+          "pos": "n",
+          "zh": "渴望"
+        },
+        {
+          "word": "relapse",
+          "pos": "other",
+          "zh": "复发"
+        },
+        {
+          "word": "treatment",
+          "pos": "n",
+          "zh": "治疗"
+        },
+        {
+          "word": "rehabilitation",
+          "pos": "n",
+          "zh": "康复"
+        },
+        {
+          "word": "behavioral",
+          "pos": "adj",
+          "zh": "行为的"
+        },
+        {
+          "word": "compulsive",
+          "pos": "adj",
+          "zh": "强迫的"
+        },
+        {
+          "word": "gambling",
+          "pos": "n",
+          "zh": "赌博"
+        }
+      ],
+      "themeTopic": "健康·成瘾",
+      "themeSummary": "该词常出现在雅思阅读或写作中关于“成瘾行为”、“物质滥用”或“心理健康”的篇章中，与 addiction, substance abuse, withdrawal, dependence 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 addict 作动词时常用被动语态 be addicted to，表示“对……上瘾”。",
+        "同根词 dict- 系列在雅思阅读中高频出现，如 predict, contradict, verdict 等。"
+      ],
+      "insight": "addict 字面是“被说向某物”，即被某种习惯或物质“宣判”了，难以自拔。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "rare": {
+      "gloss": "稀有的；罕见的；半熟的（肉）",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "rare（拉丁语 rarus：稀疏的、稀少的）",
+      "suffixLine": "无",
+      "evolution": "拉丁语 rarus 意为“稀疏的、稀少的”，直接进入英语，引申为“稀有的、罕见的”；用于肉类时指“半熟的”，源于烹饪程度稀少。",
+      "parts": [],
+      "pieSummary": "PIE *ere-（分离、稀疏）",
+      "family": [
+        {
+          "word": "rarefy",
+          "pos": "v",
+          "zh": "使稀薄",
+          "morphBreakdown": "rare + -fy"
+        },
+        {
+          "word": "rarity",
+          "pos": "n",
+          "zh": "稀有物",
+          "morphBreakdown": "rare + -ity"
+        },
+        {
+          "word": "rarely",
+          "pos": "adv",
+          "zh": "很少地",
+          "morphBreakdown": "rare + -ly"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "rarefied",
+          "pos": "adj",
+          "zh": "稀薄的；高雅的",
+          "morphBreakdown": "rarefy + -ed"
+        },
+        {
+          "word": "rarity",
+          "pos": "n",
+          "zh": "稀有；珍品",
+          "morphBreakdown": "rare + -ity"
+        },
+        {
+          "word": "rarely",
+          "pos": "adv",
+          "zh": "很少",
+          "morphBreakdown": "rare + -ly"
+        },
+        {
+          "word": "rareness",
+          "pos": "n",
+          "zh": "稀有性",
+          "morphBreakdown": "rare + -ness"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "endangered",
+          "pos": "adj",
+          "zh": "濒危的"
+        },
+        {
+          "word": "species",
+          "pos": "n",
+          "zh": "物种"
+        },
+        {
+          "word": "habitat",
+          "pos": "n",
+          "zh": "栖息地"
+        },
+        {
+          "word": "extinction",
+          "pos": "n",
+          "zh": "灭绝"
+        },
+        {
+          "word": "biodiversity",
+          "pos": "n",
+          "zh": "生物多样性"
+        },
+        {
+          "word": "conservation",
+          "pos": "n",
+          "zh": "保护"
+        },
+        {
+          "word": "vulnerable",
+          "pos": "adj",
+          "zh": "脆弱的"
+        },
+        {
+          "word": "ecosystem",
+          "pos": "n",
+          "zh": "生态系统"
+        },
+        {
+          "word": "preserve",
+          "pos": "v",
+          "zh": "保护"
+        },
+        {
+          "word": "threaten",
+          "pos": "v",
+          "zh": "威胁"
+        }
+      ],
+      "themeTopic": "环境·生物多样性",
+      "themeSummary": "在雅思阅读/写作中，rare 常描述濒危物种、稀有矿物或罕见现象，与 endangered、species、habitat 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "rare 作“半熟的”时，与 steak（牛排）搭配，如 rare steak。",
+        "rarely 是频率副词，常用于否定句或倒装句。"
+      ],
+      "insight": "rare 与 rarefied（稀薄的）同源，想象空气稀薄（rare air）的地方少见（rare）人烟。",
+      "strictEtymology": false,
+      "source": "deepseek",
+      "schemaVersion": 2
+    },
+    "fulfill": {
+      "gloss": "没有成就感的；无法让人满足的；乏味空虚的",
+      "morphKind": "classical",
+      "prefixLine": "无",
+      "rootLine": "词根 ful-（来自古英语 full，意为“满的”），与 PIE *pel-（充满）同源",
+      "suffixLine": "后缀 -fill（填充）构成动词，再加 -ing 构成形容词",
+      "evolution": "ful（满）+ fill（填充）→ 充满→ 满足；加否定前缀 un- 和 -ing 表示“不令人满足的”",
+      "parts": [],
+      "pieSummary": "PIE *pel-（充满）",
+      "family": [
+        {
+          "word": "fulfill",
+          "pos": "v",
+          "zh": "实现；满足",
+          "morphBreakdown": "ful- + fill"
+        },
+        {
+          "word": "fulfillment",
+          "pos": "n",
+          "zh": "实现；满足感",
+          "morphBreakdown": "fulfill + -ment"
+        },
+        {
+          "word": "full",
+          "pos": "adj",
+          "zh": "满的",
+          "morphBreakdown": "full"
+        }
+      ],
+      "derivatives": [
+        {
+          "word": "fulfill",
+          "pos": "v",
+          "zh": "实现；满足",
+          "morphBreakdown": "ful- + fill"
+        },
+        {
+          "word": "fulfillment",
+          "pos": "n",
+          "zh": "实现；满足感",
+          "morphBreakdown": "fulfill + -ment"
+        },
+        {
+          "word": "full",
+          "pos": "adj",
+          "zh": "满的",
+          "morphBreakdown": "full"
+        },
+        {
+          "word": "fully",
+          "pos": "adv",
+          "zh": "完全地",
+          "morphBreakdown": "full + -ly"
+        },
+        {
+          "word": "fill",
+          "pos": "v",
+          "zh": "填充",
+          "morphBreakdown": "fill"
+        },
+        {
+          "word": "filling",
+          "pos": "adj",
+          "zh": "令人满足的",
+          "morphBreakdown": "fill + -ing"
+        },
+        {
+          "word": "overfill",
+          "pos": "v",
+          "zh": "过度填充",
+          "morphBreakdown": "over- + fill"
+        },
+        {
+          "word": "refill",
+          "pos": "v",
+          "zh": "重新填充",
+          "morphBreakdown": "re- + fill"
+        }
+      ],
+      "themeWords": [
+        {
+          "word": "job satisfaction",
+          "pos": "n",
+          "zh": "工作满意度"
+        },
+        {
+          "word": "career",
+          "pos": "n",
+          "zh": "职业"
+        },
+        {
+          "word": "meaningful",
+          "pos": "adj",
+          "zh": "有意义的"
+        },
+        {
+          "word": "rewarding",
+          "pos": "adj",
+          "zh": "有回报的"
+        },
+        {
+          "word": "monotonous",
+          "pos": "adj",
+          "zh": "单调的"
+        },
+        {
+          "word": "burnout",
+          "pos": "n",
+          "zh": "倦怠"
+        },
+        {
+          "word": "motivation",
+          "pos": "n",
+          "zh": "动力"
+        },
+        {
+          "word": "purpose",
+          "pos": "n",
+          "zh": "目的"
+        },
+        {
+          "word": "achievement",
+          "pos": "n",
+          "zh": "成就"
+        },
+        {
+          "word": "contentment",
+          "pos": "n",
+          "zh": "满足"
+        },
+        {
+          "word": "frustration",
+          "pos": "n",
+          "zh": "挫败"
+        },
+        {
+          "word": "work-life balance",
+          "pos": "n",
+          "zh": "工作生活平衡"
+        }
+      ],
+      "themeTopic": "工作·职业满意度",
+      "themeSummary": "该词常出现在雅思写作或口语话题中，讨论工作满意度、职业倦怠、生活意义等场景，与 job satisfaction、career、meaningful 等词共现。",
+      "relatedNotes": [],
+      "tips": [
+        "注意 unfulfilling 是形容词，常修饰 job、life、experience 等名词。"
+      ],
+      "insight": "unfulfilling 的核心是“不满”，想象一个杯子永远装不满，让人空虚。",
       "strictEtymology": false,
       "source": "deepseek",
       "schemaVersion": 2
