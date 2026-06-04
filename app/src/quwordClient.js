@@ -162,7 +162,7 @@ export async function fetchQuwordPack(word) {
       /* optional */
     }
 
-    const urls = [...new Set(search.sections.map((s) => s.detailUrl).filter(Boolean))].slice(0, 2)
+    const urls = [...new Set(search.sections.map((s) => s.detailUrl).filter(Boolean))].slice(0, 3)
     /** @type {QuwordAffixDetail[]} */
     const affixDetails = []
     for (const url of urls) {
@@ -220,4 +220,87 @@ export function formatQuwordForPrompt(pack, maxExamples = 40) {
     '\n请优先依据以上趣词资料整理 JSON；affixGroups 保留趣词举例格式（morphBreakdown 如 pro+gress走→向前走）；不足处再补充雅思常考词。',
   )
   return lines.join('\n')
+}
+
+/** @param {string} heading @param {string} label */
+function inferAffixType(heading, label) {
+  if (/前缀/u.test(heading) || (label.endsWith('-') && !label.startsWith('-'))) return 'prefix'
+  if (/后缀/u.test(heading) || label.startsWith('-')) return 'suffix'
+  return 'root'
+}
+
+/** @param {QuwordPack} pack @returns {import('./rootAnalysis.js').AffixGroup[]} */
+export function affixGroupsFromQuwordPack(pack) {
+  /** @type {import('./rootAnalysis.js').AffixGroup[]} */
+  const groups = []
+  const seen = new Set()
+
+  for (const aff of pack.affixDetails || []) {
+    for (const g of aff.groups) {
+      const key = `${aff.label}:${g.meaning}`
+      if (seen.has(key) || !g.examples.length) continue
+      seen.add(key)
+      groups.push({
+        type: inferAffixType('', aff.label),
+        label: aff.label,
+        meaning: g.meaning,
+        examples: g.examples.slice(0, 16),
+      })
+    }
+  }
+
+  for (const sec of pack.search?.sections || []) {
+    const label = sec.heading.replace(/^(词根|前缀|后缀|词根词缀)[：:]\s*/u, '').trim()
+    if (!label) continue
+    const key = `sec:${label}`
+    if (seen.has(key)) continue
+    const meaning = [sec.meaning, sec.source].filter(Boolean).join('；') || sec.heading
+    const examples = (sec.cognates || []).map((w) => ({ word: w, zh: '' }))
+    if (!examples.length && groups.some((g) => g.label.includes(label) || label.includes(g.label))) continue
+    seen.add(key)
+    groups.push({
+      type: inferAffixType(sec.heading, label),
+      label,
+      meaning,
+      examples: examples.slice(0, 12),
+    })
+  }
+
+  return groups.filter((g) => g.examples.length > 0).slice(0, 5)
+}
+
+/**
+ * @param {import('./rootAnalysis.js').RootAnalysis} analysis
+ * @param {QuwordPack | null} pack
+ */
+export function mergeQuwordIntoAnalysis(analysis, pack) {
+  if (!analysis || !pack) return analysis
+  const fromQw = affixGroupsFromQuwordPack(pack)
+  if (!fromQw.length) return analysis
+
+  const tips = [...(analysis.tips || [])]
+  if (!tips.some((t) => t.includes('趣词'))) tips.push('参考趣词词典 quword.com')
+
+  return {
+    ...analysis,
+    affixGroups: analysis.affixGroups?.length ? analysis.affixGroups : fromQw,
+    ...(pack.zhEtymology && analysis.rootLine === '无'
+      ? { rootLine: pack.zhEtymology.slice(0, 200) }
+      : {}),
+    tips,
+  }
+}
+
+/**
+ * @param {import('./rootAnalysis.js').RootAnalysis | null | undefined} analysis
+ * @param {string} word
+ */
+export async function enrichAnalysisWithQuword(analysis, word) {
+  if (!analysis || analysis.affixGroups?.length) return analysis ?? null
+  try {
+    const pack = await fetchQuwordPack(word)
+    return mergeQuwordIntoAnalysis(analysis, pack)
+  } catch {
+    return analysis
+  }
 }

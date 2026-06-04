@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { RootAnalysisPanel } from './RootAnalysisPanel.jsx'
 import { buildRootAnalysis, withBookSameRoot } from './rootAnalysis.js'
 import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
+import { useQuwordRootAnalysis } from './useQuwordRootAnalysis.js'
 
 /**
  * @param {{
@@ -13,7 +14,7 @@ import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
  * }} props
  */
 export function WordDetailView({ entry, pool, bookId, rootEnrichRunning, onClose }) {
-  const rootAnalysis = useMemo(() => {
+  const baseRootAnalysis = useMemo(() => {
     let base
     if (entry.rootAnalysis?.source === 'deepseek') base = entry.rootAnalysis
     else {
@@ -24,6 +25,11 @@ export function WordDetailView({ entry, pool, bookId, rootEnrichRunning, onClose
     }
     return withBookSameRoot(base, entry, pool) ?? base
   }, [entry, pool, bookId])
+
+  const { analysis: rootAnalysis, quwordLoading } = useQuwordRootAnalysis(
+    baseRootAnalysis,
+    entry.word,
+  )
 
   const rootPending =
     rootEnrichRunning &&
@@ -75,7 +81,7 @@ export function WordDetailView({ entry, pool, bookId, rootEnrichRunning, onClose
               整本词表词根分析进行中，完成后会自动显示 DeepSeek 结果…
             </p>
           ) : null}
-          <RootAnalysisPanel analysis={rootAnalysis} word={entry.word} />
+          <RootAnalysisPanel analysis={rootAnalysis} word={entry.word} loading={quwordLoading} />
         </section>
       </main>
     </div>

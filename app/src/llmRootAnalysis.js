@@ -3,7 +3,7 @@ import { hasJapaneseText } from './japaneseSentence.js'
 import { normalizePos } from './rootAnalysis.js'
 import { loadWordRootAnalysis, saveWordRootAnalysis, isRootAnalysisStale, ROOT_ANALYSIS_SCHEMA_VERSION } from './rootAnalysisCache.js'
 import { findBookSameRootWords, withBookSameRoot } from './rootAnalysis.js'
-import { fetchQuwordPack, formatQuwordForPrompt } from './quwordClient.js'
+import { fetchQuwordPack, formatQuwordForPrompt, mergeQuwordIntoAnalysis } from './quwordClient.js'
 
 const SYSTEM_PROMPT = `你是一位精通印欧语源学的高级英语词源专家，擅长把趣词（quword.com）词根资料整理成结构化学习卡片。
 
@@ -167,7 +167,20 @@ function toRootAnalysis(raw, gloss) {
 export async function fetchRootAnalysisLlm(entry, cfg, bookId, pool = []) {
   const key = memKey(bookId || '', entry.word)
   const hit = getCachedRootAnalysisLlm(bookId, entry.word)
-  if (hit && !isRootAnalysisStale(hit)) return withBookSameRoot(hit, entry, pool) ?? hit
+
+  let quwordPack = null
+  if (!hasJapaneseText(entry.word)) {
+    try {
+      quwordPack = await fetchQuwordPack(entry.word)
+    } catch {
+      quwordPack = null
+    }
+  }
+
+  if (hit && !isRootAnalysisStale(hit)) {
+    const merged = mergeQuwordIntoAnalysis(hit, quwordPack)
+    return withBookSameRoot(merged, entry, pool) ?? merged
+  }
 
   const gloss = entry.senses.map((s) => s.zh).filter(Boolean).join('；')
   const bookCandidates = pool.length ? findBookSameRootWords(entry, pool, 15) : []
@@ -175,15 +188,7 @@ export async function fetchRootAnalysisLlm(entry, cfg, bookId, pool = []) {
     ? `\n本雅思词书中检测到可能同根词：${bookCandidates.map((c) => c.word).join('、')}。derivatives 与 family 请优先从此列表选取（保留释义），并补充其他雅思常考同根词。`
     : '\nderivatives 与 family 请优先给出雅思（IELTS）常考、B2–C1 书面语场景的同词根词汇。'
 
-  let quwordBlock = ''
-  if (!hasJapaneseText(entry.word)) {
-    try {
-      const pack = await fetchQuwordPack(entry.word)
-      quwordBlock = formatQuwordForPrompt(pack)
-    } catch {
-      quwordBlock = ''
-    }
-  }
+  const quwordBlock = quwordPack ? formatQuwordForPrompt(quwordPack) : ''
 
   const userPrompt = `分析单词：${entry.word}
 读音：${entry.ipa || '无'}
@@ -200,6 +205,7 @@ ${quwordBlock ? `\n${quwordBlock}\n` : '\n（未获取到趣词资料，请按�
     SYSTEM_PROMPT,
   )
   let analysis = toRootAnalysis(raw, gloss)
+  analysis = mergeQuwordIntoAnalysis(analysis, quwordPack)
   cache.set(key, analysis)
   if (bookId) saveWordRootAnalysis(bookId, entry.word, analysis)
   return withBookSameRoot(analysis, entry, pool) ?? analysis
