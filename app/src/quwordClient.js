@@ -231,6 +231,7 @@ function inferAffixType(heading, label) {
 
 /** @param {QuwordPack} pack @returns {import('./rootAnalysis.js').AffixGroup[]} */
 export function affixGroupsFromQuwordPack(pack) {
+  if (!pack) return []
   /** @type {import('./rootAnalysis.js').AffixGroup[]} */
   const groups = []
   const seen = new Set()
