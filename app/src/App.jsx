@@ -204,6 +204,11 @@ export default function App() {
     return withBookSameRoot(base, entry, pool) ?? base
   }, [currentCard, liveRootAnalysis, entries, sessionQueue])
 
+  const { analysis: enrichedRootAnalysis, quwordLoading } = useQuwordRootAnalysis(
+    displayRootAnalysis,
+    currentCard?.word,
+  )
+
   const onPickBook = useCallback(
     async (book) => {
       setImportTip(null)
@@ -1013,11 +1018,11 @@ export default function App() {
                         </button>
                       </div>
                       {showRoots ? (
-                        displayRootAnalysis ? (
+                        enrichedRootAnalysis ? (
                           <RootAnalysisPanel
-                            analysis={displayRootAnalysis}
+                            analysis={enrichedRootAnalysis}
                             word={currentCard?.word}
-                            loading={false}
+                            loading={quwordLoading}
                           />
                         ) : (
                           <p className="mt-3 rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 text-center text-xs text-amber-900">

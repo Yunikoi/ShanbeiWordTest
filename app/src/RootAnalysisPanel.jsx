@@ -22,10 +22,10 @@ function groupByPos(list) {
 }
 
 /**
- * @param {{ analysis?: import('./rootAnalysis.js').RootAnalysis | null, word?: string }} props
+ * @param {{ analysis?: import('./rootAnalysis.js').RootAnalysis | null, word?: string, loading?: boolean }} props
  */
-export function RootAnalysisPanel({ analysis, word }) {
-  if (!hasRootAnalysis(analysis)) {
+export function RootAnalysisPanel({ analysis, word, loading = false }) {
+  if (!hasRootAnalysis(analysis) && !loading) {
     return (
       <p className="mt-3 rounded-xl border border-dashed border-slate-200 bg-white px-3 py-4 text-center text-xs text-slate-500">
         暂无词根分析。英语词将拆解为前缀 / 词根 / 后缀，或识别现代合成法（如 subset = sub + set）。
@@ -49,6 +49,9 @@ export function RootAnalysisPanel({ analysis, word }) {
 
   return (
     <div className="mt-3 space-y-4 rounded-2xl border border-violet-100 bg-violet-50/50 p-4">
+      {loading ? (
+        <p className="text-center text-xs text-violet-700">正在从趣词词典加载举例…</p>
+      ) : null}
       <header>
         <h3 className="text-base font-bold text-violet-950">🔍 {title}</h3>
         {morphLabel ? (
