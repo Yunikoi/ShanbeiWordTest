@@ -30,6 +30,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           rewrite: stripPrefix('/api/deepseek'),
         },
+        '/api/quword': {
+          target: 'https://www.quword.com',
+          changeOrigin: true,
+          rewrite: stripPrefix('/api/quword'),
+        },
         ...(supabaseUrl
           ? {
               '/api/supabase': {

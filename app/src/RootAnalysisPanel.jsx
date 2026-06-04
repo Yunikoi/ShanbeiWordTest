@@ -106,10 +106,46 @@ export function RootAnalysisPanel({ analysis, word }) {
         </section>
       ) : null}
 
+      {analysis?.affixGroups?.length ? (
+        <section>
+          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700">
+            3. 前缀 / 词根 / 后缀 · 趣词式举例
+          </h4>
+          <div className="space-y-4">
+            {analysis.affixGroups.map((group) => (
+              <div key={`${group.type}-${group.label}`} className="rounded-xl bg-white px-3 py-3 ring-1 ring-violet-100">
+                <p className="text-sm font-bold text-violet-950">
+                  {group.type === 'prefix' ? '前缀' : group.type === 'suffix' ? '后缀' : '词根'}：{group.label}
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-700">{group.meaning}</p>
+                <ul className="mt-3 space-y-2">
+                  {group.examples.map((ex) => (
+                    <li key={ex.word} className="text-sm leading-snug">
+                      <span className="font-bold text-red-700">{ex.word}</span>
+                      {ex.zh ? <span className="text-slate-800"> {ex.zh}</span> : null}
+                      {ex.morphBreakdown ? (
+                        <span className="text-slate-500">（{ex.morphBreakdown}）</span>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mt-2 text-[10px] text-slate-400">
+            参考{' '}
+            <a href="https://www.quword.com/" target="_blank" rel="noreferrer" className="underline">
+              趣词词典
+            </a>
+            ，由 DeepSeek 整理为学习卡片。
+          </p>
+        </section>
+      ) : null}
+
       {derivativeGroups.length ? (
         <section>
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-violet-700">
-            3. 同根衍生词 · 雅思常考（按词性）
+            {analysis?.affixGroups?.length ? '4' : '3'}. 同根衍生词 · 雅思常考（按词性）
           </h4>
           <div className="space-y-3">
             {derivativeGroups.map((g) => (
@@ -197,7 +233,7 @@ export function RootAnalysisPanel({ analysis, word }) {
       {analysis?.themeTopic || analysis?.themeSummary || themeWordGroups.length ? (
         <section>
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-sky-700">
-            同主题雅思词汇 · 考点归纳
+            {analysis?.affixGroups?.length ? '5' : '4'}. 同主题雅思词汇 · 考点归纳
           </h4>
           <div className="rounded-xl bg-sky-50/90 px-3 py-3 ring-1 ring-sky-100">
             {analysis?.themeTopic ? (

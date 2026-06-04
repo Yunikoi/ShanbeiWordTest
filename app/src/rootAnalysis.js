@@ -17,6 +17,7 @@ import {
 /** @typedef {{ word: string, zh?: string, pos?: string, morphBreakdown?: string }} FamilyWord */
 /** @typedef {{ word: string, pos: string, zh: string, morphBreakdown?: string }} DerivativeWord */
 /** @typedef {{ label: string, zh?: string }} RelatedNote */
+/** @typedef {{ type: 'prefix' | 'suffix' | 'root', label: string, meaning: string, examples: FamilyWord[] }} AffixGroup */
 /** @typedef {{
  *   gloss: string,
  *   morphKind?: 'classical' | 'compound',
@@ -24,6 +25,8 @@ import {
  *   rootLine: string,
  *   suffixLine: string,
  *   evolution: string,
+ *   targetFormula?: string,
+ *   affixGroups?: AffixGroup[],
  *   parts: MorphPart[],
  *   pieSummary?: string,
  *   family: FamilyWord[],

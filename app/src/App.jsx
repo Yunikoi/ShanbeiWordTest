@@ -1348,7 +1348,11 @@ export default function App() {
         <details className="mb-6 rounded-2xl border border-violet-200 bg-violet-50/50 px-4 py-3 text-left shadow-sm" open>
           <summary className="cursor-pointer text-sm font-semibold text-violet-900">词根分析 · DeepSeek（推荐）</summary>
           <p className="mt-2 text-xs leading-relaxed text-slate-600">
-            在词书页可单独开启「本书自动分析词根」。全局开关只控制是否可用 DeepSeek；默认不会打开词书就整本跑 API。已保存词根仍可查看。
+            分析时会先从{' '}
+            <a href="https://www.quword.com/" target="_blank" rel="noreferrer" className="underline">
+              趣词词典
+            </a>{' '}
+            抓取词根资料，再由 DeepSeek 整理成卡片（构词→前缀举例→词性派生→主题词）。在词书页可单独开启「本书自动分析词根」。
           </p>
           <label className="mt-3 flex cursor-pointer items-center gap-2 text-sm">
             <input

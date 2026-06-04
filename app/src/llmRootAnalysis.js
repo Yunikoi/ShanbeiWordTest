@@ -3,44 +3,51 @@ import { hasJapaneseText } from './japaneseSentence.js'
 import { normalizePos } from './rootAnalysis.js'
 import { loadWordRootAnalysis, saveWordRootAnalysis, isRootAnalysisStale, ROOT_ANALYSIS_SCHEMA_VERSION } from './rootAnalysisCache.js'
 import { findBookSameRootWords, withBookSameRoot } from './rootAnalysis.js'
+import { fetchQuwordPack, formatQuwordForPrompt } from './quwordClient.js'
 
-const SYSTEM_PROMPT = `你是一位精通印欧语源学（PIE）、比较语言学的高级英语词源专家。
+const SYSTEM_PROMPT = `你是一位精通印欧语源学的高级英语词源专家，擅长把趣词（quword.com）词根资料整理成结构化学习卡片。
+
+当用户提供【趣词 quword.com 抓取】资料时：
+1. 必须优先采用趣词的前缀/词根/后缀含义与举例，保留 morphBreakdown 格式（如 pro+gress走→向前走）。
+2. 不得与趣词明显矛盾；趣词未覆盖处可补充雅思 B2–C1 词汇。
+3. 无趣词资料时，按词源学常识分析。
+
+分析顺序（JSON 字段对应）：
+① target 构词：prefixLine / rootLine / suffixLine / evolution
+② affixGroups：每个前缀或词根一组，含含义 + 趣词式举例（8–16 个/组，优先趣词原文）
+③ derivatives：同底层词根的雅思派生，按 n/v/adj/adv 标注 pos
+④ themeTopic + themeSummary + themeWords：同一雅思主题常考词（6–12 个，不要求同词根）
 
 铁律：
-1. 禁止将整词当作词干敷衍；必须拆到前缀/词根/后缀，或说明是现代合成词（sub+set）。
-2. 同根词族必须共享同一拉丁/希腊/PIE 血统；形似不同源不得列入。
-3. 单一词根词追溯 PIE；不确定时标明，不捏造。
-4. 日语汉字词按汉字拆解，不适用印欧语同根词族。
+- 禁止整词当词干敷衍；必须拆前缀/词根/后缀。
+- 同根词族须共享拉丁/希腊/PIE 血统。
+- 日语汉字词不适用印欧语同根词族。
 
-只输出 JSON，不要 markdown。格式：
+只输出 JSON：
 {
   "gloss": "核心中文释义",
   "morphKind": "classical|compound|germanic",
-  "prefixLine": "前缀说明；无则写「无」",
-  "rootLine": "词根及拉丁/希腊/PIE来源",
-  "suffixLine": "后缀说明；无则写「无」",
-  "evolution": "字面逻辑演变一句话",
-  "pieSummary": "PIE 摘要，无则空字符串",
-  "insight": "深度记忆心法一两句",
-  "family": [{"word":"同根词","zh":"释义","morphBreakdown":"拆解公式","pos":"n|v|adj|adv"}],
-  "derivatives": [
-    {"word":"structure","pos":"n","zh":"结构","morphBreakdown":"struct + -ure"},
-    {"word":"construct","pos":"v","zh":"建造","morphBreakdown":"con- + struct"},
-    {"word":"structural","pos":"adj","zh":"结构的","morphBreakdown":"struct + -ural"},
-    {"word":"structurally","pos":"adv","zh":"在结构上","morphBreakdown":"structural + -ly"}
+  "prefixLine": "前缀说明；无则「无」",
+  "rootLine": "词根及来源",
+  "suffixLine": "后缀说明；无则「无」",
+  "evolution": "本词 morphBreakdown 格式，如 pro+gress走→向前走→进步",
+  "pieSummary": "PIE 摘要，无则空",
+  "insight": "记忆心法一两句",
+  "affixGroups": [
+    {
+      "type": "prefix|root|suffix",
+      "label": "pro-",
+      "meaning": "① 表示「向前，在前」",
+      "examples": [{"word":"progress","zh":"进步","morphBreakdown":"pro+gress走→向前走"}]
+    }
   ],
-  "themeTopic": "雅思常考主题，如「环境·污染」「教育·学术」",
-  "themeSummary": "1-2句：该词常出现的雅思题型/篇章场景，与同主题词如何共现",
-  "themeWords": [
-    {"word":"emission","pos":"n","zh":"排放"},
-    {"word":"sustainable","pos":"adj","zh":"可持续的"}
-  ],
-  "tips": ["补充说明"]
-}
-
-family：2-4 个雅思常见同根词，必须真同根（不同前缀/后缀的同血统词）。
-derivatives：4-10 个雅思（IELTS）常考同词根词汇（B2–C1 学术/书面语），必须共享同一底层词根；尽量覆盖名词(n)、动词(v)、形容词(adj)、副词(adv)等词性派生，每个词标注 pos 并给出构词拆解。
-themeTopic + themeSummary + themeWords：归纳与当前词可能在同一雅思主题/篇章中考到的词汇（6-12 个，不要求同词根，要求场景语义相关；优先雅思阅读/写作/听力常考 B2–C1 词）。`
+  "family": [{"word":"同根词","zh":"释义","morphBreakdown":"拆解","pos":"n|v|adj|adv"}],
+  "derivatives": [{"word":"structure","pos":"n","zh":"结构","morphBreakdown":"struct + -ure"}],
+  "themeTopic": "雅思主题",
+  "themeSummary": "场景说明",
+  "themeWords": [{"word":"emission","pos":"n","zh":"排放"}],
+  "tips": ["补充说明，可注明「参考趣词词典」"]
+}`
 
 /** @type {Map<string, import('./rootAnalysis.js').RootAnalysis>} */
 const cache = new Map()
@@ -89,6 +96,32 @@ function toRootAnalysis(raw, gloss) {
   const derivatives = mapWords(o.derivatives).slice(0, 10)
   const themeWords = mapWords(o.themeWords).slice(0, 12)
   const familyRaw = mapWords(o.family).slice(0, 4)
+
+  /** @param {unknown} arr */
+  function mapAffixGroups(arr) {
+    if (!Array.isArray(arr)) return []
+    return arr
+      .map((item) => {
+        const x = /** @type {Record<string, unknown>} */ (item)
+        const label = String(x.label || '').trim()
+        const meaning = String(x.meaning || '').trim()
+        const type = String(x.type || 'root')
+        if (!label || !meaning) return null
+        const examples = mapWords(x.examples).slice(0, 16)
+        if (!examples.length) return null
+        return {
+          type: /** @type {'prefix'|'root'|'suffix'} */ (
+            ['prefix', 'root', 'suffix'].includes(type) ? type : 'root'
+          ),
+          label,
+          meaning,
+          examples,
+        }
+      })
+      .filter(Boolean)
+  }
+
+  const affixGroups = mapAffixGroups(o.affixGroups).slice(0, 4)
   const family =
     familyRaw.length > 0
       ? familyRaw
@@ -110,6 +143,7 @@ function toRootAnalysis(raw, gloss) {
     evolution: String(o.evolution || ''),
     parts: [],
     ...(o.pieSummary ? { pieSummary: String(o.pieSummary) } : {}),
+    ...(affixGroups.length ? { affixGroups } : {}),
     family,
     derivatives: derivatives.length ? derivatives : familyRaw,
     ...(themeWords.length ? { themeWords } : {}),
@@ -141,14 +175,23 @@ export async function fetchRootAnalysisLlm(entry, cfg, bookId, pool = []) {
     ? `\n本雅思词书中检测到可能同根词：${bookCandidates.map((c) => c.word).join('、')}。derivatives 与 family 请优先从此列表选取（保留释义），并补充其他雅思常考同根词。`
     : '\nderivatives 与 family 请优先给出雅思（IELTS）常考、B2–C1 书面语场景的同词根词汇。'
 
+  let quwordBlock = ''
+  if (!hasJapaneseText(entry.word)) {
+    try {
+      const pack = await fetchQuwordPack(entry.word)
+      quwordBlock = formatQuwordForPrompt(pack)
+    } catch {
+      quwordBlock = ''
+    }
+  }
+
   const userPrompt = `分析单词：${entry.word}
 读音：${entry.ipa || '无'}
 释义：${gloss}
 ${bookHint}
+${quwordBlock ? `\n${quwordBlock}\n` : '\n（未获取到趣词资料，请按词源学分析并补充 affixGroups 举例）\n'}
 
-请输出完整 JSON，需包含：
-1. derivatives：同词根雅思常考派生（含 pos 与构词拆解）
-2. themeTopic、themeSummary、themeWords：同一雅思主题/篇章下可能一起考到的词汇归纳（6-12 个，语义场景相关，不要求同词根）`
+请输出完整 JSON，顺序：① 本词构词 ② affixGroups（趣词式举例） ③ derivatives（按词性） ④ themeTopic/themeWords`
 
   const raw = await openaiChatJsonForRoot(
     cfg.apiKey,
