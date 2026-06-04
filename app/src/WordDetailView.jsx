@@ -29,6 +29,7 @@ export function WordDetailView({ entry, pool, bookId, rootEnrichRunning, onClose
   const { analysis: rootAnalysis, quwordLoading } = useQuwordRootAnalysis(
     baseRootAnalysis,
     entry.word,
+    bookId,
   )
 
   const rootPending =

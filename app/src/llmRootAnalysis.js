@@ -179,6 +179,14 @@ export async function fetchRootAnalysisLlm(entry, cfg, bookId, pool = []) {
 
   if (hit && !isRootAnalysisStale(hit)) {
     const merged = mergeQuwordIntoAnalysis(hit, quwordPack)
+    if (
+      bookId &&
+      merged.affixGroups?.length &&
+      !hit.affixGroups?.length
+    ) {
+      cache.set(key, merged)
+      saveWordRootAnalysis(bookId, entry.word, merged)
+    }
     return withBookSameRoot(merged, entry, pool) ?? merged
   }
 

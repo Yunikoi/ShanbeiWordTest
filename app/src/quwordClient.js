@@ -162,7 +162,12 @@ export async function fetchQuwordPack(word) {
       /* optional */
     }
 
-    const urls = [...new Set(search.sections.map((s) => s.detailUrl).filter(Boolean))].slice(0, 3)
+    const urls = [...new Set(
+      search.sections
+        .filter((s) => isSectionRelevant(s, token))
+        .map((s) => s.detailUrl)
+        .filter(Boolean),
+    )].slice(0, 2)
     /** @type {QuwordAffixDetail[]} */
     const affixDetails = []
     for (const url of urls) {
@@ -194,7 +199,7 @@ export function formatQuwordForPrompt(pack, maxExamples = 40) {
   if (pack.zhEtymology) lines.push(`中文词源：${pack.zhEtymology}`)
   if (pack.enEtymology) lines.push(`英文词源摘录：${pack.enEtymology.slice(0, 600)}`)
 
-  for (const sec of pack.search.sections) {
+  for (const sec of pack.search.sections.filter((s) => isSectionRelevant(s, pack.word))) {
     lines.push(`\n${sec.heading}`)
     if (sec.meaning) lines.push(`含义：${sec.meaning}`)
     if (sec.source) lines.push(`来源：${sec.source}`)
@@ -222,6 +227,29 @@ export function formatQuwordForPrompt(pack, maxExamples = 40) {
   return lines.join('\n')
 }
 
+/** @param {QuwordSearchSection} sec @param {string} token */
+function isSectionRelevant(sec, token) {
+  const blob = `${sec.heading} ${sec.meaning || ''} ${sec.source || ''}`.toLowerCase()
+  if (new RegExp(`\\b${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(blob)) return true
+  return (sec.cognates || []).some((c) => c.toLowerCase() === token)
+}
+
+/** @param {string} heading */
+function parseHeadingMeta(heading) {
+  const m = heading.match(/^(词根|前缀|后缀|词根词缀)[：:]\s*(.+)$/u)
+  if (!m) return { label: heading, meaning: '' }
+  const rest = m[2].trim()
+  const eq = rest.match(/^([^=]+)=\s*(.+)$/)
+  if (eq) return { label: eq[1].trim(), meaning: eq[2].trim() }
+  return { label: rest, meaning: '' }
+}
+
+/** @param {string} raw */
+function cleanMeaning(raw) {
+  const t = String(raw || '').trim()
+  if (!t || t.startsWith('【同源') || t.startsWith('【相关')) return ''
+  return t
+}
 /** @param {string} heading @param {string} label */
 function inferAffixType(heading, label) {
   if (/前缀/u.test(heading) || (label.endsWith('-') && !label.startsWith('-'))) return 'prefix'
@@ -229,9 +257,10 @@ function inferAffixType(heading, label) {
   return 'root'
 }
 
-/** @param {QuwordPack} pack @returns {import('./rootAnalysis.js').AffixGroup[]} */
-export function affixGroupsFromQuwordPack(pack) {
+/** @param {QuwordPack} pack @param {import('./rootAnalysis.js').RootAnalysis} [analysis] @returns {import('./rootAnalysis.js').AffixGroup[]} */
+export function affixGroupsFromQuwordPack(pack, analysis) {
   if (!pack) return []
+  const token = pack.word.toLowerCase()
   /** @type {import('./rootAnalysis.js').AffixGroup[]} */
   const groups = []
   const seen = new Set()
@@ -251,13 +280,18 @@ export function affixGroupsFromQuwordPack(pack) {
   }
 
   for (const sec of pack.search?.sections || []) {
-    const label = sec.heading.replace(/^(词根|前缀|后缀|词根词缀)[：:]\s*/u, '').trim()
+    if (!isSectionRelevant(sec, token)) continue
+    const meta = parseHeadingMeta(sec.heading)
+    const label = meta.label
     if (!label) continue
     const key = `sec:${label}`
     if (seen.has(key)) continue
-    const meaning = [sec.meaning, sec.source].filter(Boolean).join('；') || sec.heading
+    const meaning =
+      cleanMeaning(meta.meaning) ||
+      cleanMeaning(sec.meaning) ||
+      cleanMeaning(sec.source) ||
+      sec.heading
     const examples = (sec.cognates || []).map((w) => ({ word: w, zh: '' }))
-    if (!examples.length && groups.some((g) => g.label.includes(label) || label.includes(g.label))) continue
     seen.add(key)
     groups.push({
       type: inferAffixType(sec.heading, label),
@@ -267,7 +301,35 @@ export function affixGroupsFromQuwordPack(pack) {
     })
   }
 
-  return groups.filter((g) => g.examples.length > 0).slice(0, 5)
+  const withExamples = groups.filter((g) => g.examples.length > 0)
+  if (withExamples.length) return withExamples.slice(0, 5)
+
+  if (pack.zhEtymology || analysis) {
+    const examples = [
+      ...(analysis?.derivatives || []),
+      ...(analysis?.family || []),
+    ]
+      .filter((d, i, arr) => arr.findIndex((x) => x.word === d.word) === i)
+      .slice(0, 10)
+      .map((d) => ({
+        word: d.word,
+        zh: d.zh || '',
+        ...(d.morphBreakdown ? { morphBreakdown: d.morphBreakdown } : {}),
+      }))
+
+    if (pack.zhEtymology || examples.length) {
+      return [
+        {
+          type: /** @type {'root'} */ ('root'),
+          label: token,
+          meaning: pack.zhEtymology || analysis?.rootLine || '词源',
+          examples,
+        },
+      ]
+    }
+  }
+
+  return groups.slice(0, 5)
 }
 
 /**
@@ -276,7 +338,7 @@ export function affixGroupsFromQuwordPack(pack) {
  */
 export function mergeQuwordIntoAnalysis(analysis, pack) {
   if (!analysis || !pack) return analysis
-  const fromQw = affixGroupsFromQuwordPack(pack)
+  const fromQw = affixGroupsFromQuwordPack(pack, analysis)
   if (!fromQw.length) return analysis
 
   const tips = [...(analysis.tips || [])]
@@ -285,8 +347,11 @@ export function mergeQuwordIntoAnalysis(analysis, pack) {
   return {
     ...analysis,
     affixGroups: analysis.affixGroups?.length ? analysis.affixGroups : fromQw,
-    ...(pack.zhEtymology && analysis.rootLine === '无'
-      ? { rootLine: pack.zhEtymology.slice(0, 200) }
+    ...(pack.zhEtymology && (!analysis.rootLine || analysis.rootLine === '无')
+      ? { rootLine: pack.zhEtymology.slice(0, 240) }
+      : {}),
+    ...(pack.zhEtymology && analysis.evolution && analysis.evolution.length < 20
+      ? { evolution: pack.zhEtymology.slice(0, 120) }
       : {}),
     tips,
   }

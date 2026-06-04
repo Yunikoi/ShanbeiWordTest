@@ -208,6 +208,7 @@ export default function App() {
   const { analysis: enrichedRootAnalysis, quwordLoading } = useQuwordRootAnalysis(
     displayRootAnalysis,
     currentCard?.word,
+    activeBookId,
   )
 
   const onPickBook = useCallback(
