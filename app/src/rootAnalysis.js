@@ -39,7 +39,7 @@ import {
  *   tips: string[],
  *   insight?: string,
  *   strictEtymology?: boolean,
- *   source?: 'local' | 'deepseek',
+ *   source?: 'local' | 'deepseek' | 'quword',
  *   schemaVersion?: number,
  * }} RootAnalysis */
 
@@ -530,8 +530,20 @@ export function hasRootAnalysis(a) {
     (a.tips?.length ?? 0) > 0 ||
     !!a.evolution ||
     !!a.pieSummary ||
-    !!a.insight
+    !!a.insight ||
+    (a.affixGroups?.length ?? 0) > 0 ||
+    (a.rootLine && a.rootLine !== '无')
   )
+}
+
+/** @param {RootAnalysis | null | undefined} a */
+export function isPlaceholderRootAnalysis(a) {
+  if (!a || a.source === 'deepseek' || a.source === 'quword') return false
+  const emptyMorph =
+    (!a.prefixLine || a.prefixLine === '无') &&
+    (!a.rootLine || a.rootLine === '无') &&
+    (!a.suffixLine || a.suffixLine === '无')
+  return emptyMorph && !(a.affixGroups?.length > 0)
 }
 
 export function attachRootAnalysis(entry, pool) {

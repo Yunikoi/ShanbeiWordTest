@@ -3,10 +3,9 @@ import { getLlmSettings, setLlmSettings, getRootLlmSettings, setRootLlmSettings 
 import { useBookshelfStudy } from './useBookshelfStudy.js'
 import { StudyHistoryModal } from './StudyHistoryModal.jsx'
 import { RootAnalysisPanel } from './RootAnalysisPanel.jsx'
-import { useQuwordRootAnalysis } from './useQuwordRootAnalysis.js'
+import { useResolvedRootAnalysis } from './useResolvedRootAnalysis.js'
 import { SessionCheckpoint } from './SessionCheckpoint.jsx'
 import { WordDetailView } from './WordDetailView.jsx'
-import { buildRootAnalysis, withBookSameRoot } from './rootAnalysis.js'
 import { getCachedRootAnalysisLlm } from './llmRootAnalysis.js'
 import { countCachedRootAnalysis, exportBookRootMap, importBookRootMap } from './rootAnalysisCache.js'
 import {
@@ -188,27 +187,18 @@ export default function App() {
     return () => window.clearTimeout(timer)
   }, [view, studyPhase, cardKey, currentCard?.word, currentCard?.ipa, doneOpen, sessionEmpty, checkpointOpen])
 
-  const liveRootAnalysis = useMemo(() => {
+  const studyEntry = useMemo(() => {
     if (!currentCard?.word) return null
-    const pool = entries.length > 0 ? entries : sessionQueue
-    if (!pool.length) return null
-    const entry = entries.find((e) => e.word === currentCard.word) ?? currentCard
-    return buildRootAnalysis(entry, pool)
-  }, [currentCard, entries, sessionQueue, cardKey])
+    return entries.find((e) => e.word === currentCard.word) ?? currentCard
+  }, [currentCard, entries])
 
-  const displayRootAnalysis = useMemo(() => {
-    if (!currentCard?.word) return null
-    const pool = entries.length > 0 ? entries : sessionQueue
-    const entry = entries.find((e) => e.word === currentCard.word) ?? currentCard
-    const base = currentCard.rootAnalysis ?? liveRootAnalysis
-    if (!base) return null
-    return withBookSameRoot(base, entry, pool) ?? base
-  }, [currentCard, liveRootAnalysis, entries, sessionQueue])
+  const studyPool = entries.length > 0 ? entries : sessionQueue
 
-  const { analysis: enrichedRootAnalysis, quwordLoading } = useQuwordRootAnalysis(
-    displayRootAnalysis,
-    currentCard?.word,
+  const { analysis: enrichedRootAnalysis, loading: rootAnalysisLoading } = useResolvedRootAnalysis(
+    studyEntry,
     activeBookId,
+    studyPool,
+    { fetchOnDemand: showRoots },
   )
 
   const onPickBook = useCallback(
@@ -803,6 +793,7 @@ export default function App() {
                 {entries.map((e) => {
                   const hasRoot =
                     e.rootAnalysis?.source === 'deepseek' ||
+                    e.rootAnalysis?.source === 'quword' ||
                     (activeBookId ? !!getCachedRootAnalysisLlm(activeBookId, e.word) : false)
                   return (
                     <li key={e.word} className="border-b border-slate-50 py-1 last:border-0">
@@ -1024,7 +1015,7 @@ export default function App() {
                           <RootAnalysisPanel
                             analysis={enrichedRootAnalysis}
                             word={currentCard?.word}
-                            loading={quwordLoading}
+                            loading={rootAnalysisLoading}
                           />
                         ) : (
                           <p className="mt-3 rounded-xl border border-amber-100 bg-amber-50 px-3 py-3 text-center text-xs text-amber-900">

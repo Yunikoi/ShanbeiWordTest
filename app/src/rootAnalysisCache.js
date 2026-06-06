@@ -106,8 +106,9 @@ export function importBookRootMap(bookId, wordsMap) {
 function normalizeStored(raw) {
   if (!raw || typeof raw !== 'object') return null
   const o = /** @type {import('./rootAnalysis.js').RootAnalysis} */ (raw)
-  if (o.source !== 'deepseek') return null
-  if (!o.rootLine || !o.gloss) return null
+  if (o.source !== 'deepseek' && o.source !== 'quword') return null
+  if (!o.gloss && (!o.rootLine || o.rootLine === '无')) return null
+  if (o.source === 'deepseek' && (!o.rootLine || !o.gloss)) return null
   return o
 }
 
@@ -124,7 +125,7 @@ export function loadWordRootAnalysis(bookId, word) {
  * @param {import('./rootAnalysis.js').RootAnalysis} analysis
  */
 export function saveWordRootAnalysis(bookId, word, analysis) {
-  if (!bookId || !word || analysis.source !== 'deepseek') return
+  if (!bookId || !word || (analysis.source !== 'deepseek' && analysis.source !== 'quword')) return
   const map = loadBookRootMap(bookId)
   map[word] = analysis
   saveBookRootMap(bookId, map)

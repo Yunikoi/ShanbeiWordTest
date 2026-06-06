@@ -230,8 +230,15 @@ export function formatQuwordForPrompt(pack, maxExamples = 40) {
 /** @param {QuwordSearchSection} sec @param {string} token */
 function isSectionRelevant(sec, token) {
   const blob = `${sec.heading} ${sec.meaning || ''} ${sec.source || ''}`.toLowerCase()
-  if (new RegExp(`\\b${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(blob)) return true
-  return (sec.cognates || []).some((c) => c.toLowerCase() === token)
+  const esc = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  if (new RegExp(`\\b${esc}\\b`, 'i').test(blob)) return true
+  if ((sec.cognates || []).some((c) => c.toLowerCase() === token)) return true
+
+  const meta = parseHeadingMeta(sec.heading)
+  const label = meta.label.toLowerCase().replace(/^-+|-+$/g, '')
+  if (label.length >= 2 && token.includes(label)) return true
+  if (label.length >= 3 && label.includes(token)) return true
+  return false
 }
 
 /** @param {string} heading */
@@ -339,21 +346,27 @@ export function affixGroupsFromQuwordPack(pack, analysis) {
 export function mergeQuwordIntoAnalysis(analysis, pack) {
   if (!analysis || !pack) return analysis
   const fromQw = affixGroupsFromQuwordPack(pack, analysis)
-  if (!fromQw.length) return analysis
+  const hasQwData = fromQw.length > 0 || !!pack.zhEtymology || !!pack.enEtymology
+  if (!hasQwData) return analysis
 
   const tips = [...(analysis.tips || [])]
   if (!tips.some((t) => t.includes('趣词'))) tips.push('参考趣词词典 quword.com')
 
+  const rootFromQw =
+    pack.zhEtymology ||
+    (pack.enEtymology ? pack.enEtymology.slice(0, 240) : '')
+
   return {
     ...analysis,
     affixGroups: analysis.affixGroups?.length ? analysis.affixGroups : fromQw,
-    ...(pack.zhEtymology && (!analysis.rootLine || analysis.rootLine === '无')
-      ? { rootLine: pack.zhEtymology.slice(0, 240) }
+    ...(rootFromQw && (!analysis.rootLine || analysis.rootLine === '无')
+      ? { rootLine: rootFromQw.slice(0, 240) }
       : {}),
-    ...(pack.zhEtymology && analysis.evolution && analysis.evolution.length < 20
-      ? { evolution: pack.zhEtymology.slice(0, 120) }
+    ...(rootFromQw && (!analysis.evolution || analysis.evolution.length < 20)
+      ? { evolution: rootFromQw.slice(0, 120) }
       : {}),
-    tips,
+    tips: tips.filter((t) => !t.includes('暂未拆解')),
+    ...(analysis.source !== 'deepseek' ? { source: /** @type {'quword'} */ ('quword') } : {}),
   }
 }
 

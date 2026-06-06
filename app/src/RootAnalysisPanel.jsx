@@ -50,7 +50,9 @@ export function RootAnalysisPanel({ analysis, word, loading = false }) {
   return (
     <div className="mt-3 space-y-4 rounded-2xl border border-violet-100 bg-violet-50/50 p-4">
       {loading ? (
-        <p className="text-center text-xs text-violet-700">正在从趣词词典加载举例…</p>
+        <p className="text-center text-xs text-violet-700">
+          {analysis?.source === 'deepseek' ? '正在从趣词词典加载举例…' : '正在加载词根分析…'}
+        </p>
       ) : null}
       <header>
         <h3 className="text-base font-bold text-violet-950">🔍 {title}</h3>
@@ -311,7 +313,9 @@ export function RootAnalysisPanel({ analysis, word, loading = false }) {
       <p className="text-[10px] text-slate-400">
         {analysis?.source === 'deepseek'
           ? 'DeepSeek 词源学分析 · 含同根派生与同主题雅思词汇 · 失败时回退本地词库'
-          : '印欧语源学 + 现代合成法 · 本地词库'}
+          : analysis?.source === 'quword'
+            ? '趣词词典 quword.com · 构词与举例'
+            : '印欧语源学 + 现代合成法 · 本地词库'}
       </p>
     </div>
   )
