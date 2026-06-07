@@ -36,6 +36,39 @@ export function removeStudyHistory(bookId) {
 }
 
 /**
+ * @param {StudySession[]} sessions
+ * @returns {{ word: string, count: number, forgetCount: number, fuzzyCount: number, lastAt: string }[]}
+ */
+export function aggregateUnknownWords(sessions) {
+  /** @type {Map<string, { count: number, forgetCount: number, fuzzyCount: number, lastAt: string }>} */
+  const map = new Map()
+
+  for (const session of sessions) {
+    for (const e of session.events) {
+      if (e.kind !== 'forget' && e.kind !== 'fuzzy') continue
+      const prev = map.get(e.word) || { count: 0, forgetCount: 0, fuzzyCount: 0, lastAt: '' }
+      prev.count += 1
+      if (e.kind === 'forget') prev.forgetCount += 1
+      else prev.fuzzyCount += 1
+      if (!prev.lastAt || e.at > prev.lastAt) prev.lastAt = e.at
+      map.set(e.word, prev)
+    }
+  }
+
+  return [...map.entries()]
+    .map(([word, stat]) => ({ word, ...stat }))
+    .sort((a, b) => b.count - a.count || a.word.localeCompare(b.word))
+}
+
+/**
+ * @param {StudySession[]} sessions
+ * @returns {string[]}
+ */
+export function allUnknownWordsSorted(sessions) {
+  return aggregateUnknownWords(sessions).map((item) => item.word)
+}
+
+/**
  * @param {StudySession} session
  * @returns {{ tested: string[], unknown: string[], testedCount: number, unknownCount: number }}
  */

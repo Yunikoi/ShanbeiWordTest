@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
+  aggregateUnknownWords,
   buildGlossMap,
   formatDayKey,
   formatMonthTitle,
@@ -45,18 +46,20 @@ function todayKey() {
  *   onClose: () => void,
  *   sessions: import('./studyHistory.js').StudySession[],
  *   entries: { word: string, senses?: { zh?: string }[] }[],
- *   onReviewUnknown?: (words: string[]) => void,
+ *   onReviewUnknown?: (words: string[], opts?: { sortByInputOrder?: boolean }) => void,
  *   reviewStarting?: boolean,
  * }} props
  */
 export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUnknown, reviewStarting }) {
   const [selectedId, setSelectedId] = useState(null)
   const [selectedDate, setSelectedDate] = useState(/** @type {string | null} */ (null))
+  const [showAggregate, setShowAggregate] = useState(false)
   const [viewYear, setViewYear] = useState(() => new Date().getFullYear())
   const [viewMonth, setViewMonth] = useState(() => new Date().getMonth())
 
   const glossMap = useMemo(() => buildGlossMap(entries), [entries])
   const byDay = useMemo(() => groupSessionsByDay(sessions), [sessions])
+  const unknownStats = useMemo(() => aggregateUnknownWords(sessions), [sessions])
   const cells = useMemo(() => buildCalendarCells(viewYear, viewMonth), [viewYear, viewMonth])
   const today = todayKey()
 
@@ -64,6 +67,7 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
     if (!open) {
       setSelectedId(null)
       setSelectedDate(null)
+      setShowAggregate(false)
       return
     }
     if (sessions.length) {
@@ -89,6 +93,7 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
   const goBack = () => {
     if (selectedId) setSelectedId(null)
     else if (selectedDate) setSelectedDate(null)
+    else if (showAggregate) setShowAggregate(false)
     else onClose()
   }
 
@@ -96,7 +101,9 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
     ? '本次测试详情'
     : selectedDate
       ? formatDayKey(selectedDate)
-      : '测试历史'
+      : showAggregate
+        ? '不会词汇总'
+        : '测试历史'
 
   const subtitle = selected
     ? formatSessionTime(selected.endedAt || selected.startedAt)
@@ -104,7 +111,11 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
       ? dayBucket
         ? `共 ${dayBucket.sessionCount} 次 · 测试 ${dayBucket.testedTotal} 词 · 不会 ${dayBucket.unknownTotal} 词`
         : '当日无记录'
-      : '点击日期查看当天各次测试'
+      : showAggregate
+        ? unknownStats.length
+          ? `共 ${unknownStats.length} 词 · 按标记「不会」次数从高到低排序`
+          : '暂无不会词记录'
+        : '点击日期查看当天各次测试'
 
   if (!open) return null
 
@@ -128,7 +139,7 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
             onClick={goBack}
             className="rounded-full px-3 py-1 text-sm text-slate-500 hover:bg-slate-100"
           >
-            {selectedId || selectedDate ? '返回' : '关闭'}
+            {selectedId || selectedDate || showAggregate ? '返回' : '关闭'}
           </button>
         </div>
 
@@ -137,6 +148,13 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
             <SessionDetail
               summary={selectedSummary}
               unknownSet={unknownSet}
+              glossMap={glossMap}
+              onReviewUnknown={onReviewUnknown}
+              reviewStarting={reviewStarting}
+            />
+          ) : showAggregate ? (
+            <UnknownAggregate
+              stats={unknownStats}
               glossMap={glossMap}
               onReviewUnknown={onReviewUnknown}
               reviewStarting={reviewStarting}
@@ -174,26 +192,43 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
           ) : sessions.length === 0 ? (
             <p className="py-12 text-center text-sm text-slate-500">暂无记录，完成一次「开始学习」后会出现在这里。</p>
           ) : (
-            <HistoryCalendar
-              cells={cells}
-              byDay={byDay}
-              today={today}
-              viewYear={viewYear}
-              viewMonth={viewMonth}
-              onPrevMonth={() => {
-                if (viewMonth === 0) {
-                  setViewYear((y) => y - 1)
-                  setViewMonth(11)
-                } else setViewMonth((m) => m - 1)
-              }}
-              onNextMonth={() => {
-                if (viewMonth === 11) {
-                  setViewYear((y) => y + 1)
-                  setViewMonth(0)
-                } else setViewMonth((m) => m + 1)
-              }}
-              onPickDate={setSelectedDate}
-            />
+            <>
+              {unknownStats.length > 0 ? (
+                <button
+                  type="button"
+                  onClick={() => setShowAggregate(true)}
+                  className="mb-4 w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-left transition hover:border-rose-300 hover:bg-rose-100/80"
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-sm font-semibold text-rose-900">不会词汇总</span>
+                    <span className="rounded-full bg-rose-200 px-2 py-0.5 text-xs font-bold text-rose-900">
+                      {unknownStats.length} 词
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-rose-700">整合全部测试历史 · 按不会次数排序 · 可一键复习</p>
+                </button>
+              ) : null}
+              <HistoryCalendar
+                cells={cells}
+                byDay={byDay}
+                today={today}
+                viewYear={viewYear}
+                viewMonth={viewMonth}
+                onPrevMonth={() => {
+                  if (viewMonth === 0) {
+                    setViewYear((y) => y - 1)
+                    setViewMonth(11)
+                  } else setViewMonth((m) => m - 1)
+                }}
+                onNextMonth={() => {
+                  if (viewMonth === 11) {
+                    setViewYear((y) => y + 1)
+                    setViewMonth(0)
+                  } else setViewMonth((m) => m + 1)
+                }}
+                onPickDate={setSelectedDate}
+              />
+            </>
           )}
         </div>
       </div>
@@ -282,10 +317,81 @@ function HistoryCalendar({ cells, byDay, today, viewYear, viewMonth, onPrevMonth
 
 /**
  * @param {{
+ *   stats: ReturnType<typeof aggregateUnknownWords>,
+ *   glossMap: Map<string, string>,
+ *   onReviewUnknown?: (words: string[], opts?: { sortByInputOrder?: boolean }) => void,
+ *   reviewStarting?: boolean,
+ * }} props
+ */
+function UnknownAggregate({ stats, glossMap, onReviewUnknown, reviewStarting }) {
+  if (!stats.length) {
+    return (
+      <p className="py-12 text-center text-sm text-slate-500">
+        还没有标记为「不熟悉」或「不认识」的词，继续学习后会出现在这里。
+      </p>
+    )
+  }
+
+  const words = stats.map((s) => s.word)
+
+  return (
+    <div>
+      <div className="mb-4 flex flex-wrap gap-2 text-xs text-slate-600">
+        <span className="rounded-full bg-rose-100 px-2.5 py-1 text-rose-800">共 {stats.length} 词</span>
+        <span className="rounded-full bg-slate-100 px-2.5 py-1">
+          累计不会 {stats.reduce((n, s) => n + s.count, 0)} 次
+        </span>
+      </div>
+
+      {onReviewUnknown ? (
+        <button
+          type="button"
+          disabled={reviewStarting}
+          onClick={() => onReviewUnknown(words, { sortByInputOrder: true })}
+          className="mb-5 w-full rounded-2xl bg-indigo-600 py-3 text-sm font-semibold text-white shadow-md hover:bg-indigo-500 disabled:opacity-50"
+        >
+          {reviewStarting ? '准备复习中…' : `按顺序复习全部 ${stats.length} 个词`}
+        </button>
+      ) : null}
+
+      <ul className="space-y-2">
+        {stats.map((item, index) => {
+          const gloss = glossMap.get(item.word) || '（无释义）'
+          return (
+            <li
+              key={item.word}
+              title={gloss}
+              className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3"
+            >
+              <span className="w-6 shrink-0 text-center text-xs font-bold text-slate-400">{index + 1}</span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-semibold text-slate-900">{item.word}</p>
+                <p className="mt-0.5 truncate text-xs text-slate-500">{gloss}</p>
+              </div>
+              <div className="shrink-0 text-right">
+                <span className="inline-block rounded-full bg-rose-100 px-2.5 py-1 text-xs font-bold text-rose-800">
+                  {item.count} 次
+                </span>
+                {item.forgetCount > 0 && item.fuzzyCount > 0 ? (
+                  <p className="mt-1 text-[10px] text-slate-400">
+                    不认识 {item.forgetCount} · 不熟悉 {item.fuzzyCount}
+                  </p>
+                ) : null}
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  )
+}
+
+/**
+ * @param {{
  *   summary: ReturnType<typeof summarizeSession>,
  *   unknownSet: Set<string>,
  *   glossMap: Map<string, string>,
- *   onReviewUnknown?: (words: string[]) => void,
+ *   onReviewUnknown?: (words: string[], opts?: { sortByInputOrder?: boolean }) => void,
  *   reviewStarting?: boolean,
  * }} props
  */

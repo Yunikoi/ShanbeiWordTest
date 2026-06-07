@@ -299,7 +299,7 @@ export default function App() {
   }, [beginSession, dailyCount])
 
   const startHistoryReview = useCallback(
-    async (words) => {
+    async (words, opts) => {
       setDoneOpen(false)
       checkpointBufferRef.current = []
       resetStudyUiState({
@@ -314,7 +314,7 @@ export default function App() {
         setSessionCompletedCount,
       })
       try {
-        const r = await beginReviewSession(words)
+        const r = await beginReviewSession(words, opts)
         if (!r.ok) {
           setImportTip(r.message || '无法开始复习')
           return
@@ -893,7 +893,7 @@ export default function App() {
             <div className="text-right text-xs text-slate-500">
               <div className="font-medium text-slate-800">{activeTitle}</div>
               {sessionMode === 'history-review' ? (
-                <div className="text-indigo-600">复习本次不会的词</div>
+                <div className="text-indigo-600">复习历史不会词</div>
               ) : null}
               {!sessionEmpty && sessionQueueLength ? (
                 <div>

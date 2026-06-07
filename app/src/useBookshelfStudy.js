@@ -166,8 +166,9 @@ function shuffleCopy(arr) {
  * @param {string} bookId
  * @param {CardEntry[]} allEntries
  */
-async function buildSessionQueue(cardEntries, bookId, allEntries) {
-  let queue = shuffleCopy(cardEntries)
+async function buildSessionQueue(cardEntries, bookId, allEntries, opts = {}) {
+  const shuffle = opts.shuffle !== false
+  let queue = shuffle ? shuffleCopy(cardEntries) : cardEntries.slice()
   const cfg = getLlmSettings()
   if (cfg.enabled && cfg.apiKey.trim()) {
     queue = await enrichQueueWithLLM(queue, cfg)
@@ -497,17 +498,23 @@ export function useBookshelfStudy() {
    * @param {string[]} words
    */
   const beginReviewSession = useCallback(
-    async (words) => {
+    async (words, opts = {}) => {
       if (!activeBookId || !entries.length) return { ok: false, message: '请先选择有效词书' }
       const wordSet = new Set(words)
-      const pool = entries.filter((e) => wordSet.has(e.word))
+      let pool = entries.filter((e) => wordSet.has(e.word))
       if (!pool.length) {
         return { ok: false, message: '本次不会的词在当前词书中未找到（可能词表已更新）' }
+      }
+      if (opts.sortByInputOrder && words.length) {
+        const order = new Map(words.map((w, i) => [w, i]))
+        pool = pool.slice().sort((a, b) => (order.get(a.word) ?? 999) - (order.get(b.word) ?? 999))
       }
       setPreparingSession(true)
       setPrepareStatus('')
       try {
-        const queue = await buildSessionQueue(pool, activeBookId, entries)
+        const queue = await buildSessionQueue(pool, activeBookId, entries, {
+          shuffle: opts.sortByInputOrder !== true,
+        })
         setSessionPlanTotal(queue.length)
         setSessionQueue(queue)
         setSessionIndex(0)
