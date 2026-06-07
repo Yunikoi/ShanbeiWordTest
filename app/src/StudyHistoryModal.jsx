@@ -361,12 +361,11 @@ function UnknownAggregate({ stats, glossMap, onReviewUnknown, reviewStarting }) 
             <li
               key={item.word}
               title={gloss}
-              className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3"
+              className="flex cursor-default items-center gap-3 rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3"
             >
               <span className="w-6 shrink-0 text-center text-xs font-bold text-slate-400">{index + 1}</span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-semibold text-slate-900">{item.word}</p>
-                <p className="mt-0.5 truncate text-xs text-slate-500">{gloss}</p>
               </div>
               <div className="shrink-0 text-right">
                 <span className="inline-block rounded-full bg-rose-100 px-2.5 py-1 text-xs font-bold text-rose-800">
