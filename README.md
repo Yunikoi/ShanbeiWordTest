@@ -16,8 +16,9 @@
 |------|------|
 | **书架** | 读取 `app/public/wordbooks/manifest.json` 中配置的内置 `.txt` 词书；支持导入本地 `.txt` 或文件夹（合并多个 txt）；导入词书写入本地并出现在书架列表。 |
 | **今日复习量** | 选中词书后选择 10–100（步长 5）个词，从**当前到期**的词条中按 `nextDue` 优先级抽取。 |
-| **学习卡片** | 显示单词 → 释义页可 **查看例句 / 联想 / 词根分析**（本地生成）→ **认识 / 模糊 / 忘记**。每完成 **6** 个词弹出**阶段性回顾**（悬停看释义）再继续。词根分析为**通用引擎**（拉丁/希腊前缀·词根·后缀 → 现代合成 → 日耳曼本土词）；同根词仅按词源血统匹配。覆盖率：`node scripts/etymology-coverage.mjs <词书.md>`。 |
-| **间隔重复** | 简化 SM 思路：`认识` 则间隔按 1→2→4… 天倍增排期；`模糊` 保持间隔、`nextDue` 仍为今日；`忘记` 重置间隔与 `nextDue`。进度按**词书 ID** 分库存储。 |
+| **学习卡片** | 显示单词 → 释义页可 **查看例句 / 词根分析** → **认识 / 不熟悉 / 不认识**。每完成 **6** 个词弹出**阶段性回顾**（悬停看释义）再继续。词根分析支持 **DeepSeek + 趣词词典**（按需加载）；也可回退本地词源库。 |
+| **测试历史** | 词书页 **「测试历史」**：日历查看每次测试；单次详情可 **复习不会的 N 个词**；**「不会词汇总」** 整合全部历史，按标记「不熟悉 / 不认识」**次数从高到低**排序，列表**默认不显示释义**（悬停查看），可 **按顺序复习全部**。 |
+| **间隔重复** | 简化 SM 思路：`认识` 则间隔按 1→2→4… 天倍增排期；`不熟悉` 保持间隔、`nextDue` 仍为今日；`不认识` 重置间隔与 `nextDue`。进度按**词书 ID** 分库存储。 |
 | **例句** | 默认：**本地模板**（阅读语体英文 + 配对中文译文，不含把中文义项硬塞进英文句）。可选：**Google Gemini** 或 **Groq**（开发环境经 Vite 代理）用自备 API Key 对**今日队列中的词**逐条生成例句+译文。 |
 
 ### 词书文本格式
@@ -53,14 +54,33 @@
 | `swt-books-meta` | 用户导入词书的元数据列表 |
 | `swt-book-<id>` | 某本导入词书的词条 JSON |
 | `swt-prog-<id>` | 该词书下各词的 SRS 进度（`nextDue`、`intervalNext` 等） |
-| `swt-history-<id>` | 该词书每次完成学习的测试记录（时间、词列表、不会的词） |
+| `swt-history-<id>` | 该词书每次完成学习的测试记录（时间、各词评分、不会的词） |
+| `swt-root-llm-<id>` | 该词书 DeepSeek / 趣词 词根分析缓存（按词书分文件键） |
 | `swt-llm-*` | 大模型开关、provider、API Key、模型名（Key 仅存本机） |
+| `swt-book-prefs` | 各词书偏好（如是否自动批量分析词根），JSON 内按词书 ID 分条 |
 
 清除站点数据或删除上述键可重置对应数据。
 
 **导入词书不会随磁盘文件自动变化**：浏览器无法实时监听 `Yasi.md` 等本地路径。修改笔记后，请在词书页点 **「从本地文件更新词表」**，或在书架再次选择**同名** `.md` / `.txt` 重新导入（会覆盖该词书并保留仍存在的词条的学习进度）。
 
-**删除词书**：仅 **已导入** 词书可删（书架卡片右上角「删除」，或词书页底部「删除这本词书」）；内置词书不可删。删除会清除本机词条与学习进度。
+**删除词书**：仅 **已导入** 词书可删（书架卡片右上角「删除」，或词书页底部「删除这本词书」）；内置词书不可删。删除会清除本机词条、学习进度与测试历史。
+
+### 测试历史与不会词汇总
+
+1. 打开词书 → **测试历史**（右上角）。
+2. **日历**：有记录的日期可点，查看当天各次测试；进入某次可看到「不会的」词，并 **复习不会的 N 个词**。
+3. **不会词汇总**（日历上方入口）：汇总**全部测试**中标记为 **不熟悉** 或 **不认识** 的词。
+   - 按 **不会次数** 降序排列（同一词多次测试会累加；单次测试内同一词只计 1 次）。
+   - 列表只显示 **单词 + 次数**；**释义需鼠标悬停** 才显示（与词表 chip 一致）。
+   - **按顺序复习全部**：从次数最多的词开始，不打乱顺序。
+
+测试记录保存在 `swt-history-<词书ID>`，最多保留最近 **150** 次会话。
+
+### 词根分析（DeepSeek + 趣词，可选）
+
+1. 书架页展开 **「词根分析 · DeepSeek（推荐）」**，填写 DeepSeek API Key。
+2. 词书页可勾选 **「本书自动分析词根」** 批量补全；或学习时点 **「查看词根」** 按需加载（会先读缓存，再调 DeepSeek，并用 [趣词词典 quword.com](https://www.quword.com/) 补举例）。
+3. 线上经 `/api/deepseek`、`/api/quword` 同源代理（Vercel 已配置）；大词根 JSON（如 `Yasi-词根.json`）请放本机、**勿提交 Git**。
 
 ### 快速开始
 
@@ -84,7 +104,7 @@ npm run lint     # ESLint
 
 | 平台 | 难度 | DeepSeek 词根 | 说明 |
 |------|------|---------------|------|
-| **[Vercel](https://vercel.com)** | ⭐ 最简单 | ✅ | 连接 GitHub 仓库 `Yunikoi/ShanbeiWordTest`，根目录已有 `vercel.json`，自动构建 |
+| **[Vercel](https://vercel.com)** | ⭐ 最简单 | ✅ | 连接 GitHub 仓库 `Yunikoi/ShanbeiWordTest`，根目录已有 `vercel.json`（含 DeepSeek / Groq / 趣词代理），自动构建 |
 | **[Netlify](https://netlify.com)** | ⭐ | ✅ | 导入仓库，使用根目录 `netlify.toml` |
 | **GitHub Pages** | ⭐⭐ | ❌ 无代理 | 仅静态页；推送 `main` 后 Actions 自动部署。DeepSeek/Groq 不可用，Gemini 仍可用 |
 
@@ -137,7 +157,7 @@ npm run lint     # ESLint
 
 1. 书架页展开 **「大模型生成例句+译文（可选）」**，勾选启用并填写 **API Key**（仅 `localStorage`）。
 2. **Gemini**：浏览器直连 Google API，建议在 [Google AI Studio](https://aistudio.google.com/apikey) 创建密钥并限制 HTTP 来源。
-3. **Groq / DeepSeek**：线上经 `/api/groq`、`/api/deepseek` 同源代理（Vercel / Netlify 已配置）；本地 `npm run dev` 由 Vite 转发。
+3. **Groq / DeepSeek**：线上经 `/api/groq`、`/api/deepseek` 同源代理（Vercel / Netlify 已配置）；本地 `npm run dev` 由 Vite 转发。词根分析另用 DeepSeek（设置区独立开关）。
 
 ### 仓库结构（核心）
 
@@ -153,6 +173,10 @@ ShanbeiWordTest/
 │   ├── src/
 │   │   ├── App.jsx
 │   │   ├── useBookshelfStudy.js
+│   │   ├── studyHistory.js       # 测试历史、不会词汇总
+│   │   ├── StudyHistoryModal.jsx
+│   │   ├── llmRootAnalysis.js    # DeepSeek 词根
+│   │   ├── quwordClient.js       # 趣词词典抓取
 │   │   ├── parseWordbook.js
 │   │   ├── ieltsSentence.js  # 本地例句+译文模板
 │   │   ├── llmExamples.js    # 可选在线生成
@@ -181,7 +205,8 @@ A **pure front-end** vocabulary / SRS web app (**React 19 + Vite 8 + Tailwind CS
 |------|-------------|
 | **Bookshelf** | Loads built-in books listed in `app/public/wordbooks/manifest.json`. Users can import `.txt` files or a folder of `.txt` files; imported books are persisted locally and listed on the shelf. |
 | **Daily batch** | After picking a book, choose **10–100** words (step **5**). Words are taken from the **due** set ordered by scheduling (`nextDue`). |
-| **Study UI** | Word card → **Show gloss & examples** → per-sense Chinese gloss + English example + Chinese translation of that sentence → **Known / Vague / Forgot**. |
+| **Study UI** | Word card → gloss page with **examples / root analysis** → **Known / Vague / Forgot**. Checkpoint every **6** words (hover for gloss). Optional **DeepSeek + QuWord** root analysis on demand. |
+| **Test history** | **Test history** on the book page: calendar of sessions; per-session **review unknown words**; **Unknown words summary** aggregates all history, sorted by **failure count** (Vague + Forgot), **gloss on hover only**, **review all in order**. |
 | **SRS** | Simplified spacing: **Known** increases the interval (1→2→4… days); **Vague** keeps interval but keeps the card due **today**; **Forgot** resets interval and due date. Progress is stored **per book id**. |
 | **Examples** | **Default:** bundled **templates** (academic English + paired Chinese translation). **Optional:** **Google Gemini** (browser) or **Groq** (dev server uses the Vite **`/api/groq` proxy**) with your own API key, applied to **words in the current session queue** when you start a session. |
 
@@ -202,9 +227,19 @@ Sample books live under `app/public/wordbooks/` together with `manifest.json`.
 | `swt-books-meta` | Metadata for user-imported books |
 | `swt-book-<id>` | Serialized entries for an imported book |
 | `swt-prog-<id>` | SRS progress map for that book |
+| `swt-history-<id>` | Study session logs (grades, unknown words per session) |
+| `swt-root-llm-<id>` | Cached DeepSeek / QuWord root analysis per book |
 | `swt-llm-*` | LLM toggle, provider, API key, model names (local only) |
 
 Clear site data or delete these keys to reset the corresponding state.
+
+### Test history & unknown-word summary
+
+1. Open a book → **Test history**.
+2. **Calendar**: tap dates with records; open a session to see unknown words and **review that session’s N words**.
+3. **Unknown words summary** (entry above the calendar): merges **all sessions**; counts every **Vague** or **Forgot** grade; sorts by **count descending**; list shows **word + count only** — **hover for gloss**; **Review all in order** starts from the highest-count words without shuffling.
+
+Up to **150** recent sessions are kept per book in `swt-history-<bookId>`.
 
 ### Quick start
 
