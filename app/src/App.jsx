@@ -24,6 +24,7 @@ import {
 } from './dataBackup.js'
 import { useCloudSync } from './useCloudSync.js'
 import { generateSyncCode } from './cloudSync.js'
+import { PageFooter } from './PageFooter.jsx'
 
 function speakWord(text, reading) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return
@@ -859,6 +860,8 @@ export default function App() {
           onReviewUnknown={startHistoryReview}
           reviewStarting={preparingSession}
         />
+
+        <PageFooter className="mt-8 pb-4" />
       </div>
     )
   }
@@ -1119,6 +1122,8 @@ export default function App() {
             </div>
           </div>
         ) : null}
+
+        <PageFooter className="mt-6 pb-2" />
       </div>
     )
   }
@@ -1130,6 +1135,17 @@ export default function App() {
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">雅思梯度记忆 · 书架</h1>
           <p className="mt-2 text-sm text-slate-600">
             启用云同步后，手机与电脑自动共用进度（同一同步码）
+          </p>
+          <p className="mt-1 text-xs text-slate-500">
+            作者{' '}
+            <a
+              href="https://github.com/Yunikoi"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-indigo-600 underline decoration-indigo-300 underline-offset-2 hover:text-indigo-500"
+            >
+              Yunikoi
+            </a>
           </p>
         </header>
 
@@ -1420,6 +1436,8 @@ export default function App() {
           <span className="whitespace-nowrap">单词,释义1；释义2</span>
           。章节标题行 <span className="whitespace-nowrap">【…】</span> 与 <span className="whitespace-nowrap">#</span> 注释会跳过。
         </p>
+
+        <PageFooter className="mt-4 pb-4" />
       </div>
 
     </div>
