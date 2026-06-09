@@ -1,6 +1,6 @@
 # ShanbeiWordTest / 雅思梯度记忆 · 词书复习
 
-[English](#english) · [中文](#中文)
+[English](#english) · [中文](#中文) · 作者 [Yunikoi @ GitHub](https://github.com/Yunikoi)
 
 ---
 
@@ -191,6 +191,8 @@ ShanbeiWordTest/
 
 项目按「学习交流」提供；第三方词典或模型服务受其各自条款约束。例句模板与模型输出仅供参考，请以权威辞书与考场要求为准。
 
+维护者：[Yunikoi](https://github.com/Yunikoi) · 仓库 [Yunikoi/ShanbeiWordTest](https://github.com/Yunikoi/ShanbeiWordTest)
+
 ---
 
 <a id="english"></a>
@@ -291,4 +293,6 @@ ShanbeiWordTest/
 ### License & disclaimer
 
 Provided as-is for learning. Third-party APIs (dictionary, Gemini, Groq) remain under their own terms. Template and model outputs are **not** a substitute for authoritative dictionaries or exam instructions.
+
+Maintainer: [Yunikoi](https://github.com/Yunikoi) · Repository [Yunikoi/ShanbeiWordTest](https://github.com/Yunikoi/ShanbeiWordTest)
 IOI
