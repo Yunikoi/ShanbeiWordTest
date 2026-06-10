@@ -2,6 +2,8 @@
 
 [English](#english) · [中文](#中文) · 作者 [Yunikoi @ GitHub](https://github.com/Yunikoi)
 
+**在线体验：** [shanbei-word-test.vercel.app](https://shanbei-word-test.vercel.app) · **源码：** [Yunikoi/ShanbeiWordTest](https://github.com/Yunikoi/ShanbeiWordTest)
+
 ---
 
 <a id="中文"></a>
@@ -14,7 +16,7 @@
 
 | 模块 | 说明 |
 |------|------|
-| **书架** | 读取 `app/public/wordbooks/manifest.json` 中配置的内置 `.txt` 词书；支持导入本地 `.txt` 或文件夹（合并多个 txt）；导入词书写入本地并出现在书架列表。 |
+| **书架** | 读取 `app/public/wordbooks/manifest.json` 中配置的内置 `.txt` 词书；支持导入本地 `.txt` / `.md` 或文件夹；页头与页脚链至 [GitHub 主页](https://github.com/Yunikoi) 与开源仓库。 |
 | **今日复习量** | 选中词书后选择 10–100（步长 5）个词，从**当前到期**的词条中按 `nextDue` 优先级抽取。 |
 | **学习卡片** | 显示单词 → 释义页可 **查看例句 / 词根分析** → **认识 / 不熟悉 / 不认识**。每完成 **6** 个词弹出**阶段性回顾**（悬停看释义）再继续。词根分析支持 **DeepSeek + 趣词词典**（按需加载）；也可回退本地词源库。 |
 | **测试历史** | 词书页 **「测试历史」**：日历查看每次测试；单次详情可 **复习不会的 N 个词**；**「不会词汇总」** 整合全部历史，按标记「不熟悉 / 不认识」**次数从高到低**排序，列表**默认不显示释义**（悬停查看），可 **按顺序复习全部**。 |
@@ -112,7 +114,7 @@ npm run lint     # ESLint
 
 1. 打开 [vercel.com](https://vercel.com) → Import Git Repository → 选 `ShanbeiWordTest`
 2. 保持默认（Build：`cd app && npm run build`，Output：`app/dist`）
-3. Deploy → 获得 `https://xxx.vercel.app` 公网地址
+3. Deploy → 获得公网地址（示例：[shanbei-word-test.vercel.app](https://shanbei-word-test.vercel.app)）
 
 **Netlify：** 同样导入 GitHub 仓库，Build command / Publish directory 由 `netlify.toml` 自动读取。
 
@@ -163,7 +165,7 @@ npm run lint     # ESLint
 
 ```
 ShanbeiWordTest/
-├── vercel.json                 # Vercel 构建 + DeepSeek/Groq 代理
+├── vercel.json                 # Vercel 构建 + DeepSeek/Groq/趣词 代理
 ├── netlify.toml                # Netlify 同上
 ├── .github/workflows/          # GitHub Pages 自动部署
 ├── start-dev.bat               # Windows：一键启动 + 浏览器
@@ -177,15 +179,22 @@ ShanbeiWordTest/
 │   │   ├── StudyHistoryModal.jsx
 │   │   ├── llmRootAnalysis.js    # DeepSeek 词根
 │   │   ├── quwordClient.js       # 趣词词典抓取
+│   │   ├── useResolvedRootAnalysis.js  # 按需词根 + 趣词补全
+│   │   ├── PageFooter.jsx        # 页脚 GitHub 链接
 │   │   ├── parseWordbook.js
 │   │   ├── ieltsSentence.js  # 本地例句+译文模板
 │   │   ├── llmExamples.js    # 可选在线生成
 │   │   ├── llmSettings.js
 │   │   └── bookStorage.js
-│   └── vite.config.js        # 开发代理（Groq）
+│   └── vite.config.js        # 开发代理（Groq / DeepSeek / 趣词）
 ├── parser.js                 # （可选）根目录旧流程：生成 data.json
 └── README.md
 ```
+
+### 关于作者与页内链接
+
+- 书架标题下方、以及**书架 / 词书 / 学习**三页底部页脚，均可点击跳转 [Yunikoi @ GitHub](https://github.com/Yunikoi) 与 [ShanbeiWordTest 仓库](https://github.com/Yunikoi/ShanbeiWordTest)。
+- 与本 README 顶部链接一致，便于在手机上从应用内直达源码与作者主页。
 
 ### 许可证与免责
 
@@ -199,13 +208,17 @@ ShanbeiWordTest/
 
 ## English
 
-A **pure front-end** vocabulary / SRS web app (**React 19 + Vite 8 + Tailwind CSS 4**) for IELTS-style study: **bookshelf**, **multi-format `.txt` wordbooks**, **spaced repetition**, **reading-like example sentences with Chinese translations**, and an **optional LLM** (Gemini or Groq) to regenerate examples for the **daily review queue**. Progress is stored in the browser **localStorage**; no backend is required.
+A **pure front-end** vocabulary / SRS web app (**React 19 + Vite 8 + Tailwind CSS 4**) for IELTS-style study.
+
+**Live demo:** [shanbei-word-test.vercel.app](https://shanbei-word-test.vercel.app) · **Source:** [Yunikoi/ShanbeiWordTest](https://github.com/Yunikoi/ShanbeiWordTest)
+
+Features: **bookshelf**, **multi-format wordbook import**, **spaced repetition**, **reading-like examples**, optional **LLM examples**, **DeepSeek + QuWord root analysis**, **test history** with **unknown-word summary** (sorted by failure count, gloss on hover). Progress in **localStorage**; optional **Supabase cloud sync**.
 
 ### Feature summary
 
 | Area | Description |
 |------|-------------|
-| **Bookshelf** | Loads built-in books listed in `app/public/wordbooks/manifest.json`. Users can import `.txt` files or a folder of `.txt` files; imported books are persisted locally and listed on the shelf. |
+| **Bookshelf** | Built-in books from `manifest.json`; import `.txt` / `.md` or folders. Header and footer link to [Yunikoi on GitHub](https://github.com/Yunikoi) and the repo. |
 | **Daily batch** | After picking a book, choose **10–100** words (step **5**). Words are taken from the **due** set ordered by scheduling (`nextDue`). |
 | **Study UI** | Word card → gloss page with **examples / root analysis** → **Known / Vague / Forgot**. Checkpoint every **6** words (hover for gloss). Optional **DeepSeek + QuWord** root analysis on demand. |
 | **Test history** | **Test history** on the book page: calendar of sessions; per-session **review unknown words**; **Unknown words summary** aggregates all history, sorted by **failure count** (Vague + Forgot), **gloss on hover only**, **review all in order**. |
@@ -232,8 +245,17 @@ Sample books live under `app/public/wordbooks/` together with `manifest.json`.
 | `swt-history-<id>` | Study session logs (grades, unknown words per session) |
 | `swt-root-llm-<id>` | Cached DeepSeek / QuWord root analysis per book |
 | `swt-llm-*` | LLM toggle, provider, API key, model names (local only) |
+| `swt-book-prefs` | Per-book preferences (e.g. auto root analysis) |
 
 Clear site data or delete these keys to reset the corresponding state.
+
+### Root analysis (optional)
+
+DeepSeek + [QuWord](https://www.quword.com/) via `/api/deepseek` and `/api/quword` on Vercel. Enable on the shelf; toggle per-book batch analysis or load on **View roots** during study.
+
+### Author links in the app
+
+Shelf header plus footers on **shelf / book / study** pages link to [Yunikoi](https://github.com/Yunikoi) and [ShanbeiWordTest](https://github.com/Yunikoi/ShanbeiWordTest), same as this README.
 
 ### Test history & unknown-word summary
 
