@@ -85,6 +85,8 @@ function attachEntryRootAnalysis(entry, bookId, pool) {
 const MANIFEST_URL = '/wordbooks/manifest.json'
 /** 本轮答错时，隔几个词后再测（不推到整轮队尾） */
 const SESSION_REQUEUE_OFFSET = 4
+/** 本轮内「不熟悉 / 不认识」需再测次数（含当前这一次） */
+const SESSION_WRONG_REQUIRED = 3
 
 function localTodayYMD() {
   const d = new Date()
@@ -227,6 +229,35 @@ export function useBookshelfStudy() {
   const [studyHistory, setStudyHistory] = useState(/** @type {import('./studyHistory.js').StudySession[]} */ ([]))
   /** @type {import('react').MutableRefObject<import('./studyHistory.js').StudySession | null>} */
   const sessionLogRef = useRef(null)
+  /** @type {import('react').MutableRefObject<Map<string, number>>} */
+  const wrongReviewLeftRef = useRef(new Map())
+  const flushSessionLog = useCallback(
+    (opts = {}) => {
+      const force = opts.force === true
+      if (!sessionLogRef.current || !activeBookId) return
+      const events = sessionLogRef.current.events
+      if (!events.length) {
+        sessionLogRef.current = null
+        wrongReviewLeftRef.current = new Map()
+        return
+      }
+      const finished = {
+        ...sessionLogRef.current,
+        endedAt: new Date().toISOString(),
+        ...(force || sessionFlag !== 'done' ? { partial: true } : {}),
+      }
+      setStudyHistory(appendStudySession(activeBookId, finished))
+      sessionLogRef.current = null
+      wrongReviewLeftRef.current = new Map()
+    },
+    [activeBookId, sessionFlag],
+  )
+
+  const resetSessionRuntime = useCallback(() => {
+    sessionLogRef.current = null
+    wrongReviewLeftRef.current = new Map()
+  }, [])
+
   const rootEnrichGenRef = useRef(0)
   const [bookRootAnalysisEnabled, setBookRootAnalysisEnabledState] = useState(false)
 
@@ -482,6 +513,7 @@ export function useBookshelfStudy() {
         setSessionIndex(0)
         setSessionFlag('active')
         setSessionMode('daily')
+        wrongReviewLeftRef.current = new Map()
         sessionLogRef.current = startSessionLog(queue, n)
         setView('study')
         return { ok: true, count: queue.length }
@@ -520,6 +552,7 @@ export function useBookshelfStudy() {
         setSessionIndex(0)
         setSessionFlag('active')
         setSessionMode('history-review')
+        wrongReviewLeftRef.current = new Map()
         sessionLogRef.current = startSessionLog(queue, queue.length)
         setView('study')
         return { ok: true, count: queue.length, skipped: words.length - pool.length }
@@ -532,9 +565,9 @@ export function useBookshelfStudy() {
   )
 
   const backToShelf = useCallback(() => {
+    flushSessionLog()
     rootEnrichGenRef.current += 1
     setRootEnrich({ running: false, done: 0, total: 0, analyzed: 0, failed: 0 })
-    sessionLogRef.current = null
     setView('shelf')
     setSessionFlag('idle')
     setSessionQueue([])
@@ -546,10 +579,10 @@ export function useBookshelfStudy() {
     setActiveTitle('')
     setBookLoadError(null)
     setProgress({})
-  }, [])
+  }, [flushSessionLog])
 
   const backToBook = useCallback(() => {
-    sessionLogRef.current = null
+    flushSessionLog()
     setView('book')
     setSessionFlag('idle')
     setSessionQueue([])
@@ -560,7 +593,7 @@ export function useBookshelfStudy() {
       const today = localTodayYMD()
       setProgress(normalizeProgressMap(loadProgress(activeBookId), today))
     }
-  }, [activeBookId])
+  }, [activeBookId, flushSessionLog])
 
   const clearActiveBook = useCallback(() => {
     setActiveBookId(null)
@@ -588,7 +621,7 @@ export function useBookshelfStudy() {
       const today = localTodayYMD()
       const raw = loadProgress(activeBookId)
       const prev = raw[cur.word]
-      const { prog, requeueSameSession } = applySrsV2(prev, kind, today, addDaysYmd)
+      const { prog } = applySrsV2(prev, kind, today, addDaysYmd)
       const map = { ...raw, [cur.word]: prog }
       const normalized = normalizeProgressMap(map, today)
       saveProgress(activeBookId, normalized)
@@ -596,10 +629,24 @@ export function useBookshelfStudy() {
 
       const next = sessionIndex + 1
       let newQueue = [...sessionQueue]
-      if (requeueSameSession) {
-        const insertAt = Math.min(next + SESSION_REQUEUE_OFFSET, newQueue.length)
-        newQueue.splice(insertAt, 0, cur)
+
+      const wrong = kind === 'fuzzy' || kind === 'forget'
+      if (wrong) {
+        let left = wrongReviewLeftRef.current.get(cur.word)
+        if (left === undefined) left = SESSION_WRONG_REQUIRED
+        left -= 1
+        wrongReviewLeftRef.current.set(cur.word, left)
+        if (left > 0) {
+          const insertAt = Math.min(next + SESSION_REQUEUE_OFFSET, newQueue.length)
+          newQueue.splice(insertAt, 0, cur)
+        }
+      } else {
+        wrongReviewLeftRef.current.delete(cur.word)
+        for (let i = newQueue.length - 1; i >= next; i--) {
+          if (newQueue[i].word === cur.word) newQueue.splice(i, 1)
+        }
       }
+
       if (next >= newQueue.length) {
         setSessionQueue(newQueue)
         setSessionFlag('done')
@@ -610,6 +657,7 @@ export function useBookshelfStudy() {
           }
           setStudyHistory(appendStudySession(activeBookId, finished))
           sessionLogRef.current = null
+          wrongReviewLeftRef.current = new Map()
         }
         return { done: true }
       }
@@ -762,6 +810,7 @@ export function useBookshelfStudy() {
     triggerBookRootEnrichment,
     backToShelf,
     backToBook,
+    flushSessionLog,
     clearActiveBook,
     sessionQueue,
     sessionIndex,

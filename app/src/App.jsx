@@ -94,9 +94,12 @@ export default function App() {
     sessionQueueLength,
     sessionExtra,
     sessionEmpty,
+    sessionComplete,
+    sessionFlag,
     currentCard,
     sessionQueue,
     commitGrade,
+    flushSessionLog,
     importFromText,
     clearActiveBook,
     activeBookSource,
@@ -178,6 +181,12 @@ export default function App() {
     }
     hasBoundRootFile(activeBookId).then(setRootFileBound)
   }, [activeBookId, rootStoreTick, rootEnrich.done])
+
+  useEffect(() => {
+    if (view !== 'study' || sessionFlag !== 'done' || doneOpen || checkpointOpen) return
+    setDoneOpen(true)
+    setRevealed(true)
+  }, [view, sessionFlag, doneOpen, checkpointOpen])
 
   useEffect(() => {
     if (view !== 'study' || studyPhase !== 'word' || !currentCard?.word || doneOpen || sessionEmpty || checkpointOpen)
@@ -365,7 +374,7 @@ export default function App() {
   /** 释义页最终确认：写入 SRS 并无动画切下一词 */
   const finalizeGrade = useCallback(
     async (kind) => {
-      if (feedbackBusy || !currentCard) return
+      if (feedbackBusy || !currentCard || sessionFlag !== 'active') return
       setFeedbackBusy(true)
       try {
         const graded = currentCard
@@ -403,7 +412,7 @@ export default function App() {
         setFeedbackBusy(false)
       }
     },
-    [feedbackBusy, currentCard, commitGrade, sessionCompletedCount],
+    [feedbackBusy, currentCard, commitGrade, sessionCompletedCount, sessionFlag],
   )
 
   const onVocabFile = useCallback(
@@ -938,7 +947,7 @@ export default function App() {
               sessionTotal={sessionQueueLength}
               onContinue={continueFromCheckpoint}
             />
-          ) : currentCard && !doneOpen ? (
+          ) : currentCard && !doneOpen && sessionFlag === 'active' ? (
             <main className="flex flex-1 flex-col items-center justify-center pb-8">
               <div className="relative w-full overflow-hidden">
                 <article

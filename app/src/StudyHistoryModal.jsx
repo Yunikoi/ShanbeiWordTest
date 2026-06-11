@@ -151,6 +151,8 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
               glossMap={glossMap}
               onReviewUnknown={onReviewUnknown}
               reviewStarting={reviewStarting}
+              partial={selected.partial}
+              dailyGoal={selected.dailyGoal}
             />
           ) : showAggregate ? (
             <UnknownAggregate
@@ -177,6 +179,9 @@ export function StudyHistoryModal({ open, onClose, sessions, entries, onReviewUn
                         </div>
                         <div className="mt-1 text-xs text-slate-600">
                           测试 {sum.testedCount} 词 · 不会 {sum.unknownCount} 词
+                          {s.partial ? (
+                            <span className="ml-1 text-amber-700">· 未完成（目标 {s.dailyGoal} 词）</span>
+                          ) : null}
                           {sum.unknownCount > 0 ? (
                             <span className="ml-2 text-rose-600">（不熟悉 / 不认识）</span>
                           ) : null}
@@ -392,11 +397,19 @@ function UnknownAggregate({ stats, glossMap, onReviewUnknown, reviewStarting }) 
  *   glossMap: Map<string, string>,
  *   onReviewUnknown?: (words: string[], opts?: { sortByInputOrder?: boolean }) => void,
  *   reviewStarting?: boolean,
+ *   partial?: boolean,
+ *   dailyGoal?: number,
  * }} props
  */
-function SessionDetail({ summary, unknownSet, glossMap, onReviewUnknown, reviewStarting }) {
+function SessionDetail({ summary, unknownSet, glossMap, onReviewUnknown, reviewStarting, partial, dailyGoal }) {
   return (
     <div>
+      {partial ? (
+        <p className="mb-3 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+          本次测试未做完（已测 {summary.testedCount} 词
+          {dailyGoal ? `，目标 ${dailyGoal} 词` : ''}），退出时已自动保存记录。
+        </p>
+      ) : null}
       <div className="mb-4 flex flex-wrap gap-2 text-xs text-slate-600">
         <span className="rounded-full bg-slate-100 px-2.5 py-1">共 {summary.testedCount} 词</span>
         <span className="rounded-full bg-rose-100 px-2.5 py-1 text-rose-800">不会 {summary.unknownCount} 词</span>

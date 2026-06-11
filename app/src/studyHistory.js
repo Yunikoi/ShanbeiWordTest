@@ -3,7 +3,7 @@ const MAX_SESSIONS = 150
 
 /** @typedef {'known' | 'fuzzy' | 'forget'} GradeKind */
 /** @typedef {{ word: string, kind: GradeKind, at: string }} HistoryEvent */
-/** @typedef {{ id: string, startedAt: string, endedAt: string, planTotal: number, dailyGoal: number, events: HistoryEvent[] }} StudySession */
+/** @typedef {{ id: string, startedAt: string, endedAt: string, planTotal: number, dailyGoal: number, events: HistoryEvent[], partial?: boolean }} StudySession */
 
 /**
  * @param {string} bookId
