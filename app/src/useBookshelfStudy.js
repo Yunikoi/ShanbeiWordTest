@@ -621,7 +621,7 @@ export function useBookshelfStudy() {
       const today = localTodayYMD()
       const raw = loadProgress(activeBookId)
       const prev = raw[cur.word]
-      const { prog } = applySrsV2(prev, kind, today, addDaysYmd)
+      const { prog, requeueAfterKnown } = applySrsV2(prev, kind, today, addDaysYmd)
       const map = { ...raw, [cur.word]: prog }
       const normalized = normalizeProgressMap(map, today)
       saveProgress(activeBookId, normalized)
@@ -640,6 +640,9 @@ export function useBookshelfStudy() {
           const insertAt = Math.min(next + SESSION_REQUEUE_OFFSET, newQueue.length)
           newQueue.splice(insertAt, 0, cur)
         }
+      } else if (requeueAfterKnown) {
+        const insertAt = Math.min(next + SESSION_REQUEUE_OFFSET, newQueue.length)
+        newQueue.splice(insertAt, 0, cur)
       } else {
         wrongReviewLeftRef.current.delete(cur.word)
         for (let i = newQueue.length - 1; i >= next; i--) {

@@ -20,7 +20,7 @@
 | **今日复习量** | 选中词书后选择 10–100（步长 5）个词，从**当前到期**的词条中按 `nextDue` 优先级抽取。 |
 | **学习卡片** | 显示单词 → 释义页可 **查看例句 / 词根分析** → **认识 / 不熟悉 / 不认识**。每完成 **6** 个词弹出**阶段性回顾**（悬停看释义）再继续。词根分析支持 **DeepSeek + 趣词词典**（按需加载）；也可回退本地词源库。 |
 | **测试历史** | 词书页 **「测试历史」**：日历查看每次测试；单次详情可 **复习不会的 N 个词**；**「不会词汇总」** 整合全部历史，按标记「不熟悉 / 不认识」**次数从高到低**排序，列表**默认不显示释义**（悬停查看），可 **按顺序复习全部**。 |
-| **间隔重复** | 简化 SM 思路：`认识` 则间隔按 1→2→4… 天倍增排期；`不熟悉` 保持间隔、`nextDue` 仍为今日；`不认识` 重置间隔与 `nextDue`。进度按**词书 ID** 分库存储。 |
+| **间隔重复** | 简化 SM 思路：`认识` 则间隔按 1→2→4… 天倍增排期；`不熟悉` 保持间隔、`nextDue` 仍为今日；`不认识` 重置间隔与 `nextDue`。标记不会后需再 **连续 2 次**「认识」才算真正答对（第 1 次会加练一次）。进度按**词书 ID** 分库存储。 |
 | **例句** | 默认：**本地模板**（阅读语体英文 + 配对中文译文，不含把中文义项硬塞进英文句）。可选：**Google Gemini** 或 **Groq**（开发环境经 Vite 代理）用自备 API Key 对**今日队列中的词**逐条生成例句+译文。 |
 
 ### 词书文本格式
@@ -128,6 +128,23 @@ npm run lint     # ESLint
 - 学习进度、词根缓存、API Key 仍在**各浏览器 localStorage**，换设备/换浏览器数据不互通（未做账号后端）。
 - 用户自备 DeepSeek Key，在网站设置里填写即可；Key 不会进 Git 仓库。
 - Gemini 需在 Google AI Studio 把线上域名加入 API Key 的 HTTP 来源限制。
+
+**若 Vercel 显示 “This deployment is temporarily paused”：**
+
+这是 Vercel **暂停部署**，不是代码坏了。常见原因是 Hobby 免费额度用尽（尤其是 `/api/quword`、`/api/deepseek` 代理会消耗 **Fluid CPU**）。处理方式：
+
+1. 打开 [Vercel Dashboard](https://vercel.com/dashboard) → 项目 **ShanbeiWordTest** → **Usage** 查看是否超额。
+2. **恢复访问（任选其一）：**
+   - 等待 Hobby 额度重置（通常约 **30 天**；部分指标周期更短，见 [Hobby 计划说明](https://vercel.com/docs/plans/hobby)）。
+   - 升级到 **Pro** 计划（可立即恢复，按量计费）。
+   - 在 Dashboard 中若显示 **Resume / Unpause**，手动恢复项目。
+3. **备用地址（不依赖 Vercel）：** 推送 `main` 后 GitHub Actions 会部署到  
+   **https://yunikoi.github.io/ShanbeiWordTest/**  
+   （需仓库 Settings → Pages → Source 选 **GitHub Actions**）。  
+   GitHub Pages **没有** DeepSeek / Groq / 趣词代理，背单词与 Gemini 例句仍可用。
+4. **本地开发：** 运行 `start-dev.bat` 或 `cd app && npm run dev`，本机可用全部代理功能。
+
+本地还有 **1 个未推送 commit**，推送到 GitHub 后可同时更新 Vercel（恢复后）与 GitHub Pages。
 
 ### 云同步（手机 / 电脑自动同步，推荐）
 

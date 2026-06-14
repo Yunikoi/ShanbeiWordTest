@@ -7,6 +7,9 @@ export const MASTERY_GAP_DAYS = [1, 2, 4, 7, 15, 30, 60]
 /** 刚达成连续 3 次正确、进入已掌握时，第一次「已掌握复习」的间隔（天） */
 export const FIRST_MASTERED_GAP_DAYS = 1
 
+/** 标记「不熟悉 / 不认识」后，需再答对「认识」的次数才算真正认识 */
+export const KNOWN_CONFIRM_AFTER_WRONG = 2
+
 /**
  * @typedef {{
  *   version: 2,
@@ -15,6 +18,7 @@ export const FIRST_MASTERED_GAP_DAYS = 1
  *   masteryIndex: number,
  *   nextDue: string,
  *   lastReviewed?: string,
+ *   confirmKnownLeft?: number,
  * }} WordProgV2
  */
 
@@ -33,6 +37,9 @@ export function migrateWordProg(p, today) {
       masteryIndex: Math.max(0, Math.min(MASTERY_GAP_DAYS.length - 1, Number(x.masteryIndex) || 0)),
       nextDue: typeof x.nextDue === 'string' && x.nextDue ? x.nextDue : today,
       lastReviewed: typeof x.lastReviewed === 'string' ? x.lastReviewed : undefined,
+      ...(Number(x.confirmKnownLeft) > 0
+        ? { confirmKnownLeft: Math.min(KNOWN_CONFIRM_AFTER_WRONG, Number(x.confirmKnownLeft)) }
+        : {}),
     }
   }
   if (!p || typeof p !== 'object') {
@@ -62,35 +69,51 @@ export function migrateWordProg(p, today) {
  * @param {'known' | 'fuzzy' | 'forget'} kind
  * @param {string} today
  * @param {(ymd: string, n: number) => string} addDaysYmd
+ * @returns {{ prog: WordProgV2, requeueAfterKnown?: boolean }}
  */
 export function applySrsV2(prev, kind, today, addDaysYmd) {
-  const base = migrateWordProg(prev, today)
+  let base = migrateWordProg(prev, today)
   const wrong = kind === 'fuzzy' || kind === 'forget'
 
   if (wrong) {
+    const reset = {
+      version: 2,
+      phase: /** @type {'learning'} */ ('learning'),
+      streak: 0,
+      masteryIndex: 0,
+      nextDue: today,
+      lastReviewed: today,
+      confirmKnownLeft: KNOWN_CONFIRM_AFTER_WRONG,
+    }
     if (base.phase === 'mastered') {
-      return {
-        prog: {
-          version: 2,
-          phase: 'learning',
-          streak: 0,
-          masteryIndex: 0,
-          nextDue: today,
-          lastReviewed: today,
-        },
-        requeueSameSession: true,
-      }
+      return { prog: reset, requeueAfterKnown: false }
     }
     return {
       prog: {
-        ...base,
-        phase: 'learning',
-        streak: 0,
-        nextDue: today,
-        lastReviewed: today,
+        ...reset,
+        masteryIndex: base.masteryIndex,
       },
-      requeueSameSession: true,
+      requeueAfterKnown: false,
     }
+  }
+
+  const confirmLeft = Number(base.confirmKnownLeft) || 0
+  if (confirmLeft > 0) {
+    const nextLeft = confirmLeft - 1
+    if (nextLeft > 0) {
+      return {
+        prog: {
+          ...base,
+          phase: 'learning',
+          streak: 0,
+          confirmKnownLeft: nextLeft,
+          nextDue: today,
+          lastReviewed: today,
+        },
+        requeueAfterKnown: true,
+      }
+    }
+    base = { ...base, confirmKnownLeft: undefined }
   }
 
   if (base.phase === 'mastered') {
@@ -105,7 +128,7 @@ export function applySrsV2(prev, kind, today, addDaysYmd) {
         nextDue: addDaysYmd(today, gap),
         lastReviewed: today,
       },
-      requeueSameSession: false,
+      requeueAfterKnown: false,
     }
   }
 
@@ -120,7 +143,7 @@ export function applySrsV2(prev, kind, today, addDaysYmd) {
         nextDue: addDaysYmd(today, FIRST_MASTERED_GAP_DAYS),
         lastReviewed: today,
       },
-      requeueSameSession: false,
+      requeueAfterKnown: false,
     }
   }
 
@@ -135,6 +158,6 @@ export function applySrsV2(prev, kind, today, addDaysYmd) {
       nextDue: addDaysYmd(today, gap),
       lastReviewed: today,
     },
-    requeueSameSession: false,
+    requeueAfterKnown: false,
   }
 }
