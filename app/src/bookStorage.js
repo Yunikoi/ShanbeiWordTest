@@ -1,5 +1,6 @@
 import { removeStudyHistory } from './studyHistory.js'
 import { removeRootAnalysisCache, pruneRootAnalysisCache } from './rootAnalysisCache.js'
+import { scheduleUserDataFileSync } from './userDataFileStorage.js'
 
 const META_KEY = 'swt-books-meta'
 const PREFIX_BOOK = 'swt-book-'
@@ -20,6 +21,7 @@ export function loadMeta() {
 /** @param {BookMeta[]} list */
 export function saveMeta(list) {
   localStorage.setItem(META_KEY, JSON.stringify(list))
+  scheduleUserDataFileSync()
 }
 
 /** @param {string} bookId */
@@ -37,6 +39,7 @@ export function loadBookEntries(bookId) {
 /** @param {string} bookId @param {unknown[]} entries */
 export function saveBookEntries(bookId, entries) {
   localStorage.setItem(PREFIX_BOOK + bookId, JSON.stringify(entries))
+  scheduleUserDataFileSync()
 }
 
 /** @param {string} bookId */
@@ -52,6 +55,7 @@ export function loadProgress(bookId) {
 /** @param {string} bookId @param {Record<string, unknown>} map */
 export function saveProgress(bookId, map) {
   localStorage.setItem(PREFIX_PROG + bookId, JSON.stringify(map))
+  scheduleUserDataFileSync()
 }
 
 /**

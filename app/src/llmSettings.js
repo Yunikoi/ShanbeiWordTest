@@ -1,3 +1,5 @@
+import { scheduleUserDataFileSync } from './userDataFileStorage.js'
+
 const P = 'swt-llm-'
 
 /** @typedef {{ enabled: boolean, provider: 'gemini' | 'groq' | 'deepseek', apiKey: string, modelGemini: string, modelGroq: string, modelDeepseek: string }} LlmSettings */
@@ -50,6 +52,7 @@ export function setLlmSettings(patch) {
     if (patch.modelGemini !== undefined) localStorage.setItem(P + 'model-gemini', patch.modelGemini)
     if (patch.modelGroq !== undefined) localStorage.setItem(P + 'model-groq', patch.modelGroq)
     if (patch.modelDeepseek !== undefined) localStorage.setItem(P + 'model-deepseek', patch.modelDeepseek)
+    scheduleUserDataFileSync()
   } catch {
     /* ignore */
   }
@@ -61,6 +64,7 @@ export function setRootLlmSettings(patch) {
     if (patch.enabled !== undefined) localStorage.setItem(P + 'root-enabled', patch.enabled ? '1' : '0')
     if (patch.apiKey !== undefined) localStorage.setItem(P + 'root-apikey', patch.apiKey)
     if (patch.model !== undefined) localStorage.setItem(P + 'root-model', patch.model)
+    scheduleUserDataFileSync()
   } catch {
     /* ignore */
   }

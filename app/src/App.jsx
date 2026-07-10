@@ -24,6 +24,12 @@ import {
 } from './dataBackup.js'
 import { useCloudSync } from './useCloudSync.js'
 import { generateSyncCode } from './cloudSync.js'
+import {
+  isUserDataFileStorageSupported,
+  bindUserDataFile,
+  bindExistingUserDataFile,
+  hasBoundUserDataFile,
+} from './userDataFileStorage.js'
 import { PageFooter } from './PageFooter.jsx'
 
 function speakWord(text, reading) {
@@ -157,6 +163,8 @@ export default function App() {
 
   const [rootFileBound, setRootFileBound] = useState(false)
   const [rootFileTip, setRootFileTip] = useState('')
+  const [userDataFileBound, setUserDataFileBound] = useState(false)
+  const [userDataFileTip, setUserDataFileTip] = useState('')
   const [rootStoreTick, setRootStoreTick] = useState(0)
   const [llm, setLlm] = useState(() => getLlmSettings())
   const [rootLlm, setRootLlm] = useState(() => getRootLlmSettings())
@@ -181,6 +189,10 @@ export default function App() {
     }
     hasBoundRootFile(activeBookId).then(setRootFileBound)
   }, [activeBookId, rootStoreTick, rootEnrich.done])
+
+  useEffect(() => {
+    hasBoundUserDataFile().then(setUserDataFileBound)
+  }, [backupTip, books.length])
 
   useEffect(() => {
     if (view !== 'study' || sessionFlag !== 'done' || doneOpen || checkpointOpen) return
@@ -751,7 +763,9 @@ export default function App() {
                 onChange={onReimportFile}
               />
               <p className="mt-4 text-center text-xs leading-relaxed text-slate-500">
-                词书保存在浏览器本机，不会自动读取磁盘上的文件。修改了 Obsidian / txt 后，请点下方按钮重新选择同一文件以更新词表。
+                <strong>词表内容</strong>导入后存在浏览器里，不会自动监视磁盘上的 Obsidian / txt。你改了源文件后，请点下方按钮重新选择同一文件以更新词表。
+                <br />
+                <strong>学习进度、测试历史</strong>请在书架页绑定「本机自动保存」，才会写入 JSON 文件；换浏览器后从该文件恢复。
               </p>
               <button
                 type="button"
@@ -1158,6 +1172,67 @@ export default function App() {
           </p>
         </header>
 
+        <section className="mb-6 rounded-2xl border border-violet-300 bg-violet-50/80 px-4 py-4 text-left shadow-sm">
+          <h2 className="text-sm font-semibold text-violet-950">本机自动保存（推荐 · 换浏览器不丢数据）</h2>
+          {!isUserDataFileStorageSupported() ? (
+            <p className="mt-2 text-xs leading-relaxed text-violet-900/80">
+              手机浏览器无法写本机文件。请用<strong>电脑版 Chrome 或 Edge</strong>打开本页，绑定一个 JSON 文件后，学习进度、测试历史、词根缓存会<strong>自动写入磁盘</strong>；换浏览器时选「从本机文件恢复」即可。
+            </p>
+          ) : (
+            <>
+              <p className="mt-2 text-xs leading-relaxed text-violet-900/80">
+                绑定后每次学习都会自动更新你选的 JSON 文件（约 1 秒防抖）。数据在<strong>文件里</strong>，不在浏览器缓存里；换浏览器、清缓存后，点「从本机文件恢复」即可找回。
+                {userDataFileBound ? (
+                  <span className="ml-1 font-semibold text-violet-800">· 已绑定本机文件</span>
+                ) : (
+                  <span className="ml-1 font-semibold text-amber-800">· 尚未绑定（请先绑定，否则数据只在当前浏览器）</span>
+                )}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setUserDataFileTip('')
+                    try {
+                      await bindUserDataFile()
+                      setUserDataFileBound(true)
+                      setUserDataFileTip('已绑定本机 JSON，之后学习数据会自动写入该文件')
+                    } catch (e) {
+                      if (e?.name !== 'AbortError') setUserDataFileTip(e?.message || String(e))
+                    }
+                  }}
+                  className="rounded-xl bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-500"
+                >
+                  {userDataFileBound ? '更换自动保存文件' : '绑定本机自动保存 (.json)'}
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setUserDataFileTip('')
+                    try {
+                      await bindExistingUserDataFile()
+                      refreshImports()
+                      setUserDataFileBound(true)
+                      setUserDataFileTip('已从本机 JSON 恢复学习数据')
+                      window.setTimeout(() => window.location.reload(), 800)
+                    } catch (e) {
+                      if (e?.name !== 'AbortError') setUserDataFileTip(e?.message || String(e))
+                    }
+                  }}
+                  className="rounded-xl border border-violet-300 bg-white px-4 py-2 text-sm font-semibold text-violet-900 hover:bg-violet-50"
+                >
+                  从本机文件恢复
+                </button>
+              </div>
+              {userDataFileTip ? (
+                <p className="mt-3 rounded-xl border border-violet-200 bg-white/80 px-3 py-2 text-xs text-violet-950">
+                  {userDataFileTip}
+                </p>
+              ) : null}
+            </>
+          )}
+        </section>
+
         <section className="mb-6 rounded-2xl border border-sky-200 bg-sky-50/70 px-4 py-4 text-left shadow-sm">
           <h2 className="text-sm font-semibold text-sky-950">云同步 · 手机 / 电脑自动同步</h2>
           {!cloud.configured ? (
@@ -1224,7 +1299,7 @@ export default function App() {
             手动备份（可选）
           </summary>
           <p className="mt-2 text-xs leading-relaxed text-emerald-900/80">
-            导出一份 JSON，在 Vercel、换浏览器、换端口（5173 / 6294）后「恢复备份」即可找回词书、学习进度、测试历史、词根缓存与 API 设置。
+            若已绑定上方「本机自动保存」，一般无需手动导出。此处仍可导出一份 JSON，在 Vercel、换浏览器、换端口（5173 / 6294）后「恢复备份」即可找回词书、学习进度、测试历史、词根缓存与 API 设置。
           </p>
           {localDataSummary ? (
             <p className="mt-2 text-xs text-emerald-800">

@@ -157,6 +157,16 @@ npm run lint     # ESLint
 
 使用：书架 **「云同步」** → 设一个同步码（或随机生成）→ **启用**。在手机上打开同一 Vercel 地址，输入**相同同步码**即可自动同步，约每 10 秒上传/拉取。
 
+### 本机自动保存（推荐 · 换浏览器不丢）
+
+电脑 **Chrome / Edge** 书架页 **「本机自动保存」**：
+
+1. **绑定本机自动保存**：选一个 JSON 路径（如 `shanbei-学习数据.json`）。之后词书、进度、测试历史、词根缓存约每 1 秒防抖写入该文件。
+2. **从本机文件恢复**：换浏览器或清缓存后，选之前那份 JSON 即可恢复。
+3. 启动时若已绑定过文件，会自动比较文件与浏览器时间戳，取较新的一份。
+
+> 未绑定前数据只在当前浏览器的 localStorage 里；换浏览器会「像没存过一样」。绑定文件后数据在磁盘 JSON 中，与浏览器无关。
+
 ### 手动备份（可选）
 
 书架 **「手动备份」**：导出 JSON / 恢复备份（无 Supabase 时的备选）。
@@ -198,6 +208,8 @@ ShanbeiWordTest/
 │   │   ├── quwordClient.js       # 趣词词典抓取
 │   │   ├── useResolvedRootAnalysis.js  # 按需词根 + 趣词补全
 │   │   ├── PageFooter.jsx        # 页脚 GitHub 链接
+│   │   ├── userDataFileStorage.js  # 学习数据本机 JSON 自动保存
+│   │   ├── dataBackup.js         # 手动导出/导入备份
 │   │   ├── parseWordbook.js
 │   │   ├── ieltsSentence.js  # 本地例句+译文模板
 │   │   ├── llmExamples.js    # 可选在线生成

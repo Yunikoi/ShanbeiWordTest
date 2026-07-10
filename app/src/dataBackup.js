@@ -1,3 +1,5 @@
+import { scheduleUserDataFileSync } from './userDataFileStorage.js'
+
 const BACKUP_FORMAT = 'shanbei-word-test-backup'
 const BACKUP_VERSION = 1
 const KEY_PREFIX = 'swt-'
@@ -103,7 +105,9 @@ export function importUserDataBackup(text, opts = {}) {
     throw new Error('JSON 解析失败')
   }
   validateBackup(payload)
-  return applyStorageRecord(payload.storage, opts)
+  const result = applyStorageRecord(payload.storage, opts)
+  scheduleUserDataFileSync()
+  return result
 }
 
 /** @returns {{ keyCount: number, bookCount: number } | null} */

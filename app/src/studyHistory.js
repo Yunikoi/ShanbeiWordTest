@@ -1,3 +1,5 @@
+import { scheduleUserDataFileSync } from './userDataFileStorage.js'
+
 const PREFIX_HISTORY = 'swt-history-'
 const MAX_SESSIONS = 150
 
@@ -27,6 +29,7 @@ export function appendStudySession(bookId, session) {
   const prev = loadStudyHistory(bookId)
   const next = [session, ...prev.filter((s) => s.id !== session.id)].slice(0, MAX_SESSIONS)
   localStorage.setItem(PREFIX_HISTORY + bookId, JSON.stringify(next))
+  scheduleUserDataFileSync()
   return next
 }
 

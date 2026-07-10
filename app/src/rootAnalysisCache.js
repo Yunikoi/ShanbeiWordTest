@@ -1,5 +1,6 @@
 import { resolveRootStorageKey, migrateLegacyRootStorage } from './rootStorageKey.js'
 import { scheduleRootFileSync } from './rootFileStorage.js'
+import { scheduleUserDataFileSync } from './userDataFileStorage.js'
 
 const PREFIX = 'swt-root-llm-'
 
@@ -65,6 +66,7 @@ function saveBookRootMap(bookId, map) {
   bookMapMem.set(key, map)
   localStorage.setItem(key, JSON.stringify(map))
   scheduleRootFileSync(bookId, map)
+  scheduleUserDataFileSync()
 }
 
 /** @param {string} bookId @returns {Record<string, import('./rootAnalysis.js').RootAnalysis>} */

@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { buildBackupPayload, applyStorageRecord } from './dataBackup.js'
+import { scheduleUserDataFileSync } from './userDataFileStorage.js'
 
 const SYNC_KEY_STORE = 'swt-cloud-sync-key'
 const SYNC_ENABLED = 'swt-cloud-sync-enabled'
@@ -268,6 +269,7 @@ export function applyRemotePayload(payload, remoteUpdatedAt) {
   const merged = mergeRootStorageRecords(payload.storage, localRoots)
   applyStorageRecord(merged, { replace: true })
   markSyncedAt(remoteUpdatedAt)
+  scheduleUserDataFileSync()
 }
 
 /** @returns {string} */

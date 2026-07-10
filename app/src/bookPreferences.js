@@ -1,3 +1,5 @@
+import { scheduleUserDataFileSync } from './userDataFileStorage.js'
+
 const KEY = 'swt-book-prefs'
 
 /** @typedef {{ rootAnalysisEnabled?: boolean }} BookPrefs */
@@ -17,6 +19,7 @@ function loadAll() {
 function saveAll(map) {
   try {
     localStorage.setItem(KEY, JSON.stringify(map))
+    scheduleUserDataFileSync()
   } catch {
     /* ignore */
   }
