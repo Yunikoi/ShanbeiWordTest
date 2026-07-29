@@ -139,7 +139,8 @@ export default function App() {
     }
   }, [cloud.settings.syncKey, syncKeyInput])
 
-  const [dailyCount, setDailyCount] = useState(30)
+  const [reviewCount, setReviewCount] = useState(15)
+  const [newCount, setNewCount] = useState(15)
   const [wordListOpen, setWordListOpen] = useState(false)
   const [browseWord, setBrowseWord] = useState(/** @type {string | null} */ (null))
   const [historyOpen, setHistoryOpen] = useState(false)
@@ -230,7 +231,8 @@ export default function App() {
       const r = await loadBook(book)
       setOpeningId(null)
       if (!r.ok) return
-      setDailyCount(30)
+      setReviewCount(15)
+      setNewCount(15)
       setWordListOpen(false)
     },
     [loadBook],
@@ -313,12 +315,12 @@ export default function App() {
       setSessionCompletedCount,
     })
     try {
-      await beginSession(dailyCount)
+      await beginSession(reviewCount, newCount)
       setCardKey((k) => k + 1)
     } catch {
       setImportTip('开始学习失败，请检查网络或大模型 API 设置')
     }
-  }, [beginSession, dailyCount])
+  }, [beginSession, reviewCount, newCount])
 
   const startHistoryReview = useCallback(
     async (words, opts) => {
@@ -719,19 +721,47 @@ export default function App() {
           ) : null}
 
           <details className="mt-6 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left shadow-sm">
-            <summary className="cursor-pointer text-sm font-semibold text-slate-800">今日学习量</summary>
-            <p className="mt-2 text-xs text-slate-500">从今日到期词中抽取（10–100，步长 5）。</p>
-            <div className="mt-3 flex items-center gap-3">
-              <input
-                type="range"
-                min={10}
-                max={100}
-                step={5}
-                value={dailyCount}
-                onChange={(e) => setDailyCount(Number(e.target.value))}
-                className="w-full accent-emerald-600"
-              />
-              <span className="w-10 text-center text-sm font-bold text-emerald-700">{dailyCount}</span>
+            <summary className="cursor-pointer text-sm font-semibold text-slate-800">学习设置</summary>
+            <p className="mt-2 text-xs text-slate-500">
+              复习：到期词中曾标记「不熟悉/不认识」的优先复习（最近不会的优先，次数多的优先）。
+              <br />
+              新学：到期词中未曾不会过的。
+            </p>
+            <div className="mt-4 space-y-4">
+              <div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-slate-700">复习单词</span>
+                  <span className="font-bold text-indigo-700">{reviewCount}</span>
+                </div>
+                <div className="mt-1 flex items-center gap-3">
+                  <input
+                    type="range"
+                    min={0}
+                    max={60}
+                    step={5}
+                    value={reviewCount}
+                    onChange={(e) => setReviewCount(Number(e.target.value))}
+                    className="w-full accent-indigo-600"
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-slate-700">新学单词</span>
+                  <span className="font-bold text-emerald-700">{newCount}</span>
+                </div>
+                <div className="mt-1 flex items-center gap-3">
+                  <input
+                    type="range"
+                    min={0}
+                    max={60}
+                    step={5}
+                    value={newCount}
+                    onChange={(e) => setNewCount(Number(e.target.value))}
+                    className="w-full accent-emerald-600"
+                  />
+                </div>
+              </div>
             </div>
           </details>
 
@@ -1126,9 +1156,9 @@ export default function App() {
               <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl">
                 ✓
               </div>
-              <h2 className="text-xl font-bold text-slate-900">今日复习完成</h2>
+              <h2 className="text-xl font-bold text-slate-900">今日学习完成</h2>
               <p className="mt-2 text-sm text-slate-600">
-                本轮共 {sessionQueueLength} 张（今日目标 {sessionPlanTotal} 词
+                本轮共 {sessionQueueLength} 张（复习 + 新学共 {sessionPlanTotal} 词
                 {sessionExtra > 0 ? `，含答错加练 ${sessionExtra}` : ''}）。已掌握词按 1→2→4→7→15→30→60
                 天间隔再出现；今天答对的不会在今天重复推送。
               </p>

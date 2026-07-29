@@ -26,7 +26,7 @@ import { parseWordbookText } from './parseWordbook.js'
 import { applySrsV2, migrateWordProg } from './srsCurve.js'
 import { enrichEntriesWithIpa } from './ipaLookup.js'
 import { computeBookDashboard } from './bookDashboard.js'
-import { appendStudySession, loadStudyHistory } from './studyHistory.js'
+import { aggregateUnknownWords, appendStudySession, loadStudyHistory } from './studyHistory.js'
 import { isBookRootAnalysisEnabled, setBookRootAnalysisEnabled as persistBookRootAnalysisEnabled } from './bookPreferences.js'
 
 /** @typedef {{ id: string, title: string, source: 'builtin' | 'import', file?: string }} ShelfBook */
@@ -485,10 +485,11 @@ export function useBookshelfStudy() {
   }, [entries, progress])
 
   /**
-   * @param {number} dailyGoal 10–100 step 5
+   * @param {number} reviewCount 复习词数
+   * @param {number} newCount 新学词数
    */
   const beginSession = useCallback(
-    async (dailyGoal) => {
+    async (reviewCount, newCount = 0) => {
       if (!activeBookId || !entries.length) return { ok: false, message: '请先选择有效词书' }
       setPreparingSession(true)
       setPrepareStatus('')
@@ -496,8 +497,34 @@ export function useBookshelfStudy() {
         const today = localTodayYMD()
         const prog = normalizeProgressMap(loadProgress(activeBookId), today)
         const dueSorted = buildDueSortedQueue(prog, entries, today)
-        const n = Math.max(0, Math.min(dailyGoal, dueSorted.length))
-        if (n === 0) {
+
+        // 从测试历史中找出所有不会的词，按最近错误时间倒序 + 错误次数降序排列
+        const history = loadStudyHistory(activeBookId)
+        const unknownStats = aggregateUnknownWords(history)
+        const unknownMap = new Map(unknownStats.map((s) => [s.word, s]))
+
+        // 复习候选：到期且曾标记为「不熟悉 / 不认识」
+        const reviewCandidates = dueSorted.filter((e) => unknownMap.has(e.word))
+        reviewCandidates.sort((a, b) => {
+          const sa = unknownMap.get(a.word)
+          const sb = unknownMap.get(b.word)
+          // 最近错误的最优先
+          if (sa.lastAt !== sb.lastAt) {
+            return sa.lastAt > sb.lastAt ? -1 : 1
+          }
+          // 错误次数多的优先
+          return (sb?.count ?? 0) - (sa?.count ?? 0)
+        })
+        const reviewPool = reviewCandidates.slice(0, reviewCount)
+
+        // 新学候选：到期且未曾不会过的
+        const newCandidates = dueSorted.filter((e) => !unknownMap.has(e.word))
+        const newPool = shuffleCopy(newCandidates).slice(0, newCount)
+
+        let queue = [...reviewPool, ...newPool]
+        const total = queue.length
+
+        if (total === 0) {
           setSessionQueue([])
           setSessionIndex(0)
           setSessionPlanTotal(0)
@@ -505,16 +532,15 @@ export function useBookshelfStudy() {
           setView('study')
           return { ok: true, empty: true }
         }
-        const pool = shuffleCopy(dueSorted)
-        let queue = pool.slice(0, n)
+
         queue = await buildSessionQueue(queue, activeBookId, entries)
-        setSessionPlanTotal(queue.length)
+        setSessionPlanTotal(total)
         setSessionQueue(queue)
         setSessionIndex(0)
         setSessionFlag('active')
         setSessionMode('daily')
         wrongReviewLeftRef.current = new Map()
-        sessionLogRef.current = startSessionLog(queue, n)
+        sessionLogRef.current = startSessionLog(queue, total)
         setView('study')
         return { ok: true, count: queue.length }
       } finally {
